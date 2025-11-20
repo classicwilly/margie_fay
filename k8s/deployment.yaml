@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wonky-sprout-os
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: wonky-sprout-os
+  template:
+    metadata:
+      labels:
+        app: wonky-sprout-os
+    spec:
+      containers:
+        - name: web
+          image: gcr.io/your-project/wonky-sprout-os:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: NODE_ENV
+              value: "production"
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 20
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wonky-sprout-os
+spec:
+  type: ClusterIP
+  selector:
+    app: wonky-sprout-os
+  ports:
+    - port: 80
+      targetPort: 8080
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: wonky-sprout-os-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: wonky-sprout-os
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 50
