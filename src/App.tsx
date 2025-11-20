@@ -25,7 +25,7 @@ import LiveChatModal from '@components/LiveChatModal';
 import CommandPalette from '@components/CommandPalette';
 import { useCommandPalette } from '@hooks/useCommandPalette';
 import ContextSwitchCaptureModal from '@components/ContextSwitchCaptureModal';
-import ContextSwitchRestoreModal from '@components/ContextSwitchRestoreModal';
+import { ContextSwitchRestoreModal } from './components/modals/ContextSwitchRestoreModal';
 import { useAchievementEngine } from '@hooks/useAchievementEngine';
 import ToastContainer from '@components/ToastContainer';
 import LoadingSpinner from '@components/LoadingSpinner';
@@ -71,7 +71,11 @@ import { useApplyNeuroPrefs } from '@hooks/useApplyNeuroPrefs';
 
 
 const AppContent = () => {
-  const { appState, dispatch } = useAppState();
+  const context = useAppState();
+  if (!context) {
+    return <div className="text-white p-10 text-center">Systems Initializing...</div>;
+  }
+  const { appState, dispatch } = context;
   // Apply neurodivergent preferences (body classes and micro steps UI)
   useApplyNeuroPrefs();
   const [isResetModalOpen, setResetModalOpen] = useState(false);
@@ -96,8 +100,6 @@ const AppContent = () => {
 
   // Achievement Engine Hook
   useAchievementEngine();
-
-  if (!appState) return <LoadingSpinner message="Loading Sprout OS..." />;
 
   // E2E debug: print the current view and dashboard to the console when a
   // seeded localStorage is present so Playwright logs capture the effective
@@ -301,6 +303,8 @@ const AppContent = () => {
     return <GardenView />;
   };
 
+  console.log('AppContent render, isContextRestoreModalOpen:', appState.isContextRestoreModalOpen);
+
   return (
     <div className="min-h-screen bg-sanctuary-bg text-sanctuary-text-main flex flex-col">
       <Header openResetModal={() => setResetModalOpen(true)} />
@@ -315,6 +319,8 @@ const AppContent = () => {
       {appState.isContextCaptureModalOpen && <ContextSwitchCaptureModal />}
       {appState.isContextRestoreModalOpen && <ContextSwitchRestoreModal />}
       <ToastContainer />
+      {/* THE AIRLOCK */}
+      <ContextSwitchRestoreModal />
       <ScrollToTopButton />
       {appState.dashboardType === 'william' && (
           <button

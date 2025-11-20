@@ -5,6 +5,7 @@ export type AppState = typeof defaultUserState;
 
 // Discriminated union for all possible actions.
 export type AppAction =
+    | { type: 'SET_SAVED_CONTEXT'; payload: any }
   | { type: 'SET_VIEW'; payload: AppState['view'] }
   | { type: 'SET_DASHBOARD_TYPE'; payload: AppState['dashboardType'] }
   | { type: 'TOGGLE_CHECKED'; payload: string }

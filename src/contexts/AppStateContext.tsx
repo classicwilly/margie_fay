@@ -85,8 +85,13 @@ function safeMerge<T extends Record<string, any>>(base: T, override: Partial<T> 
 
 
 function userReducer(state: AppState, action: AppAction): AppState {
+    console.log('REDUCER ACTION:', action.type, (action as any).payload);
     const newState = { ...state }; // Create a shallow copy
     switch (action.type) {
+        case 'SET_SAVED_CONTEXT':
+            newState.savedContext = action.payload;
+            break;
+        // case 'SET_CONTEXT_RESTORE_MODAL_OPEN' handled later in the reducer to keep similar actions grouped
         case 'SET_VIEW': 
             try { (window as any).__WONKY_E2E_LOG_PUSH__('USER_ACTION_SET_VIEW', { view: action.payload }); } catch(e) { /* ignore */ }
             try { console.info('E2E: reducer SET_VIEW', action.payload); } catch (e) { /* ignore */ }
@@ -782,8 +787,11 @@ export const AppStateProvider = ({ children }: { children: React.ReactNode }) =>
 
   // Create a dispatch function that writes to the database
   const dispatchWrapper = (action: AppAction) => {
+    const newState = userReducer(appState, action);
+    console.log('dispatchWrapper: before setAppState, appState.isContextRestoreModalOpen:', appState.isContextRestoreModalOpen);
+    setAppState(newState);
+    console.log('dispatchWrapper: after setAppState, newState.isContextRestoreModalOpen:', newState.isContextRestoreModalOpen);
     if (authUser && appState) {
-            const newState = userReducer(appState, action);
             try { (window as any).__WONKY_E2E_LOG_PUSH__('USER_DISPATCH', { action: action.type, payload: action.hasOwnProperty('payload') ? (action as any).payload : null, viewBefore: appState.view, viewAfter: newState.view }); } catch(e) { /* ignore */ }
       // Asynchronously update the database, the UI will update via the onSnapshot listener
       db.setDoc(authUser.uid, newState).catch(console.error);
@@ -1053,9 +1061,9 @@ export const AppStateProvider = ({ children }: { children: React.ReactNode }) =>
 };
 
 export const useAppState = () => {
-  const context = useContext(AppStateContext);
-  if (context === undefined) {
-    throw new Error('useAppState must be used within an AppStateProvider');
-  }
-  return context;
+    const context = useContext(AppStateContext);
+    if (context === undefined) {
+        throw new Error('useAppState must be used within an AppStateProvider');
+    }
+    return context;
 };

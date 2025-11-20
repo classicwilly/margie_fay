@@ -1,147 +1,95 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useAppState } from '@contexts/AppStateContext';
-import { auth } from '../../firebase.js';
+import { ViewType } from '../../types';
 
-const NavItem = ({ label, view, dataTestId }: { label: string, view: string, dataTestId?: string }) => {
+interface HeaderProps {
+  openResetModal: () => void;
+}
+
+const NavItem: React.FC<{ label: string; view: ViewType; icon?: string; dataTestId?: string }>
+  = ({ label, view, icon, dataTestId }) => {
     const { appState, dispatch } = useAppState();
-    const isActive = appState?.view === view;
-
-    const handleClick = () => {
-        dispatch({ type: 'SET_VIEW', payload: view });
-    };
+    const isActive = appState.view === view;
 
     return (
         <button
-            onClick={handleClick}
-            className={`px-3 py-2 rounded-md text-sm font-semibold flex items-center gap-2 ${
-                isActive ? 'bg-sanctuary-accent/10 text-sanctuary-accent' : 'text-sanctuary-text-secondary hover:bg-white/5'
+            onClick={() => dispatch({ type: 'SET_VIEW', payload: view })}
+            className={`px-3 py-2 rounded-md text-sm font-semibold transition-colors duration-200 flex items-center gap-2 ${
+                isActive ? 'bg-accent-blue text-background-dark' : 'text-text-light hover:bg-gray-700'
             }`}
-                {...(dataTestId ? { 'data-testid': dataTestId } : {})}
+              {...(dataTestId ? { 'data-testid': dataTestId } : {})}
             aria-current={isActive ? 'page' : undefined}
         >
+            {icon && <span className="text-lg">{icon}</span>}
             <span className="truncate">{label}</span>
         </button>
     );
 };
 
-const DropdownMenu = ({ items, onItemClick, isOpen }: { items: any[], onItemClick: (item: any) => void, isOpen: boolean }) => (
-    <div className={`absolute right-0 mt-2 w-56 origin-top-right bg-sanctuary-card rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border border-sanctuary-border z-20 transition-all duration-150 ease-out transform ${isOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}`}>
-        <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-            {items.map(item => {
-                if (item.type === 'separator') {
-                    return <div key={item.id} className="border-t border-sanctuary-border my-1"></div>;
-                }
-                return (
+interface DropdownMenuProps {
+    openResetModal: () => void;
+    onItemClick: (view: ViewType) => void;
+}
+
+
+const DropdownMenu: React.FC<DropdownMenuProps> = ({ openResetModal, onItemClick }) => {
+    const dropdownItems = [
+      { label: 'Flight Protocol Vault', view: 'sop-vault' as ViewType, dataTestId: 'nav-sop-vault' },
+        { label: 'Weekly Review', view: 'weekly-review' as ViewType },
+        { label: 'System Integration', view: 'system-integration' as ViewType },
+        { label: 'Manifesto', view: 'manifesto' as ViewType },
+    ];
+
+    return (
+        <div className="absolute right-0 mt-2 w-56 origin-top-right bg-card-dark rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border border-gray-700 z-20">
+                <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                {dropdownItems.map(item => (
                     <button
-                        key={item.id}
-                        onClick={() => onItemClick(item)}
-                        className={`block w-full text-left px-4 py-2 text-sm hover:bg-white/5 ${item.className || 'text-sanctuary-text-main'}`}
+                        key={item.view}
+                        onClick={() => onItemClick(item.view)}
+                        className="block w-full text-left px-4 py-2 text-sm text-text-light hover:bg-gray-700"
                         role="menuitem"
-                        {...(item.dataTestId ? { 'data-testid': item.dataTestId } : {})}
+                      {...(item.dataTestId ? { 'data-testid': item.dataTestId } : {})}
                     >
                         {item.label}
                     </button>
-                );
-            })}
+                ))}
+                <div className="border-t border-gray-700 my-1"></div>
+                <button
+                    onClick={openResetModal}
+                    className="block w-full text-left px-4 py-2 text-sm text-accent-blue hover:bg-gray-700"
+                    role="menuitem"
+                >
+                    System Reset
+                </button>
+                <button
+                  onClick={() => onItemClick('neuro-onboarding' as any)}
+                  className="block w-full text-left px-4 py-2 text-sm text-accent-blue hover:bg-gray-700"
+                  role="menuitem"
+                >
+                  Re-run Onboarding
+                </button>
+            </div>
         </div>
-    </div>
-);
-
-const navItemConfig = {
-    william: {
-        // Core nav for admin users — remove optional add-on modules from top nav
-        desktop: [ { label: 'Ops Control', view: 'operations-control' }, { label: 'All Checklists', view: 'all-checklists' } ],
-        mobile: [ { label: 'Ops Control', view: 'operations-control' }, { label: 'Tracker', view: 'all-checklists' } ],
-    },
-    willow: {
-        // Generic label - avoid user-specific names for public/shared installs
-        desktop: [ { label: 'Child Dashboard', view: 'willows-dashboard' }, { label: 'All Checklists', view: 'all-checklists' } ],
-        mobile: [ { label: 'Child', view: 'willows-dashboard' }, { label: 'Tracker', view: 'all-checklists' }, { label: 'Flight Protocols', view: 'sop-vault' } ],
-    },
-    sebastian: {
-        // Generic label - avoid user-specific names for public/shared installs
-        desktop: [ { label: 'Child Dashboard', view: 'sebastians-dashboard' }, { label: 'All Checklists', view: 'all-checklists' } ],
-        mobile: [ { label: 'Child', view: 'sebastians-dashboard' }, { label: 'Tracker', view: 'all-checklists' }, { label: 'Flight Protocols', view: 'sop-vault' } ],
-    },
-    'co-parenting': {
-        desktop: [ { label: 'Co-Parenting', view: 'co-parenting-dashboard' } ],
-        mobile: [ { label: 'Parenting', view: 'co-parenting-dashboard' } ],
-    },
+    );
 };
 
-const Header = ({ openResetModal }: { openResetModal: () => void }) => {
+const Header: React.FC<HeaderProps> = ({ openResetModal }) => {
   const { appState, dispatch } = useAppState();
+  const { isModMode } = appState;
+  const modSwitchRef = useRef<HTMLButtonElement | null>(null);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const dropdownRef = useRef<HTMLElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const mobileDropdownRef = useRef<HTMLDivElement>(null);
 
-  if (!appState) return null; // Don't render header if no user is logged in
-
-  const { isModMode, dashboardType } = appState;
-    const modSwitchRef = useRef<HTMLButtonElement | null>(null);
-
-  const handleToggleModMode = () => dispatch({ type: 'TOGGLE_MOD_MODE' });
-  
-  const handleDropdownToggle = () => setDropdownOpen(prev => !prev);
-
-  const handleDropdownItemClick = (item: any) => {
-      if (item.weeklyReviewMode) {
-          // Set the preferred Weekly Review mode prior to navigating
-          dispatch({ type: 'SET_WEEKLY_REVIEW_MODE', payload: item.weeklyReviewMode });
-      }
-    const earlyE2EInit = typeof window !== 'undefined' ? (window as any).__WONKY_TEST_INITIALIZE__ : undefined;
-    // For robust E2E detection, also check for an already-applied window.appState
-    // and a seeded localStorage key. Tests may apply seeds using either the
-    // `__WONKY_TEST_INITIALIZE__` helper or direct localStorage; prefer the
-    // explicit helper, fall back to `window.appState`, then localStorage.
-    let seededDashboardType: string | undefined = undefined;
-    try {
-        if (earlyE2EInit && earlyE2EInit.dashboardType) seededDashboardType = earlyE2EInit.dashboardType;
-        else if (typeof window !== 'undefined' && (window as any).appState?.dashboardType) seededDashboardType = (window as any).appState.dashboardType;
-        else if (typeof window !== 'undefined') {
-            const e2eStorageKey = (window as any).__E2E_STORAGE_KEY__ || 'wonky-sprout-os-state';
-            if (window.localStorage.getItem(e2eStorageKey)) {
-                const raw = window.localStorage.getItem(e2eStorageKey);
-                if (raw) {
-                    const parsed = JSON.parse(raw);
-                    if (parsed && parsed.dashboardType) seededDashboardType = parsed.dashboardType;
-                }
-            }
-        }
-            
-        }
-    } catch (e) { /* ignore */ }
-          // In E2E runs, prefer using the test-provided helper to force the view
-          // to ensure deterministic UI behavior even when reducer blocks updates
-          // due to sticky state or DB gating. This ensures the UI navigates
-          // correctly during tests when they click the menu item.
-          try {
-              const e2eForce = typeof window !== 'undefined' ? (window as any).__WONKY_TEST_FORCE_VIEW__ : undefined;
-              if (e2eForce && typeof e2eForce === 'function') {
-                  try { (window as any).__WONKY_TEST_FORCE_VIEW__(item.view); } catch(e) { /* ignore */ }
-              } else {
-                  dispatch({ type: 'SET_VIEW', payload: item.view });
-              }
-          } catch(e) { /* fallback */ dispatch({ type: 'SET_VIEW', payload: item.view }); }
-      } else if (item.type === 'action' && item.action) {
-          item.action();
-      }
-      setDropdownOpen(false);
+  const handleToggleModMode = () => {
+    dispatch({ type: 'TOGGLE_MOD_MODE' });
   };
   
-  const handleLogout = () => auth.signOut();
-
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) setDropdownOpen(false);
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-    const allowedByE2E = (isE2ECommandCenter || !!e2eForceGameMaster || seededDashboardType === 'william') && item.id === 'game-master';
-
-    useEffect(() => {
-        if (!modSwitchRef.current) return;
-        modSwitchRef.current.setAttribute('aria-checked', isModMode ? 'true' : 'false');
-    }, [isModMode]);
+    if (!modSwitchRef.current) return;
+    modSwitchRef.current.setAttribute('aria-checked', isModMode ? 'true' : 'false');
+  }, [isModMode]);
   
   const allDropdownItems = [
       { id: 'manifesto', label: 'Manifesto (The "Bible")', type: 'view', view: 'manifesto', allowedDashboardTypes: ['william', 'willow', 'sebastian', 'co-parenting'] },

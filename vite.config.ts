@@ -24,12 +24,14 @@ export default defineConfig(({ mode }) => {
           // primary alias used in imports. During the migration we support the legacy 'components/*' folder
           // to make sure runtime resolution (vite) matches TypeScript's fallback paths. Adjust later to 'src/components'.
           // support both bare and subpath imports (e.g. '@components/ErrorBoundary')
+          // Primary alias for legacy `components` location; keep `@components-src` for src/components
           { find: /^@components\/(.*)$/, replacement: path.resolve(__dirname, 'components') + '/$1' },
           { find: '@components', replacement: path.resolve(__dirname, 'components') },
-          // helper alias to reach new canonical components in src when needed
-          { find: '@components-src', replacement: path.resolve(__dirname, 'src/components') },
-          // fallback to legacy root folder while migrating to src/components
+          // Keep a legacy alias for the original root `components` folder
           { find: '@components-root', replacement: path.resolve(__dirname, 'components') },
+          { find: /^@components-src\/(.*)$/, replacement: path.resolve(__dirname, 'src/components') + '/$1' },
+          { find: '@components-src', replacement: path.resolve(__dirname, 'src/components') },
+          // fallback to legacy root folder while migrating to src/components (kept for compatibility)
           // legacy import path to support transitional imports before full migration
           { find: 'components', replacement: path.resolve(__dirname, 'components') },
           // alias for utilities — keep Vite and TypeScript paths in sync

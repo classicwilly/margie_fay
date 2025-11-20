@@ -32,8 +32,11 @@
         "contexts/*"
       ],
       "@components/*": [
-        "src/components/*",
-        "components/*"
+        "components/*",
+        "src/components/*"
+      ],
+      "@components-src/*": [
+        "src/components/*"
       ],
       "@components-root/*": [
         "components/*"
