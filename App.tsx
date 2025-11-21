@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import WeeklyReview from '@components/WeeklyReview';
+import { WeeklyReview } from '@components/WeeklyReview';
 import ContextSwitchingProtocol from '@components/ContextSwitchingProtocol';
 import ExecutiveDysfunctionProtocol from '@components/ExecutiveDysfunctionProtocol';
 import SensoryOverloadProtocol from '@components/SensoryOverloadProtocol';
@@ -16,21 +16,22 @@ import AccessibilitySafetyProtocol from '@components/AccessibilitySafetyProtocol
 import BubbleShieldProtocol from '@components/BubbleShieldProtocol';
 import Manifesto from '@components/Manifesto';
 import HeadphoneControllerIpi from '@components/HeadphoneControllerIpi';
-import CommandCenter from '@components/CommandCenter';
+import { CommandCenter } from '@components/CommandCenter';
 import SopVault from '@components/SopVault';
 import { useCurrentMode } from './hooks/useCurrentMode';
 import { AppStateProvider, useAppState } from '@contexts/AppStateContext';
-import Header from '@components/Header';
-import E2EGate from '@components/E2EGate';
-import SopForm from '@components/SopForm';
+import { Header } from '@components/Header';
+import { E2EGate } from '@components/E2EGate';
+import { SopForm } from '@components/SopForm';
 import SystemIntegrationGuide from '@components/SystemIntegrationGuide';
-import AllChecklists from '@components/AllChecklists';
+import { AllChecklists } from '@components/AllChecklists';
 import CoParentingProtocol from '@components/CoParentingProtocol';
 import KidsCorner from '@components/KidsCorner';
 import SystemResetModal from '@components/SystemResetModal';
 import WillowsCorner from '@components/WillowsCorner';
 import BashsCorner from '@components/BashsCorner';
 import ScrollToTopButton from '@components/ScrollToTopButton';
+import { ContextSwitchRestoreModal } from '@components/ContextSwitchRestoreModal';
 
 const AppContent: React.FC = () => {
   const { appState } = useAppState();
@@ -114,6 +115,7 @@ const AppContent: React.FC = () => {
       </footer>
       <SystemResetModal isOpen={isResetModalOpen} onClose={handleCloseResetModal} />
       <ScrollToTopButton />
+      {appState.isContextRestoreModalOpen && <ContextSwitchRestoreModal />}
     </div>
   );
 }

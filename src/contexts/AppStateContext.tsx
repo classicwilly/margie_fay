@@ -106,7 +106,8 @@ function userReducer(state: AppState, action: AppAction): AppState {
                     break;
                 }
             } catch (e) { /* ignore */ }
-            newState.view = action.payload; break;
+            newState.view = action.payload;
+            break;
         case 'SET_DASHBOARD_TYPE': 
             try { (window as any).__WONKY_E2E_LOG_PUSH__('USER_ACTION_SET_DASHBOARD', { dashboard: action.payload }); } catch(e) { /* ignore */ }
             try {
@@ -561,8 +562,8 @@ const { currentStreak, longestStreak } = recalculateStreaks(habitId, newLog); re
             break;
         
         default:
-             console.warn("Unhandled user-dispatched action:", action);
-             break;
+            console.warn("Unhandled user-dispatched action:", action);
+            return newState;
     }
     return newState;
 }
@@ -800,7 +801,7 @@ export const AppStateProvider = ({ children }: { children: React.ReactNode }) =>
 
     // Always check for seeded localStorage and skipDev flag on every mount
         const isE2EMode = typeof window !== 'undefined' && (
-            window.localStorage.getItem(storageKey) || (window as any).__PLAYWRIGHT_SKIP_DEV_BYPASS__ || !!(window as any).__WONKY_TEST_INITIALIZE__
+            (typeof window !== 'undefined' && window.localStorage.getItem(storageKey)) || (window as any).__PLAYWRIGHT_SKIP_DEV_BYPASS__ || !!(window as any).__WONKY_TEST_INITIALIZE__
         );
         // Gate DB updates based on whether we're in E2E seeding mode. If E2E is
         // active, block updates until a test calls `__WONKY_TEST_ALLOW_DB_UPDATES__`
@@ -885,10 +886,12 @@ export const AppStateProvider = ({ children }: { children: React.ReactNode }) =>
             };
             // Always define testUser and ensure authUser is set for E2E
             testUser = { uid: 'playwright', email: 'e2e@wonky.local' };
+            const isTestModeLocal = typeof window !== 'undefined' && !!(window as any).__WONKY_E2E_TEST_MODE__;
             testContextValue = {
                 authUser: testUser,
                 appState: testState,
                 dispatch: testDispatch,
+                isTestMode: isTestModeLocal,
             };
                 // Allow tests to provide an explicit initial state to avoid
                 // race conditions where header may render before a seeded
@@ -1051,7 +1054,8 @@ export const AppStateProvider = ({ children }: { children: React.ReactNode }) =>
             );
     }
 
-  const contextValue: AppContextType = { authUser, appState, dispatch: dispatchWrapper };
+    const isTestMode = typeof window !== 'undefined' && (!!(window as any).__WONKY_E2E_TEST_MODE__ || (import.meta as any).env?.VITE_PLAYWRIGHT_ACCELERATE === 'true');
+    const contextValue: AppContextType = { authUser, appState, dispatch: dispatchWrapper, isTestMode };
 
   return (
     <AppStateContext.Provider value={contextValue}>

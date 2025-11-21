@@ -3,7 +3,7 @@ import useSafeAI from '@hooks/useSafeAI';
 import { useAIPromptSafety } from '@hooks/useAIPromptSafety';
 import AIConsentModal from '../AIConsentModal';
 import PIIWarningModal from '../PIIWarningModal';
-import Button from '../Button';
+import { Button } from '../Button';
 import { SecureMarkdown } from '../../utils/secureMarkdownRenderer.js';
 import Skeleton from '../Skeleton';
 import ContentCard from '@components/ContentCard';
@@ -83,7 +83,7 @@ Your primary function is to be a tool that provides structure, not a coach that 
     };
 
     return (
-        <ContentCard title="👁️ The Observer">
+        <ContentCard title="🧠 Observer">
             {isConsentModalOpen && <AIConsentModal onConfirm={handleConfirm} onCancel={handleCancel} dontShowAgain={dontShowAgain} setDontShowAgain={setDontShowAgain} />}
             {isPiiModalOpen && <PIIWarningModal isOpen={isPiiModalOpen} onCancel={handlePiiCancel} onConfirm={handlePiiConfirm} matches={piiMatches} />}
             <div className="flex flex-col h-full">

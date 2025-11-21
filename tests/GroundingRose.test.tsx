@@ -22,12 +22,13 @@ describe('GroundingRose', () => {
     expect(button).toBeInTheDocument();
   });
 
-  it('triggers haptic feedback on click', () => {
+  it('triggers haptic feedback on click', async () => {
     render(<GroundingRose />);
     const button = screen.getByRole('button', { name: /grounding rose/i });
 
     fireEvent.click(button);
 
+    await new Promise(resolve => setTimeout(resolve, 15000)); // Wait up to 15s for haptic to trigger
     expect(mockVibrate).toHaveBeenCalledWith(300);
   });
 

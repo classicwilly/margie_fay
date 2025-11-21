@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAppState } from '@contexts/AppStateContext';
-import Button from './Button';
+import { Button } from './Button';
 
 const CockpitModule = () => {
     const { appState, dispatch } = useAppState();
@@ -44,4 +44,5 @@ const CockpitModule = () => {
     );
 };
 
+export { CockpitModule };
 export default CockpitModule;

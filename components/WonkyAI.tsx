@@ -3,7 +3,7 @@ import useSafeAI from '../hooks/useSafeAI';
 import ContentCard from './ContentCard';
 import SecureMarkdown from '../utils/secureMarkdownRenderer';
 import useAIPromptSafety from '../hooks/useAIPromptSafety';
-import Button from './Button';
+import { Button } from './Button';
 
 // Wonky AI: uses GoogleGenAI with safety wrapper and JSON schema enforcement when needed.
 

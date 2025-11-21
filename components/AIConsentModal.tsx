@@ -7,8 +7,8 @@ interface AIConsentModalProps {
     setDontShowAgain: (value: boolean) => void;
 }
 
-import Modal from './Modal';
-import Button from './Button';
+import { Modal } from './Modal';
+import { Button } from './Button';
 
 const AIConsentModal: React.FC<AIConsentModalProps> = ({ onConfirm, onCancel, dontShowAgain, setDontShowAgain }) => {
     return (

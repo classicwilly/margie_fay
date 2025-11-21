@@ -4,6 +4,7 @@ import fs from 'fs';
 
 test('axe accessibility scan', async ({ page }) => {
   await page.goto('/');
+  await page.waitForLoadState('networkidle');
   await page.addScriptTag({ content: axe.source });
   const result = await page.evaluate(async () => await (window as any).axe.run());
 

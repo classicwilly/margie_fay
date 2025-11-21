@@ -131,6 +131,12 @@ button, a, input, textarea, select, details summary {
 .month-marker { width: var(--progress, 33%); }
 .timeline-track { position: absolute; left: var(--left, 0%); width: var(--width, 100%); top: 0; height: 100%; }
 
+/* Airlock modal progress styles */
+.context-restore-progress .progress {
+    width: var(--progress, 0%);
+    transition: width 1s ease-in-out;
+}
+
 /* Modal animations and focus ring for improved UX */
 .modal-fade-enter {
     opacity: 0;

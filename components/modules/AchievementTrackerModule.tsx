@@ -19,7 +19,7 @@ const AchievementCard: React.FC<AchievementCardProps> = ({ achievement, collecte
             <div className="flex items-center space-x-3">
                 <div className={`text-4xl ${!isUnlocked ? 'filter grayscale' : ''}`}>{achievement.emoji}</div>
                 <div>
-                    <h4 className={`text-md font-bold ${isUnlocked ? 'text-accent-green' : 'text-text-light'}`}>{achievement.label}</h4>
+                    <h4 className={`text-md font-bold ${isUnlocked ? 'text-accent-green' : 'text-gray-300'}`}>{achievement.label}</h4>
                     <p className={`text-xs mt-1 ${isUnlocked ? 'text-green-400' : 'text-gray-300'}`}>
                         {achievement.description}
                     </p>
@@ -66,9 +66,9 @@ const AchievementTrackerModule = () => {
     useProgressVar(progressRef, progressPercentage);
 
     return (
-        <ContentCard title="🏆 Achievement System">
+        <ContentCard title="🏆 Achievements">
              <div className="flex flex-col h-full">
-                <div className="flex-grow overflow-y-auto pr-2 max-h-96">
+                <div className="flex-grow overflow-y-auto pr-2 max-h-96" tabIndex={0}>
                     <div className="mb-4">
                         {nextTier ? (
                             <>

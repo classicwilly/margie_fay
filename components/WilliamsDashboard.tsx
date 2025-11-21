@@ -1,10 +1,10 @@
 import React from 'react';
 import { useAppState } from '@contexts/AppStateContext';
 import { useSystemHealth } from '../hooks/useSystemHealth';
-import DailyBriefingModule from './modules/william/DailyBriefingModule.tsx';
+import { DailyBriefingModule } from './modules/william/DailyBriefingModule.tsx';
 import DashboardLauncher from './DashboardLauncher';
 import SystemNudgeModule from './modules/william/SystemNudgeModule';
-import Button from './Button';
+import { Button } from './Button';
 import { useProactiveAI } from '../hooks/useProactiveAI';
 import CockpitModule from '../src/components/CockpitModule';
 import ProfileStackBuilder from '../src/components/ProfileStackBuilder';

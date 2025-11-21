@@ -2,7 +2,7 @@ import React from 'react';
 import ChecklistItem from './ChecklistItem';
 import ContentCard from './ContentCard';
 import { ALL_CHECKLIST_DATA, ChecklistSectionData } from '../checklist-data.tsx';
-import QuickJump from './QuickJump';
+import { QuickJump } from './QuickJump';
 import { exportChecklists, importChecklists } from '../src/utils/importExport';
 
 const AllChecklists: React.FC = () => {
@@ -108,4 +108,5 @@ const AllChecklists: React.FC = () => {
   );
 };
 
+export { AllChecklists };
 export default AllChecklists;

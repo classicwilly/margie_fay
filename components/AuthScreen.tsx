@@ -197,3 +197,4 @@ const AuthScreen = () => {
 };
 
 export default AuthScreen;
+export { AuthScreen };

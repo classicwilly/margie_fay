@@ -4,7 +4,7 @@ interface QuickJumpProps {
   sections: { id: string; title: string }[];
 }
 
-const QuickJump: React.FC<QuickJumpProps> = ({ sections }) => {
+export const QuickJump: React.FC<QuickJumpProps> = ({ sections }) => {
   const handleJump = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -29,6 +29,4 @@ const QuickJump: React.FC<QuickJumpProps> = ({ sections }) => {
       </ul>
     </section>
   );
-};
-
-export default QuickJump;
+  };

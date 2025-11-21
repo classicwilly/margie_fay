@@ -3,7 +3,7 @@
 import React from 'react';
 import { useAppState } from '@contexts/AppStateContext';
 import { componentMap } from './componentMap.js';
-import Button from './Button';
+import { Button } from './Button';
 
 const CoParentingDashboard = () => {
   const { appState, dispatch } = useAppState();

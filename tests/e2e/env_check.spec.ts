@@ -2,6 +2,7 @@ import { test, expect } from './playwright-fixtures';
 
 test('Environment health checks - duplicate React detection @smoke', async ({ page }) => {
   await page.goto('/', { waitUntil: 'load' });
+  await page.waitForLoadState('networkidle');
   // Log the presence of an importmap string (helps debug CDN injection)
   const hasImportMap = await page.evaluate(() => {
     try {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { AppStateProvider, useAppState } from '@contexts/AppStateContext';
 import { NeuroPrefsProvider } from '@contexts/NeurodivergentPreferencesContext';
-import Header from '@components/Header';
+import { Header } from '@components/Header';
 import E2EDebugView from '@components/E2EDebugView';
 import SystemResetModal from '@components/SystemResetModal';
 // Top-level error logging for app entry point
@@ -15,17 +15,22 @@ try {
   if (typeof window !== 'undefined') {
     try { window.localStorage.setItem('wonky-last-error', String(e.stack || e)); } catch (err) { /* ignore */ }
   }
-  AppExport = () => <div style={{color:'red',padding:'2rem'}}><h1>App failed to initialize</h1><pre>{String(e.stack || e)}</pre></div>;
+  AppExport = () => (
+    <div className="text-red-400 p-4">
+      <h1>App failed to initialize</h1>
+      <pre className="whitespace-pre-wrap break-all">{String(e.stack || e)}</pre>
+    </div>
+  );
 }
 
 export default AppExport;
-import AuthScreen from '@components/AuthScreen';
+import { AuthScreen } from '@components/AuthScreen';
 import WonkyAISetupGuide from '@components/WonkyAISetupGuide';
 import LiveChatModal from '@components/LiveChatModal';
 import CommandPalette from '@components/CommandPalette';
 import { useCommandPalette } from '@hooks/useCommandPalette';
 import ContextSwitchCaptureModal from '@components/ContextSwitchCaptureModal';
-import { ContextSwitchRestoreModal } from './components/modals/ContextSwitchRestoreModal';
+import { Portal } from '@components/Portal';
 import { useAchievementEngine } from '@hooks/useAchievementEngine';
 import ToastContainer from '@components/ToastContainer';
 import LoadingSpinner from '@components/LoadingSpinner';
@@ -39,7 +44,7 @@ import WillowsDashboard from '@components/WillowsDashboard';
 import SebastiansDashboard from '@components/SebastiansDashboard';
 import CoParentingDashboard from '@components/CoParentingDashboard';
 import SopVault from '@components/SopVault';
-import WeeklyReview from '@components/WeeklyReview';
+import { WeeklyReview } from '@components/WeeklyReview';
 import ArchiveLog from '@components/ArchiveLog';
 import StrategicRoadmap from '@components/StrategicRoadmap';
 import DailyDebrief from '@components/DailyDebrief';
@@ -55,7 +60,7 @@ import SebastiansDashboardBuilder from '@components/SebastiansDashboardBuilder';
 import SystemInsights from '@components/SystemInsights';
 import GameMasterDashboard from '@components/GameMasterDashboard';
 import GardenView from '@components/GardenView';
-import CommandCenter from '@components/CommandCenter';
+import { CommandCenter } from '@components/CommandCenter';
 import DailyReport from '@components/DailyReport';
 import { componentMap } from '@components/componentMap';
 import ModuleViewWrapper from '@components/ModuleViewWrapper';
@@ -67,12 +72,14 @@ import DesignLanguageProtocol from '@components/DesignLanguageProtocol';
 import OperatingManual from '@components/OperatingManual';
 import DeploymentProtocol from '@components/DeploymentProtocol';
 import WonkyToolkit from '@components/WonkyToolkit';
+import BioHacksView from '@components/views/BioHacksView';
 import { useApplyNeuroPrefs } from '@hooks/useApplyNeuroPrefs';
 
 
 const AppContent = () => {
   const context = useAppState();
-  if (!context) {
+  if (!context || !context.appState || !context.appState.initialSetupComplete) {
+    // CRITICAL: Stop rendering until context exists and setup is complete
     return <div className="text-white p-10 text-center">Systems Initializing...</div>;
   }
   const { appState, dispatch } = context;
@@ -252,6 +259,7 @@ const AppContent = () => {
         'command-center': <CommandCenter />,
         'daily-report': <DailyReport />,
         'wonky-toolkit': <WonkyToolkit />,
+        'bio-hacks': <BioHacksView />,
         'neuro-onboarding': <NeurodivergentOnboarding />,
         'all-checklists': <AllChecklists />,
         'system-insights': <SystemInsights />,
@@ -319,8 +327,7 @@ const AppContent = () => {
       {appState.isContextCaptureModalOpen && <ContextSwitchCaptureModal />}
       {appState.isContextRestoreModalOpen && <ContextSwitchRestoreModal />}
       <ToastContainer />
-      {/* THE AIRLOCK */}
-      <ContextSwitchRestoreModal />
+      {/* THE AIRLOCK — ensure only conditionally rendered */}
       <ScrollToTopButton />
       {appState.dashboardType === 'william' && (
           <button

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAppState } from '@contexts/AppStateContext';
-import Button from './Button';
+import { Button } from './Button';
 import ContentCard from './ContentCard';
 
 const WonkyToolkit: React.FC = () => {

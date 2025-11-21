@@ -5,7 +5,7 @@
 import React, { useState, useMemo } from 'react';
 import { useAppState } from '@contexts/AppStateContext';
 import ContentCard from '../../ContentCard.js';
-import Button from '../../Button';
+import { Button } from '../../Button';
 import { Type } from '@google/genai';
 import useSafeAI from '../../../hooks/useSafeAI';
 import { useAIPromptSafety } from '../../../hooks/useAIPromptSafety.js';

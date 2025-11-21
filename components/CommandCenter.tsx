@@ -1,1 +1,1 @@
-export { default } from './CommandCenter.clean';
+export { default, CommandCenter } from './CommandCenter.clean';

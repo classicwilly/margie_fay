@@ -8,8 +8,14 @@ export const useHaptics = () => {
   const vibrate = useCallback((pattern: number | number[] = 200) => {
     // E2E stub check - allows tests to control vibration behavior
     if (typeof window !== 'undefined' && (window as any).__E2E_HAPTICS_STUB__) {
-      // In E2E tests, vibration is stubbed - log for test verification
+      // In E2E tests, vibration is stubbed — log for test verification.
+      // Also attempt to call navigator.vibrate if it's present and stubbed
       console.log('Haptics: vibrate called with pattern:', pattern);
+      try {
+        if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+          return navigator.vibrate(pattern);
+        }
+      } catch (err) { /* ignore */ }
       return true;
     }
 

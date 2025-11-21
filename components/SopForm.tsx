@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Sop } from '../types';
 import { generateId } from '@utils/generateId';
 import { useAppState } from '@contexts/AppStateContext';
-import Button from './Button';
+import { Button } from './Button';
 
 const SopForm: React.FC = () => {
   const [title, setTitle] = useState('');
@@ -234,3 +234,4 @@ const SopForm: React.FC = () => {
 };
 
 export default SopForm;
+export { SopForm };

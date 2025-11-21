@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useAppState } from '@contexts/AppStateContext';
 import { generateId } from '@utils/generateId';
 import { SOP_DATA } from '../constants.js';
-import Button from '@components/Button';
+import { Button } from '@components/Button';
 
 const SopForm = () => {
   const { appState, dispatch } = useAppState();
@@ -245,4 +245,5 @@ const SopForm = () => {
   );
 };
 
+export { SopForm };
 export default SopForm;

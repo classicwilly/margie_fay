@@ -3,7 +3,7 @@ import SopCard from './SopCard';
 import { SOP_DATA } from '../constants';
 import { Sop, ViewType, SopSubCategory } from '../types';
 import { useAppState } from '@contexts/AppStateContext';
-import Button from './Button';
+import { Button } from './Button';
 import { NEURO_SOP_TEMPLATES } from '../src/sops/neuro/neuro_sop_templates';
 import { generateId } from '@utils/generateId';
 import { exportSops } from '../src/utils/importExport';
@@ -173,3 +173,4 @@ const SopVault: React.FC = () => {
 };
 
 export default SopVault;
+export { SopVault };

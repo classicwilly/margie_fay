@@ -2,7 +2,7 @@
 import React from 'react';
 import { useAppState } from '@contexts/AppStateContext';
 import ContentCard from './ContentCard.js';
-import Button from './Button';
+import { Button } from './Button';
 import ChecklistItem from './ChecklistItem.js';
 import ActionableCue from './ActionableCue.js';
 

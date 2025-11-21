@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAppState } from '@contexts/AppStateContext';
 import { ALL_CO_PARENTING_MODULES_CONFIG } from '../constants.js';
-import Button from './Button';
+import { Button } from './Button';
 
 // FIX: Explicitly typed component with React.FC and a props interface to handle the `key` prop correctly.
 interface TabButtonProps {

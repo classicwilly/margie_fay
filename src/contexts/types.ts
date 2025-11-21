@@ -125,4 +125,5 @@ export interface AppContextType {
   authUser: { uid: string; email: string | null } | null | undefined;
   appState: AppState | null;
   dispatch: React.Dispatch<AppAction>;
+  isTestMode?: boolean;
 }

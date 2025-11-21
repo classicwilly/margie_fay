@@ -102,4 +102,5 @@ const AchievementTracker: React.FC = () => {
     );
 };
 
+export { AchievementTracker };
 export default AchievementTracker;

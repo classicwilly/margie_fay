@@ -65,7 +65,7 @@ export function useLiveSession({ onMessage, config }) {
                 return;
             }
 
-            if (!inputAudioContextRef.current) {
+            if (!inputAudioContextRef.current && typeof window !== 'undefined') {
                 // FIX: Cast window to any to access vendor-prefixed property.
                 inputAudioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 16000 });
             }

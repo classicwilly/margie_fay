@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ContentCard from './ContentCard';
 import ChecklistItem from './ChecklistItem';
-import QuickJump from './QuickJump';
+import { QuickJump } from './QuickJump';
 import { useAppState } from '@contexts/AppStateContext';
 import { SOP_DATA } from '../constants';
 // Fix: Added '.tsx' extension to the import path to ensure the file is treated as a module.

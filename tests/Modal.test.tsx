@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { vi } from 'vitest';
-import Modal from '@components/Modal';
+import { Modal } from '@components/Modal';
 
 describe('Modal focus trap and keyboard', () => {
   it('traps focus inside and closes on ESC', () => {

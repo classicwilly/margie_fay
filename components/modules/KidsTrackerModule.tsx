@@ -43,7 +43,7 @@ const KidStatus = ({ name, idPrefix, emoji }) => {
 
 const KidsTrackerModule = () => {
     return (
-        <ContentCard title="👨‍👧‍👦 Kids Status">
+        <ContentCard title="👶 Kids Status">
             <div className="space-y-4">
                 <KidStatus name="Willow" idPrefix="kids-willow" emoji="🌸" />
                 <div className="border-t border-gray-700"></div>

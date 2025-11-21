@@ -32,6 +32,7 @@ export const GroundingRose: React.FC<GroundingRoseProps> = ({
   return (
     <button
       onClick={handleActivate}
+      data-testid="grounding-rose-button"
       className={`
         relative overflow-hidden
         bg-gradient-to-br from-rose-100 to-pink-200
@@ -43,7 +44,7 @@ export const GroundingRose: React.FC<GroundingRoseProps> = ({
         active:scale-95
         ${className}
       `}
-      aria-label="Grounding Rose - Activate emotional grounding"
+      aria-label="Activate Grounding Rose"
       type="button"
     >
       {/* Rose SVG Icon */}
@@ -59,6 +60,7 @@ export const GroundingRose: React.FC<GroundingRoseProps> = ({
       {/* Ripple Effect Overlay */}
       {isRippling && (
         <div
+          data-testid="grounding-rose-ripple"
           className="
             absolute inset-0
             bg-rose-400/30

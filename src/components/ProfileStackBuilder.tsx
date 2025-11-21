@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAppState } from '@contexts/AppStateContext';
-import Button from './Button';
+import { Button } from './Button';
 import { generateId } from '@utils/generateId';
 import type { ProfileStack } from '../types';
 
@@ -68,7 +68,7 @@ const ProfileStackBuilder = () => {
     };
 
     const handleDelete = (id: string) => {
-        if (window.confirm('Are you sure you want to delete this profile stack?')) {
+        if (typeof window !== 'undefined' && window.confirm('Are you sure you want to delete this profile stack?')) {
             dispatch({ type: 'DELETE_PROFILE_STACK', payload: id });
         }
     };

@@ -17,7 +17,7 @@ const focusableSelector = [
   '[tabindex]:not([tabindex="-1"])',
 ].join(',');
 
-export default function Modal({ isOpen, onClose, ariaLabelledBy, children, preventBackgroundClick = false }: ModalProps) {
+export const Modal = ({ isOpen, onClose, ariaLabelledBy, children, preventBackgroundClick = false }: ModalProps) => {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const lastActive = useRef<HTMLElement | null>(null);
 
@@ -80,5 +80,5 @@ export default function Modal({ isOpen, onClose, ariaLabelledBy, children, preve
         {children}
       </div>
     </div>
-  );
-}
+    );
+  };

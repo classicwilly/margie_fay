@@ -17,9 +17,11 @@ export const FeatureFlagsProvider: React.FC<{ children: React.ReactNode }> = ({ 
   // Read persisted user-level overrides from localStorage for now
   const [flags, setFlags] = useState<Flags>(() => {
     try {
-      const raw = localStorage.getItem('wonky_flags');
-      if (raw) {
-        return { ...DEFAULTS, ...JSON.parse(raw) };
+      if (typeof window !== 'undefined') {
+        const raw = window.localStorage.getItem('wonky_flags');
+        if (raw) {
+          return { ...DEFAULTS, ...JSON.parse(raw) };
+        }
       }
     } catch (e) {
       console.warn('Error reading wonky_flags', e);
@@ -29,7 +31,9 @@ export const FeatureFlagsProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
   useEffect(() => {
     try {
-      localStorage.setItem('wonky_flags', JSON.stringify(flags));
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem('wonky_flags', JSON.stringify(flags));
+      }
     } catch (e) {
       // ignore
     }

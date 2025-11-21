@@ -2,7 +2,7 @@
 import React from 'react';
 import ContentCard from './ContentCard.js';
 import ChecklistItem from './ChecklistItem.js';
-import QuickJump from './QuickJump.js';
+import { QuickJump } from './QuickJump.js';
 import { ALL_CHECKLIST_DATA } from '../checklist-data.js';
 import { SecureMarkdown } from '../utils/secureMarkdownRenderer.js';
 

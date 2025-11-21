@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAppState } from '@contexts/AppStateContext';
-import Button from '@components/Button';
+import { Button } from '@components/Button';
 
 const SopCard = ({ sop, isTemplate = false }: { sop: any, isTemplate?: boolean }) => {
   const { appState, dispatch } = useAppState();
@@ -27,7 +27,7 @@ const SopCard = ({ sop, isTemplate = false }: { sop: any, isTemplate?: boolean }
 
   const handleDelete = () => {
     const itemType = isTemplate ? 'template' : 'protocol';
-    if (window.confirm(`Are you sure you want to permanently delete the ${itemType} "${sop.title}"? This cannot be undone.`)) {
+    if (typeof window !== 'undefined' && window.confirm(`Are you sure you want to permanently delete the ${itemType} "${sop.title}"? This cannot be undone.`)) {
       if (isTemplate) {
         dispatch({ type: 'DELETE_SOP_TEMPLATE', payload: sop.id });
       } else {
@@ -93,4 +93,5 @@ const SopCard = ({ sop, isTemplate = false }: { sop: any, isTemplate?: boolean }
   );
 };
 
+export { SopCard };
 export default SopCard;

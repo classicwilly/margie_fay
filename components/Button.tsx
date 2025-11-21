@@ -17,6 +17,6 @@ const sizeClass = {
   md: '',
 };
 
-export default function Button({ variant = 'primary', size = 'md', className = '', ...props }: ButtonProps) {
+export const Button = ({ variant = 'primary', size = 'md', className = '', ...props }: ButtonProps) => {
   return <button {...props} className={`${base} ${variantClass[variant]} ${sizeClass[size]} ${className}`} />;
-}
+};

@@ -43,4 +43,5 @@ const E2EGate: React.FC = () => {
   );
 };
 
+export { E2EGate };
 export default E2EGate;

@@ -33,13 +33,12 @@ export default {
             'text-text-light': '#ccd6f6',
             'text-background-dark': '#0a192f',
             'card-darker': '#0b1220'
+        },
+        // Custom properties for progress bar animation
+        // The actual animation is handled in the component, this just allows arbitrary values.
+        width: {
+          'progress-width': 'var(--progress-width)',
         }
-        ,
-        // Button theme tokens to map to CSS variables (useful for tailwind utilities)
-        'btn-primary': 'var(--btn-primary-bg)',
-        'btn-primary-hover': 'var(--btn-primary-bg-hover)',
-        'btn-secondary': 'var(--btn-secondary-bg)',
-        'btn-danger': 'var(--btn-danger-bg)'
     }
   },
   plugins: [],

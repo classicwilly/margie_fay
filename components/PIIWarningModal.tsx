@@ -3,8 +3,8 @@
 import React from 'react';
 
 
-import Modal from './Modal';
-import Button from './Button';
+import { Modal } from './Modal';
+import { Button } from './Button';
 
 const PIIWarningModal = ({ isOpen, onCancel, onConfirm, matches }) => {
     return (

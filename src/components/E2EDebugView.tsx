@@ -23,7 +23,10 @@ const E2EDebugView = () => {
 
   if (typeof window === 'undefined') return null;
 
-  const isE2E = !!(window as any).__WONKY_TEST_INITIALIZE__ || !!(window as any).__E2E_FORCE_VIEW__ || !!window.localStorage.getItem((window as any).__E2E_STORAGE_KEY__ || 'wonky-sprout-os-state');
+  let isE2E = false;
+  if (typeof window !== 'undefined') {
+    isE2E = !!(window as any).__WONKY_TEST_INITIALIZE__ || !!(window as any).__E2E_FORCE_VIEW__ || !!window.localStorage.getItem((window as any).__E2E_STORAGE_KEY__ || 'wonky-sprout-os-state');
+  }
   if (!isE2E) return null;
 
   const view = appStateVal?.view || (typeof window !== 'undefined' ? (window as any).__WONKY_TEST_INITIALIZE__?.view : 'unknown') || 'unknown';
@@ -48,4 +51,5 @@ const E2EDebugView = () => {
   );
 };
 
+export { E2EDebugView };
 export default E2EDebugView;

@@ -7,11 +7,11 @@ import { useAIPromptSafety } from '../../hooks/useAIPromptSafety';
 import AIConsentModal from '@components/AIConsentModal';
 import PIIWarningModal from '@components/PIIWarningModal';
 import AITrendAnalysis from '@components/insights/AITrendAnalysis';
-import Button from '@components/Button';
+import { Button } from '@components/Button';
 import HabitHeatmap from '@components/insights/HabitHeatmap';
 import ContentCard from '@components/ContentCard';
 // NOTE: Button is located in the main components folder
-import QuickJump from '@components/QuickJump';
+import { QuickJump } from '@components/QuickJump';
 import ChecklistItem from '@components/ChecklistItem';
 import { ALL_CHECKLIST_DATA } from '../checklist-data';
 
@@ -296,4 +296,5 @@ const WeeklyReview: React.FC<WeeklyReviewProps> = ({ initialMode }) => {
     );
 };
 
+export { WeeklyReview };
 export default WeeklyReview;

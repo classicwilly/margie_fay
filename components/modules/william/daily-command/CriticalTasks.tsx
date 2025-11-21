@@ -124,17 +124,21 @@ const CriticalTasks = () => {
             {isPiiModalOpen && <PIIWarningModal isOpen={isPiiModalOpen} onCancel={handlePiiCancel} onConfirm={handlePiiConfirm} matches={piiMatches} />}
             <summary className="cursor-pointer font-bold text-accent-teal flex justify-between items-center">
                 <span>🎯 Critical Tasks</span>
-                 <button
-                    onClick={(e) => { e.preventDefault(); triggerGeneration(); }}
-                    disabled={loading}
-                    className="px-3 py-1 text-xs bg-accent-blue text-background-dark font-semibold rounded-md hover:bg-blue-400 disabled:bg-gray-600"
-                >
-                    {loading ? '...' : '✨ Ask AI for Tasks'}
-                </button>
             </summary>
              <div className="mt-2 pt-2 border-t border-gray-700 space-y-2">
+                <div className="flex items-center justify-between">
+                    <p className="text-xs text-gray-400 italic">Showing High-priority tasks for today from the Task Matrix.</p>
+                    <button
+                        onClick={(e) => { e.preventDefault(); triggerGeneration(); }}
+                        disabled={loading}
+                        aria-label="Ask AI to generate critical tasks"
+                        className="px-3 py-1 text-xs bg-accent-blue text-background-dark font-semibold rounded-md hover:bg-blue-400 disabled:bg-gray-600"
+                    >
+                        {loading ? '...' : '✨ Ask AI for Tasks'}
+                    </button>
+                </div>
                 {error && <div className="text-red-400 text-xs p-2 bg-red-900/30 rounded-md">{error}</div>}
-                <p className="text-xs text-gray-400 italic">Showing High-priority tasks for today from the Task Matrix.</p>
+                {/* moved the explanatory text above */}
                 <TaskSlot task={criticalTasks[0]} index={0} />
                 <TaskSlot task={criticalTasks[1]} index={1} />
                 <TaskSlot task={criticalTasks[2]} index={2} />

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAppState } from '@contexts/AppStateContext';
-import Button from './Button';
+import { Button } from './Button';
 import ContentCard from './ContentCard';
 
 const WonkyToolkit: React.FC = () => {
@@ -63,3 +63,4 @@ const WonkyToolkit: React.FC = () => {
 };
 
 export default WonkyToolkit;
+export { WonkyToolkit };

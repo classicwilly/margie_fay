@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ContentCard from './ContentCard';
 import ChecklistItem from './ChecklistItem';
 import OriginStory from './OriginStory';
-import QuickJump from './QuickJump';
+import { QuickJump } from './QuickJump';
 // Fix: Added '.tsx' extension to the import path to ensure the file is treated as a module.
 import { ALL_CHECKLIST_DATA, ChecklistSectionData } from '../checklist-data.tsx';
 import { SecureMarkdown } from '../utils/secureMarkdownRenderer.js';

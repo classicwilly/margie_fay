@@ -15,6 +15,10 @@ export const test = base.extend<{ storageKey: string }>({
     await page.addInitScript((key) => {
       try { (window as any).__E2E_STORAGE_KEY__ = key; } catch (e) { /* ignore */ }
     }, storageKey);
+    // Mark this run as an E2E test mode so components can accelerate timers.
+    await page.addInitScript(() => {
+      try { (window as any).__WONKY_E2E_TEST_MODE__ = true; } catch (e) { /* ignore */ }
+    });
     // Add global error and console logging for all pages in this context
     page.on('pageerror', (exception) => {
       console.error(`PW_PAGE_ERROR [${test.info().title}]:`, exception);

@@ -3,8 +3,26 @@ import ReactDOM from 'react-dom/client';
 import App from './App.js';
 import registerGlobalErrorHandlers from './utils/globalErrorHandlers';
 import './index.css';
+// Removed ContextSwitchRestoreModal import
+// Removed unused imports
 
-const rootElement = document.getElementById('root');
+// Minimal AppStateProvider for isolation
+const dummyState = {
+  isContextRestoreModalOpen: true,
+  savedContext: { view: 'cockpit', dashboardType: 'william' }
+};
+const AppStateContext = createContext({ appState: dummyState, dispatch: () => {} });
+export const useAppState = () => useContext(AppStateContext);
+
+const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <AppStateContext.Provider value={{ appState: dummyState, dispatch: () => {} }}>
+    {children}
+  </AppStateContext.Provider>
+);
+let rootElement: HTMLElement | null = null;
+if (typeof document !== 'undefined') {
+  rootElement = document.getElementById('root');
+}
 if (!rootElement) {
   throw new Error("Could not find root element to mount React application to.");
 }

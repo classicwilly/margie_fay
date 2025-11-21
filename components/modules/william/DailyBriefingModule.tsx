@@ -92,4 +92,4 @@ const DailyBriefingModule = () => {
     );
 };
 
-export default DailyBriefingModule;
+export const DailyBriefingModule = DailyBriefingModule;

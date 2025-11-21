@@ -4,7 +4,7 @@
 import React from 'react';
 import { useAppState } from '@contexts/AppStateContext';
 import ContentCard from '../ContentCard.js';
-import Button from '../Button';
+import { Button } from '../Button';
 import { REWARD_TIERS } from '../../constants.js';
 
 const RewardStoreModule = () => {

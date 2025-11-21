@@ -7,7 +7,7 @@ import { useAppState } from '@contexts/AppStateContext';
 import ContentCard from '../../ContentCard.js';
 import { useAIPromptSafety } from '../../../hooks/useAIPromptSafety.js';
 import AIConsentModal from '../../AIConsentModal.js';
-import Button from '../../Button';
+import { Button } from '../../Button';
 import PIIWarningModal from '../../PIIWarningModal.js';
 
 const CalendarModal = ({ item, onClose, onSubmit }) => {

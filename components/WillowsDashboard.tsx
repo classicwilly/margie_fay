@@ -65,3 +65,4 @@ const WillowsDashboard = () => {
 };
 
 export default WillowsDashboard;
+export { WillowsDashboard };

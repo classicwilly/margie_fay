@@ -1,5 +1,5 @@
 import React from 'react';
-import QuickJump from './QuickJump';
+import { QuickJump } from './QuickJump';
 import ChecklistItem from './ChecklistItem';
 import ContentCard from './ContentCard';
 import { ALL_CHECKLIST_DATA } from '../checklist-data.tsx';
@@ -75,3 +75,4 @@ const WeeklyReview: React.FC = () => {
 };
 
 export default WeeklyReview;
+export { WeeklyReview };

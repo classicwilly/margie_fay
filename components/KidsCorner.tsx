@@ -54,3 +54,4 @@ const KidsCorner: React.FC = () => {
 };
 
 export default KidsCorner;
+export { KidsCorner };

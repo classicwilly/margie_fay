@@ -5,21 +5,25 @@ import ErrorBoundary from '@components/ErrorBoundary';
 import { AIProtectionProvider } from '@contexts/AIProtectionContext';
 import telemetryBackend from './utils/telemetryBackend';
 
-const rootElement = document.getElementById('root');
-if (!rootElement) {
-  throw new Error("Could not find root element to mount React application to.");
+if (typeof document !== 'undefined') {
+  const rootElement = document.getElementById('root');
+  if (!rootElement) {
+    // If the root element cannot be found in the current environment, do not mount.
+    // This avoids runtime errors in SSR or non-browser environments.
+    console.warn('No root element found; skipping client render.');
+  } else {
+    const root = ReactDOM.createRoot(rootElement);
+    root.render(
+      <React.StrictMode>
+          <ErrorBoundary>
+            <AIProtectionProvider>
+              <App />
+            </AIProtectionProvider>
+          </ErrorBoundary>
+      </React.StrictMode>
+    );
+  }
 }
-
-const root = ReactDOM.createRoot(rootElement);
-root.render(
-  <React.StrictMode>
-      <ErrorBoundary>
-        <AIProtectionProvider>
-          <App />
-        </AIProtectionProvider>
-      </ErrorBoundary>
-  </React.StrictMode>
-);
 
 // Initialize telemetry backend. Use environment var TELEMETRY_BACKEND='sentry' to try to enable sentry.
 telemetryBackend.initTelemetry();

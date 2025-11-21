@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import Button from './Button';
+import { Button } from './Button';
 import { useAppState } from '@contexts/AppStateContext';
 import { CalendarEvent } from '../types';
 import ContentCard from './ContentCard';

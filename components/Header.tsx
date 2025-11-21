@@ -183,4 +183,4 @@ const Header: React.FC<HeaderProps> = ({ openResetModal }) => {
   );
 };
 
-export default Header;
+export { Header };

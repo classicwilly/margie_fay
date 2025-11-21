@@ -26,4 +26,5 @@ const ChecklistCard = ({ section }) => {
     );
 };
 
+export { ChecklistCard };
 export default ChecklistCard;

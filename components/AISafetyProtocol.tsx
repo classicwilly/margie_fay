@@ -17,4 +17,5 @@ const AISafetyProtocol = () => {
   );
 };
 
+export { AISafetyProtocol };
 export default AISafetyProtocol;

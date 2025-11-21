@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAppState } from '@contexts/AppStateContext';
-import Button from './Button';
+import { Button } from './Button';
 
 const ModuleViewWrapper = ({ title, children }) => {
     const { dispatch } = useAppState();

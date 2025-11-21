@@ -17,7 +17,7 @@ const ResultIcon = ({ type }) => {
     return <span className="text-xl mr-3">{icons[type] || '➡️'}</span>;
 };
 
-const CommandPalette = ({
+export const CommandPalette = ({
     isOpen,
     searchTerm,
     setSearchTerm,
@@ -104,5 +104,3 @@ const CommandPalette = ({
         </div>
     );
 };
-
-export default CommandPalette;
