@@ -32,6 +32,9 @@ export const test = base.extend<{ storageKey: string }>({
         console.log(`PW_CONSOLE_LOG [${test.info().title}][${msg.type()}]:`, msg.text());
       }
     });
+    // Capture lifecycle events for better triage when pages close/crash unexpectedly.
+    page.on('close', () => console.log(`PW_PAGE_CLOSE [${test.info().title}] page closed`));
+    page.on('crash', () => console.error(`PW_PAGE_CRASH [${test.info().title}] page crashed`));
     await use(page);
   },
 });

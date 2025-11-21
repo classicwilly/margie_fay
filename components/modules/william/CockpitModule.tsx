@@ -15,6 +15,11 @@ const CockpitModule = () => {
     dispatch({ type: 'APPLY_PROFILE_STACK', payload: activeId });
   };
 
+  // Debug mount logs for E2E trace visibility
+  React.useEffect(() => {
+    try { console.log('CockpitModule mounted, activeId:', activeId, 'stacks:', stacks.map(s => s.id)); } catch(e) {}
+  }, [activeId, stacks]);
+
   return (
     <ContentCard title="Cockpit" titleClassName="text-accent-teal">
       <div className="space-y-3">

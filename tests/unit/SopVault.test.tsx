@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import { SopVault } from '../../src/components/SopVault';
-import { AppStateProvider } from '../../src/context/AppStateContext';
+import SopVault from '../../components/SopVault';
+import * as AppStateContext from '../../src/contexts/AppStateContext';
 
 describe('SopVault Component', () => {
   it('Importing neuro templates calls dispatch with ADD_SOP', async () => {
@@ -22,11 +22,8 @@ describe('SopVault Component', () => {
       }
     };
 
-    render(
-      <AppStateProvider {...providerProps}>
-        <SopVault />
-      </AppStateProvider>
-    );
+    const useAppStateSpy = vi.spyOn(AppStateContext as any, 'useAppState').mockReturnValue(providerProps.value as any);
+    render(<SopVault />);
 
     // STEP 1: Open the Import Menu
     const mainImportBtn = screen.getByRole('button', { name: /Import/i });
@@ -44,5 +41,6 @@ describe('SopVault Component', () => {
         expect.objectContaining({ type: 'ADD_SOP' })
       );
     });
+    useAppStateSpy.mockRestore();
   });
 });

@@ -76,7 +76,9 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ openResetModal, onItemClick
 
 const Header: React.FC<HeaderProps> = ({ openResetModal }) => {
   const { appState, dispatch } = useAppState();
-  const { isModMode } = appState;
+  const isModMode = appState?.isModMode ?? false;
+  const dashboardType = appState?.dashboardType ?? 'william';
+  const seededDashboardType = (typeof window !== 'undefined' && (window as any).__WONKY_TEST_INITIALIZE__?.dashboardType) || undefined;
   const modSwitchRef = useRef<HTMLButtonElement | null>(null);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);

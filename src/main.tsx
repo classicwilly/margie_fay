@@ -1,31 +1,18 @@
+import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App.js';
-import registerGlobalErrorHandlers from './utils/globalErrorHandlers';
-import './index.css';
-// Removed ContextSwitchRestoreModal import
-// Removed unused imports
+import App from './App';
+import { AppStateProvider } from './contexts/AppStateContext';
 
-// Minimal AppStateProvider for isolation
-const dummyState = {
-  isContextRestoreModalOpen: true,
-  savedContext: { view: 'cockpit', dashboardType: 'william' }
-};
-const AppStateContext = createContext({ appState: dummyState, dispatch: () => {} });
-export const useAppState = () => useContext(AppStateContext);
+const root = ReactDOM.createRoot(document.getElementById('root')!);
 
-const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <AppStateContext.Provider value={{ appState: dummyState, dispatch: () => {} }}>
-    {children}
-  </AppStateContext.Provider>
+root.render(
+  <React.StrictMode>
+    <AppStateProvider>
+      <App />
+    </AppStateProvider>
+  </React.StrictMode>
 );
-let rootElement: HTMLElement | null = null;
-if (typeof document !== 'undefined') {
-  rootElement = document.getElementById('root');
-}
-if (!rootElement) {
-  throw new Error("Could not find root element to mount React application to.");
-}
 
 // Register global error handlers early in the app lifecycle so we capture
 // initialization errors before React mounts.

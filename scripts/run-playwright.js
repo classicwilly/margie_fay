@@ -8,38 +8,41 @@
 // CLI path is resolved below so our alias doesn't break module resolution.
 
 async function run() {
+  // Avoid importing Playwright internal CLI path (which isn't exported
+  // in newer Playwright versions) and instead execute it using the
+  // `npx playwright test` CLI wrapped in a child process. This approach
+  // is more compatible across versions and avoids export-map related
+  // runtime failures (ERR_PACKAGE_PATH_NOT_EXPORTED).
   try {
-    // Import Playwright CLI directly (runs in the same node process)
-    // Resolve Playwright CLI path via createRequire so we can import its
-    // internal module even when the package export map doesn't expose it.
-    const { createRequire } = await import('module');
-    const localRequire = createRequire(import.meta.url);
-    const cliPath = localRequire.resolve('@playwright/test/lib/cli.js');
-    // Register test shim (install module alias) before running the CLI so
-    // tests that import `@playwright/test` pick up our fixtures.
+    const { spawnSync } = await import('child_process');
+
+    // register test shim so that `@playwright/test` resolves to our fixtures
     try {
       await import('./../tests/e2e/register_shim.cjs');
     } catch (shimErr) {
-      // Log and continue; tests may not need the shim.
-      console.error('Could not register test shim:', shimErr);
+      console.info('No test shim found or could not register:', shimErr?.message || shimErr);
     }
 
-    const { runCLI } = await import(cliPath);
-    // runCLI returns a Promise or similar; call with provided args
-    const args = process.argv.slice(2);
-    const res = await runCLI(args);
-    process.exit(res ?? 0);
-  } catch (e) {
-    console.error('Failed to launch Playwright CLI via script', e);
-    // As fallback, spawn the normal CLI
-    const { spawnSync } = await import('child_process');
-    // When fallback to spawn is needed (like on Windows), ensure we preload
-    // our test shim so fixtures like `storageKey` are available to the
-    // Playwright worker process. Use NODE_OPTIONS to preload the shim.
+    // Check Node.js version for Vite compatibility and warn if too low.
+    const semver = (version) => version.split('.').map(n => parseInt(n, 10));
+    const nodeVer = semver(process.versions.node || '0.0.0');
+    const required = semver('20.19.0');
+    for (let i = 0; i < 3; i++) {
+      if ((nodeVer[i] || 0) < (required[i] || 0)) {
+        console.error(`Your Node.js ${process.versions.node} is older than recommended ${required.join('.')} for Vite. Tests may fail. Please upgrade Node.js.`);
+        break;
+      }
+      if ((nodeVer[i] || 0) > (required[i] || 0)) break;
+    }
+
     const shimRel = './tests/e2e/register_shim.cjs';
     const env = { ...process.env, NODE_OPTIONS: `${process.env.NODE_OPTIONS || ''} -r ${shimRel}` };
-    const r = spawnSync('npx', ['playwright', 'test', ...process.argv.slice(2)], { stdio: 'inherit', shell: true, env });
-    process.exit(r.status || 1);
+    const args = ['playwright', 'test', ...process.argv.slice(2)];
+    const r = spawnSync('npx', args, { stdio: 'inherit', shell: true, env });
+    process.exit(r.status || 0);
+  } catch (e) {
+    console.error('Failed to spawn Playwright CLI via script', e);
+    process.exit(1);
   }
 }
 

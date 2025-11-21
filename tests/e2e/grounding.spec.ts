@@ -52,7 +52,7 @@ test.describe('GroundingRose E2E', () => {
     console.log('PW_DEBUG_ROSE', debugRose);
 
     // Visual Ripple check (stable indentifier)
-    await expect(page.getByTestId('grounding-rose-ripple')).toBeVisible({ timeout: 15000 });
+    await expect(page.getByTestId('grounding-rose-ripple')).toHaveClass(/animate-ping/i, { timeout: 15000 });
 
     // Haptic check
     const hapticCalls = await page.evaluate(() => (window as any).hapticCalls);

@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
 import { GroundingRose } from '../src/components/GroundingRose';
 
@@ -22,13 +22,16 @@ describe('GroundingRose', () => {
     expect(button).toBeInTheDocument();
   });
 
-  it('triggers haptic feedback on click', async () => {
+  it('triggers haptic feedback on click', () => {
     render(<GroundingRose />);
     const button = screen.getByRole('button', { name: /grounding rose/i });
 
-    fireEvent.click(button);
+    // Use act to wrap state-updating calls
+    act(() => {
+      fireEvent.click(button);
+    });
 
-    await new Promise(resolve => setTimeout(resolve, 15000)); // Wait up to 15s for haptic to trigger
+    // Vibrate is called synchronously by the component's handler
     expect(mockVibrate).toHaveBeenCalledWith(300);
   });
 

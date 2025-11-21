@@ -552,9 +552,22 @@ const { currentStreak, longestStreak } = recalculateStreaks(habitId, newLog); re
             newState.chatMessages = [...newState.chatMessages, newChatMessage];
             break;
         case 'IMPORT_STATE':
-            // Ensure dismissedNudges is an array, providing a fallback if the imported state is older
-            const importedState = { ...action.payload, dismissedNudges: Array.isArray(action.payload.dismissedNudges) ? action.payload.dismissedNudges : [] };
-            return importedState;
+            // Ensure the imported state is merged safely with our defaults so
+            // missing keys or older export shapes don't create `undefined`
+            // fields that cause runtime errors in production builds.
+            // Use safeMerge to prefer `imported` arrays and merge nested objects.
+            try {
+                const rawImported = { ...action.payload } as any;
+                // Ensure at least the `dismissedNudges` is an array
+                rawImported.dismissedNudges = Array.isArray(rawImported.dismissedNudges) ? rawImported.dismissedNudges : [];
+                const merged = safeMerge(defaultUserState as any, rawImported);
+                return merged as AppState;
+            } catch (e) {
+                // If safeMerge fails for any reason, fall back to the incoming import
+                // or default state to ensure the app doesn't crash with undefined keys.
+                try { console.error('IMPORT_STATE merge failed, returning safe defaults', e); } catch (e2) { /* ignore */ }
+                return safeMerge(defaultUserState as any, action.payload as any) as AppState;
+            }
         case 'DISMISS_NUDGE':
             if (!newState.dismissedNudges.includes(action.payload)) {
                 newState.dismissedNudges = [...newState.dismissedNudges, action.payload];

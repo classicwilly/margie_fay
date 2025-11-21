@@ -11,7 +11,8 @@ const oralOptions = ['none', 'chew', 'sip', 'hum', 'sing'];
 
 const ProfileStackBuilder = () => {
     const { appState, dispatch } = useAppState();
-    const { profileStacks, activeProfileStackId } = appState;
+    const profileStacks = appState?.profileStacks ?? [];
+    const activeProfileStackId = appState?.activeProfileStackId ?? null;
 
     const [editStack, setEditStack] = useState<ProfileStack | null>(null);
     const [stackName, setStackName] = useState('');

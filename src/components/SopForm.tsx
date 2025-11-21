@@ -6,7 +6,12 @@ import { Button } from '@components/Button';
 
 const SopForm = () => {
   const { appState, dispatch } = useAppState();
-  const { generatedSopDraft, editingSopId, userSops, modifiedSops, activeSopTemplate, newSopType } = appState;
+  const generatedSopDraft = appState?.generatedSopDraft ?? null;
+  const editingSopId = appState?.editingSopId ?? null;
+  const userSops = appState?.userSops ?? [];
+  const modifiedSops = appState?.modifiedSops ?? {};
+  const activeSopTemplate = appState?.activeSopTemplate ?? null;
+  const newSopType = appState?.newSopType ?? null;
   
   const isEditMode = editingSopId !== null;
 

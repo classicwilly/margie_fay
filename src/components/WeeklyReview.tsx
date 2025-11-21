@@ -26,7 +26,10 @@ const WeeklyReview: React.FC<WeeklyReviewProps> = ({ initialMode }) => {
     const weeklyMode = initialMode || appState?.weeklyReviewMode || 'wizard';
     // Debugging: log the weeklyMode when running tests to catch state race conditions
     // For test determinism: initialMode overrides appState weekly mode
-    const { tasks, brainDumpText, objectives, projects } = appState;
+    const tasks = appState?.tasks ?? [];
+    const brainDumpText = appState?.brainDumpText ?? '';
+    const objectives = appState?.objectives ?? [];
+    const projects = appState?.projects ?? [];
     const [step, setStep] = useState(1);
 
     // Step 2 State

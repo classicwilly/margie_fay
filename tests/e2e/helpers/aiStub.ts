@@ -17,13 +17,29 @@ export async function applyAiStub(page: Page, opts: { text?: string; status?: nu
     meta: { stub: true },
   });
 
+  // Register the route at both page and context level to ensure the service worker
+  // or other worker contexts don't bypass our stubbed responses.
+  try {
+     await page.context().route('**/aiProxy**', (route) => {
+      route.fulfill({
+        status: opts.status || 200,
+        headers: { 'Content-Type': 'application/json' },
+        body,
+      });
+    });
+    console.log('AI stub: context route for **/aiProxy** registered');
+  } catch (e) {
+    // Some versions or contexts might not allow context-level routing; fall back to page-level route.
+    console.warn('context.route failed; falling back to page.route', e?.message || e);
+  }
   await page.route('**/aiProxy**', (route) => {
-    route.fulfill({
+     route.fulfill({
       status: opts.status || 200,
       headers: { 'Content-Type': 'application/json' },
       body,
     });
   });
+    console.log('AI stub: page route for **/aiProxy** registered');
 
   // If this test requested deterministic local state, set a client flag to
   // skip the DEV-mode state shortcut so seeded localStorage is honored.

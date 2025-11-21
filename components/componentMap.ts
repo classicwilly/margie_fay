@@ -21,7 +21,7 @@ import TaskMatrixModule from './modules/william/TaskMatrixModule.js';
 import StrategicObjectivesModule from './modules/william/StrategicObjectivesModule.js';
 import LiveChatModule from './modules/william/LiveChatModule.js'; 
 import SensoryRegulationModule from './modules/william/SensoryRegulationModule.js';
-import CockpitModule from '../src/components/CockpitModule.tsx';
+import CockpitModule from './modules/william/CockpitModule.tsx';
 import GenericChecklistModule from './GenericChecklistModule.js';
 import { ALL_WILLIAM_MODULES_CONFIG } from '../src/constants.js';
 import ProfileStackBuilder from '../src/components/ProfileStackBuilder.tsx';

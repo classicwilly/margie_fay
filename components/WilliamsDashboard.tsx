@@ -6,7 +6,7 @@ import DashboardLauncher from './DashboardLauncher';
 import SystemNudgeModule from './modules/william/SystemNudgeModule';
 import { Button } from './Button';
 import { useProactiveAI } from '../hooks/useProactiveAI';
-import CockpitModule from '../src/components/CockpitModule';
+import CockpitModule from './modules/william/CockpitModule';
 import ProfileStackBuilder from '../src/components/ProfileStackBuilder';
 
 const WilliamsDashboard = () => {

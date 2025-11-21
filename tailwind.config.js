@@ -3,6 +3,46 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}"
+  ],
+  theme: {
+    extend: {
+      colors: {
+        background: { dark: '#0f172a' },
+        surface: { 800: '#1e293b', 700: '#334155' },
+        primary: { 400: '#60a5fa' },
+        accent: { teal: '#2dd4bf', red: '#f87171', blue: '#60a5fa' },
+        text: { light: '#f1f5f9', muted: '#94a3b8' }
+      }
+    },
+  },
+  plugins: [],
+}
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}", // Capture root components if any exist
+  ],
+  theme: {
+    extend: {
+      colors: {
+        background: { dark: '#0f172a' }, // Ensure your custom colors exist
+        surface: { 800: '#1e293b', 700: '#334155' },
+        primary: { 400: '#60a5fa' },
+        accent: { teal: '#2dd4bf', red: '#f87171', blue: '#60a5fa' },
+        text: { light: '#f1f5f9', muted: '#94a3b8' }
+      }
+    },
+  },
+  plugins: [],
+}
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     fontFamily: {

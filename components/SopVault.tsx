@@ -10,7 +10,8 @@ import { exportSops } from '../src/utils/importExport';
 
 const SopVault: React.FC = () => {
   const { appState, dispatch } = useAppState();
-  const { modifiedSops, userSops } = appState;
+  const modifiedSops = appState?.modifiedSops ?? {};
+  const userSops = appState?.userSops ?? [];
   const [searchTerm, setSearchTerm] = useState('');
   
   const allSops = useMemo(() => 

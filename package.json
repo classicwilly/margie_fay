@@ -21,7 +21,10 @@
     "test:watch": "vitest",
     "watch:dev": "npx concurrently -k 'npm run dev' 'cross-env PLAYWRIGHT_REUSE_EXISTING_SERVER=true npm run e2e'",
     "dev:watch": "npm run dev",
-    "e2e:watch": "npx concurrently -k 'npm run dev' 'cross-env PLAYWRIGHT_REUSE_EXISTING_SERVER=true npm run e2e'"
+    "e2e:watch": "npx concurrently -k 'npm run dev' 'cross-env PLAYWRIGHT_REUSE_EXISTING_SERVER=true npm run e2e'",
+    "show-latest-trace": "pwsh -NoProfile -ExecutionPolicy Bypass -File ./scripts/show-latest-trace.ps1",
+    "show-latest-trace:node": "node ./scripts/show-latest-trace.js",
+    "verify-dashboard": "node ./scripts/verify-dashboard.js"
   },
   "dependencies": {
     "@google/genai": "^1.29.0",

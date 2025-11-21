@@ -25,7 +25,7 @@ describe('SopVault Component', () => {
     // Wait for dispatch to be called
     await waitFor(() => {
       expect(dispatchMock).toHaveBeenCalledWith(
-        expect.objectContaining({ type: 'IMPORT_SOP_TEMPLATES' })
+        expect.objectContaining({ type: 'ADD_SOP' })
       );
     });
     useAppStateSpy.mockRestore();

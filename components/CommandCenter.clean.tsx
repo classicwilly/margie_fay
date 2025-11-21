@@ -24,7 +24,7 @@ const CommandCenter: React.FC = () => {
         
         {/* Header (Top) */}
         <header className="mb-8 text-center">
-            <h1 data-testid="command-center-title" className="text-4xl font-bold text-primary-400 mb-2">
+            <h1 data-testid="command-center-title" className="text-3xl font-bold text-primary-400 mb-2 pt-4">
                 The Cockpit
             </h1>
             <p className="text-text-muted">
