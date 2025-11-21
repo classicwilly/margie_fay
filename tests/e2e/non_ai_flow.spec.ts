@@ -5,7 +5,7 @@ test('app works without AI - manual flow @smoke', async ({ page, storageKey }) =
   // Ensure AI is disabled via localStorage before app boot
   await page.addInitScript(() => localStorage.setItem('wonky_flags', JSON.stringify({ aiEnabled: false })));
   await page.addInitScript((key) => { try { window.localStorage.removeItem(key as string); } catch (e) { /* ignore */ } }, storageKey);
-  await page.goto('/', { timeout: 120_000, waitUntil: 'load' });
+  await page.goto('/?forceView=command-center', { timeout: 120_000, waitUntil: 'load' });
     // Allow more time for network idle during local dev/hmr
     await page.waitForLoadState('networkidle', { timeout: 120_000 });
   await page.getByRole('banner').waitFor({ timeout: 120_000 });
@@ -14,7 +14,9 @@ test('app works without AI - manual flow @smoke', async ({ page, storageKey }) =
 
   // Navigate to the weekly review
     await page.addInitScript((key) => { try { window.localStorage.removeItem(key as string); } catch (e) { /* ignore */ } }, storageKey);
-    await page.waitForTimeout(100);
+    // Ensure the entire DOM is settled after navigation and for the main title to be visible
+    await page.waitForLoadState('networkidle');
+    await expect(page.getByRole('heading', { name: 'The Cockpit' })).toBeVisible({ timeout: 10000 });
 
     // Prefer stable data-testid if available
     let commandCenterNav = page.getByTestId('nav-command-center');

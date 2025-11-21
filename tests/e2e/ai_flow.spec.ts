@@ -15,6 +15,7 @@ test('basic AI flow from UI placeholder to telemetry @smoke', async ({ page, sto
     try { window.localStorage.setItem(key as string, JSON.stringify({ initialSetupComplete: true })); } catch (e) { /* ignore */ }
     try { (window as any).__PLAYWRIGHT_SKIP_DEV_BYPASS__ = true; } catch (e) { /* ignore */ }
   }, storageKey);
+  await page.goto('/?forceView=command-center');
   // Opt into the Playwright server stub so the app uses the deterministic proxy
   await page.addInitScript(() => { (window as any).__PLAYWRIGHT_AI_STUB__ = true; });
   // Install an AI stub at the network layer BEFORE navigation to ensure the route is active
@@ -24,6 +25,9 @@ test('basic AI flow from UI placeholder to telemetry @smoke', async ({ page, sto
   // If Playwright is enabling server-side AI stub set by the workflow, add an explicit query param
   // so `index.html` sets the client-side `__PLAYWRIGHT_AI_STUB__` earliest.
   const url = process.env.PLAYWRIGHT_AI_STUB === 'true' ? '/?use_ai_proxy=true' : '/';
+  // Ensure the entire DOM is settled after navigation and for the main title to be visible
+  await page.waitForLoadState('networkidle');
+  await expect(page.getByRole('heading', { name: 'The Cockpit' })).toBeVisible({ timeout: 10000 });
   await page.goto(url, { timeout: 120_000, waitUntil: 'load' });
   // log the flag so we can assert the page is using the Playwright AI stub
   await page.evaluate(() => console.log('PLAYWRIGHT_AI_STUB flag:', (window as any).__PLAYWRIGHT_AI_STUB__));
