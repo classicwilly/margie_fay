@@ -109,7 +109,8 @@ const StrategicRoadmap = () => {
 
 const MonthMarker: React.FC<{ marker: any }> = ({ marker }) => {
     const ref = React.useRef<HTMLDivElement | null>(null);
-    useProgressVar(ref, progressPercentage);
+    // The marker width is already a percentage string (e.g., '33.3333%'), so use that as progress
+    useProgressVar(ref, marker.width);
     React.useEffect(() => {
         if (ref.current) ref.current.style.setProperty('--progress', marker.width);
     }, [marker.width]);

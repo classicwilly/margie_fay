@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wonky Sprout OS</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <script>
         // Tailwind CSS custom configuration for the specific dark mode palette.
-        tailwind.config = {
+        // Guard against CDN-less builds (e.g., production builds that include tailwind via PostCSS)
+        if (typeof tailwind !== 'undefined' && tailwind) {
+            tailwind.config = {
             theme: {
                 extend: {
                     colors: {
@@ -19,6 +20,7 @@
                         'accent-green': '#2ecc71',
                     }
                 }
+            }
             }
         }
     </script>

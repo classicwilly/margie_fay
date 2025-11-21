@@ -51,6 +51,14 @@ const ProjectFocusModal = ({
         setNewTaskTitle('');
     };
 
+    // Compute project progress for this focused project
+    const progress = React.useMemo(() => {
+        const linkedTasks = tasks.filter(t => t.projectId === project.id);
+        if (!linkedTasks || linkedTasks.length === 0) return 0;
+        const completedTasks = linkedTasks.filter(t => t.status === 'done').length;
+        return (completedTasks / linkedTasks.length) * 100;
+    }, [tasks, project.id]);
+
     const progressRef = React.useRef<HTMLDivElement | null>(null);
     useProgressVar(progressRef, progress);
 
@@ -126,6 +134,9 @@ const ProjectItem: React.FC<ProjectItemProps> = ({ project, tasks, setFocusedPro
         const progress = (completedTasks / linkedTasks.length) * 100;
         return { progress, completed: completedTasks, total: linkedTasks.length };
     }, [tasks, project.id]);
+
+    const progressRef = React.useRef<HTMLDivElement | null>(null);
+    useProgressVar(progressRef, progress);
 
     return (
         <button onClick={() => setFocusedProject(project)} className="w-full text-left p-3 bg-gray-800 rounded-md hover:bg-gray-700 transition-colors">

@@ -2,6 +2,12 @@ import React from 'react';
 import DOMPurify from 'dompurify';
 import { marked } from 'marked';
 
+// Suppress automatic header id generation and email/social mangling warnings
+marked.setOptions({
+  mangle: false,
+  headerIds: false,
+});
+
 interface Props { source?: string; content?: string }
 
 // Backwards-compatible SecureMarkdown: accepts either `source` or `content`.
