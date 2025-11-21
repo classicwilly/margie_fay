@@ -64,7 +64,7 @@
     "tailwindcss": "^4.1.17",
     "typescript": "~5.8.2",
     "vite": "^7.2.2",
-    "vitest": "^4.0.9",
+    "vitest": "^4.0.13",
     "web-vitals": "^3.3.0"
   },
   "overrides": {
