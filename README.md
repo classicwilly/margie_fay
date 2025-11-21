@@ -26,4 +26,4 @@ Open PowerShell as Administrator and run:
 npm run windows:fix-node
 ```
 
-This runs `scripts/windows-node-fix.ps1` which attempts to stop Node, remove the locked `node_modules` folder for the `lightningcss` binary, clean the npm cache and then run `npm ci`.
+This runs `scripts/windows-node-fix.ps1` which attempts to stop Node, remove the locked `node_modules` folder for the `lightningcss` binary, clean the npm cache and then run `npm ci`.# margie_fay
