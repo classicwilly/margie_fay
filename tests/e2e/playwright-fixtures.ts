@@ -35,6 +35,16 @@ export const test = base.extend<{ storageKey: string }>({
     // Capture lifecycle events for better triage when pages close/crash unexpectedly.
     page.on('close', () => console.log(`PW_PAGE_CLOSE [${test.info().title}] page closed`));
     page.on('crash', () => console.error(`PW_PAGE_CRASH [${test.info().title}] page crashed`));
+    // If test runner asks for AI stub, intercept requests to the proxy and return a canned response.
+    if (process.env.PLAYWRIGHT_AI_STUB === 'true') {
+      await page.route('**/api/gemini', (route) => {
+        route.fulfill({
+          status: 200,
+          contentType: 'application/json',
+          body: JSON.stringify({ output: { text: 'Hey kiddo, here is a simple fix: try some soap and steel wool. Love, Grandma.' } }),
+        });
+      });
+    }
     await use(page);
   },
 });

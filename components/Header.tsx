@@ -15,7 +15,7 @@ const NavItem: React.FC<{ label: string; view: ViewType; icon?: string; dataTest
         <button
             onClick={() => dispatch({ type: 'SET_VIEW', payload: view })}
             className={`px-3 py-2 rounded-md text-sm font-semibold transition-colors duration-200 flex items-center gap-2 ${
-                isActive ? 'bg-accent-blue text-background-dark' : 'text-text-light hover:bg-gray-700'
+              isActive ? 'bg-accent-teal/10 text-accent-teal border border-accent-teal/20' : 'text-text-light hover:bg-gray-700'
             }`}
               {...(dataTestId ? { 'data-testid': dataTestId } : {})}
             aria-current={isActive ? 'page' : undefined}
@@ -112,9 +112,9 @@ const Header: React.FC<HeaderProps> = ({ openResetModal }) => {
   }, []);
 
   return (
-    <header className={`py-3 px-4 md:px-6 bg-sanctuary-card shadow-md sticky top-0 z-20 border-b border-sanctuary-border transition-shadow no-print ${isModMode ? 'shadow-lg shadow-sanctuary-focus/20' : ''}`}>
+    <header className={`py-3 px-4 md:px-6 bg-neon-sunset shadow-md sticky top-0 z-20 border-b border-sanctuary-border transition-shadow no-print ${isModMode ? 'shadow-lg shadow-sanctuary-focus/20' : ''}`}>
       <div className="container mx-auto flex items-center justify-between gap-4">
-        <button onClick={() => dispatch({ type: 'SET_VIEW', payload: 'command-center' })} className="text-xl md:text-2xl font-bold text-accent-teal flex-shrink-0">
+          <button onClick={() => dispatch({ type: 'SET_VIEW', payload: 'command-center' })} className="text-xl md:text-2xl font-bold text-gradient-accent flex-shrink-0 glow-accent">
           🌱 Wonky Sprout OS
         </button>
 

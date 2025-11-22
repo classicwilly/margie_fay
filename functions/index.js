@@ -81,13 +81,20 @@ exports.aiProxy = functions.https.onRequest(async (req, res) => {
     const { scrubPII, hashUserId } = require('./pii_sanitizer');
     const { text: sanitized, found } = scrubPII(prompt);
     const promptForAi = sanitized;
-    const aiUrl = process.env.AI_BACKEND_URL || (functions.config && functions.config().ai && functions.config().ai.url) || 'https://ai.example.com/generate';
+    // If a custom AI backend is configured, use it. Otherwise, default to Google Generative AI (Gemini)
     const aiKey = process.env.AI_BACKEND_KEY || (functions.config && functions.config().ai && functions.config().ai.key);
+    const geminiModel = process.env.GEMINI_MODEL || 'gemini-2.5-flash-preview-09-2025';
+    const aiUrl = process.env.AI_BACKEND_URL || (functions.config && functions.config().ai && functions.config().ai.url) || `https://generativeai.googleapis.com/v1/models/${geminiModel}:generate`;
+    // If AI_BACKEND_URL wasn't set, we'll also prefer to use the GEMINI_API_KEY env var to authenticate.
+    const fallbackGeminiKey = process.env.GEMINI_API_KEY;
 
     const headers = {
       'Content-Type': 'application/json',
     };
     if (aiKey) headers['x-api-key'] = aiKey;
+    if (!aiKey && fallbackGeminiKey && aiUrl.includes('generativeai.googleapis.com')) {
+      headers['Authorization'] = `Bearer ${fallbackGeminiKey}`;
+    }
 
     const aiResponse = await fetch(aiUrl, {
       method: 'POST',

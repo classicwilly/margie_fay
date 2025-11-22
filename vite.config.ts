@@ -9,13 +9,35 @@ export default defineConfig(({ mode }) => {
       server: {
         port: 3000,
         host: '0.0.0.0',
+        proxy: {
+          '/api': {
+            target: 'http://localhost:8080',
+            changeOrigin: true,
+            secure: false,
+          }
+        }
       },
       // ...existing code...
       plugins: [react()],
+      build: {
+        rollupOptions: {
+          output: {
+            manualChunks(id) {
+              if (id.includes('node_modules')) {
+                if (id.includes('react') || id.includes('react-dom')) return 'vendor-react';
+                if (id.includes('framer-motion')) return 'vendor-framer';
+                if (id.includes('firebase')) return 'vendor-firebase';
+                return 'vendor';
+              }
+            }
+          }
+        }
+      },
       define: {
         'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
         'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY)
       },
+      envPrefix: ['VITE_', 'PLAYWRIGHT_'],
       resolve: {
         alias: {
           '@components': path.resolve(__dirname, 'components'),

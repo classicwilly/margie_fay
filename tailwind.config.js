@@ -37,6 +37,11 @@ export default {
         'neon-sm': '0 0 8px rgba(45, 212, 191, 0.4)', // Subtle Teal Glow for hover
         'neon-md': '0 0 15px rgba(236, 72, 153, 0.6)', // Aggressive Pink Glow for anchor
       },
+      backgroundImage: {
+        'neon-sunset': 'linear-gradient(135deg, rgba(236,72,153,0.12) 0%, rgba(45,212,191,0.12) 100%)',
+        'grid-pattern': 'linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(180deg, rgba(255,255,255,0.02) 1px, transparent 1px)'
+      },
+      container: { center: true, padding: '2rem' },
       keyframes: {
         // CRT Flicker Effect (Low-stim visual feedback) (From attached config)
         flicker: {

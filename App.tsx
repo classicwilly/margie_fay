@@ -33,6 +33,7 @@ import WillowsCorner from '@components/WillowsCorner';
 import BashsCorner from '@components/BashsCorner';
 import ScrollToTopButton from '@components/ScrollToTopButton';
 import { ContextSwitchRestoreModal } from '@components/ContextSwitchRestoreModal';
+import AskGrandmaFloating from '@components/AskGrandmaFloating';
 
 const AppContent: React.FC = () => {
   const { appState } = useAppState();
@@ -42,6 +43,20 @@ const AppContent: React.FC = () => {
 
   const handleOpenResetModal = () => setResetModalOpen(true);
   const handleCloseResetModal = () => setResetModalOpen(false);
+
+  React.useEffect(() => {
+    const keyHandler = (e: KeyboardEvent) => {
+      const meta = e.metaKey || e.ctrlKey;
+      // Ctrl/Cmd+G focuses Grandma input
+      if (meta && e.key.toLowerCase() === 'g') {
+        e.preventDefault();
+        const el = document.getElementById('grandma-input') as HTMLInputElement | null;
+        if (el) el.focus();
+      }
+    };
+    window.addEventListener('keydown', keyHandler);
+    return () => window.removeEventListener('keydown', keyHandler);
+  }, []);
 
   const renderContent = () => {
     switch (view) {
@@ -120,6 +135,7 @@ const AppContent: React.FC = () => {
       <SystemResetModal isOpen={isResetModalOpen} onClose={handleCloseResetModal} />
       <ScrollToTopButton />
       {appState.isContextRestoreModalOpen && <ContextSwitchRestoreModal />}
+      <AskGrandmaFloating />
     </div>
   );
 }

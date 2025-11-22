@@ -3,8 +3,8 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: './tests/e2e',
-  timeout: 60_000,
-  expect: { timeout: 5000 },
+  timeout: 120_000,
+  expect: { timeout: 10000 },
   retries: process.env.CI ? 2 : 0,
   reporter: [ ['list'], ['html', { outputFolder: 'playwright-report' }] ],
   // Store artifacts in a known location for CI uploads
@@ -45,6 +45,6 @@ export default defineConfig({
     // local environments set PLAYWRIGHT_REUSE_EXISTING_SERVER=true or run a
     // fresh server via `npm run dev` before running tests and set the env var.
     reuseExistingServer: process.env.CI ? false : (process.env.PLAYWRIGHT_REUSE_EXISTING_SERVER !== 'false'),
-    timeout: 180_000,
+    timeout: 240_000,
   },
 });

@@ -1,0 +1,221 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - generic [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e6]:
+        - generic [ref=e8]: WS
+        - navigation [ref=e10]:
+          - generic [ref=e11]:
+            - button "Ops Deck" [ref=e12]:
+              - img [ref=e13]
+              - text: Ops Deck
+            - button "Legacy" [ref=e18]:
+              - img [ref=e19]
+              - text: Legacy
+            - button "Bio-Hacks" [ref=e22]:
+              - img [ref=e23]
+              - text: Bio-Hacks
+          - generic [ref=e27]:
+            - button "Decompress" [ref=e28]:
+              - img [ref=e29]
+            - button "Settings" [ref=e33]:
+              - img [ref=e34]
+      - generic [ref=e37]:
+        - banner [ref=e38]:
+          - generic [ref=e39]:
+            - button "🌱 Wonky Sprout OS" [ref=e40]
+            - navigation [ref=e41]:
+              - button "The Cockpit" [ref=e42]
+              - button "Daily Tracker" [ref=e43]
+              - button "Little Sprouts" [ref=e44]
+              - button "Parenting" [ref=e45]
+              - button "System" [ref=e47]:
+                - text: System
+                - img [ref=e48]
+            - generic [ref=e50]:
+              - text: Mod Mode
+              - switch "Enable Mod Mode" [ref=e51]
+          - navigation [ref=e52]:
+            - button "Cockpit" [ref=e53]
+            - button "Tracker" [ref=e54]
+            - button "Sprouts" [ref=e55]
+            - button "Parenting" [ref=e56]
+            - button "System" [ref=e58]:
+              - text: System
+              - img [ref=e59]
+        - main [ref=e61]:
+          - generic [ref=e62]:
+            - generic [ref=e64]:
+              - generic [ref=e65]:
+                - paragraph [ref=e66]: PROTOCOL 11-22-44 // INTEGRITY CHECK
+                - heading "DAY 36,525" [level=1] [ref=e67]
+                - paragraph [ref=e68]: ● 0 CONFIRMED VICTORIES
+              - generic [ref=e69]:
+                - generic [ref=e70]:
+                  - heading "FIELD REPORT" [level=2] [ref=e71]
+                  - paragraph [ref=e72]: Fog of War. Visibility low. Rely on instruments.
+                - generic [ref=e73]:
+                  - text: FREE FLIGHTDeep Focus
+                  - img [ref=e74]
+            - generic [ref=e79]:
+              - generic [ref=e81]:
+                - img "Grandma AI" [ref=e83]
+                - generic [ref=e84]:
+                  - heading "ASK GRANDMA" [level=3] [ref=e85]
+                  - paragraph [ref=e86]: MARGIE FAY KATEN (1925-2025)
+                - generic [ref=e88]:
+                  - textbox "Ask Grandma input" [active] [ref=e89]:
+                    - /placeholder: What's overwhelming you, honey?
+                  - button "Ask Grandma" [ref=e90]: ASK
+              - generic [ref=e93]:
+                - img "Grandma AI" [ref=e95]
+                - generic [ref=e96]:
+                  - heading "ASK GRANDMA" [level=3] [ref=e97]
+                  - paragraph [ref=e98]: MARGIE FAY KATEN (1925-2025)
+                - generic [ref=e100]:
+                  - textbox "Ask Grandma input" [ref=e101]:
+                    - /placeholder: What's overwhelming you, honey?
+                  - button "Ask Grandma" [ref=e102]: ASK
+              - button "Ask Grandma quick action" [ref=e103]: 🍋
+            - generic [ref=e104]:
+              - generic [ref=e107]:
+                - heading "Day Progress" [level=2] [ref=e108]
+                - generic [ref=e109]:
+                  - heading "Day Progress" [level=2] [ref=e110]
+                  - generic [ref=e111]:
+                    - text: 06:00
+                    - text: 22:30
+              - generic [ref=e114]:
+                - paragraph [ref=e115]: Take a moment to ground yourself. Feel the connection.
+                - button "Activate Grounding Rose" [ref=e116]: 🌹
+            - generic [ref=e117]:
+              - region "👤 Personal Status" [ref=e118]:
+                - generic [ref=e119]:
+                  - heading "👤 Personal Status" [level=2] [ref=e120]
+                  - generic [ref=e122]:
+                    - generic [ref=e123]:
+                      - heading "🧠 Mood" [level=3] [ref=e124]
+                      - generic [ref=e125]:
+                        - 'button "Set status: Focused" [ref=e126]': Focused
+                        - 'button "Set status: Calm" [ref=e127]': Calm
+                        - 'button "Set status: Overwhelmed" [pressed] [ref=e128]': Overwhelmed
+                    - generic [ref=e129]:
+                      - heading "⚡️ Energy" [level=3] [ref=e130]
+                      - generic [ref=e131]:
+                        - 'button "Set status: High" [ref=e132]': High
+                        - 'button "Set status: Medium" [ref=e133]': Medium
+                        - 'button "Set status: Low" [pressed] [ref=e134]': Low
+              - region "🥗 Daily Essentials" [ref=e135]:
+                - generic [ref=e136]:
+                  - heading "🥗 Daily Essentials" [level=2] [ref=e137]
+                  - paragraph [ref=e139]: This module has been deprecated. Its functionality is now integrated into the 'Daily Command Module' for a more unified daily workflow.
+              - region "👶 Kids Status" [ref=e140]:
+                - generic [ref=e141]:
+                  - heading "👶 Kids Status" [level=2] [ref=e142]
+                  - generic [ref=e144]:
+                    - generic [ref=e145]:
+                      - heading "🌸 Willow" [level=3] [ref=e146]
+                      - generic [ref=e147]:
+                        - button "At Mom's" [ref=e148]
+                        - button "With Me" [ref=e149]
+                        - button "School/Other" [ref=e150]
+                      - generic [ref=e151]:
+                        - text: "Note:"
+                        - textbox "Note:" [ref=e152]:
+                          - /placeholder: Quick update...
+                    - generic [ref=e153]:
+                      - heading "🦖 Sebastian" [level=3] [ref=e154]
+                      - generic [ref=e155]:
+                        - button "At Mom's" [ref=e156]
+                        - button "With Me" [ref=e157]
+                        - button "School/Other" [ref=e158]
+                      - generic [ref=e159]:
+                        - text: "Note:"
+                        - textbox "Note:" [ref=e160]:
+                          - /placeholder: Quick update...
+            - generic [ref=e161]:
+              - region "🚀 Workspace Launchpad" [ref=e162]:
+                - generic [ref=e163]:
+                  - heading "🚀 Workspace Launchpad" [level=2] [ref=e164]
+                  - generic [ref=e165]:
+                    - region "🚀 Workspace Launchpad" [ref=e166]:
+                      - generic [ref=e167]:
+                        - heading "🚀 Workspace Launchpad" [level=2] [ref=e168]
+                        - generic [ref=e170]:
+                          - paragraph [ref=e171]: Quick buttons to navigate your workspace and tools.
+                          - generic [ref=e172]:
+                            - button "Open Command Center" [ref=e173]
+                            - button "Open Bio Hacks (Apothecary)" [ref=e174]
+                            - button "Open Weekly Review" [ref=e175]
+                    - generic [ref=e176]:
+                      - button "🛑 Test Airlock Protocol" [ref=e177]
+                      - button "💊 The Apothecary" [ref=e178]
+              - group [ref=e179]:
+                - generic "🎯 Critical Tasks" [ref=e180]
+            - region "🏆 Achievements" [ref=e182]:
+              - generic [ref=e183]:
+                - heading "🏆 Achievements" [level=2] [ref=e184]
+                - generic [ref=e187]:
+                  - generic [ref=e188]:
+                    - 'heading "Collect 2 more to unlock: 1 Hour Hobby Time" [level=3] [ref=e189]'
+                    - 'progressbar "Achievement progress: 0%" [ref=e190]':
+                      - generic [ref=e191]: "Progress: 0%"
+                  - generic [ref=e192]:
+                    - generic [ref=e194]:
+                      - generic [ref=e195]: 🛠️
+                      - generic [ref=e196]:
+                        - heading "1 Hour Hobby Time" [level=4] [ref=e197]
+                        - paragraph [ref=e198]: Requires 2 Achievements
+                    - generic [ref=e200]:
+                      - generic [ref=e201]: 💸
+                      - generic [ref=e202]:
+                        - heading "Small Tech/Tool Purchase" [level=4] [ref=e203]
+                        - paragraph [ref=e204]: Requires 4 Achievements
+                    - generic [ref=e206]:
+                      - generic [ref=e207]: 🏖️
+                      - generic [ref=e208]:
+                        - heading "Guilt-Free Rest Day" [level=4] [ref=e209]
+                        - paragraph [ref=e210]: Requires 6 Achievements
+                  - generic [ref=e211]:
+                    - heading "Achievement Roadmap (0/6)" [level=4] [ref=e212]
+                    - generic [ref=e213]:
+                      - generic [ref=e215]:
+                        - generic [ref=e216]: 📭
+                        - generic [ref=e217]:
+                          - heading "Inbox Zero" [level=4] [ref=e218]
+                          - paragraph
+                      - generic [ref=e220]:
+                        - generic [ref=e221]: 🧹
+                        - generic [ref=e222]:
+                          - heading "Weekly Deep Clean" [level=4] [ref=e223]
+                          - paragraph
+                      - generic [ref=e225]:
+                        - generic [ref=e226]: 🏗️
+                        - generic [ref=e227]:
+                          - heading "Solo Week Executed" [level=4] [ref=e228]
+                          - paragraph
+                      - generic [ref=e230]:
+                        - generic [ref=e231]: 🪨
+                        - generic [ref=e232]:
+                          - heading "Daily Foundation Set" [level=4] [ref=e233]
+                          - paragraph
+                      - generic [ref=e235]:
+                        - generic [ref=e236]: 📊
+                        - generic [ref=e237]:
+                          - heading "Weekly Review Done" [level=4] [ref=e238]
+                          - paragraph
+                      - generic [ref=e240]:
+                        - generic [ref=e241]: ✅
+                        - generic [ref=e242]:
+                          - heading "All Systems Green" [level=4] [ref=e243]
+                          - paragraph
+        - contentinfo [ref=e244]:
+          - paragraph [ref=e245]: © 2025 Wonky Sprout OS by classicwilly. Anti-BS Structure for Chaos.
+    - button "Scroll to top" [ref=e247]:
+      - img
+    - button "Open Ask Grandma" [ref=e248]: ❤️
+```

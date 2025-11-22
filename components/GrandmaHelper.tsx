@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { getGrandmaAdvice } from '@services/geminiService';
+import { sanitizePrompt } from '@utils/promptSanitizer';
 
 const GrandmaHelper: React.FC = () => {
   const [query, setQuery] = useState('');
@@ -10,28 +11,12 @@ const GrandmaHelper: React.FC = () => {
   const [animate, setAnimate] = useState(false);
   const responseRef = useRef<HTMLDivElement | null>(null);
 
-  const sanitizeInput = (raw: string): { sanitized: string; redacted: boolean } => {
-    if (!raw) return { sanitized: '', redacted: false };
-    let sanitized = raw;
-    let redacted = false;
-    // Email
-    const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/g;
-    if (emailRegex.test(sanitized)) { sanitized = sanitized.replace(emailRegex, '[EMAIL REDACTED]'); redacted = true; }
-    // URLs
-    const urlRegex = /https?:\/\/\S+|www\.\S+/g;
-    if (urlRegex.test(sanitized)) { sanitized = sanitized.replace(urlRegex, '[URL REDACTED]'); redacted = true; }
-    // Phone numbers (simple)
-    const phoneRegex = /\+?\d[\d\-\.\s]{6,}\d/g;
-    if (phoneRegex.test(sanitized)) { sanitized = sanitized.replace(phoneRegex, '[PHONE REDACTED]'); redacted = true; }
-    // SSN-like
-    const ssnRegex = /\b\d{3}-\d{2}-\d{4}\b/g;
-    if (ssnRegex.test(sanitized)) { sanitized = sanitized.replace(ssnRegex, '[REDACTED]'); redacted = true; }
-    return { sanitized, redacted };
-  };
+  // use a shared sanitizer util
 
   const handleAsk = async () => {
     if (!query.trim()) return;
-    const { sanitized, redacted } = sanitizeInput(query);
+    const sanitized = sanitizePrompt(query) || '';
+    const redacted = sanitized !== query;
     if (redacted) {
       setPiiWarning('Sensitive info removed for your safety.');
     } else {
@@ -49,6 +34,28 @@ const GrandmaHelper: React.FC = () => {
       setResponseText('Grandma is having trouble right now. Try again later. Love, Grandma.');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const quickTips = [
+    'How do I clean a drain?',
+    'How do I get motivated to finish the dishes?',
+    'How do I reorganize my workspace?'
+  ];
+
+  const handleQuickTip = (t: string) => {
+    setQuery(t);
+    setTimeout(() => {
+      const el = document.getElementById('grandma-input');
+      if (el) (el as HTMLElement).focus();
+    }, 50);
+  };
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(responseText);
+    } catch (e) {
+      console.warn('copy failed', e);
     }
   };
 
@@ -98,7 +105,7 @@ const GrandmaHelper: React.FC = () => {
           />
           <button
             aria-label="Ask Grandma"
-            className="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-2 bg-accent-600 text-white font-bold rounded shadow-md hover:bg-accent-700 transition-colors"
+            className="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-2 bg-gradient-to-r from-accent-pink to-accent-teal text-white font-bold rounded shadow-neon-md hover:shadow-neon-md transition-all active:scale-95"
             onClick={handleAsk}
             disabled={loading}
           >
@@ -112,6 +119,10 @@ const GrandmaHelper: React.FC = () => {
             className={`mt-4 p-4 rounded-lg bg-surface-900 border border-surface-700 ${animate ? 'animate-pulse' : ''}`}
           >
             <p className="whitespace-pre-wrap">{responseText}</p>
+            <div className="flex gap-2 mt-3">
+              <button className="text-xs px-2 py-1 bg-accent-teal/10 rounded text-accent-teal" onClick={handleCopy}>COPY</button>
+              <button className="text-xs px-2 py-1 bg-accent-pink/10 rounded text-accent-pink" onClick={() => alert('Save to SOP (TODO)')}>SAVE</button>
+            </div>
           </div>
         )}
       </div>

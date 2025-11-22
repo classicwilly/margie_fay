@@ -1,6 +1,6 @@
 /* eslint-disable no-await-in-loop */
 const GEMINI_API_URL = 'https://generativeai.googleapis.com/v1/models';
-const GEMINI_MODEL = 'gemini-2.5-flash-preview-09-2025';
+const GEMINI_MODEL = process.env?.GEMINI_MODEL ?? 'gemini-2.5-flash-preview-09-2025';
 
 function getApiKey(): string | undefined {
   const envAny: any = import.meta;
@@ -14,15 +14,22 @@ interface GenerateOptions {
 }
 
 export async function generateContent({ prompt, systemInstruction = '', maxTokens = 512 }: GenerateOptions): Promise<string> {
+  // Prefer server-side proxy to keep API keys out of the client bundle
+  const proxyEnabled = ((import.meta as any)?.env && (import.meta as any).env.VITE_GEMINI_USE_PROXY) !== 'false';
   const apiKey = getApiKey();
-
-  if (!apiKey) {
-    console.warn('VITE_GEMINI_API_KEY not set');
+  // If proxy is enabled, we don't need a local apiKey (server keeps it secure).
+  if (!proxyEnabled && !apiKey) {
+    console.warn('VITE_GEMINI_API_KEY not set and proxy disabled; returning a polite failure');
     return 'Grandma is taking a nap. Try again later. Love, Grandma.';
   }
 
-  const url = `${GEMINI_API_URL}/${GEMINI_MODEL}:generate`;
-  const body = {
+  // Use the local server-side proxy if possible. This endpoint is implemented in server.js
+  const url = proxyEnabled ? '/api/gemini' : `${GEMINI_API_URL}/${GEMINI_MODEL}:generate`;
+  const body = proxyEnabled ? {
+    prompt,
+    systemInstruction,
+    maxTokens,
+  } as any : {
     prompt: [
       { role: 'system', content: systemInstruction },
       { role: 'user', content: prompt },
@@ -38,14 +45,20 @@ export async function generateContent({ prompt, systemInstruction = '', maxToken
 
   while (attempt < maxAttempts) {
     try {
+      // Abort requests after a reasonable period to avoid hanging clients
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 45_000);
+      const headers: any = { 'Content-Type': 'application/json' };
+      if (!proxyEnabled && apiKey) headers.Authorization = `Bearer ${apiKey}`;
+
+      if (proxyEnabled) console.debug('geminiService: Using proxy at', url);
       const res = await fetch(url, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`,
-        },
+        headers,
         body: JSON.stringify(body),
+        signal: controller.signal,
       });
+      clearTimeout(timeoutId);
 
       if (!res.ok) {
         const text = await res.text();
@@ -71,6 +84,31 @@ export async function generateContent({ prompt, systemInstruction = '', maxToken
       const delayMs = 2 ** attempt * 500;
       // eslint-disable-next-line no-await-in-loop
       await new Promise(resolve => setTimeout(resolve, delayMs));
+      // If proxy is enabled and it's a network error, and we have a local API key, try direct API on last attempt
+      if (proxyEnabled && apiKey && attempt >= maxAttempts) {
+        try {
+          // switch to direct Google API for a last-ditch attempt
+          const directUrl = `${GEMINI_API_URL}/${GEMINI_MODEL}:generate`;
+          const dController = new AbortController();
+          const directRes = await fetch(directUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
+            body: JSON.stringify({ prompt: [ { role: 'system', content: systemInstruction }, { role: 'user', content: prompt } ], maxOutputTokens: maxTokens, temperature: 0.6 }),
+            signal: dController.signal,
+          });
+          if (directRes.ok) {
+            const directData = await directRes.json();
+            if (directData?.candidates && directData.candidates.length > 0 && directData.candidates[0].content) {
+              return directData.candidates[0].content;
+            }
+            if (directData?.output?.text) {
+              return directData.output.text;
+            }
+          }
+        } catch (dErr) {
+          lastError = dErr as Error;
+        }
+      }
     }
   }
 

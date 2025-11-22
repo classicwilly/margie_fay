@@ -108,10 +108,10 @@ input[type=range].slider-thumb-pink::-moz-range-thumb {
 
 /* Utility to prevent text selection */
 .select-none {
-  user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+  user-select: none;
 }
 
 /* General fade-in animation for views */
@@ -131,4 +131,16 @@ input[type=range].slider-thumb-pink::-moz-range-thumb {
 /* Framer-motion specific transitions/overrides */
 .layout-transition-all > * {
   transition: all 0.3s ease-out;
+}
+
+/* Gradient text utility */
+.text-gradient-accent {
+  background: linear-gradient(90deg, #ec4899 0%, #2dd4bf 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.glow-accent {
+  box-shadow: 0 0 12px rgba(45,212,191,0.25), 0 0 36px rgba(236,72,153,0.06);
 }
