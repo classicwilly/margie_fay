@@ -1,1 +1,1 @@
-export { default, CommandCenter } from './CommandCenter.clean';
+export { default, Cockpit as CommandCenter } from './Cockpit';

@@ -133,10 +133,10 @@ const Header: React.FC<HeaderProps> = ({ openResetModal }) => {
     const e2eDatasetView = typeof document !== 'undefined' ? (document.documentElement as any)?.dataset?.e2eView : undefined;
     const earlyE2EInit = typeof window !== 'undefined' ? (window as any).__WONKY_TEST_INITIALIZE__ : undefined;
             const isE2ECommandCenter = typeof window !== 'undefined' && (
-            e2eForceView === 'command-center' ||
-            (window as any).appState?.view === 'command-center' ||
-                (document?.querySelector('h1')?.textContent || '').includes('The Cockpit')
-    );
+            e2eForceView === 'command-center' || e2eForceView === 'cockpit' ||
+            (window as any).appState?.view === 'command-center' || (window as any).appState?.view === 'cockpit' ||
+              (document?.querySelector('h1')?.textContent || '').includes('The Cockpit')
+        );
     // Extra debug: when E2E forces are active, log early flags to help us
     // understand why the Game Master link may not appear in tests.
     if (typeof window !== 'undefined' && ((window as any).__WONKY_TEST_INITIALIZE__ || (window as any).__E2E_FORCE_VIEW__ || (window as any).__E2E_FORCE_GAMEMASTER__)) {
@@ -156,7 +156,7 @@ const Header: React.FC<HeaderProps> = ({ openResetModal }) => {
   // Master Hub shows up in the System menu even if the seeded state isn't
   // read early enough. We'll clone the item out of `allDropdownItems` to
   // avoid mutating the source.
-    if (typeof window !== 'undefined' && ((window as any).__E2E_FORCE_VIEW__ === 'command-center' || e2eForceGameMaster || (earlyE2EInit && earlyE2EInit.dashboardType === 'william') || e2eStickyView === 'game-master-dashboard')) {
+    if (typeof window !== 'undefined' && (((window as any).__E2E_FORCE_VIEW__ === 'command-center' || (window as any).__E2E_FORCE_VIEW__ === 'cockpit') || e2eForceGameMaster || (earlyE2EInit && earlyE2EInit.dashboardType === 'william') || e2eStickyView === 'game-master-dashboard')) {
       const gmItem = allDropdownItems.find(i => i.id === 'game-master');
       if (gmItem && !visibleDropdownItems.some(i => i.id === 'game-master')) {
           visibleDropdownItems.push({ ...gmItem });

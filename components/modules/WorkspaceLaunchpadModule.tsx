@@ -7,7 +7,7 @@ export const WorkspaceLaunchpadModule = () => {
     const { dispatch } = useAppState();
 
     const quickActions = [
-        { label: 'Open Command Center', action: () => dispatch?.({ type: 'SET_VIEW', payload: 'cockpit' }) },
+        { label: 'Open Command Center', action: () => dispatch?.({ type: 'SET_VIEW', payload: 'command-center' }) },
         { label: 'Open Bio Hacks (Apothecary)', action: () => dispatch?.({ type: 'SET_VIEW', payload: 'bio-hacks' }) },
         { label: 'Open Weekly Review', action: () => dispatch?.({ type: 'SET_VIEW', payload: 'weekly-review' }) },
     ];

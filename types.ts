@@ -1,5 +1,6 @@
 export type ViewType = 
   'command-center' |
+  'cockpit' |
   'sop-vault' |
   'weekly-review' |
   'kids-corner' |

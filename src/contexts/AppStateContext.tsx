@@ -675,8 +675,10 @@ export const AppStateProvider = ({ children }: { children: React.ReactNode }) =>
             if (e2eForceView === 'sebastians-dashboard') seededState.dashboardType = 'sebastian';
             // When tests force the Command Center, prefer the admin/dashboard
             // persona so admin-only menu items (like Game Master) are visible.
-            if (e2eForceView === 'command-center') seededState.dashboardType = 'william';
-            seededState.view = e2eForceView;
+            // Back-compat: Accept 'cockpit' as an alias for 'command-center'
+            const normalizedE2EView = e2eForceView === 'cockpit' ? 'command-center' : e2eForceView;
+            if (normalizedE2EView === 'command-center') seededState.dashboardType = 'william';
+            seededState.view = normalizedE2EView as any;
             // eslint-disable-next-line no-console
             console.log('E2E: Applied __E2E_FORCE_VIEW__ early', e2eForceView);
         }

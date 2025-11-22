@@ -43,7 +43,7 @@ test('Airlock — Test Airlock Protocol opens modal and starts decompression tim
     const dispatchAvailable = await page.evaluate(() => typeof (window as any).__WONKY_TEST_DISPATCH__ === 'function');
     if (dispatchAvailable) {
       await page.evaluate(() => {
-        try { (window as any).__WONKY_TEST_DISPATCH__({ type: 'SET_SAVED_CONTEXT', payload: { view: 'cockpit', dashboardType: 'william' } }); } catch (e) { /* ignore */ }
+        try { (window as any).__WONKY_TEST_DISPATCH__({ type: 'SET_SAVED_CONTEXT', payload: { view: 'command-center', dashboardType: 'william' } }); } catch (e) { /* ignore */ }
         try { (window as any).__WONKY_TEST_DISPATCH__({ type: 'SET_CONTEXT_RESTORE_MODAL_OPEN', payload: true }); } catch (e) { /* ignore */ }
       });
       // allow UI to update

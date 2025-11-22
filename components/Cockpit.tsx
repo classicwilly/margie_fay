@@ -10,11 +10,13 @@ import AchievementTrackerModule from "@components/modules/AchievementTrackerModu
 import DayProgressBarModule from '@components/modules/DayProgressBarModule';
 import StatusTrackerModule from '@components/modules/StatusTrackerModule';
 import { GroundingRose } from '@components/GroundingRose';
-const CommandCenter: React.FC = () => {
+
+const Cockpit: React.FC = () => {
     const { appState, dispatch } = useAppState();
 
     const handleTestAirlock = (e: React.MouseEvent) => {
         e.preventDefault();
+        // Keep the internal view value as 'command-center' to avoid breaking existing logic
         dispatch?.({ type: 'SET_SAVED_CONTEXT', payload: { view: 'command-center', dashboardType: 'william' } });
         dispatch?.({ type: 'SET_CONTEXT_RESTORE_MODAL_OPEN', payload: true });
     };
@@ -51,8 +53,6 @@ const CommandCenter: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* The modules are rendered here in parallel */}
             <StatusTrackerModule />
-            {/* <EssentialsTrackerModule /> */}
-            {/* <KidsTrackerModule /> */}
             <EssentialsTrackerModule />
             <KidsTrackerModule />
         </div>
@@ -80,14 +80,11 @@ const CommandCenter: React.FC = () => {
                     </button>
                 </div>
             </ContentCard>
-            {/* <CriticalTasks /> */}
             <CriticalTasks />
         </div>
 
         {/* --- ROW 4: AI & ACHIEVEMENT --- */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* <WonkyAIModule /> */}
-            {/* <AchievementTrackerModule /> */}
             <WonkyAIModule />
             <AchievementTrackerModule />
         </div>
@@ -96,5 +93,5 @@ const CommandCenter: React.FC = () => {
   );
 };
 
-export { CommandCenter };
-export default CommandCenter;
+export { Cockpit };
+export default Cockpit;
