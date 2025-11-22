@@ -1,85 +1,59 @@
 /** @type {import('tailwindcss').Config} */
-export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}"
-  ],
-  theme: {
-    extend: {
-      colors: {
-        background: { dark: '#0f172a' },
-        surface: { 800: '#1e293b', 700: '#334155' },
-        primary: { 400: '#60a5fa' },
-        accent: { teal: '#2dd4bf', red: '#f87171', blue: '#60a5fa' },
-        text: { light: '#f1f5f9', muted: '#94a3b8' }
-      }
-    },
-  },
-  plugins: [],
-}
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}", // Capture root components if any exist
-  ],
-  theme: {
-    extend: {
-      colors: {
-        background: { dark: '#0f172a' }, // Ensure your custom colors exist
-        surface: { 800: '#1e293b', 700: '#334155' },
-        primary: { 400: '#60a5fa' },
-        accent: { teal: '#2dd4bf', red: '#f87171', blue: '#60a5fa' },
-        text: { light: '#f1f5f9', muted: '#94a3b8' }
-      }
-    },
-  },
-  plugins: [],
-}
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
-  theme: {
-    fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        mono: ['JetBrains Mono', 'monospace'],
-    },
-    extend: {
-        colors: {
-            'sanctuary-bg': '#0a192f',
-            'sanctuary-card': '#112240',
-            'sanctuary-text-main': '#ccd6f6',
-            'sanctuary-text-secondary': '#8892b0',
-            'sanctuary-accent': '#64ffda',
-            'sanctuary-focus': '#58a6ff',
-            'sanctuary-warning': '#f39c12',
-            'sanctuary-purple': '#9b59b6',
-            'sanctuary-border': '#233554',
+import defaultTheme from 'tailwindcss/defaultTheme';
 
-            // Legacy mapping for compatibility: map old token names to sanctuary tokens
-            'background-dark': '#0a192f',
-            'card-dark': '#112240',
-            'text-light': '#ccd6f6',
-            'accent-teal': '#64ffda',
-            'accent-blue': '#58a6ff',
-            'accent-green': '#64ffda',
-            // Common aliases developers use in the app
-            'sanctuary-text': '#ccd6f6',
-            'text-text-light': '#ccd6f6',
-            'text-background-dark': '#0a192f',
-            'card-darker': '#0b1220'
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {
+      fontFamily: {
+        // Use monospace font for terminal aesthetic in select areas
+        sans: ['"Inter"', ...defaultTheme.fontFamily.sans],
+        mono: ['"Dank Mono"', '"Fira Code"', ...defaultTheme.fontFamily.mono],
+      },
+      colors: {
+        // Deep, rich base colors for high contrast (The Void)
+        'background-dark': '#0f172a', 
+        'surface-900': '#10152B',
+        'surface-800': '#1C2442', // Standard Card Background
+        'surface-700': '#334155', // Card Border/Separator
+        
+        // High-contrast accents (The Dopamine Hits)
+        'accent-teal': '#2dd4bf', // Primary Action/Success
+        'accent-pink': '#ec4899', // Grounding Rose/Secondary Accent
+        'text-light': '#f1f5f9',
+        'text-muted': '#94a3b8',
+        'alert-red': '#f87171',
+        'alert-orange': '#fb923c',
+      },
+      // FINAL AESTHETIC: Custom shadows for depth and glow
+      boxShadow: {
+        // Inward shadow for depth (subtle)
+        'inner-dark': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.4)',
+        // Outward glow for focus and anchor
+        'neon-sm': '0 0 8px rgba(45, 212, 191, 0.4)', // Subtle Teal Glow for hover
+        'neon-md': '0 0 15px rgba(236, 72, 153, 0.6)', // Aggressive Pink Glow for anchor
+      },
+      keyframes: {
+        // CRT Flicker Effect (Low-stim visual feedback) (From attached config)
+        flicker: {
+          '0%, 100%': { opacity: 1 },
+          '50%': { opacity: 0.98 },
         },
-        // Custom properties for progress bar animation
-        // The actual animation is handled in the component, this just allows arbitrary values.
-        width: {
-          'progress-width': 'var(--progress-width)',
-        }
-    }
+        // Subtle pulse for interactive elements (From attached config)
+        pulse: {
+          '0%, 100%': { opacity: 1 },
+          '50%': { opacity: 0.8 },
+        },
+      },
+      animation: {
+        flicker: 'flicker 4s ease-in-out infinite',
+        pulse: 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+      },
+    },
   },
   plugins: [],
 }

@@ -18,9 +18,9 @@ const ContentCard: React.FC<ContentCardProps> = ({ title = '', children, showHea
   
   return (
     <section aria-labelledby={showHeader ? titleId : undefined} className={className}>
-      <div className="bg-card-dark rounded-lg shadow-md p-4 md:p-6 border border-gray-700 flex flex-col">
+      <div className="card-base flex flex-col">
         {showHeader && hasTitle && (
-          <h2 id={titleId} className={`text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 ${titleClassName}`}>
+          <h2 id={titleId} className={`text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 ${titleClassName}`}>
             {title}
           </h2>
         )}

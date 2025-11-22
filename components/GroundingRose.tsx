@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { useHaptics } from '../hooks/useHaptics';
+import { motion } from 'framer-motion';
 
-// This is a minimal functional GroundingRose component that mimics the
-// behavior used in the E2E tests (haptics + visual ripple), so tests can
-// reliably interact with the component even in the stubbed module.
+// The GroundingRose component as a high-stim anchor point
 export const GroundingRose = () => {
     const { vibrate } = useHaptics();
     const [isRippling, setIsRippling] = useState(false);
@@ -15,9 +14,11 @@ export const GroundingRose = () => {
     };
 
     return (
-        <button
+        <motion.button
+            whileHover={{ scale: 1.05, rotate: 3 }}
+            whileTap={{ scale: 0.95 }}
             data-testid="grounding-rose-button"
-            className="w-16 h-16 rounded-full bg-pink-500/50 flex items-center justify-center text-3xl cursor-pointer shadow-lg transition-all hover:bg-pink-400"
+            className="relative w-24 h-24 rounded-full bg-accent-pink/20 flex items-center justify-center text-5xl cursor-pointer shadow-neon-md transition-all duration-300 hover:bg-accent-pink/30 border border-accent-pink"
             role="button"
             aria-label="Activate Grounding Rose"
             onClick={handleClick}
@@ -27,10 +28,10 @@ export const GroundingRose = () => {
             {isRippling && (
                 <div
                     data-testid="grounding-rose-ripple"
-                    className="absolute inset-0 bg-rose-400/30 rounded-full animate-ping"
+                    className="absolute inset-0 bg-accent-pink rounded-full opacity-70 animate-ping"
                     style={{ animationDuration: '600ms' }}
                 />
             )}
-        </button>
+        </motion.button>
     );
 };
