@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, LayoutGrid, Folder, FlaskConical, Settings, Workflow } from 'lucide-react';
+import CockpitNavigation from './CockpitNavigation';
 
 const Sidebar: React.FC = () => {
   return (
@@ -9,14 +9,9 @@ const Sidebar: React.FC = () => {
           WS
         </div>
       </div>
-      <nav className="flex flex-col space-y-8">
-        <Home className="text-text-muted hover:text-accent-500 cursor-pointer transition-colors" size={28} />
-        <LayoutGrid className="text-text-muted hover:text-accent-500 cursor-pointer transition-colors" size={28} />
-        <Folder className="text-text-muted hover:text-accent-500 cursor-pointer transition-colors" size={28} />
-        <FlaskConical className="text-text-muted hover:text-accent-500 cursor-pointer transition-colors" size={28} />
-        <Settings className="text-text-muted hover:text-accent-500 cursor-pointer transition-colors" size={28} />
-        <Workflow className="text-text-muted hover:text-accent-500 cursor-pointer transition-colors" size={28} />
-      </nav>
+      <div className="flex-1 w-full">
+        <CockpitNavigation />
+      </div>
     </div>
   );
 };

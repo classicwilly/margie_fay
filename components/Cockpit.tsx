@@ -10,6 +10,7 @@ import AchievementTrackerModule from "@components/modules/AchievementTrackerModu
 import DayProgressBarModule from '@components/modules/DayProgressBarModule';
 import StatusTrackerModule from '@components/modules/StatusTrackerModule';
 import { GroundingRose } from '@components/GroundingRose';
+import DeepFocusContainer from '@components/DeepFocusContainer';
 
 const Cockpit: React.FC = () => {
     const { appState, dispatch } = useAppState();
@@ -25,6 +26,7 @@ const Cockpit: React.FC = () => {
     <div className="p-6 max-w-7xl mx-auto space-y-8 pb-24">
         
         {/* Header (Top) */}
+        <DeepFocusContainer active={appState?.isFocusModeActive}>
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
             <div className="text-left mb-4 md:mb-0">
                 <p className="text-primary-300 font-mono text-sm">PROTOCOL 11-22-44 // INTEGRITY CHECK</p>
@@ -43,6 +45,7 @@ const Cockpit: React.FC = () => {
                 </div>
             </div>
         </div>
+        </DeepFocusContainer>
 
         {/* --- ROW 1: AUCTION (Ask Grandma) --- */}
         <ContentCard showHeader={false} className="w-full">
