@@ -5,12 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "start:server": "node server.js",
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext .ts,.tsx --report-unused-disable-directives --max-warnings=0",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "ci:build": "npm run lint && npm test && npm run build",
     "e2e": "cross-env node ./scripts/run-playwright.js test",
+    "e2e:stub": "cross-env PLAYWRIGHT_AI_STUB=true node ./scripts/run-playwright.js test",
     "e2e:global": "npm run e2e",
     "e2e:local": "cross-env PLAYWRIGHT_REUSE_EXISTING_SERVER=true npm run e2e",
     "e2e:win": "cross-env NODE_OPTIONS=-r ./tests/e2e/register_shim.cjs npx playwright test",
@@ -19,6 +21,7 @@
     "test:coverage": "vitest --coverage",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:ci": "cross-env PLAYWRIGHT_AI_STUB=true npm run e2e",
     "watch:dev": "npx concurrently -k 'npm run dev' 'cross-env PLAYWRIGHT_REUSE_EXISTING_SERVER=true npm run e2e'",
     "dev:watch": "npm run dev",
     "e2e:watch": "npx concurrently -k 'npm run dev' 'cross-env PLAYWRIGHT_REUSE_EXISTING_SERVER=true npm run e2e'",
@@ -27,6 +30,7 @@
     "verify-dashboard": "node ./scripts/verify-dashboard.js"
   },
   "dependencies": {
+    "express-rate-limit": "^7.0.1",
     "@google/genai": "^1.30.0",
     "@sentry/browser": "^7.78.0",
     "@tailwindcss/postcss": "^4.1.17",
