@@ -21,6 +21,7 @@ import SopVault from '@components/SopVault';
 import { useCurrentMode } from './hooks/useCurrentMode';
 import { AppStateProvider, useAppState } from '@contexts/AppStateContext';
 import { Header } from '@components/Header';
+import Sidebar from '@components/Sidebar';
 import { E2EGate } from '@components/E2EGate';
 import { SopForm } from '@components/SopForm';
 import SystemIntegrationGuide from '@components/SystemIntegrationGuide';
@@ -102,17 +103,20 @@ const AppContent: React.FC = () => {
   };
   
   return (
-    <div className="min-h-screen bg-background-dark text-text-light flex flex-col">
-      <Header openResetModal={handleOpenResetModal} />
-      <E2EGate />
-      <div className="flex-1 flex">
-        <main id="main-content" className="flex-grow w-full container mx-auto p-4 md:p-8">
-          {renderContent()}
-        </main>
+    <div className="min-h-screen bg-background-dark text-text-light">
+      <div className="flex h-screen">
+        <Sidebar />
+        <div className="flex-1 flex flex-col">
+          <Header openResetModal={handleOpenResetModal} />
+          <E2EGate />
+          <main id="main-content" className="flex-1 overflow-y-auto w-full container mx-auto p-4 md:p-8">
+            {renderContent()}
+          </main>
+          <footer className="w-full py-6 px-4 md:px-8 bg-card-dark text-text-light text-opacity-80 text-center text-sm border-t border-gray-700 mt-auto no-print">
+            <p>&copy; {new Date().getFullYear()} Wonky Sprout OS by classicwilly. Anti-BS Structure for Chaos.</p>
+          </footer>
+        </div>
       </div>
-      <footer className="w-full py-6 px-4 md:px-8 bg-card-dark text-text-light text-opacity-80 text-center text-sm border-t border-gray-700 mt-auto no-print">
-        <p>&copy; {new Date().getFullYear()} Wonky Sprout OS by classicwilly. Anti-BS Structure for Chaos.</p>
-      </footer>
       <SystemResetModal isOpen={isResetModalOpen} onClose={handleCloseResetModal} />
       <ScrollToTopButton />
       {appState.isContextRestoreModalOpen && <ContextSwitchRestoreModal />}

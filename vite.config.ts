@@ -18,11 +18,12 @@ export default defineConfig(({ mode }) => {
       },
       resolve: {
         alias: {
-          '@components': path.resolve(__dirname, 'src/components'),
+          '@components': path.resolve(__dirname, 'components'),
           '@contexts': path.resolve(__dirname, 'src/contexts'),
-          '@hooks': path.resolve(__dirname, 'src/hooks'),
+          '@hooks': path.resolve(__dirname, 'hooks'),
           '@services': path.resolve(__dirname, 'src/services'),
-          '@types': path.resolve(__dirname, 'src/types.ts')
+          '@types': path.resolve(__dirname, 'src/types.ts'),
+          '@utils': path.resolve(__dirname, 'src/utils')
         }
       }
     };

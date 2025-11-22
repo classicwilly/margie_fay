@@ -23,11 +23,12 @@
     /* Aliases */
     "baseUrl": ".",
     "paths": {
-      "@components/*": ["src/components/*"],
+      "@components/*": ["components/*"],
       "@contexts/*": ["src/contexts/*"],
-      "@hooks/*": ["src/hooks/*"],
+      "@hooks/*": ["hooks/*"],
       "@services/*": ["src/services/*"],
-      "@types": ["src/types.ts"]
+      "@types": ["src/types.ts"],
+      "@utils/*": ["src/utils/*"]
     }
   },
   "include": ["src"],

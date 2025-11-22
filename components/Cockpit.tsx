@@ -5,7 +5,7 @@ import EssentialsTrackerModule from "@components/modules/EssentialsTrackerModule
 import KidsTrackerModule from "@components/modules/KidsTrackerModule";
 import { WorkspaceLaunchpadModule } from "@components/modules/WorkspaceLaunchpadModule";
 import CriticalTasks from "@components/modules/william/daily-command/CriticalTasks";
-import WonkyAIModule from "@components/modules/WonkyAIModule";
+import WonkyAIModule from "../WonkyAIModule";
 import AchievementTrackerModule from "@components/modules/AchievementTrackerModule";
 import DayProgressBarModule from '@components/modules/DayProgressBarModule';
 import StatusTrackerModule from '@components/modules/StatusTrackerModule';
@@ -25,16 +25,31 @@ const Cockpit: React.FC = () => {
     <div className="p-6 max-w-7xl mx-auto space-y-8 pb-24">
         
         {/* Header (Top) */}
-        <header className="mb-8 text-center">
-            <h1 data-testid="command-center-title" className="text-3xl font-bold text-primary-400 mb-2 pt-4">
-                The Cockpit
-            </h1>
-            <p className="text-text-muted">
-                Systems Online. Frequency Tuned. Welcome back, Pilot.
-            </p>
-        </header>
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+            <div className="text-left mb-4 md:mb-0">
+                <p className="text-primary-300 font-mono text-sm">PROTOCOL 11-22-44 // INTEGRITY CHECK</p>
+                <h1 className="text-5xl font-bold text-accent-400 mt-2">DAY <span className="text-white">36,525</span></h1>
+                <p className="text-text-muted mt-2">● 0 CONFIRMED VICTORIES</p>
+            </div>
+            <div className="text-right md:text-right flex flex-col items-end">
+                <div className="bg-primary-dark-300 p-4 rounded-lg shadow-neon-sm border border-primary-dark-200 mb-4 max-w-xs w-full">
+                    <h2 className="text-md font-semibold text-primary-300">FIELD REPORT</h2>
+                    <p className="text-text-light italic mt-1">Fog of War. Visibility low. Rely on instruments.</p>
+                </div>
+                <div className="bg-primary-dark-300 px-4 py-2 rounded-full shadow-neon-sm border border-primary-dark-200 flex items-center space-x-2">
+                    <span className="text-sm text-text-muted font-mono">FREE FLIGHT</span>
+                    <span className="text-lg text-accent-500 font-bold">Deep Focus</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-zap text-accent-500"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </div>
+            </div>
+        </div>
 
-        {/* --- ROW 1: DAY PROGRESS & GROUNDING (Existing) --- */}
+        {/* --- ROW 1: AUCTION (Ask Grandma) --- */}
+        <ContentCard showHeader={false} className="w-full">
+            <WonkyAIModule />
+        </ContentCard>
+
+        {/* --- ROW 2: DAY PROGRESS & GROUNDING (Existing) --- */}
         <div className="grid grid-cols-1 gap-6">
             <ContentCard showHeader={false}>
                 <h2 className="text-xl font-semibold text-primary-300 mb-4">Day Progress</h2>
@@ -85,7 +100,6 @@ const Cockpit: React.FC = () => {
 
         {/* --- ROW 4: AI & ACHIEVEMENT --- */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <WonkyAIModule />
             <AchievementTrackerModule />
         </div>
         

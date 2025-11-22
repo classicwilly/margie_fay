@@ -13,7 +13,7 @@
     "orientationAngle": 0,
     "orientationType": "portrait-primary"
   },
-  "timestamp": "2025-11-21T03:59:42.457Z",
+  "timestamp": "2025-11-22T07:04:22.862Z",
   "url": "http://localhost:3000/",
   "toolOptions": {
     "reporter": "v1"
@@ -939,9 +939,9 @@
             }
           ],
           "impact": null,
-          "html": "<section aria-labelledby=\"day-progress-r3\" class=\"\">",
+          "html": "<button data-testid=\"grounding-rose-butto...\" class=\"relative w-24 h-24 r...\" role=\"button\" aria-label=\"Activate Grounding R...\" type=\"button\" tabindex=\"0\">",
           "target": [
-            "section[aria-labelledby=\"day-progress-r3\"]"
+            ".w-24"
           ]
         },
         {
@@ -965,61 +965,9 @@
             }
           ],
           "impact": null,
-          "html": "<div class=\"h-2 rounded-full bg-gray-700\" role=\"progressbar\" aria-label=\"Day progress: 100%\" style=\"--progress: 100%;\"><div class=\"h-2 rounded-full bg-accent-blue progress-fill\"></div><span class=\"sr-only\">Day progress: 100%</span></div>",
+          "html": "<section aria-labelledby=\"personal-status-r2\" class=\"\">",
           "target": [
-            "div[aria-label=\"Day progress: 100%\"]"
-          ]
-        },
-        {
-          "any": [],
-          "all": [
-            {
-              "id": "aria-allowed-attr",
-              "data": null,
-              "relatedNodes": [],
-              "impact": "critical",
-              "message": "ARIA attributes are used correctly for the defined role"
-            }
-          ],
-          "none": [
-            {
-              "id": "aria-unsupported-attr",
-              "data": null,
-              "relatedNodes": [],
-              "impact": "critical",
-              "message": "ARIA attribute is supported"
-            }
-          ],
-          "impact": null,
-          "html": "<button data-testid=\"grounding-rose-button\" class=\"w-16 h-16 rounded-full bg-pink-500/50 flex items-center justify-center text-3xl cursor-pointer shadow-lg transition-all hover:bg-pink-400\" role=\"button\" aria-label=\"Activate Grounding Rose\" type=\"button\">🌹</button>",
-          "target": [
-            ".w-16"
-          ]
-        },
-        {
-          "any": [],
-          "all": [
-            {
-              "id": "aria-allowed-attr",
-              "data": null,
-              "relatedNodes": [],
-              "impact": "critical",
-              "message": "ARIA attributes are used correctly for the defined role"
-            }
-          ],
-          "none": [
-            {
-              "id": "aria-unsupported-attr",
-              "data": null,
-              "relatedNodes": [],
-              "impact": "critical",
-              "message": "ARIA attribute is supported"
-            }
-          ],
-          "impact": null,
-          "html": "<section aria-labelledby=\"personal-status-r7\" class=\"\">",
-          "target": [
-            "section[aria-labelledby=\"personal-status-r7\"]"
+            "section[aria-labelledby=\"personal-status-r2\"]"
           ]
         },
         {
@@ -1199,9 +1147,9 @@
             }
           ],
           "impact": null,
-          "html": "<section aria-labelledby=\"daily-essentials-r9\" class=\"\">",
+          "html": "<section aria-labelledby=\"daily-essentials-r3\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"daily-essentials-r9\"]"
+            "section[aria-labelledby=\"daily-essentials-r3\"]"
           ]
         },
         {
@@ -1225,9 +1173,9 @@
             }
           ],
           "impact": null,
-          "html": "<section aria-labelledby=\"kids-status-rb\" class=\"\">",
+          "html": "<section aria-labelledby=\"kids-status-r4\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"kids-status-rb\"]"
+            "section[aria-labelledby=\"kids-status-r4\"]"
           ]
         },
         {
@@ -1251,9 +1199,9 @@
             }
           ],
           "impact": null,
-          "html": "<section aria-labelledby=\"workspace-launchpad-rd\" class=\"\">",
+          "html": "<section aria-labelledby=\"workspace-launchpad-r5\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"workspace-launchpad-rd\"]"
+            "section[aria-labelledby=\"workspace-launchpad-r5\"]"
           ]
         },
         {
@@ -1277,9 +1225,9 @@
             }
           ],
           "impact": null,
-          "html": "<section aria-labelledby=\"workspace-launchpad-rf\" class=\"\">",
+          "html": "<section aria-labelledby=\"workspace-launchpad-r6\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"workspace-launchpad-rf\"]"
+            "section[aria-labelledby=\"workspace-launchpad-r6\"]"
           ]
         },
         {
@@ -1303,9 +1251,9 @@
             }
           ],
           "impact": null,
-          "html": "<section aria-labelledby=\"observer-rh\" class=\"\">",
+          "html": "<section aria-labelledby=\"observer-r7\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"observer-rh\"]"
+            "section[aria-labelledby=\"observer-r7\"]"
           ]
         },
         {
@@ -1329,9 +1277,9 @@
             }
           ],
           "impact": null,
-          "html": "<section aria-labelledby=\"achievements-rj\" class=\"\">",
+          "html": "<section aria-labelledby=\"achievements-r8\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"achievements-rj\"]"
+            "section[aria-labelledby=\"achievements-r8\"]"
           ]
         },
         {
@@ -1357,7 +1305,7 @@
           "impact": null,
           "html": "<div class=\"w-full bg-gray-700 rounded-full h-3\" role=\"progressbar\" aria-label=\"Achievement progress: 0%\">",
           "target": [
-            "div[aria-label=\"Achievement progress: 0%\"]"
+            "div[role=\"progressbar\"]"
           ]
         }
       ]
@@ -1404,27 +1352,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<div class=\"h-2 rounded-full bg-gray-700\" role=\"progressbar\" aria-label=\"Day progress: 100%\" style=\"--progress: 100%;\"><div class=\"h-2 rounded-full bg-accent-blue progress-fill\"></div><span class=\"sr-only\">Day progress: 100%</span></div>",
+          "html": "<button data-testid=\"grounding-rose-butto...\" class=\"relative w-24 h-24 r...\" role=\"button\" aria-label=\"Activate Grounding R...\" type=\"button\" tabindex=\"0\">",
           "target": [
-            "div[aria-label=\"Day progress: 100%\"]"
-          ]
-        },
-        {
-          "any": [
-            {
-              "id": "aria-allowed-role",
-              "data": null,
-              "relatedNodes": [],
-              "impact": "minor",
-              "message": "ARIA role is allowed for given element"
-            }
-          ],
-          "all": [],
-          "none": [],
-          "impact": null,
-          "html": "<button data-testid=\"grounding-rose-button\" class=\"w-16 h-16 rounded-full bg-pink-500/50 flex items-center justify-center text-3xl cursor-pointer shadow-lg transition-all hover:bg-pink-400\" role=\"button\" aria-label=\"Activate Grounding Rose\" type=\"button\">🌹</button>",
-          "target": [
-            ".w-16"
+            ".w-24"
           ]
         },
         {
@@ -1442,7 +1372,7 @@
           "impact": null,
           "html": "<div class=\"w-full bg-gray-700 rounded-full h-3\" role=\"progressbar\" aria-label=\"Achievement progress: 0%\">",
           "target": [
-            "div[aria-label=\"Achievement progress: 0%\"]"
+            "div[role=\"progressbar\"]"
           ]
         }
       ]
@@ -1494,9 +1424,9 @@
           ],
           "none": [],
           "impact": null,
-          "html": "<section aria-labelledby=\"day-progress-r3\" class=\"\">",
+          "html": "<button data-testid=\"grounding-rose-butto...\" class=\"relative w-24 h-24 r...\" role=\"button\" aria-label=\"Activate Grounding R...\" type=\"button\" tabindex=\"0\">",
           "target": [
-            "section[aria-labelledby=\"day-progress-r3\"]"
+            ".w-24"
           ]
         },
         {
@@ -1512,45 +1442,9 @@
           ],
           "none": [],
           "impact": null,
-          "html": "<div class=\"h-2 rounded-full bg-gray-700\" role=\"progressbar\" aria-label=\"Day progress: 100%\" style=\"--progress: 100%;\"><div class=\"h-2 rounded-full bg-accent-blue progress-fill\"></div><span class=\"sr-only\">Day progress: 100%</span></div>",
+          "html": "<section aria-labelledby=\"personal-status-r2\" class=\"\">",
           "target": [
-            "div[aria-label=\"Day progress: 100%\"]"
-          ]
-        },
-        {
-          "any": [],
-          "all": [
-            {
-              "id": "aria-conditional-attr",
-              "data": null,
-              "relatedNodes": [],
-              "impact": "serious",
-              "message": "ARIA attribute is allowed"
-            }
-          ],
-          "none": [],
-          "impact": null,
-          "html": "<button data-testid=\"grounding-rose-button\" class=\"w-16 h-16 rounded-full bg-pink-500/50 flex items-center justify-center text-3xl cursor-pointer shadow-lg transition-all hover:bg-pink-400\" role=\"button\" aria-label=\"Activate Grounding Rose\" type=\"button\">🌹</button>",
-          "target": [
-            ".w-16"
-          ]
-        },
-        {
-          "any": [],
-          "all": [
-            {
-              "id": "aria-conditional-attr",
-              "data": null,
-              "relatedNodes": [],
-              "impact": "serious",
-              "message": "ARIA attribute is allowed"
-            }
-          ],
-          "none": [],
-          "impact": null,
-          "html": "<section aria-labelledby=\"personal-status-r7\" class=\"\">",
-          "target": [
-            "section[aria-labelledby=\"personal-status-r7\"]"
+            "section[aria-labelledby=\"personal-status-r2\"]"
           ]
         },
         {
@@ -1674,9 +1568,9 @@
           ],
           "none": [],
           "impact": null,
-          "html": "<section aria-labelledby=\"daily-essentials-r9\" class=\"\">",
+          "html": "<section aria-labelledby=\"daily-essentials-r3\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"daily-essentials-r9\"]"
+            "section[aria-labelledby=\"daily-essentials-r3\"]"
           ]
         },
         {
@@ -1692,9 +1586,9 @@
           ],
           "none": [],
           "impact": null,
-          "html": "<section aria-labelledby=\"kids-status-rb\" class=\"\">",
+          "html": "<section aria-labelledby=\"kids-status-r4\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"kids-status-rb\"]"
+            "section[aria-labelledby=\"kids-status-r4\"]"
           ]
         },
         {
@@ -1710,9 +1604,9 @@
           ],
           "none": [],
           "impact": null,
-          "html": "<section aria-labelledby=\"workspace-launchpad-rd\" class=\"\">",
+          "html": "<section aria-labelledby=\"workspace-launchpad-r5\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"workspace-launchpad-rd\"]"
+            "section[aria-labelledby=\"workspace-launchpad-r5\"]"
           ]
         },
         {
@@ -1728,9 +1622,9 @@
           ],
           "none": [],
           "impact": null,
-          "html": "<section aria-labelledby=\"workspace-launchpad-rf\" class=\"\">",
+          "html": "<section aria-labelledby=\"workspace-launchpad-r6\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"workspace-launchpad-rf\"]"
+            "section[aria-labelledby=\"workspace-launchpad-r6\"]"
           ]
         },
         {
@@ -1746,9 +1640,9 @@
           ],
           "none": [],
           "impact": null,
-          "html": "<section aria-labelledby=\"observer-rh\" class=\"\">",
+          "html": "<section aria-labelledby=\"observer-r7\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"observer-rh\"]"
+            "section[aria-labelledby=\"observer-r7\"]"
           ]
         },
         {
@@ -1764,9 +1658,9 @@
           ],
           "none": [],
           "impact": null,
-          "html": "<section aria-labelledby=\"achievements-rj\" class=\"\">",
+          "html": "<section aria-labelledby=\"achievements-r8\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"achievements-rj\"]"
+            "section[aria-labelledby=\"achievements-r8\"]"
           ]
         },
         {
@@ -1784,7 +1678,7 @@
           "impact": null,
           "html": "<div class=\"w-full bg-gray-700 rounded-full h-3\" role=\"progressbar\" aria-label=\"Achievement progress: 0%\">",
           "target": [
-            "div[aria-label=\"Achievement progress: 0%\"]"
+            "div[role=\"progressbar\"]"
           ]
         }
       ]
@@ -1836,27 +1730,9 @@
             }
           ],
           "impact": null,
-          "html": "<div class=\"h-2 rounded-full bg-gray-700\" role=\"progressbar\" aria-label=\"Day progress: 100%\" style=\"--progress: 100%;\"><div class=\"h-2 rounded-full bg-accent-blue progress-fill\"></div><span class=\"sr-only\">Day progress: 100%</span></div>",
+          "html": "<button data-testid=\"grounding-rose-butto...\" class=\"relative w-24 h-24 r...\" role=\"button\" aria-label=\"Activate Grounding R...\" type=\"button\" tabindex=\"0\">",
           "target": [
-            "div[aria-label=\"Day progress: 100%\"]"
-          ]
-        },
-        {
-          "any": [],
-          "all": [],
-          "none": [
-            {
-              "id": "deprecatedrole",
-              "data": null,
-              "relatedNodes": [],
-              "impact": "minor",
-              "message": "ARIA role is not deprecated"
-            }
-          ],
-          "impact": null,
-          "html": "<button data-testid=\"grounding-rose-button\" class=\"w-16 h-16 rounded-full bg-pink-500/50 flex items-center justify-center text-3xl cursor-pointer shadow-lg transition-all hover:bg-pink-400\" role=\"button\" aria-label=\"Activate Grounding Rose\" type=\"button\">🌹</button>",
-          "target": [
-            ".w-16"
+            ".w-24"
           ]
         },
         {
@@ -1874,7 +1750,7 @@
           "impact": null,
           "html": "<div class=\"w-full bg-gray-700 rounded-full h-3\" role=\"progressbar\" aria-label=\"Achievement progress: 0%\">",
           "target": [
-            "div[aria-label=\"Achievement progress: 0%\"]"
+            "div[role=\"progressbar\"]"
           ]
         }
       ]
@@ -1946,27 +1822,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<div class=\"h-2 rounded-full bg-gray-700\" role=\"progressbar\" aria-label=\"Day progress: 100%\" style=\"--progress: 100%;\"><div class=\"h-2 rounded-full bg-accent-blue progress-fill\"></div><span class=\"sr-only\">Day progress: 100%</span></div>",
-          "target": [
-            "div[aria-label=\"Day progress: 100%\"]"
-          ]
-        },
-        {
-          "any": [
-            {
-              "id": "aria-label",
-              "data": null,
-              "relatedNodes": [],
-              "impact": "serious",
-              "message": "aria-label attribute exists and is not empty"
-            }
-          ],
-          "all": [],
-          "none": [],
-          "impact": null,
           "html": "<div class=\"w-full bg-gray-700 rounded-full h-3\" role=\"progressbar\" aria-label=\"Achievement progress: 0%\">",
           "target": [
-            "div[aria-label=\"Achievement progress: 0%\"]"
+            "div[role=\"progressbar\"]"
           ]
         }
       ]
@@ -2018,9 +1876,9 @@
             }
           ],
           "impact": null,
-          "html": "<section aria-labelledby=\"day-progress-r3\" class=\"\">",
+          "html": "<button data-testid=\"grounding-rose-butto...\" class=\"relative w-24 h-24 r...\" role=\"button\" aria-label=\"Activate Grounding R...\" type=\"button\" tabindex=\"0\">",
           "target": [
-            "section[aria-labelledby=\"day-progress-r3\"]"
+            ".w-24"
           ]
         },
         {
@@ -2036,45 +1894,9 @@
             }
           ],
           "impact": null,
-          "html": "<div class=\"h-2 rounded-full bg-gray-700\" role=\"progressbar\" aria-label=\"Day progress: 100%\" style=\"--progress: 100%;\"><div class=\"h-2 rounded-full bg-accent-blue progress-fill\"></div><span class=\"sr-only\">Day progress: 100%</span></div>",
+          "html": "<section aria-labelledby=\"personal-status-r2\" class=\"\">",
           "target": [
-            "div[aria-label=\"Day progress: 100%\"]"
-          ]
-        },
-        {
-          "any": [],
-          "all": [],
-          "none": [
-            {
-              "id": "aria-prohibited-attr",
-              "data": null,
-              "relatedNodes": [],
-              "impact": "serious",
-              "message": "ARIA attribute is allowed"
-            }
-          ],
-          "impact": null,
-          "html": "<button data-testid=\"grounding-rose-button\" class=\"w-16 h-16 rounded-full bg-pink-500/50 flex items-center justify-center text-3xl cursor-pointer shadow-lg transition-all hover:bg-pink-400\" role=\"button\" aria-label=\"Activate Grounding Rose\" type=\"button\">🌹</button>",
-          "target": [
-            ".w-16"
-          ]
-        },
-        {
-          "any": [],
-          "all": [],
-          "none": [
-            {
-              "id": "aria-prohibited-attr",
-              "data": null,
-              "relatedNodes": [],
-              "impact": "serious",
-              "message": "ARIA attribute is allowed"
-            }
-          ],
-          "impact": null,
-          "html": "<section aria-labelledby=\"personal-status-r7\" class=\"\">",
-          "target": [
-            "section[aria-labelledby=\"personal-status-r7\"]"
+            "section[aria-labelledby=\"personal-status-r2\"]"
           ]
         },
         {
@@ -2198,9 +2020,9 @@
             }
           ],
           "impact": null,
-          "html": "<section aria-labelledby=\"daily-essentials-r9\" class=\"\">",
+          "html": "<section aria-labelledby=\"daily-essentials-r3\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"daily-essentials-r9\"]"
+            "section[aria-labelledby=\"daily-essentials-r3\"]"
           ]
         },
         {
@@ -2216,9 +2038,9 @@
             }
           ],
           "impact": null,
-          "html": "<section aria-labelledby=\"kids-status-rb\" class=\"\">",
+          "html": "<section aria-labelledby=\"kids-status-r4\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"kids-status-rb\"]"
+            "section[aria-labelledby=\"kids-status-r4\"]"
           ]
         },
         {
@@ -2234,9 +2056,9 @@
             }
           ],
           "impact": null,
-          "html": "<section aria-labelledby=\"workspace-launchpad-rd\" class=\"\">",
+          "html": "<section aria-labelledby=\"workspace-launchpad-r5\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"workspace-launchpad-rd\"]"
+            "section[aria-labelledby=\"workspace-launchpad-r5\"]"
           ]
         },
         {
@@ -2252,9 +2074,9 @@
             }
           ],
           "impact": null,
-          "html": "<section aria-labelledby=\"workspace-launchpad-rf\" class=\"\">",
+          "html": "<section aria-labelledby=\"workspace-launchpad-r6\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"workspace-launchpad-rf\"]"
+            "section[aria-labelledby=\"workspace-launchpad-r6\"]"
           ]
         },
         {
@@ -2270,9 +2092,9 @@
             }
           ],
           "impact": null,
-          "html": "<section aria-labelledby=\"observer-rh\" class=\"\">",
+          "html": "<section aria-labelledby=\"observer-r7\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"observer-rh\"]"
+            "section[aria-labelledby=\"observer-r7\"]"
           ]
         },
         {
@@ -2288,9 +2110,9 @@
             }
           ],
           "impact": null,
-          "html": "<section aria-labelledby=\"achievements-rj\" class=\"\">",
+          "html": "<section aria-labelledby=\"achievements-r8\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"achievements-rj\"]"
+            "section[aria-labelledby=\"achievements-r8\"]"
           ]
         },
         {
@@ -2308,7 +2130,7 @@
           "impact": null,
           "html": "<div class=\"w-full bg-gray-700 rounded-full h-3\" role=\"progressbar\" aria-label=\"Achievement progress: 0%\">",
           "target": [
-            "div[aria-label=\"Achievement progress: 0%\"]"
+            "div[role=\"progressbar\"]"
           ]
         }
       ]
@@ -2360,27 +2182,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<div class=\"h-2 rounded-full bg-gray-700\" role=\"progressbar\" aria-label=\"Day progress: 100%\" style=\"--progress: 100%;\"><div class=\"h-2 rounded-full bg-accent-blue progress-fill\"></div><span class=\"sr-only\">Day progress: 100%</span></div>",
+          "html": "<button data-testid=\"grounding-rose-butto...\" class=\"relative w-24 h-24 r...\" role=\"button\" aria-label=\"Activate Grounding R...\" type=\"button\" tabindex=\"0\">",
           "target": [
-            "div[aria-label=\"Day progress: 100%\"]"
-          ]
-        },
-        {
-          "any": [
-            {
-              "id": "aria-required-attr",
-              "data": null,
-              "relatedNodes": [],
-              "impact": "critical",
-              "message": "All required ARIA attributes are present"
-            }
-          ],
-          "all": [],
-          "none": [],
-          "impact": null,
-          "html": "<button data-testid=\"grounding-rose-button\" class=\"w-16 h-16 rounded-full bg-pink-500/50 flex items-center justify-center text-3xl cursor-pointer shadow-lg transition-all hover:bg-pink-400\" role=\"button\" aria-label=\"Activate Grounding Rose\" type=\"button\">🌹</button>",
-          "target": [
-            ".w-16"
+            ".w-24"
           ]
         },
         {
@@ -2398,7 +2202,7 @@
           "impact": null,
           "html": "<div class=\"w-full bg-gray-700 rounded-full h-3\" role=\"progressbar\" aria-label=\"Achievement progress: 0%\">",
           "target": [
-            "div[aria-label=\"Achievement progress: 0%\"]"
+            "div[role=\"progressbar\"]"
           ]
         }
       ]
@@ -2478,41 +2282,9 @@
             }
           ],
           "impact": null,
-          "html": "<div class=\"h-2 rounded-full bg-gray-700\" role=\"progressbar\" aria-label=\"Day progress: 100%\" style=\"--progress: 100%;\"><div class=\"h-2 rounded-full bg-accent-blue progress-fill\"></div><span class=\"sr-only\">Day progress: 100%</span></div>",
+          "html": "<button data-testid=\"grounding-rose-butto...\" class=\"relative w-24 h-24 r...\" role=\"button\" aria-label=\"Activate Grounding R...\" type=\"button\" tabindex=\"0\">",
           "target": [
-            "div[aria-label=\"Day progress: 100%\"]"
-          ]
-        },
-        {
-          "any": [],
-          "all": [],
-          "none": [
-            {
-              "id": "invalidrole",
-              "data": null,
-              "relatedNodes": [],
-              "impact": "critical",
-              "message": "ARIA role is valid"
-            },
-            {
-              "id": "abstractrole",
-              "data": null,
-              "relatedNodes": [],
-              "impact": "critical",
-              "message": "Abstract roles are not used"
-            },
-            {
-              "id": "unsupportedrole",
-              "data": null,
-              "relatedNodes": [],
-              "impact": "critical",
-              "message": "ARIA role is supported"
-            }
-          ],
-          "impact": null,
-          "html": "<button data-testid=\"grounding-rose-button\" class=\"w-16 h-16 rounded-full bg-pink-500/50 flex items-center justify-center text-3xl cursor-pointer shadow-lg transition-all hover:bg-pink-400\" role=\"button\" aria-label=\"Activate Grounding Rose\" type=\"button\">🌹</button>",
-          "target": [
-            ".w-16"
+            ".w-24"
           ]
         },
         {
@@ -2544,7 +2316,7 @@
           "impact": null,
           "html": "<div class=\"w-full bg-gray-700 rounded-full h-3\" role=\"progressbar\" aria-label=\"Achievement progress: 0%\">",
           "target": [
-            "div[aria-label=\"Achievement progress: 0%\"]"
+            "div[role=\"progressbar\"]"
           ]
         }
       ]
@@ -2624,9 +2396,9 @@
           ],
           "none": [],
           "impact": null,
-          "html": "<section aria-labelledby=\"day-progress-r3\" class=\"\">",
+          "html": "<button data-testid=\"grounding-rose-butto...\" class=\"relative w-24 h-24 r...\" role=\"button\" aria-label=\"Activate Grounding R...\" type=\"button\" tabindex=\"0\">",
           "target": [
-            "section[aria-labelledby=\"day-progress-r3\"]"
+            ".w-24"
           ]
         },
         {
@@ -2656,73 +2428,9 @@
           ],
           "none": [],
           "impact": null,
-          "html": "<div class=\"h-2 rounded-full bg-gray-700\" role=\"progressbar\" aria-label=\"Day progress: 100%\" style=\"--progress: 100%;\"><div class=\"h-2 rounded-full bg-accent-blue progress-fill\"></div><span class=\"sr-only\">Day progress: 100%</span></div>",
+          "html": "<section aria-labelledby=\"personal-status-r2\" class=\"\">",
           "target": [
-            "div[aria-label=\"Day progress: 100%\"]"
-          ]
-        },
-        {
-          "any": [],
-          "all": [
-            {
-              "id": "aria-valid-attr-value",
-              "data": null,
-              "relatedNodes": [],
-              "impact": "critical",
-              "message": "ARIA attribute values are valid"
-            },
-            {
-              "id": "aria-errormessage",
-              "data": null,
-              "relatedNodes": [],
-              "impact": "critical",
-              "message": "aria-errormessage exists and references elements visible to screen readers that use a supported aria-errormessage technique"
-            },
-            {
-              "id": "aria-level",
-              "data": null,
-              "relatedNodes": [],
-              "impact": "critical",
-              "message": "aria-level values are valid"
-            }
-          ],
-          "none": [],
-          "impact": null,
-          "html": "<button data-testid=\"grounding-rose-button\" class=\"w-16 h-16 rounded-full bg-pink-500/50 flex items-center justify-center text-3xl cursor-pointer shadow-lg transition-all hover:bg-pink-400\" role=\"button\" aria-label=\"Activate Grounding Rose\" type=\"button\">🌹</button>",
-          "target": [
-            ".w-16"
-          ]
-        },
-        {
-          "any": [],
-          "all": [
-            {
-              "id": "aria-valid-attr-value",
-              "data": null,
-              "relatedNodes": [],
-              "impact": "critical",
-              "message": "ARIA attribute values are valid"
-            },
-            {
-              "id": "aria-errormessage",
-              "data": null,
-              "relatedNodes": [],
-              "impact": "critical",
-              "message": "aria-errormessage exists and references elements visible to screen readers that use a supported aria-errormessage technique"
-            },
-            {
-              "id": "aria-level",
-              "data": null,
-              "relatedNodes": [],
-              "impact": "critical",
-              "message": "aria-level values are valid"
-            }
-          ],
-          "none": [],
-          "impact": null,
-          "html": "<section aria-labelledby=\"personal-status-r7\" class=\"\">",
-          "target": [
-            "section[aria-labelledby=\"personal-status-r7\"]"
+            "section[aria-labelledby=\"personal-status-r2\"]"
           ]
         },
         {
@@ -2944,9 +2652,9 @@
           ],
           "none": [],
           "impact": null,
-          "html": "<section aria-labelledby=\"daily-essentials-r9\" class=\"\">",
+          "html": "<section aria-labelledby=\"daily-essentials-r3\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"daily-essentials-r9\"]"
+            "section[aria-labelledby=\"daily-essentials-r3\"]"
           ]
         },
         {
@@ -2976,9 +2684,9 @@
           ],
           "none": [],
           "impact": null,
-          "html": "<section aria-labelledby=\"kids-status-rb\" class=\"\">",
+          "html": "<section aria-labelledby=\"kids-status-r4\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"kids-status-rb\"]"
+            "section[aria-labelledby=\"kids-status-r4\"]"
           ]
         },
         {
@@ -3008,9 +2716,9 @@
           ],
           "none": [],
           "impact": null,
-          "html": "<section aria-labelledby=\"workspace-launchpad-rd\" class=\"\">",
+          "html": "<section aria-labelledby=\"workspace-launchpad-r5\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"workspace-launchpad-rd\"]"
+            "section[aria-labelledby=\"workspace-launchpad-r5\"]"
           ]
         },
         {
@@ -3040,9 +2748,9 @@
           ],
           "none": [],
           "impact": null,
-          "html": "<section aria-labelledby=\"workspace-launchpad-rf\" class=\"\">",
+          "html": "<section aria-labelledby=\"workspace-launchpad-r6\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"workspace-launchpad-rf\"]"
+            "section[aria-labelledby=\"workspace-launchpad-r6\"]"
           ]
         },
         {
@@ -3072,9 +2780,9 @@
           ],
           "none": [],
           "impact": null,
-          "html": "<section aria-labelledby=\"observer-rh\" class=\"\">",
+          "html": "<section aria-labelledby=\"observer-r7\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"observer-rh\"]"
+            "section[aria-labelledby=\"observer-r7\"]"
           ]
         },
         {
@@ -3104,9 +2812,9 @@
           ],
           "none": [],
           "impact": null,
-          "html": "<section aria-labelledby=\"achievements-rj\" class=\"\">",
+          "html": "<section aria-labelledby=\"achievements-r8\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"achievements-rj\"]"
+            "section[aria-labelledby=\"achievements-r8\"]"
           ]
         },
         {
@@ -3138,7 +2846,7 @@
           "impact": null,
           "html": "<div class=\"w-full bg-gray-700 rounded-full h-3\" role=\"progressbar\" aria-label=\"Achievement progress: 0%\">",
           "target": [
-            "div[aria-label=\"Achievement progress: 0%\"]"
+            "div[role=\"progressbar\"]"
           ]
         }
       ]
@@ -3190,9 +2898,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<section aria-labelledby=\"day-progress-r3\" class=\"\">",
+          "html": "<button data-testid=\"grounding-rose-butto...\" class=\"relative w-24 h-24 r...\" role=\"button\" aria-label=\"Activate Grounding R...\" type=\"button\" tabindex=\"0\">",
           "target": [
-            "section[aria-labelledby=\"day-progress-r3\"]"
+            ".w-24"
           ]
         },
         {
@@ -3208,45 +2916,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<div class=\"h-2 rounded-full bg-gray-700\" role=\"progressbar\" aria-label=\"Day progress: 100%\" style=\"--progress: 100%;\"><div class=\"h-2 rounded-full bg-accent-blue progress-fill\"></div><span class=\"sr-only\">Day progress: 100%</span></div>",
+          "html": "<section aria-labelledby=\"personal-status-r2\" class=\"\">",
           "target": [
-            "div[aria-label=\"Day progress: 100%\"]"
-          ]
-        },
-        {
-          "any": [
-            {
-              "id": "aria-valid-attr",
-              "data": null,
-              "relatedNodes": [],
-              "impact": "critical",
-              "message": "ARIA attribute name is valid"
-            }
-          ],
-          "all": [],
-          "none": [],
-          "impact": null,
-          "html": "<button data-testid=\"grounding-rose-button\" class=\"w-16 h-16 rounded-full bg-pink-500/50 flex items-center justify-center text-3xl cursor-pointer shadow-lg transition-all hover:bg-pink-400\" role=\"button\" aria-label=\"Activate Grounding Rose\" type=\"button\">🌹</button>",
-          "target": [
-            ".w-16"
-          ]
-        },
-        {
-          "any": [
-            {
-              "id": "aria-valid-attr",
-              "data": null,
-              "relatedNodes": [],
-              "impact": "critical",
-              "message": "ARIA attribute name is valid"
-            }
-          ],
-          "all": [],
-          "none": [],
-          "impact": null,
-          "html": "<section aria-labelledby=\"personal-status-r7\" class=\"\">",
-          "target": [
-            "section[aria-labelledby=\"personal-status-r7\"]"
+            "section[aria-labelledby=\"personal-status-r2\"]"
           ]
         },
         {
@@ -3370,9 +3042,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<section aria-labelledby=\"daily-essentials-r9\" class=\"\">",
+          "html": "<section aria-labelledby=\"daily-essentials-r3\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"daily-essentials-r9\"]"
+            "section[aria-labelledby=\"daily-essentials-r3\"]"
           ]
         },
         {
@@ -3388,9 +3060,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<section aria-labelledby=\"kids-status-rb\" class=\"\">",
+          "html": "<section aria-labelledby=\"kids-status-r4\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"kids-status-rb\"]"
+            "section[aria-labelledby=\"kids-status-r4\"]"
           ]
         },
         {
@@ -3406,9 +3078,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<section aria-labelledby=\"workspace-launchpad-rd\" class=\"\">",
+          "html": "<section aria-labelledby=\"workspace-launchpad-r5\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"workspace-launchpad-rd\"]"
+            "section[aria-labelledby=\"workspace-launchpad-r5\"]"
           ]
         },
         {
@@ -3424,9 +3096,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<section aria-labelledby=\"workspace-launchpad-rf\" class=\"\">",
+          "html": "<section aria-labelledby=\"workspace-launchpad-r6\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"workspace-launchpad-rf\"]"
+            "section[aria-labelledby=\"workspace-launchpad-r6\"]"
           ]
         },
         {
@@ -3442,9 +3114,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<section aria-labelledby=\"observer-rh\" class=\"\">",
+          "html": "<section aria-labelledby=\"observer-r7\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"observer-rh\"]"
+            "section[aria-labelledby=\"observer-r7\"]"
           ]
         },
         {
@@ -3460,9 +3132,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<section aria-labelledby=\"achievements-rj\" class=\"\">",
+          "html": "<section aria-labelledby=\"achievements-r8\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"achievements-rj\"]"
+            "section[aria-labelledby=\"achievements-r8\"]"
           ]
         },
         {
@@ -3480,7 +3152,7 @@
           "impact": null,
           "html": "<div class=\"w-full bg-gray-700 rounded-full h-3\" role=\"progressbar\" aria-label=\"Achievement progress: 0%\">",
           "target": [
-            "div[aria-label=\"Achievement progress: 0%\"]"
+            "div[role=\"progressbar\"]"
           ]
         }
       ]
@@ -3500,38 +3172,6 @@
       "help": "Inline text spacing must be adjustable with custom stylesheets",
       "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/avoid-inline-spacing?application=axeAPI",
       "nodes": [
-        {
-          "any": [],
-          "all": [
-            {
-              "id": "important-letter-spacing",
-              "data": null,
-              "relatedNodes": [],
-              "impact": "serious",
-              "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
-            },
-            {
-              "id": "important-word-spacing",
-              "data": null,
-              "relatedNodes": [],
-              "impact": "serious",
-              "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
-            },
-            {
-              "id": "important-line-height",
-              "data": null,
-              "relatedNodes": [],
-              "impact": "serious",
-              "message": "line-height in the style attribute is not set to !important, or meets the minimum"
-            }
-          ],
-          "none": [],
-          "impact": null,
-          "html": "<div class=\"h-2 rounded-full bg-gray-700\" role=\"progressbar\" aria-label=\"Day progress: 100%\" style=\"--progress: 100%;\"><div class=\"h-2 rounded-full bg-accent-blue progress-fill\"></div><span class=\"sr-only\">Day progress: 100%</span></div>",
-          "target": [
-            "div[aria-label=\"Day progress: 100%\"]"
-          ]
-        },
         {
           "any": [],
           "all": [
@@ -3823,9 +3463,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<button data-testid=\"grounding-rose-button\" class=\"w-16 h-16 rounded-full bg-pink-500/50 flex items-center justify-center text-3xl cursor-pointer shadow-lg transition-all hover:bg-pink-400\" role=\"button\" aria-label=\"Activate Grounding Rose\" type=\"button\">🌹</button>",
+          "html": "<button data-testid=\"grounding-rose-butto...\" class=\"relative w-24 h-24 r...\" role=\"button\" aria-label=\"Activate Grounding R...\" type=\"button\" tabindex=\"0\">",
           "target": [
-            ".w-16"
+            ".w-24"
           ]
         },
         {
@@ -4230,7 +3870,7 @@
               "data": null,
               "relatedNodes": [
                 {
-                  "html": "<h1 data-testid=\"command-center-title\" class=\"text-4xl font-bold text-primary-400 mb-2\">The Cockpit</h1>",
+                  "html": "<h1 data-testid=\"command-center-title\" class=\"text-3xl font-bold text-primary-400 mb-2 pt-4\">The Cockpit</h1>",
                   "target": [
                     "h1"
                   ]
@@ -4242,21 +3882,21 @@
                   ]
                 },
                 {
-                  "html": "<h2 id=\"day-progress-r3\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">Day Progress</h2>",
+                  "html": "<h2 class=\"text-2xl font-bold text-accent-green mb-4\">Day Progress</h2>",
                   "target": [
-                    "#day-progress-r3"
+                    ".text-accent-green"
                   ]
                 },
                 {
-                  "html": "<h2 id=\"personal-status-r7\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">👤 Personal Status</h2>",
+                  "html": "<h2 id=\"personal-status-r2\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">👤 Personal Status</h2>",
                   "target": [
-                    "#personal-status-r7"
+                    "#personal-status-r2"
                   ]
                 },
                 {
                   "html": "<h3 class=\"text-md font-semibold text-accent-teal mb-2\">🧠 Mood</h3>",
                   "target": [
-                    "section[aria-labelledby=\"personal-status-r7\"] > .md\\:p-6.bg-card-dark.shadow-md > .flex-grow > .space-y-4 > div:nth-child(1) > h3"
+                    "section[aria-labelledby=\"personal-status-r2\"] > .card-base.flex-col.flex > .flex-grow > .space-y-4 > div:nth-child(1) > h3"
                   ]
                 },
                 {
@@ -4266,15 +3906,15 @@
                   ]
                 },
                 {
-                  "html": "<h2 id=\"daily-essentials-r9\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">🥗 Daily Essentials</h2>",
+                  "html": "<h2 id=\"daily-essentials-r3\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">🥗 Daily Essentials</h2>",
                   "target": [
-                    "#daily-essentials-r9"
+                    "#daily-essentials-r3"
                   ]
                 },
                 {
-                  "html": "<h2 id=\"kids-status-rb\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">👶 Kids Status</h2>",
+                  "html": "<h2 id=\"kids-status-r4\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">👶 Kids Status</h2>",
                   "target": [
-                    "#kids-status-rb"
+                    "#kids-status-r4"
                   ]
                 },
                 {
@@ -4290,27 +3930,27 @@
                   ]
                 },
                 {
-                  "html": "<h2 id=\"workspace-launchpad-rd\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">🚀 Workspace Launchpad</h2>",
+                  "html": "<h2 id=\"workspace-launchpad-r5\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">🚀 Workspace Launchpad</h2>",
                   "target": [
-                    "#workspace-launchpad-rd"
+                    "#workspace-launchpad-r5"
                   ]
                 },
                 {
-                  "html": "<h2 id=\"workspace-launchpad-rf\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">🚀 Workspace Launchpad</h2>",
+                  "html": "<h2 id=\"workspace-launchpad-r6\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">🚀 Workspace Launchpad</h2>",
                   "target": [
-                    "#workspace-launchpad-rf"
+                    "#workspace-launchpad-r6"
                   ]
                 },
                 {
-                  "html": "<h2 id=\"observer-rh\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">🧠 Observer</h2>",
+                  "html": "<h2 id=\"observer-r7\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">🧠 Observer</h2>",
                   "target": [
-                    "#observer-rh"
+                    "#observer-r7"
                   ]
                 },
                 {
-                  "html": "<h2 id=\"achievements-rj\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">🏆 Achievements</h2>",
+                  "html": "<h2 id=\"achievements-r8\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">🏆 Achievements</h2>",
                   "target": [
-                    "#achievements-rj"
+                    "#achievements-r8"
                   ]
                 },
                 {
@@ -4322,61 +3962,61 @@
                 {
                   "html": "<h4 class=\"text-md font-bold text-text-light\">1 Hour Hobby Time</h4>",
                   "target": [
-                    ".opacity-80.duration-300.filter:nth-child(1) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+                    ".opacity-80.filter.grayscale:nth-child(1) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
                   ]
                 },
                 {
                   "html": "<h4 class=\"text-md font-bold text-text-light\">Small Tech/Tool Purchase</h4>",
                   "target": [
-                    ".opacity-80.duration-300.filter:nth-child(2) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+                    ".opacity-80.filter.grayscale:nth-child(2) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
                   ]
                 },
                 {
                   "html": "<h4 class=\"text-md font-bold text-text-light\">Guilt-Free Rest Day</h4>",
                   "target": [
-                    ".opacity-80.duration-300.filter:nth-child(3) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+                    ".opacity-80.filter.grayscale:nth-child(3) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
                   ]
                 },
                 {
                   "html": "<h4 class=\"text-center text-accent-teal font-semibold mb-3\">Achievement Roadmap (0/6)</h4>",
                   "target": [
-                    ".mb-3.text-center.text-accent-teal"
+                    ".mb-3.text-center"
                   ]
                 },
                 {
                   "html": "<h4 class=\"text-md font-bold text-gray-300\">Inbox Zero</h4>",
                   "target": [
-                    ".opacity-60.duration-300.p-3:nth-child(1) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+                    ".opacity-60.rounded-lg.duration-300:nth-child(1) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
                   ]
                 },
                 {
                   "html": "<h4 class=\"text-md font-bold text-gray-300\">Weekly Deep Clean</h4>",
                   "target": [
-                    ".opacity-60.duration-300.p-3:nth-child(2) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+                    ".opacity-60.rounded-lg.duration-300:nth-child(2) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
                   ]
                 },
                 {
                   "html": "<h4 class=\"text-md font-bold text-gray-300\">Solo Week Executed</h4>",
                   "target": [
-                    ".opacity-60.duration-300.p-3:nth-child(3) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+                    ".opacity-60.rounded-lg.duration-300:nth-child(3) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
                   ]
                 },
                 {
                   "html": "<h4 class=\"text-md font-bold text-gray-300\">Daily Foundation Set</h4>",
                   "target": [
-                    ".opacity-60.duration-300.p-3:nth-child(4) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+                    ".opacity-60.rounded-lg.duration-300:nth-child(4) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
                   ]
                 },
                 {
                   "html": "<h4 class=\"text-md font-bold text-gray-300\">Weekly Review Done</h4>",
                   "target": [
-                    ".opacity-60.duration-300.p-3:nth-child(5) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+                    ".opacity-60.rounded-lg.duration-300:nth-child(5) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
                   ]
                 },
                 {
                   "html": "<h4 class=\"text-md font-bold text-gray-300\">All Systems Green</h4>",
                   "target": [
-                    ".opacity-60.duration-300.p-3:nth-child(6) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+                    ".opacity-60.rounded-lg.duration-300:nth-child(6) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
                   ]
                 }
               ],
@@ -4772,7 +4412,7 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h1 data-testid=\"command-center-title\" class=\"text-4xl font-bold text-primary-400 mb-2\">The Cockpit</h1>",
+          "html": "<h1 data-testid=\"command-center-title\" class=\"text-3xl font-bold text-primary-400 mb-2 pt-4\">The Cockpit</h1>",
           "target": [
             "h1"
           ]
@@ -4847,9 +4487,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"day-progress-r3\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">Day Progress</h2>",
+          "html": "<h2 class=\"text-2xl font-bold text-accent-green mb-4\">Day Progress</h2>",
           "target": [
-            "#day-progress-r3"
+            ".text-accent-green"
           ]
         },
         {
@@ -4874,32 +4514,7 @@
           "impact": null,
           "html": "<span class=\"font-mono text-sm text-accent-teal\">06:00</span>",
           "target": [
-            ".font-mono.text-accent-teal:nth-child(1)"
-          ]
-        },
-        {
-          "any": [
-            {
-              "id": "color-contrast",
-              "data": {
-                "fgColor": "#000000",
-                "bgColor": "#ffffff",
-                "contrastRatio": 21,
-                "fontSize": "12.0pt (16px)",
-                "fontWeight": "normal",
-                "expectedContrastRatio": "4.5:1"
-              },
-              "relatedNodes": [],
-              "impact": "serious",
-              "message": "Element has sufficient color contrast of 21"
-            }
-          ],
-          "all": [],
-          "none": [],
-          "impact": null,
-          "html": "<span class=\"sr-only\">Day progress: 100%</span>",
-          "target": [
-            "div[aria-label=\"Day progress: 100%\"] > .sr-only"
+            ".gap-4.items-center.flex > .font-mono.text-accent-teal:nth-child(1)"
           ]
         },
         {
@@ -4947,31 +4562,6 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<p class=\"text-center text-sm text-text-light text-opacity-70 mt-2\">Current System Time: 10:59 PM</p>",
-          "target": [
-            ".text-opacity-70"
-          ]
-        },
-        {
-          "any": [
-            {
-              "id": "color-contrast",
-              "data": {
-                "fgColor": "#000000",
-                "bgColor": "#ffffff",
-                "contrastRatio": 21,
-                "fontSize": "12.0pt (16px)",
-                "fontWeight": "normal",
-                "expectedContrastRatio": "4.5:1"
-              },
-              "relatedNodes": [],
-              "impact": "serious",
-              "message": "Element has sufficient color contrast of 21"
-            }
-          ],
-          "all": [],
-          "none": [],
-          "impact": null,
           "html": "<p class=\"text-text-muted text-sm\">Take a moment to ground yourself. Feel the connection.</p>",
           "target": [
             ".flex-grow > .text-text-muted"
@@ -4997,9 +4587,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"personal-status-r7\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">👤 Personal Status</h2>",
+          "html": "<h2 id=\"personal-status-r2\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">👤 Personal Status</h2>",
           "target": [
-            "#personal-status-r7"
+            "#personal-status-r2"
           ]
         },
         {
@@ -5024,7 +4614,7 @@
           "impact": null,
           "html": "<h3 class=\"text-md font-semibold text-accent-teal mb-2\">🧠 Mood</h3>",
           "target": [
-            "section[aria-labelledby=\"personal-status-r7\"] > .md\\:p-6.bg-card-dark.shadow-md > .flex-grow > .space-y-4 > div:nth-child(1) > h3"
+            "section[aria-labelledby=\"personal-status-r2\"] > .card-base.flex-col.flex > .flex-grow > .space-y-4 > div:nth-child(1) > h3"
           ]
         },
         {
@@ -5222,9 +4812,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"daily-essentials-r9\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">🥗 Daily Essentials</h2>",
+          "html": "<h2 id=\"daily-essentials-r3\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">🥗 Daily Essentials</h2>",
           "target": [
-            "#daily-essentials-r9"
+            "#daily-essentials-r3"
           ]
         },
         {
@@ -5249,7 +4839,7 @@
           "impact": null,
           "html": "<p class=\"text-text-light text-opacity-80 text-center p-4\">This module has been deprecated. Its functionality is now integrated into the 'Daily Command Module' for a more unified daily workflow.</p>",
           "target": [
-            ".text-opacity-80.text-center.p-4"
+            ".text-opacity-80.p-4.text-center"
           ]
         },
         {
@@ -5272,9 +4862,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"kids-status-rb\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">👶 Kids Status</h2>",
+          "html": "<h2 id=\"kids-status-r4\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">👶 Kids Status</h2>",
           "target": [
-            "#kids-status-rb"
+            "#kids-status-r4"
           ]
         },
         {
@@ -5422,7 +5012,7 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<input id=\"kids-willow-note\" type=\"text\" placeholder=\"Quick update...\" class=\"flex-grow p-2 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue w-full\" value=\"\">",
+          "html": "<input id=\"kids-willow-note\" placeholder=\"Quick update...\" class=\"flex-grow p-2 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue w-full\" type=\"text\" value=\"\">",
           "target": [
             "#kids-willow-note"
           ]
@@ -5572,7 +5162,7 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<input id=\"kids-sebastian-note\" type=\"text\" placeholder=\"Quick update...\" class=\"flex-grow p-2 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue w-full\" value=\"\">",
+          "html": "<input id=\"kids-sebastian-note\" placeholder=\"Quick update...\" class=\"flex-grow p-2 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue w-full\" type=\"text\" value=\"\">",
           "target": [
             "#kids-sebastian-note"
           ]
@@ -5597,9 +5187,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"workspace-launchpad-rd\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">🚀 Workspace Launchpad</h2>",
+          "html": "<h2 id=\"workspace-launchpad-r5\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">🚀 Workspace Launchpad</h2>",
           "target": [
-            "#workspace-launchpad-rd"
+            "#workspace-launchpad-r5"
           ]
         },
         {
@@ -5622,9 +5212,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"workspace-launchpad-rf\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">🚀 Workspace Launchpad</h2>",
+          "html": "<h2 id=\"workspace-launchpad-r6\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">🚀 Workspace Launchpad</h2>",
           "target": [
-            "#workspace-launchpad-rf"
+            "#workspace-launchpad-r6"
           ]
         },
         {
@@ -5822,9 +5412,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"observer-rh\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">🧠 Observer</h2>",
+          "html": "<h2 id=\"observer-r7\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">🧠 Observer</h2>",
           "target": [
-            "#observer-rh"
+            "#observer-r7"
           ]
         },
         {
@@ -5872,7 +5462,7 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<input type=\"text\" data-testid=\"ask-ai-input\" placeholder=\"Describe the chaos...\" class=\"flex-grow p-3 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue\" value=\"\">",
+          "html": "<input data-testid=\"ask-ai-input\" placeholder=\"Describe the chaos...\" class=\"flex-grow p-3 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue\" type=\"text\" value=\"\">",
           "target": [
             "input[data-testid=\"ask-ai-input\"]"
           ]
@@ -5922,9 +5512,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"achievements-rj\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">🏆 Achievements</h2>",
+          "html": "<h2 id=\"achievements-r8\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">🏆 Achievements</h2>",
           "target": [
-            "#achievements-rj"
+            "#achievements-r8"
           ]
         },
         {
@@ -5999,7 +5589,7 @@
           "impact": null,
           "html": "<span class=\"sr-only\">Progress: 0%</span>",
           "target": [
-            "div[aria-label=\"Achievement progress: 0%\"] > .sr-only"
+            "div[role=\"progressbar\"] > .sr-only"
           ]
         },
         {
@@ -6024,7 +5614,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-text-light\">1 Hour Hobby Time</h4>",
           "target": [
-            ".opacity-80.duration-300.filter:nth-child(1) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-80.filter.grayscale:nth-child(1) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         },
         {
@@ -6049,7 +5639,7 @@
           "impact": null,
           "html": "<p class=\"text-xs mt-1 text-gray-300\">Requires 2 Achievements</p>",
           "target": [
-            ".opacity-80.duration-300.filter:nth-child(1) > .space-x-3.items-center.flex > div:nth-child(2) > .mt-1.text-gray-300"
+            ".opacity-80.filter.grayscale:nth-child(1) > .space-x-3.items-center.flex > div:nth-child(2) > .mt-1.text-gray-300"
           ]
         },
         {
@@ -6074,7 +5664,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-text-light\">Small Tech/Tool Purchase</h4>",
           "target": [
-            ".opacity-80.duration-300.filter:nth-child(2) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-80.filter.grayscale:nth-child(2) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         },
         {
@@ -6099,7 +5689,7 @@
           "impact": null,
           "html": "<p class=\"text-xs mt-1 text-gray-300\">Requires 4 Achievements</p>",
           "target": [
-            ".opacity-80.duration-300.filter:nth-child(2) > .space-x-3.items-center.flex > div:nth-child(2) > .mt-1.text-gray-300"
+            ".opacity-80.filter.grayscale:nth-child(2) > .space-x-3.items-center.flex > div:nth-child(2) > .mt-1.text-gray-300"
           ]
         },
         {
@@ -6124,7 +5714,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-text-light\">Guilt-Free Rest Day</h4>",
           "target": [
-            ".opacity-80.duration-300.filter:nth-child(3) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-80.filter.grayscale:nth-child(3) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         },
         {
@@ -6149,7 +5739,7 @@
           "impact": null,
           "html": "<p class=\"text-xs mt-1 text-gray-300\">Requires 6 Achievements</p>",
           "target": [
-            ".opacity-80.duration-300.filter:nth-child(3) > .space-x-3.items-center.flex > div:nth-child(2) > .mt-1.text-gray-300"
+            ".opacity-80.filter.grayscale:nth-child(3) > .space-x-3.items-center.flex > div:nth-child(2) > .mt-1.text-gray-300"
           ]
         },
         {
@@ -6174,7 +5764,7 @@
           "impact": null,
           "html": "<h4 class=\"text-center text-accent-teal font-semibold mb-3\">Achievement Roadmap (0/6)</h4>",
           "target": [
-            ".mb-3.text-center.text-accent-teal"
+            ".mb-3.text-center"
           ]
         },
         {
@@ -6199,7 +5789,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-gray-300\">Inbox Zero</h4>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(1) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-60.rounded-lg.duration-300:nth-child(1) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         },
         {
@@ -6224,7 +5814,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-gray-300\">Weekly Deep Clean</h4>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(2) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-60.rounded-lg.duration-300:nth-child(2) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         },
         {
@@ -6249,7 +5839,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-gray-300\">Solo Week Executed</h4>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(3) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-60.rounded-lg.duration-300:nth-child(3) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         },
         {
@@ -6274,7 +5864,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-gray-300\">Daily Foundation Set</h4>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(4) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-60.rounded-lg.duration-300:nth-child(4) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         },
         {
@@ -6299,7 +5889,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-gray-300\">Weekly Review Done</h4>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(5) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-60.rounded-lg.duration-300:nth-child(5) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         },
         {
@@ -6324,7 +5914,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-gray-300\">All Systems Green</h4>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(6) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-60.rounded-lg.duration-300:nth-child(6) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         },
         {
@@ -6413,7 +6003,7 @@
           "any": [
             {
               "id": "duplicate-id-aria",
-              "data": "day-progress-r3",
+              "data": "personal-status-r2",
               "relatedNodes": [],
               "impact": "critical",
               "message": "Document has no elements referenced with ARIA or labels that share the same id attribute"
@@ -6422,16 +6012,16 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"day-progress-r3\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">Day Progress</h2>",
+          "html": "<h2 id=\"personal-status-r2\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">👤 Personal Status</h2>",
           "target": [
-            "#day-progress-r3"
+            "#personal-status-r2"
           ]
         },
         {
           "any": [
             {
               "id": "duplicate-id-aria",
-              "data": "personal-status-r7",
+              "data": "daily-essentials-r3",
               "relatedNodes": [],
               "impact": "critical",
               "message": "Document has no elements referenced with ARIA or labels that share the same id attribute"
@@ -6440,16 +6030,16 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"personal-status-r7\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">👤 Personal Status</h2>",
+          "html": "<h2 id=\"daily-essentials-r3\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">🥗 Daily Essentials</h2>",
           "target": [
-            "#personal-status-r7"
+            "#daily-essentials-r3"
           ]
         },
         {
           "any": [
             {
               "id": "duplicate-id-aria",
-              "data": "daily-essentials-r9",
+              "data": "kids-status-r4",
               "relatedNodes": [],
               "impact": "critical",
               "message": "Document has no elements referenced with ARIA or labels that share the same id attribute"
@@ -6458,27 +6048,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"daily-essentials-r9\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">🥗 Daily Essentials</h2>",
+          "html": "<h2 id=\"kids-status-r4\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">👶 Kids Status</h2>",
           "target": [
-            "#daily-essentials-r9"
-          ]
-        },
-        {
-          "any": [
-            {
-              "id": "duplicate-id-aria",
-              "data": "kids-status-rb",
-              "relatedNodes": [],
-              "impact": "critical",
-              "message": "Document has no elements referenced with ARIA or labels that share the same id attribute"
-            }
-          ],
-          "all": [],
-          "none": [],
-          "impact": null,
-          "html": "<h2 id=\"kids-status-rb\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">👶 Kids Status</h2>",
-          "target": [
-            "#kids-status-rb"
+            "#kids-status-r4"
           ]
         },
         {
@@ -6494,7 +6066,7 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<input id=\"kids-willow-note\" type=\"text\" placeholder=\"Quick update...\" class=\"flex-grow p-2 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue w-full\" value=\"\">",
+          "html": "<input id=\"kids-willow-note\" placeholder=\"Quick update...\" class=\"flex-grow p-2 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue w-full\" type=\"text\" value=\"\">",
           "target": [
             "#kids-willow-note"
           ]
@@ -6512,7 +6084,7 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<input id=\"kids-sebastian-note\" type=\"text\" placeholder=\"Quick update...\" class=\"flex-grow p-2 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue w-full\" value=\"\">",
+          "html": "<input id=\"kids-sebastian-note\" placeholder=\"Quick update...\" class=\"flex-grow p-2 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue w-full\" type=\"text\" value=\"\">",
           "target": [
             "#kids-sebastian-note"
           ]
@@ -6521,7 +6093,7 @@
           "any": [
             {
               "id": "duplicate-id-aria",
-              "data": "workspace-launchpad-rd",
+              "data": "workspace-launchpad-r5",
               "relatedNodes": [],
               "impact": "critical",
               "message": "Document has no elements referenced with ARIA or labels that share the same id attribute"
@@ -6530,16 +6102,16 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"workspace-launchpad-rd\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">🚀 Workspace Launchpad</h2>",
+          "html": "<h2 id=\"workspace-launchpad-r5\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">🚀 Workspace Launchpad</h2>",
           "target": [
-            "#workspace-launchpad-rd"
+            "#workspace-launchpad-r5"
           ]
         },
         {
           "any": [
             {
               "id": "duplicate-id-aria",
-              "data": "workspace-launchpad-rf",
+              "data": "workspace-launchpad-r6",
               "relatedNodes": [],
               "impact": "critical",
               "message": "Document has no elements referenced with ARIA or labels that share the same id attribute"
@@ -6548,16 +6120,16 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"workspace-launchpad-rf\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">🚀 Workspace Launchpad</h2>",
+          "html": "<h2 id=\"workspace-launchpad-r6\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">🚀 Workspace Launchpad</h2>",
           "target": [
-            "#workspace-launchpad-rf"
+            "#workspace-launchpad-r6"
           ]
         },
         {
           "any": [
             {
               "id": "duplicate-id-aria",
-              "data": "observer-rh",
+              "data": "observer-r7",
               "relatedNodes": [],
               "impact": "critical",
               "message": "Document has no elements referenced with ARIA or labels that share the same id attribute"
@@ -6566,16 +6138,16 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"observer-rh\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">🧠 Observer</h2>",
+          "html": "<h2 id=\"observer-r7\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">🧠 Observer</h2>",
           "target": [
-            "#observer-rh"
+            "#observer-r7"
           ]
         },
         {
           "any": [
             {
               "id": "duplicate-id-aria",
-              "data": "achievements-rj",
+              "data": "achievements-r8",
               "relatedNodes": [],
               "impact": "critical",
               "message": "Document has no elements referenced with ARIA or labels that share the same id attribute"
@@ -6584,9 +6156,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"achievements-rj\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">🏆 Achievements</h2>",
+          "html": "<h2 id=\"achievements-r8\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">🏆 Achievements</h2>",
           "target": [
-            "#achievements-rj"
+            "#achievements-r8"
           ]
         }
       ]
@@ -6615,7 +6187,7 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h1 data-testid=\"command-center-title\" class=\"text-4xl font-bold text-primary-400 mb-2\">The Cockpit</h1>",
+          "html": "<h1 data-testid=\"command-center-title\" class=\"text-3xl font-bold text-primary-400 mb-2 pt-4\">The Cockpit</h1>",
           "target": [
             "h1"
           ]
@@ -6651,9 +6223,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"day-progress-r3\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">Day Progress</h2>",
+          "html": "<h2 class=\"text-2xl font-bold text-accent-green mb-4\">Day Progress</h2>",
           "target": [
-            "#day-progress-r3"
+            ".text-accent-green"
           ]
         },
         {
@@ -6669,9 +6241,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"personal-status-r7\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">👤 Personal Status</h2>",
+          "html": "<h2 id=\"personal-status-r2\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">👤 Personal Status</h2>",
           "target": [
-            "#personal-status-r7"
+            "#personal-status-r2"
           ]
         },
         {
@@ -6689,7 +6261,7 @@
           "impact": null,
           "html": "<h3 class=\"text-md font-semibold text-accent-teal mb-2\">🧠 Mood</h3>",
           "target": [
-            "section[aria-labelledby=\"personal-status-r7\"] > .md\\:p-6.bg-card-dark.shadow-md > .flex-grow > .space-y-4 > div:nth-child(1) > h3"
+            "section[aria-labelledby=\"personal-status-r2\"] > .card-base.flex-col.flex > .flex-grow > .space-y-4 > div:nth-child(1) > h3"
           ]
         },
         {
@@ -6723,9 +6295,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"daily-essentials-r9\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">🥗 Daily Essentials</h2>",
+          "html": "<h2 id=\"daily-essentials-r3\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">🥗 Daily Essentials</h2>",
           "target": [
-            "#daily-essentials-r9"
+            "#daily-essentials-r3"
           ]
         },
         {
@@ -6741,9 +6313,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"kids-status-rb\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">👶 Kids Status</h2>",
+          "html": "<h2 id=\"kids-status-r4\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">👶 Kids Status</h2>",
           "target": [
-            "#kids-status-rb"
+            "#kids-status-r4"
           ]
         },
         {
@@ -6795,9 +6367,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"workspace-launchpad-rd\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">🚀 Workspace Launchpad</h2>",
+          "html": "<h2 id=\"workspace-launchpad-r5\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">🚀 Workspace Launchpad</h2>",
           "target": [
-            "#workspace-launchpad-rd"
+            "#workspace-launchpad-r5"
           ]
         },
         {
@@ -6813,9 +6385,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"workspace-launchpad-rf\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">🚀 Workspace Launchpad</h2>",
+          "html": "<h2 id=\"workspace-launchpad-r6\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">🚀 Workspace Launchpad</h2>",
           "target": [
-            "#workspace-launchpad-rf"
+            "#workspace-launchpad-r6"
           ]
         },
         {
@@ -6831,9 +6403,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"observer-rh\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">🧠 Observer</h2>",
+          "html": "<h2 id=\"observer-r7\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">🧠 Observer</h2>",
           "target": [
-            "#observer-rh"
+            "#observer-r7"
           ]
         },
         {
@@ -6849,9 +6421,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"achievements-rj\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">🏆 Achievements</h2>",
+          "html": "<h2 id=\"achievements-r8\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">🏆 Achievements</h2>",
           "target": [
-            "#achievements-rj"
+            "#achievements-r8"
           ]
         },
         {
@@ -6887,7 +6459,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-text-light\">1 Hour Hobby Time</h4>",
           "target": [
-            ".opacity-80.duration-300.filter:nth-child(1) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-80.filter.grayscale:nth-child(1) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         },
         {
@@ -6905,7 +6477,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-text-light\">Small Tech/Tool Purchase</h4>",
           "target": [
-            ".opacity-80.duration-300.filter:nth-child(2) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-80.filter.grayscale:nth-child(2) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         },
         {
@@ -6923,7 +6495,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-text-light\">Guilt-Free Rest Day</h4>",
           "target": [
-            ".opacity-80.duration-300.filter:nth-child(3) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-80.filter.grayscale:nth-child(3) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         },
         {
@@ -6941,7 +6513,7 @@
           "impact": null,
           "html": "<h4 class=\"text-center text-accent-teal font-semibold mb-3\">Achievement Roadmap (0/6)</h4>",
           "target": [
-            ".mb-3.text-center.text-accent-teal"
+            ".mb-3.text-center"
           ]
         },
         {
@@ -6959,7 +6531,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-gray-300\">Inbox Zero</h4>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(1) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-60.rounded-lg.duration-300:nth-child(1) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         },
         {
@@ -6977,7 +6549,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-gray-300\">Weekly Deep Clean</h4>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(2) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-60.rounded-lg.duration-300:nth-child(2) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         },
         {
@@ -6995,7 +6567,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-gray-300\">Solo Week Executed</h4>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(3) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-60.rounded-lg.duration-300:nth-child(3) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         },
         {
@@ -7013,7 +6585,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-gray-300\">Daily Foundation Set</h4>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(4) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-60.rounded-lg.duration-300:nth-child(4) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         },
         {
@@ -7031,7 +6603,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-gray-300\">Weekly Review Done</h4>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(5) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-60.rounded-lg.duration-300:nth-child(5) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         },
         {
@@ -7049,7 +6621,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-gray-300\">All Systems Green</h4>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(6) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-60.rounded-lg.duration-300:nth-child(6) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         }
       ]
@@ -7092,7 +6664,7 @@
             }
           ],
           "impact": null,
-          "html": "<input id=\"kids-willow-note\" type=\"text\" placeholder=\"Quick update...\" class=\"flex-grow p-2 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue w-full\" value=\"\">",
+          "html": "<input id=\"kids-willow-note\" placeholder=\"Quick update...\" class=\"flex-grow p-2 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue w-full\" type=\"text\" value=\"\">",
           "target": [
             "#kids-willow-note"
           ]
@@ -7117,7 +6689,7 @@
             }
           ],
           "impact": null,
-          "html": "<input id=\"kids-sebastian-note\" type=\"text\" placeholder=\"Quick update...\" class=\"flex-grow p-2 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue w-full\" value=\"\">",
+          "html": "<input id=\"kids-sebastian-note\" placeholder=\"Quick update...\" class=\"flex-grow p-2 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue w-full\" type=\"text\" value=\"\">",
           "target": [
             "#kids-sebastian-note"
           ]
@@ -7135,7 +6707,7 @@
             }
           ],
           "impact": null,
-          "html": "<input type=\"text\" data-testid=\"ask-ai-input\" placeholder=\"Describe the chaos...\" class=\"flex-grow p-3 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue\" value=\"\">",
+          "html": "<input data-testid=\"ask-ai-input\" placeholder=\"Describe the chaos...\" class=\"flex-grow p-3 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue\" type=\"text\" value=\"\">",
           "target": [
             "input[data-testid=\"ask-ai-input\"]"
           ]
@@ -7173,7 +6745,7 @@
                   },
                   {
                     "ancestry": [
-                      "html > body > div:nth-child(2) > div > div:nth-child(2) > main > div > div:nth-child(2) > section:nth-child(1) > div > div > section:nth-child(2) > div > h2:nth-child(1)"
+                      "html > body > div:nth-child(2) > div > div:nth-child(2) > main > div > div:nth-child(2) > section:nth-child(1) > div > div > div:nth-child(2) > h2:nth-child(1)"
                     ],
                     "level": 2
                   },
@@ -7319,7 +6891,7 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h1 data-testid=\"command-center-title\" class=\"text-4xl font-bold text-primary-400 mb-2\">The Cockpit</h1>",
+          "html": "<h1 data-testid=\"command-center-title\" class=\"text-3xl font-bold text-primary-400 mb-2 pt-4\">The Cockpit</h1>",
           "target": [
             "h1"
           ]
@@ -7355,9 +6927,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"day-progress-r3\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">Day Progress</h2>",
+          "html": "<h2 class=\"text-2xl font-bold text-accent-green mb-4\">Day Progress</h2>",
           "target": [
-            "#day-progress-r3"
+            ".text-accent-green"
           ]
         },
         {
@@ -7373,9 +6945,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"personal-status-r7\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">👤 Personal Status</h2>",
+          "html": "<h2 id=\"personal-status-r2\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">👤 Personal Status</h2>",
           "target": [
-            "#personal-status-r7"
+            "#personal-status-r2"
           ]
         },
         {
@@ -7393,7 +6965,7 @@
           "impact": null,
           "html": "<h3 class=\"text-md font-semibold text-accent-teal mb-2\">🧠 Mood</h3>",
           "target": [
-            "section[aria-labelledby=\"personal-status-r7\"] > .md\\:p-6.bg-card-dark.shadow-md > .flex-grow > .space-y-4 > div:nth-child(1) > h3"
+            "section[aria-labelledby=\"personal-status-r2\"] > .card-base.flex-col.flex > .flex-grow > .space-y-4 > div:nth-child(1) > h3"
           ]
         },
         {
@@ -7427,9 +6999,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"daily-essentials-r9\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">🥗 Daily Essentials</h2>",
+          "html": "<h2 id=\"daily-essentials-r3\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">🥗 Daily Essentials</h2>",
           "target": [
-            "#daily-essentials-r9"
+            "#daily-essentials-r3"
           ]
         },
         {
@@ -7445,9 +7017,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"kids-status-rb\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">👶 Kids Status</h2>",
+          "html": "<h2 id=\"kids-status-r4\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">👶 Kids Status</h2>",
           "target": [
-            "#kids-status-rb"
+            "#kids-status-r4"
           ]
         },
         {
@@ -7499,9 +7071,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"workspace-launchpad-rd\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">🚀 Workspace Launchpad</h2>",
+          "html": "<h2 id=\"workspace-launchpad-r5\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">🚀 Workspace Launchpad</h2>",
           "target": [
-            "#workspace-launchpad-rd"
+            "#workspace-launchpad-r5"
           ]
         },
         {
@@ -7517,9 +7089,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"workspace-launchpad-rf\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">🚀 Workspace Launchpad</h2>",
+          "html": "<h2 id=\"workspace-launchpad-r6\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">🚀 Workspace Launchpad</h2>",
           "target": [
-            "#workspace-launchpad-rf"
+            "#workspace-launchpad-r6"
           ]
         },
         {
@@ -7535,9 +7107,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"observer-rh\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">🧠 Observer</h2>",
+          "html": "<h2 id=\"observer-r7\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">🧠 Observer</h2>",
           "target": [
-            "#observer-rh"
+            "#observer-r7"
           ]
         },
         {
@@ -7553,9 +7125,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"achievements-rj\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">🏆 Achievements</h2>",
+          "html": "<h2 id=\"achievements-r8\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">🏆 Achievements</h2>",
           "target": [
-            "#achievements-rj"
+            "#achievements-r8"
           ]
         },
         {
@@ -7591,7 +7163,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-text-light\">1 Hour Hobby Time</h4>",
           "target": [
-            ".opacity-80.duration-300.filter:nth-child(1) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-80.filter.grayscale:nth-child(1) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         },
         {
@@ -7609,7 +7181,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-text-light\">Small Tech/Tool Purchase</h4>",
           "target": [
-            ".opacity-80.duration-300.filter:nth-child(2) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-80.filter.grayscale:nth-child(2) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         },
         {
@@ -7627,7 +7199,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-text-light\">Guilt-Free Rest Day</h4>",
           "target": [
-            ".opacity-80.duration-300.filter:nth-child(3) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-80.filter.grayscale:nth-child(3) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         },
         {
@@ -7645,7 +7217,7 @@
           "impact": null,
           "html": "<h4 class=\"text-center text-accent-teal font-semibold mb-3\">Achievement Roadmap (0/6)</h4>",
           "target": [
-            ".mb-3.text-center.text-accent-teal"
+            ".mb-3.text-center"
           ]
         },
         {
@@ -7663,7 +7235,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-gray-300\">Inbox Zero</h4>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(1) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-60.rounded-lg.duration-300:nth-child(1) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         },
         {
@@ -7681,7 +7253,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-gray-300\">Weekly Deep Clean</h4>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(2) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-60.rounded-lg.duration-300:nth-child(2) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         },
         {
@@ -7699,7 +7271,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-gray-300\">Solo Week Executed</h4>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(3) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-60.rounded-lg.duration-300:nth-child(3) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         },
         {
@@ -7717,7 +7289,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-gray-300\">Daily Foundation Set</h4>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(4) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-60.rounded-lg.duration-300:nth-child(4) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         },
         {
@@ -7735,7 +7307,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-gray-300\">Weekly Review Done</h4>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(5) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-60.rounded-lg.duration-300:nth-child(5) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         },
         {
@@ -7753,7 +7325,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-gray-300\">All Systems Green</h4>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(6) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-60.rounded-lg.duration-300:nth-child(6) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         }
       ]
@@ -7860,7 +7432,7 @@
             }
           ],
           "impact": null,
-          "html": "<input id=\"kids-willow-note\" type=\"text\" placeholder=\"Quick update...\" class=\"flex-grow p-2 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue w-full\" value=\"\">",
+          "html": "<input id=\"kids-willow-note\" placeholder=\"Quick update...\" class=\"flex-grow p-2 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue w-full\" type=\"text\" value=\"\">",
           "target": [
             "#kids-willow-note"
           ]
@@ -7878,7 +7450,7 @@
             }
           ],
           "impact": null,
-          "html": "<input id=\"kids-sebastian-note\" type=\"text\" placeholder=\"Quick update...\" class=\"flex-grow p-2 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue w-full\" value=\"\">",
+          "html": "<input id=\"kids-sebastian-note\" placeholder=\"Quick update...\" class=\"flex-grow p-2 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue w-full\" type=\"text\" value=\"\">",
           "target": [
             "#kids-sebastian-note"
           ]
@@ -7896,7 +7468,7 @@
             }
           ],
           "impact": null,
-          "html": "<input type=\"text\" data-testid=\"ask-ai-input\" placeholder=\"Describe the chaos...\" class=\"flex-grow p-3 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue\" value=\"\">",
+          "html": "<input data-testid=\"ask-ai-input\" placeholder=\"Describe the chaos...\" class=\"flex-grow p-3 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue\" type=\"text\" value=\"\">",
           "target": [
             "input[data-testid=\"ask-ai-input\"]"
           ]
@@ -7961,7 +7533,7 @@
             }
           ],
           "impact": null,
-          "html": "<input id=\"kids-willow-note\" type=\"text\" placeholder=\"Quick update...\" class=\"flex-grow p-2 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue w-full\" value=\"\">",
+          "html": "<input id=\"kids-willow-note\" placeholder=\"Quick update...\" class=\"flex-grow p-2 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue w-full\" type=\"text\" value=\"\">",
           "target": [
             "#kids-willow-note"
           ]
@@ -8003,7 +7575,7 @@
             }
           ],
           "impact": null,
-          "html": "<input id=\"kids-sebastian-note\" type=\"text\" placeholder=\"Quick update...\" class=\"flex-grow p-2 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue w-full\" value=\"\">",
+          "html": "<input id=\"kids-sebastian-note\" placeholder=\"Quick update...\" class=\"flex-grow p-2 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue w-full\" type=\"text\" value=\"\">",
           "target": [
             "#kids-sebastian-note"
           ]
@@ -8029,7 +7601,7 @@
             }
           ],
           "impact": null,
-          "html": "<input type=\"text\" data-testid=\"ask-ai-input\" placeholder=\"Describe the chaos...\" class=\"flex-grow p-3 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue\" value=\"\">",
+          "html": "<input data-testid=\"ask-ai-input\" placeholder=\"Describe the chaos...\" class=\"flex-grow p-3 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue\" type=\"text\" value=\"\">",
           "target": [
             "input[data-testid=\"ask-ai-input\"]"
           ]
@@ -8325,27 +7897,6 @@
               "id": "landmark-is-unique",
               "data": {
                 "role": "region",
-                "accessibleText": "day progress"
-              },
-              "relatedNodes": [],
-              "impact": "moderate",
-              "message": "Landmarks must have a unique role or role/label/title (i.e. accessible name) combination"
-            }
-          ],
-          "all": [],
-          "none": [],
-          "impact": null,
-          "html": "<section aria-labelledby=\"day-progress-r3\" class=\"\">",
-          "target": [
-            "section[aria-labelledby=\"day-progress-r3\"]"
-          ]
-        },
-        {
-          "any": [
-            {
-              "id": "landmark-is-unique",
-              "data": {
-                "role": "region",
                 "accessibleText": "👤 personal status"
               },
               "relatedNodes": [],
@@ -8356,9 +7907,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<section aria-labelledby=\"personal-status-r7\" class=\"\">",
+          "html": "<section aria-labelledby=\"personal-status-r2\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"personal-status-r7\"]"
+            "section[aria-labelledby=\"personal-status-r2\"]"
           ]
         },
         {
@@ -8377,9 +7928,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<section aria-labelledby=\"daily-essentials-r9\" class=\"\">",
+          "html": "<section aria-labelledby=\"daily-essentials-r3\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"daily-essentials-r9\"]"
+            "section[aria-labelledby=\"daily-essentials-r3\"]"
           ]
         },
         {
@@ -8398,9 +7949,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<section aria-labelledby=\"kids-status-rb\" class=\"\">",
+          "html": "<section aria-labelledby=\"kids-status-r4\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"kids-status-rb\"]"
+            "section[aria-labelledby=\"kids-status-r4\"]"
           ]
         },
         {
@@ -8419,9 +7970,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<section aria-labelledby=\"observer-rh\" class=\"\">",
+          "html": "<section aria-labelledby=\"observer-r7\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"observer-rh\"]"
+            "section[aria-labelledby=\"observer-r7\"]"
           ]
         },
         {
@@ -8440,9 +7991,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<section aria-labelledby=\"achievements-rj\" class=\"\">",
+          "html": "<section aria-labelledby=\"achievements-r8\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"achievements-rj\"]"
+            "section[aria-labelledby=\"achievements-r8\"]"
           ]
         },
         {
@@ -8879,27 +8430,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<div class=\"h-2 rounded-full bg-gray-700\" role=\"progressbar\" aria-label=\"Day progress: 100%\" style=\"--progress: 100%;\"><div class=\"h-2 rounded-full bg-accent-blue progress-fill\"></div><span class=\"sr-only\">Day progress: 100%</span></div>",
+          "html": "<button data-testid=\"grounding-rose-butto...\" class=\"relative w-24 h-24 r...\" role=\"button\" aria-label=\"Activate Grounding R...\" type=\"button\" tabindex=\"0\">",
           "target": [
-            "div[aria-label=\"Day progress: 100%\"]"
-          ]
-        },
-        {
-          "any": [
-            {
-              "id": "no-focusable-content",
-              "data": null,
-              "relatedNodes": [],
-              "impact": "serious",
-              "message": "Element does not have focusable descendants"
-            }
-          ],
-          "all": [],
-          "none": [],
-          "impact": null,
-          "html": "<button data-testid=\"grounding-rose-button\" class=\"w-16 h-16 rounded-full bg-pink-500/50 flex items-center justify-center text-3xl cursor-pointer shadow-lg transition-all hover:bg-pink-400\" role=\"button\" aria-label=\"Activate Grounding Rose\" type=\"button\">🌹</button>",
-          "target": [
-            ".w-16"
+            ".w-24"
           ]
         },
         {
@@ -9259,7 +8792,7 @@
           "impact": null,
           "html": "<div class=\"w-full bg-gray-700 rounded-full h-3\" role=\"progressbar\" aria-label=\"Achievement progress: 0%\">",
           "target": [
-            "div[aria-label=\"Achievement progress: 0%\"]"
+            "div[role=\"progressbar\"]"
           ]
         }
       ]
@@ -9283,7 +8816,7 @@
               "data": null,
               "relatedNodes": [
                 {
-                  "html": "<h1 data-testid=\"command-center-title\" class=\"text-4xl font-bold text-primary-400 mb-2\">The Cockpit</h1>",
+                  "html": "<h1 data-testid=\"command-center-title\" class=\"text-3xl font-bold text-primary-400 mb-2 pt-4\">The Cockpit</h1>",
                   "target": [
                     "h1"
                   ]
@@ -10110,7 +9643,7 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<header class=\"mb-8 text-center\"><h1 data-testid=\"command-center-title\" class=\"text-4xl font-bold text-primary-400 mb-2\">The Cockpit</h1><p class=\"text-text-muted\">Systems Online. Frequency Tuned. Welcome back, Pilot.</p></header>",
+          "html": "<header class=\"mb-8 text-center\"><h1 data-testid=\"command-center-title\" class=\"text-3xl font-bold text-primary-400 mb-2 pt-4\">The Cockpit</h1><p class=\"text-text-muted\">Systems Online. Frequency Tuned. Welcome back, Pilot.</p></header>",
           "target": [
             ".mb-8"
           ]
@@ -10130,7 +9663,7 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h1 data-testid=\"command-center-title\" class=\"text-4xl font-bold text-primary-400 mb-2\">The Cockpit</h1>",
+          "html": "<h1 data-testid=\"command-center-title\" class=\"text-3xl font-bold text-primary-400 mb-2 pt-4\">The Cockpit</h1>",
           "target": [
             "h1"
           ]
@@ -10210,9 +9743,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<div class=\"bg-card-dark rounded-lg shadow-md p-4 md:p-6 border border-gray-700 flex flex-col\">",
+          "html": "<div class=\"card-base flex flex-col\">",
           "target": [
-            ".gap-6.grid-cols-1.grid:nth-child(2) > section:nth-child(1) > .md\\:p-6.bg-card-dark.shadow-md"
+            ".gap-6.grid-cols-1.grid:nth-child(2) > section:nth-child(1) > .card-base.flex-col.flex"
           ]
         },
         {
@@ -10232,7 +9765,7 @@
           "impact": null,
           "html": "<div class=\"flex-grow\">",
           "target": [
-            ".gap-6.grid-cols-1.grid:nth-child(2) > section:nth-child(1) > .md\\:p-6.bg-card-dark.shadow-md > .flex-grow"
+            ".gap-6.grid-cols-1.grid:nth-child(2) > section:nth-child(1) > .card-base.flex-col.flex > .flex-grow"
           ]
         },
         {
@@ -10270,9 +9803,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<section aria-labelledby=\"day-progress-r3\" class=\"\">",
+          "html": "<div class=\"p-4 bg-card-dark rounded-lg shadow-md border border-gray-700\">",
           "target": [
-            "section[aria-labelledby=\"day-progress-r3\"]"
+            ".bg-card-dark.shadow-md.p-4"
           ]
         },
         {
@@ -10290,9 +9823,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<div class=\"bg-card-dark rounded-lg shadow-md p-4 md:p-6 border border-gray-700 flex flex-col\">",
+          "html": "<h2 class=\"text-2xl font-bold text-accent-green mb-4\">Day Progress</h2>",
           "target": [
-            "section[aria-labelledby=\"day-progress-r3\"] > .md\\:p-6.bg-card-dark.shadow-md"
+            ".text-accent-green"
           ]
         },
         {
@@ -10310,49 +9843,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"day-progress-r3\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">Day Progress</h2>",
+          "html": "<div class=\"flex items-center gap-4\"><span class=\"font-mono text-sm text-accent-teal\">06:00</span><div class=\"w-full bg-gray-700 rounded-full h-4\"><div class=\"h-4 rounded-full bg-accent-blue w-[45%]\"></div></div><span class=\"font-mono text-sm text-accent-teal\">22:30</span></div>",
           "target": [
-            "#day-progress-r3"
-          ]
-        },
-        {
-          "any": [
-            {
-              "id": "region",
-              "data": {
-                "isIframe": false
-              },
-              "relatedNodes": [],
-              "impact": "moderate",
-              "message": "All page content is contained by landmarks"
-            }
-          ],
-          "all": [],
-          "none": [],
-          "impact": null,
-          "html": "<div class=\"flex-grow\">",
-          "target": [
-            "section[aria-labelledby=\"day-progress-r3\"] > .md\\:p-6.bg-card-dark.shadow-md > .flex-grow"
-          ]
-        },
-        {
-          "any": [
-            {
-              "id": "region",
-              "data": {
-                "isIframe": false
-              },
-              "relatedNodes": [],
-              "impact": "moderate",
-              "message": "All page content is contained by landmarks"
-            }
-          ],
-          "all": [],
-          "none": [],
-          "impact": null,
-          "html": "<div class=\"flex items-center gap-4\">",
-          "target": [
-            ".flex-grow > .gap-4.items-center.flex"
+            ".bg-card-dark.shadow-md.p-4 > .gap-4.items-center.flex"
           ]
         },
         {
@@ -10372,7 +9865,7 @@
           "impact": null,
           "html": "<span class=\"font-mono text-sm text-accent-teal\">06:00</span>",
           "target": [
-            ".font-mono.text-accent-teal:nth-child(1)"
+            ".gap-4.items-center.flex > .font-mono.text-accent-teal:nth-child(1)"
           ]
         },
         {
@@ -10390,7 +9883,7 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<div class=\"w-full bg-gray-700 rounded-full h-4\"><div class=\"h-2 rounded-full bg-gray-700\" role=\"progressbar\" aria-label=\"Day progress: 100%\" style=\"--progress: 100%;\"><div class=\"h-2 rounded-full bg-accent-blue progress-fill\"></div><span class=\"sr-only\">Day progress: 100%</span></div></div>",
+          "html": "<div class=\"w-full bg-gray-700 rounded-full h-4\"><div class=\"h-4 rounded-full bg-accent-blue w-[45%]\"></div></div>",
           "target": [
             ".h-4.rounded-full.bg-gray-700"
           ]
@@ -10410,49 +9903,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<div class=\"h-2 rounded-full bg-gray-700\" role=\"progressbar\" aria-label=\"Day progress: 100%\" style=\"--progress: 100%;\"><div class=\"h-2 rounded-full bg-accent-blue progress-fill\"></div><span class=\"sr-only\">Day progress: 100%</span></div>",
+          "html": "<div class=\"h-4 rounded-full bg-accent-blue w-[45%]\"></div>",
           "target": [
-            "div[aria-label=\"Day progress: 100%\"]"
-          ]
-        },
-        {
-          "any": [
-            {
-              "id": "region",
-              "data": {
-                "isIframe": false
-              },
-              "relatedNodes": [],
-              "impact": "moderate",
-              "message": "All page content is contained by landmarks"
-            }
-          ],
-          "all": [],
-          "none": [],
-          "impact": null,
-          "html": "<div class=\"h-2 rounded-full bg-accent-blue progress-fill\"></div>",
-          "target": [
-            ".h-2.progress-fill.bg-accent-blue"
-          ]
-        },
-        {
-          "any": [
-            {
-              "id": "region",
-              "data": {
-                "isIframe": false
-              },
-              "relatedNodes": [],
-              "impact": "moderate",
-              "message": "All page content is contained by landmarks"
-            }
-          ],
-          "all": [],
-          "none": [],
-          "impact": null,
-          "html": "<span class=\"sr-only\">Day progress: 100%</span>",
-          "target": [
-            "div[aria-label=\"Day progress: 100%\"] > .sr-only"
+            ".w-\\[45\\%\\]"
           ]
         },
         {
@@ -10490,26 +9943,6 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<p class=\"text-center text-sm text-text-light text-opacity-70 mt-2\">Current System Time: 10:59 PM</p>",
-          "target": [
-            ".text-opacity-70"
-          ]
-        },
-        {
-          "any": [
-            {
-              "id": "region",
-              "data": {
-                "isIframe": false
-              },
-              "relatedNodes": [],
-              "impact": "moderate",
-              "message": "All page content is contained by landmarks"
-            }
-          ],
-          "all": [],
-          "none": [],
-          "impact": null,
           "html": "<section class=\"flex flex-col items-center justify-center space-y-6\">",
           "target": [
             ".space-y-6"
@@ -10530,9 +9963,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<div class=\"bg-card-dark rounded-lg shadow-md p-4 md:p-6 border border-gray-700 flex flex-col\">",
+          "html": "<div class=\"card-base flex flex-col\">",
           "target": [
-            ".space-y-6 > .md\\:p-6.bg-card-dark.shadow-md"
+            ".space-y-6 > .card-base.flex-col.flex"
           ]
         },
         {
@@ -10552,7 +9985,7 @@
           "impact": null,
           "html": "<div class=\"flex-grow\">",
           "target": [
-            ".space-y-6 > .md\\:p-6.bg-card-dark.shadow-md > .flex-grow"
+            ".space-y-6 > .card-base.flex-col.flex > .flex-grow"
           ]
         },
         {
@@ -10590,9 +10023,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<button data-testid=\"grounding-rose-button\" class=\"w-16 h-16 rounded-full bg-pink-500/50 flex items-center justify-center text-3xl cursor-pointer shadow-lg transition-all hover:bg-pink-400\" role=\"button\" aria-label=\"Activate Grounding Rose\" type=\"button\">🌹</button>",
+          "html": "<button data-testid=\"grounding-rose-butto...\" class=\"relative w-24 h-24 r...\" role=\"button\" aria-label=\"Activate Grounding R...\" type=\"button\" tabindex=\"0\">",
           "target": [
-            ".w-16"
+            ".w-24"
           ]
         },
         {
@@ -10630,9 +10063,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<section aria-labelledby=\"personal-status-r7\" class=\"\">",
+          "html": "<section aria-labelledby=\"personal-status-r2\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"personal-status-r7\"]"
+            "section[aria-labelledby=\"personal-status-r2\"]"
           ]
         },
         {
@@ -10650,9 +10083,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<div class=\"bg-card-dark rounded-lg shadow-md p-4 md:p-6 border border-gray-700 flex flex-col\">",
+          "html": "<div class=\"card-base flex flex-col\">",
           "target": [
-            "section[aria-labelledby=\"personal-status-r7\"] > .md\\:p-6.bg-card-dark.shadow-md"
+            "section[aria-labelledby=\"personal-status-r2\"] > .card-base.flex-col.flex"
           ]
         },
         {
@@ -10670,9 +10103,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"personal-status-r7\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">👤 Personal Status</h2>",
+          "html": "<h2 id=\"personal-status-r2\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">👤 Personal Status</h2>",
           "target": [
-            "#personal-status-r7"
+            "#personal-status-r2"
           ]
         },
         {
@@ -10692,7 +10125,7 @@
           "impact": null,
           "html": "<div class=\"flex-grow\">",
           "target": [
-            "section[aria-labelledby=\"personal-status-r7\"] > .md\\:p-6.bg-card-dark.shadow-md > .flex-grow"
+            "section[aria-labelledby=\"personal-status-r2\"] > .card-base.flex-col.flex > .flex-grow"
           ]
         },
         {
@@ -10712,7 +10145,7 @@
           "impact": null,
           "html": "<div class=\"space-y-4\">",
           "target": [
-            "section[aria-labelledby=\"personal-status-r7\"] > .md\\:p-6.bg-card-dark.shadow-md > .flex-grow > .space-y-4"
+            "section[aria-labelledby=\"personal-status-r2\"] > .card-base.flex-col.flex > .flex-grow > .space-y-4"
           ]
         },
         {
@@ -10732,7 +10165,7 @@
           "impact": null,
           "html": "<div>",
           "target": [
-            "section[aria-labelledby=\"personal-status-r7\"] > .md\\:p-6.bg-card-dark.shadow-md > .flex-grow > .space-y-4 > div:nth-child(1)"
+            "section[aria-labelledby=\"personal-status-r2\"] > .card-base.flex-col.flex > .flex-grow > .space-y-4 > div:nth-child(1)"
           ]
         },
         {
@@ -10752,7 +10185,7 @@
           "impact": null,
           "html": "<h3 class=\"text-md font-semibold text-accent-teal mb-2\">🧠 Mood</h3>",
           "target": [
-            "section[aria-labelledby=\"personal-status-r7\"] > .md\\:p-6.bg-card-dark.shadow-md > .flex-grow > .space-y-4 > div:nth-child(1) > h3"
+            "section[aria-labelledby=\"personal-status-r2\"] > .card-base.flex-col.flex > .flex-grow > .space-y-4 > div:nth-child(1) > h3"
           ]
         },
         {
@@ -10772,7 +10205,7 @@
           "impact": null,
           "html": "<div class=\"grid grid-cols-3 gap-2\">",
           "target": [
-            "section[aria-labelledby=\"personal-status-r7\"] > .md\\:p-6.bg-card-dark.shadow-md > .flex-grow > .space-y-4 > div:nth-child(1) > .grid-cols-3.grid.gap-2"
+            "section[aria-labelledby=\"personal-status-r2\"] > .card-base.flex-col.flex > .flex-grow > .space-y-4 > div:nth-child(1) > .grid-cols-3.grid.gap-2"
           ]
         },
         {
@@ -10852,7 +10285,7 @@
           "impact": null,
           "html": "<div>",
           "target": [
-            "section[aria-labelledby=\"personal-status-r7\"] > .md\\:p-6.bg-card-dark.shadow-md > .flex-grow > .space-y-4 > div:nth-child(2)"
+            "section[aria-labelledby=\"personal-status-r2\"] > .card-base.flex-col.flex > .flex-grow > .space-y-4 > div:nth-child(2)"
           ]
         },
         {
@@ -10970,9 +10403,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<section aria-labelledby=\"daily-essentials-r9\" class=\"\">",
+          "html": "<section aria-labelledby=\"daily-essentials-r3\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"daily-essentials-r9\"]"
+            "section[aria-labelledby=\"daily-essentials-r3\"]"
           ]
         },
         {
@@ -10990,9 +10423,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<div class=\"bg-card-dark rounded-lg shadow-md p-4 md:p-6 border border-gray-700 flex flex-col\">",
+          "html": "<div class=\"card-base flex flex-col\">",
           "target": [
-            "section[aria-labelledby=\"daily-essentials-r9\"] > .md\\:p-6.bg-card-dark.shadow-md"
+            "section[aria-labelledby=\"daily-essentials-r3\"] > .card-base.flex-col.flex"
           ]
         },
         {
@@ -11010,9 +10443,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"daily-essentials-r9\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">🥗 Daily Essentials</h2>",
+          "html": "<h2 id=\"daily-essentials-r3\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">🥗 Daily Essentials</h2>",
           "target": [
-            "#daily-essentials-r9"
+            "#daily-essentials-r3"
           ]
         },
         {
@@ -11032,7 +10465,7 @@
           "impact": null,
           "html": "<div class=\"flex-grow\"><p class=\"text-text-light text-opacity-80 text-center p-4\">This module has been deprecated. Its functionality is now integrated into the 'Daily Command Module' for a more unified daily workflow.</p></div>",
           "target": [
-            "section[aria-labelledby=\"daily-essentials-r9\"] > .md\\:p-6.bg-card-dark.shadow-md > .flex-grow"
+            "section[aria-labelledby=\"daily-essentials-r3\"] > .card-base.flex-col.flex > .flex-grow"
           ]
         },
         {
@@ -11052,7 +10485,7 @@
           "impact": null,
           "html": "<p class=\"text-text-light text-opacity-80 text-center p-4\">This module has been deprecated. Its functionality is now integrated into the 'Daily Command Module' for a more unified daily workflow.</p>",
           "target": [
-            ".text-opacity-80.text-center.p-4"
+            ".text-opacity-80.p-4.text-center"
           ]
         },
         {
@@ -11070,9 +10503,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<section aria-labelledby=\"kids-status-rb\" class=\"\">",
+          "html": "<section aria-labelledby=\"kids-status-r4\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"kids-status-rb\"]"
+            "section[aria-labelledby=\"kids-status-r4\"]"
           ]
         },
         {
@@ -11090,9 +10523,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<div class=\"bg-card-dark rounded-lg shadow-md p-4 md:p-6 border border-gray-700 flex flex-col\">",
+          "html": "<div class=\"card-base flex flex-col\">",
           "target": [
-            "section[aria-labelledby=\"kids-status-rb\"] > .md\\:p-6.bg-card-dark.shadow-md"
+            "section[aria-labelledby=\"kids-status-r4\"] > .card-base.flex-col.flex"
           ]
         },
         {
@@ -11110,9 +10543,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"kids-status-rb\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">👶 Kids Status</h2>",
+          "html": "<h2 id=\"kids-status-r4\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">👶 Kids Status</h2>",
           "target": [
-            "#kids-status-rb"
+            "#kids-status-r4"
           ]
         },
         {
@@ -11132,7 +10565,7 @@
           "impact": null,
           "html": "<div class=\"flex-grow\">",
           "target": [
-            "section[aria-labelledby=\"kids-status-rb\"] > .md\\:p-6.bg-card-dark.shadow-md > .flex-grow"
+            "section[aria-labelledby=\"kids-status-r4\"] > .card-base.flex-col.flex > .flex-grow"
           ]
         },
         {
@@ -11152,7 +10585,7 @@
           "impact": null,
           "html": "<div class=\"space-y-4\">",
           "target": [
-            "section[aria-labelledby=\"kids-status-rb\"] > .md\\:p-6.bg-card-dark.shadow-md > .flex-grow > .space-y-4"
+            "section[aria-labelledby=\"kids-status-r4\"] > .card-base.flex-col.flex > .flex-grow > .space-y-4"
           ]
         },
         {
@@ -11172,7 +10605,7 @@
           "impact": null,
           "html": "<div>",
           "target": [
-            "section[aria-labelledby=\"kids-status-rb\"] > .md\\:p-6.bg-card-dark.shadow-md > .flex-grow > .space-y-4 > div:nth-child(1)"
+            "section[aria-labelledby=\"kids-status-r4\"] > .card-base.flex-col.flex > .flex-grow > .space-y-4 > div:nth-child(1)"
           ]
         },
         {
@@ -11330,7 +10763,7 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<input id=\"kids-willow-note\" type=\"text\" placeholder=\"Quick update...\" class=\"flex-grow p-2 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue w-full\" value=\"\">",
+          "html": "<input id=\"kids-willow-note\" placeholder=\"Quick update...\" class=\"flex-grow p-2 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue w-full\" type=\"text\" value=\"\">",
           "target": [
             "#kids-willow-note"
           ]
@@ -11530,7 +10963,7 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<input id=\"kids-sebastian-note\" type=\"text\" placeholder=\"Quick update...\" class=\"flex-grow p-2 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue w-full\" value=\"\">",
+          "html": "<input id=\"kids-sebastian-note\" placeholder=\"Quick update...\" class=\"flex-grow p-2 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue w-full\" type=\"text\" value=\"\">",
           "target": [
             "#kids-sebastian-note"
           ]
@@ -11570,9 +11003,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<section aria-labelledby=\"workspace-launchpad-rd\" class=\"\">",
+          "html": "<section aria-labelledby=\"workspace-launchpad-r5\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"workspace-launchpad-rd\"]"
+            "section[aria-labelledby=\"workspace-launchpad-r5\"]"
           ]
         },
         {
@@ -11590,9 +11023,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<div class=\"bg-card-dark rounded-lg shadow-md p-4 md:p-6 border border-gray-700 flex flex-col\">",
+          "html": "<div class=\"card-base flex flex-col\">",
           "target": [
-            "section[aria-labelledby=\"workspace-launchpad-rd\"] > .md\\:p-6.bg-card-dark.shadow-md"
+            "section[aria-labelledby=\"workspace-launchpad-r5\"] > .card-base.flex-col.flex"
           ]
         },
         {
@@ -11610,89 +11043,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"workspace-launchpad-rd\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">🚀 Workspace Launchpad</h2>",
+          "html": "<h2 id=\"workspace-launchpad-r5\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">🚀 Workspace Launchpad</h2>",
           "target": [
-            "#workspace-launchpad-rd"
-          ]
-        },
-        {
-          "any": [
-            {
-              "id": "region",
-              "data": {
-                "isIframe": false
-              },
-              "relatedNodes": [],
-              "impact": "moderate",
-              "message": "All page content is contained by landmarks"
-            }
-          ],
-          "all": [],
-          "none": [],
-          "impact": null,
-          "html": "<div class=\"flex-grow\">",
-          "target": [
-            "section[aria-labelledby=\"workspace-launchpad-rd\"] > .md\\:p-6.bg-card-dark.shadow-md > .flex-grow"
-          ]
-        },
-        {
-          "any": [
-            {
-              "id": "region",
-              "data": {
-                "isIframe": false
-              },
-              "relatedNodes": [],
-              "impact": "moderate",
-              "message": "All page content is contained by landmarks"
-            }
-          ],
-          "all": [],
-          "none": [],
-          "impact": null,
-          "html": "<section aria-labelledby=\"workspace-launchpad-rf\" class=\"\">",
-          "target": [
-            "section[aria-labelledby=\"workspace-launchpad-rf\"]"
-          ]
-        },
-        {
-          "any": [
-            {
-              "id": "region",
-              "data": {
-                "isIframe": false
-              },
-              "relatedNodes": [],
-              "impact": "moderate",
-              "message": "All page content is contained by landmarks"
-            }
-          ],
-          "all": [],
-          "none": [],
-          "impact": null,
-          "html": "<div class=\"bg-card-dark rounded-lg shadow-md p-4 md:p-6 border border-gray-700 flex flex-col\">",
-          "target": [
-            "section[aria-labelledby=\"workspace-launchpad-rf\"] > .md\\:p-6.bg-card-dark.shadow-md"
-          ]
-        },
-        {
-          "any": [
-            {
-              "id": "region",
-              "data": {
-                "isIframe": false
-              },
-              "relatedNodes": [],
-              "impact": "moderate",
-              "message": "All page content is contained by landmarks"
-            }
-          ],
-          "all": [],
-          "none": [],
-          "impact": null,
-          "html": "<h2 id=\"workspace-launchpad-rf\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">🚀 Workspace Launchpad</h2>",
-          "target": [
-            "#workspace-launchpad-rf"
+            "#workspace-launchpad-r5"
           ]
         },
         {
@@ -11712,7 +11065,87 @@
           "impact": null,
           "html": "<div class=\"flex-grow\">",
           "target": [
-            "section[aria-labelledby=\"workspace-launchpad-rf\"] > .md\\:p-6.bg-card-dark.shadow-md > .flex-grow"
+            "section[aria-labelledby=\"workspace-launchpad-r5\"] > .card-base.flex-col.flex > .flex-grow"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "region",
+              "data": {
+                "isIframe": false
+              },
+              "relatedNodes": [],
+              "impact": "moderate",
+              "message": "All page content is contained by landmarks"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<section aria-labelledby=\"workspace-launchpad-r6\" class=\"\">",
+          "target": [
+            "section[aria-labelledby=\"workspace-launchpad-r6\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "region",
+              "data": {
+                "isIframe": false
+              },
+              "relatedNodes": [],
+              "impact": "moderate",
+              "message": "All page content is contained by landmarks"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<div class=\"card-base flex flex-col\">",
+          "target": [
+            "section[aria-labelledby=\"workspace-launchpad-r6\"] > .card-base.flex-col.flex"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "region",
+              "data": {
+                "isIframe": false
+              },
+              "relatedNodes": [],
+              "impact": "moderate",
+              "message": "All page content is contained by landmarks"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<h2 id=\"workspace-launchpad-r6\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">🚀 Workspace Launchpad</h2>",
+          "target": [
+            "#workspace-launchpad-r6"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "region",
+              "data": {
+                "isIframe": false
+              },
+              "relatedNodes": [],
+              "impact": "moderate",
+              "message": "All page content is contained by landmarks"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<div class=\"flex-grow\">",
+          "target": [
+            "section[aria-labelledby=\"workspace-launchpad-r6\"] > .card-base.flex-col.flex > .flex-grow"
           ]
         },
         {
@@ -11990,9 +11423,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<section aria-labelledby=\"observer-rh\" class=\"\">",
+          "html": "<section aria-labelledby=\"observer-r7\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"observer-rh\"]"
+            "section[aria-labelledby=\"observer-r7\"]"
           ]
         },
         {
@@ -12010,9 +11443,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<div class=\"bg-card-dark rounded-lg shadow-md p-4 md:p-6 border border-gray-700 flex flex-col\">",
+          "html": "<div class=\"card-base flex flex-col\">",
           "target": [
-            "section[aria-labelledby=\"observer-rh\"] > .md\\:p-6.bg-card-dark.shadow-md"
+            "section[aria-labelledby=\"observer-r7\"] > .card-base.flex-col.flex"
           ]
         },
         {
@@ -12030,9 +11463,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"observer-rh\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">🧠 Observer</h2>",
+          "html": "<h2 id=\"observer-r7\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">🧠 Observer</h2>",
           "target": [
-            "#observer-rh"
+            "#observer-r7"
           ]
         },
         {
@@ -12052,7 +11485,7 @@
           "impact": null,
           "html": "<div class=\"flex-grow\">",
           "target": [
-            "section[aria-labelledby=\"observer-rh\"] > .md\\:p-6.bg-card-dark.shadow-md > .flex-grow"
+            "section[aria-labelledby=\"observer-r7\"] > .card-base.flex-col.flex > .flex-grow"
           ]
         },
         {
@@ -12072,7 +11505,7 @@
           "impact": null,
           "html": "<div class=\"flex flex-col h-full\">",
           "target": [
-            "section[aria-labelledby=\"observer-rh\"] > .md\\:p-6.bg-card-dark.shadow-md > .flex-grow > .h-full.flex-col.flex"
+            "section[aria-labelledby=\"observer-r7\"] > .card-base.flex-col.flex > .flex-grow > .h-full.flex-col.flex"
           ]
         },
         {
@@ -12150,7 +11583,7 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<input type=\"text\" data-testid=\"ask-ai-input\" placeholder=\"Describe the chaos...\" class=\"flex-grow p-3 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue\" value=\"\">",
+          "html": "<input data-testid=\"ask-ai-input\" placeholder=\"Describe the chaos...\" class=\"flex-grow p-3 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue\" type=\"text\" value=\"\">",
           "target": [
             "input[data-testid=\"ask-ai-input\"]"
           ]
@@ -12210,9 +11643,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<section aria-labelledby=\"achievements-rj\" class=\"\">",
+          "html": "<section aria-labelledby=\"achievements-r8\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"achievements-rj\"]"
+            "section[aria-labelledby=\"achievements-r8\"]"
           ]
         },
         {
@@ -12230,9 +11663,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<div class=\"bg-card-dark rounded-lg shadow-md p-4 md:p-6 border border-gray-700 flex flex-col\">",
+          "html": "<div class=\"card-base flex flex-col\">",
           "target": [
-            "section[aria-labelledby=\"achievements-rj\"] > .md\\:p-6.bg-card-dark.shadow-md"
+            "section[aria-labelledby=\"achievements-r8\"] > .card-base.flex-col.flex"
           ]
         },
         {
@@ -12250,9 +11683,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h2 id=\"achievements-rj\" class=\"text-2xl font-bold text-accent-green mb-4 border-b-2 border-gray-700 pb-2 \">🏆 Achievements</h2>",
+          "html": "<h2 id=\"achievements-r8\" class=\"text-2xl font-mono font-bold text-accent-teal mb-4 border-b border-surface-700 pb-2 \">🏆 Achievements</h2>",
           "target": [
-            "#achievements-rj"
+            "#achievements-r8"
           ]
         },
         {
@@ -12272,7 +11705,7 @@
           "impact": null,
           "html": "<div class=\"flex-grow\">",
           "target": [
-            "section[aria-labelledby=\"achievements-rj\"] > .md\\:p-6.bg-card-dark.shadow-md > .flex-grow"
+            "section[aria-labelledby=\"achievements-r8\"] > .card-base.flex-col.flex > .flex-grow"
           ]
         },
         {
@@ -12292,7 +11725,7 @@
           "impact": null,
           "html": "<div class=\"flex flex-col h-full\">",
           "target": [
-            "section[aria-labelledby=\"achievements-rj\"] > .md\\:p-6.bg-card-dark.shadow-md > .flex-grow > .h-full.flex-col.flex"
+            "section[aria-labelledby=\"achievements-r8\"] > .card-base.flex-col.flex > .flex-grow > .h-full.flex-col.flex"
           ]
         },
         {
@@ -12392,7 +11825,7 @@
           "impact": null,
           "html": "<div class=\"w-full bg-gray-700 rounded-full h-3\" role=\"progressbar\" aria-label=\"Achievement progress: 0%\">",
           "target": [
-            "div[aria-label=\"Achievement progress: 0%\"]"
+            "div[role=\"progressbar\"]"
           ]
         },
         {
@@ -12432,7 +11865,7 @@
           "impact": null,
           "html": "<span class=\"sr-only\">Progress: 0%</span>",
           "target": [
-            "div[aria-label=\"Achievement progress: 0%\"] > .sr-only"
+            "div[role=\"progressbar\"] > .sr-only"
           ]
         },
         {
@@ -12472,7 +11905,7 @@
           "impact": null,
           "html": "<div class=\"bg-gray-800 rounded-lg p-3 border transition-all duration-300 border-gray-700 filter grayscale opacity-80\">",
           "target": [
-            ".opacity-80.duration-300.filter:nth-child(1)"
+            ".opacity-80.filter.grayscale:nth-child(1)"
           ]
         },
         {
@@ -12492,7 +11925,7 @@
           "impact": null,
           "html": "<div class=\"flex items-center space-x-3\"><div class=\"text-3xl\">🛠️</div><div><h4 class=\"text-md font-bold text-text-light\">1 Hour Hobby Time</h4><p class=\"text-xs mt-1 text-gray-300\">Requires 2 Achievements</p></div></div>",
           "target": [
-            ".opacity-80.duration-300.filter:nth-child(1) > .space-x-3.items-center.flex"
+            ".opacity-80.filter.grayscale:nth-child(1) > .space-x-3.items-center.flex"
           ]
         },
         {
@@ -12512,7 +11945,7 @@
           "impact": null,
           "html": "<div class=\"text-3xl\">🛠️</div>",
           "target": [
-            ".opacity-80.duration-300.filter:nth-child(1) > .space-x-3.items-center.flex > .text-3xl"
+            ".opacity-80.filter.grayscale:nth-child(1) > .space-x-3.items-center.flex > .text-3xl"
           ]
         },
         {
@@ -12532,7 +11965,7 @@
           "impact": null,
           "html": "<div><h4 class=\"text-md font-bold text-text-light\">1 Hour Hobby Time</h4><p class=\"text-xs mt-1 text-gray-300\">Requires 2 Achievements</p></div>",
           "target": [
-            ".opacity-80.duration-300.filter:nth-child(1) > .space-x-3.items-center.flex > div:nth-child(2)"
+            ".opacity-80.filter.grayscale:nth-child(1) > .space-x-3.items-center.flex > div:nth-child(2)"
           ]
         },
         {
@@ -12552,7 +11985,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-text-light\">1 Hour Hobby Time</h4>",
           "target": [
-            ".opacity-80.duration-300.filter:nth-child(1) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-80.filter.grayscale:nth-child(1) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         },
         {
@@ -12572,7 +12005,7 @@
           "impact": null,
           "html": "<p class=\"text-xs mt-1 text-gray-300\">Requires 2 Achievements</p>",
           "target": [
-            ".opacity-80.duration-300.filter:nth-child(1) > .space-x-3.items-center.flex > div:nth-child(2) > .mt-1.text-gray-300"
+            ".opacity-80.filter.grayscale:nth-child(1) > .space-x-3.items-center.flex > div:nth-child(2) > .mt-1.text-gray-300"
           ]
         },
         {
@@ -12592,7 +12025,7 @@
           "impact": null,
           "html": "<div class=\"bg-gray-800 rounded-lg p-3 border transition-all duration-300 border-gray-700 filter grayscale opacity-80\">",
           "target": [
-            ".opacity-80.duration-300.filter:nth-child(2)"
+            ".opacity-80.filter.grayscale:nth-child(2)"
           ]
         },
         {
@@ -12612,7 +12045,7 @@
           "impact": null,
           "html": "<div class=\"flex items-center space-x-3\"><div class=\"text-3xl\">💸</div><div><h4 class=\"text-md font-bold text-text-light\">Small Tech/Tool Purchase</h4><p class=\"text-xs mt-1 text-gray-300\">Requires 4 Achievements</p></div></div>",
           "target": [
-            ".opacity-80.duration-300.filter:nth-child(2) > .space-x-3.items-center.flex"
+            ".opacity-80.filter.grayscale:nth-child(2) > .space-x-3.items-center.flex"
           ]
         },
         {
@@ -12632,7 +12065,7 @@
           "impact": null,
           "html": "<div class=\"text-3xl\">💸</div>",
           "target": [
-            ".opacity-80.duration-300.filter:nth-child(2) > .space-x-3.items-center.flex > .text-3xl"
+            ".opacity-80.filter.grayscale:nth-child(2) > .space-x-3.items-center.flex > .text-3xl"
           ]
         },
         {
@@ -12652,7 +12085,7 @@
           "impact": null,
           "html": "<div><h4 class=\"text-md font-bold text-text-light\">Small Tech/Tool Purchase</h4><p class=\"text-xs mt-1 text-gray-300\">Requires 4 Achievements</p></div>",
           "target": [
-            ".opacity-80.duration-300.filter:nth-child(2) > .space-x-3.items-center.flex > div:nth-child(2)"
+            ".opacity-80.filter.grayscale:nth-child(2) > .space-x-3.items-center.flex > div:nth-child(2)"
           ]
         },
         {
@@ -12672,7 +12105,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-text-light\">Small Tech/Tool Purchase</h4>",
           "target": [
-            ".opacity-80.duration-300.filter:nth-child(2) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-80.filter.grayscale:nth-child(2) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         },
         {
@@ -12692,7 +12125,7 @@
           "impact": null,
           "html": "<p class=\"text-xs mt-1 text-gray-300\">Requires 4 Achievements</p>",
           "target": [
-            ".opacity-80.duration-300.filter:nth-child(2) > .space-x-3.items-center.flex > div:nth-child(2) > .mt-1.text-gray-300"
+            ".opacity-80.filter.grayscale:nth-child(2) > .space-x-3.items-center.flex > div:nth-child(2) > .mt-1.text-gray-300"
           ]
         },
         {
@@ -12712,7 +12145,7 @@
           "impact": null,
           "html": "<div class=\"bg-gray-800 rounded-lg p-3 border transition-all duration-300 border-gray-700 filter grayscale opacity-80\">",
           "target": [
-            ".opacity-80.duration-300.filter:nth-child(3)"
+            ".opacity-80.filter.grayscale:nth-child(3)"
           ]
         },
         {
@@ -12732,7 +12165,7 @@
           "impact": null,
           "html": "<div class=\"flex items-center space-x-3\"><div class=\"text-3xl\">🏖️</div><div><h4 class=\"text-md font-bold text-text-light\">Guilt-Free Rest Day</h4><p class=\"text-xs mt-1 text-gray-300\">Requires 6 Achievements</p></div></div>",
           "target": [
-            ".opacity-80.duration-300.filter:nth-child(3) > .space-x-3.items-center.flex"
+            ".opacity-80.filter.grayscale:nth-child(3) > .space-x-3.items-center.flex"
           ]
         },
         {
@@ -12752,7 +12185,7 @@
           "impact": null,
           "html": "<div class=\"text-3xl\">🏖️</div>",
           "target": [
-            ".opacity-80.duration-300.filter:nth-child(3) > .space-x-3.items-center.flex > .text-3xl"
+            ".opacity-80.filter.grayscale:nth-child(3) > .space-x-3.items-center.flex > .text-3xl"
           ]
         },
         {
@@ -12772,7 +12205,7 @@
           "impact": null,
           "html": "<div><h4 class=\"text-md font-bold text-text-light\">Guilt-Free Rest Day</h4><p class=\"text-xs mt-1 text-gray-300\">Requires 6 Achievements</p></div>",
           "target": [
-            ".opacity-80.duration-300.filter:nth-child(3) > .space-x-3.items-center.flex > div:nth-child(2)"
+            ".opacity-80.filter.grayscale:nth-child(3) > .space-x-3.items-center.flex > div:nth-child(2)"
           ]
         },
         {
@@ -12792,7 +12225,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-text-light\">Guilt-Free Rest Day</h4>",
           "target": [
-            ".opacity-80.duration-300.filter:nth-child(3) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-80.filter.grayscale:nth-child(3) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         },
         {
@@ -12812,7 +12245,7 @@
           "impact": null,
           "html": "<p class=\"text-xs mt-1 text-gray-300\">Requires 6 Achievements</p>",
           "target": [
-            ".opacity-80.duration-300.filter:nth-child(3) > .space-x-3.items-center.flex > div:nth-child(2) > .mt-1.text-gray-300"
+            ".opacity-80.filter.grayscale:nth-child(3) > .space-x-3.items-center.flex > div:nth-child(2) > .mt-1.text-gray-300"
           ]
         },
         {
@@ -12852,7 +12285,7 @@
           "impact": null,
           "html": "<h4 class=\"text-center text-accent-teal font-semibold mb-3\">Achievement Roadmap (0/6)</h4>",
           "target": [
-            ".mb-3.text-center.text-accent-teal"
+            ".mb-3.text-center"
           ]
         },
         {
@@ -12892,7 +12325,7 @@
           "impact": null,
           "html": "<div class=\"p-3 rounded-lg border transition-all duration-300 bg-gray-800 border-gray-700 opacity-60\">",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(1)"
+            ".opacity-60.rounded-lg.duration-300:nth-child(1)"
           ]
         },
         {
@@ -12912,7 +12345,7 @@
           "impact": null,
           "html": "<div class=\"flex items-center space-x-3\"><div class=\"text-4xl filter grayscale\">📭</div><div><h4 class=\"text-md font-bold text-gray-300\">Inbox Zero</h4><p class=\"text-xs mt-1 text-gray-300\"></p></div></div>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(1) > .space-x-3.items-center.flex"
+            ".opacity-60.rounded-lg.duration-300:nth-child(1) > .space-x-3.items-center.flex"
           ]
         },
         {
@@ -12932,7 +12365,7 @@
           "impact": null,
           "html": "<div class=\"text-4xl filter grayscale\">📭</div>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(1) > .space-x-3.items-center.flex > .text-4xl.filter.grayscale"
+            ".opacity-60.rounded-lg.duration-300:nth-child(1) > .space-x-3.items-center.flex > .text-4xl.filter.grayscale"
           ]
         },
         {
@@ -12952,7 +12385,7 @@
           "impact": null,
           "html": "<div><h4 class=\"text-md font-bold text-gray-300\">Inbox Zero</h4><p class=\"text-xs mt-1 text-gray-300\"></p></div>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(1) > .space-x-3.items-center.flex > div:nth-child(2)"
+            ".opacity-60.rounded-lg.duration-300:nth-child(1) > .space-x-3.items-center.flex > div:nth-child(2)"
           ]
         },
         {
@@ -12972,7 +12405,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-gray-300\">Inbox Zero</h4>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(1) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-60.rounded-lg.duration-300:nth-child(1) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         },
         {
@@ -12992,7 +12425,7 @@
           "impact": null,
           "html": "<p class=\"text-xs mt-1 text-gray-300\"></p>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(1) > .space-x-3.items-center.flex > div:nth-child(2) > .mt-1.text-gray-300"
+            ".opacity-60.rounded-lg.duration-300:nth-child(1) > .space-x-3.items-center.flex > div:nth-child(2) > .mt-1.text-gray-300"
           ]
         },
         {
@@ -13012,7 +12445,7 @@
           "impact": null,
           "html": "<div class=\"p-3 rounded-lg border transition-all duration-300 bg-gray-800 border-gray-700 opacity-60\">",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(2)"
+            ".opacity-60.rounded-lg.duration-300:nth-child(2)"
           ]
         },
         {
@@ -13032,7 +12465,7 @@
           "impact": null,
           "html": "<div class=\"flex items-center space-x-3\"><div class=\"text-4xl filter grayscale\">🧹</div><div><h4 class=\"text-md font-bold text-gray-300\">Weekly Deep Clean</h4><p class=\"text-xs mt-1 text-gray-300\"></p></div></div>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(2) > .space-x-3.items-center.flex"
+            ".opacity-60.rounded-lg.duration-300:nth-child(2) > .space-x-3.items-center.flex"
           ]
         },
         {
@@ -13052,7 +12485,7 @@
           "impact": null,
           "html": "<div class=\"text-4xl filter grayscale\">🧹</div>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(2) > .space-x-3.items-center.flex > .text-4xl.filter.grayscale"
+            ".opacity-60.rounded-lg.duration-300:nth-child(2) > .space-x-3.items-center.flex > .text-4xl.filter.grayscale"
           ]
         },
         {
@@ -13072,7 +12505,7 @@
           "impact": null,
           "html": "<div><h4 class=\"text-md font-bold text-gray-300\">Weekly Deep Clean</h4><p class=\"text-xs mt-1 text-gray-300\"></p></div>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(2) > .space-x-3.items-center.flex > div:nth-child(2)"
+            ".opacity-60.rounded-lg.duration-300:nth-child(2) > .space-x-3.items-center.flex > div:nth-child(2)"
           ]
         },
         {
@@ -13092,7 +12525,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-gray-300\">Weekly Deep Clean</h4>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(2) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-60.rounded-lg.duration-300:nth-child(2) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         },
         {
@@ -13112,7 +12545,7 @@
           "impact": null,
           "html": "<p class=\"text-xs mt-1 text-gray-300\"></p>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(2) > .space-x-3.items-center.flex > div:nth-child(2) > .mt-1.text-gray-300"
+            ".opacity-60.rounded-lg.duration-300:nth-child(2) > .space-x-3.items-center.flex > div:nth-child(2) > .mt-1.text-gray-300"
           ]
         },
         {
@@ -13132,7 +12565,7 @@
           "impact": null,
           "html": "<div class=\"p-3 rounded-lg border transition-all duration-300 bg-gray-800 border-gray-700 opacity-60\">",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(3)"
+            ".opacity-60.rounded-lg.duration-300:nth-child(3)"
           ]
         },
         {
@@ -13152,7 +12585,7 @@
           "impact": null,
           "html": "<div class=\"flex items-center space-x-3\"><div class=\"text-4xl filter grayscale\">🏗️</div><div><h4 class=\"text-md font-bold text-gray-300\">Solo Week Executed</h4><p class=\"text-xs mt-1 text-gray-300\"></p></div></div>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(3) > .space-x-3.items-center.flex"
+            ".opacity-60.rounded-lg.duration-300:nth-child(3) > .space-x-3.items-center.flex"
           ]
         },
         {
@@ -13172,7 +12605,7 @@
           "impact": null,
           "html": "<div class=\"text-4xl filter grayscale\">🏗️</div>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(3) > .space-x-3.items-center.flex > .text-4xl.filter.grayscale"
+            ".opacity-60.rounded-lg.duration-300:nth-child(3) > .space-x-3.items-center.flex > .text-4xl.filter.grayscale"
           ]
         },
         {
@@ -13192,7 +12625,7 @@
           "impact": null,
           "html": "<div><h4 class=\"text-md font-bold text-gray-300\">Solo Week Executed</h4><p class=\"text-xs mt-1 text-gray-300\"></p></div>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(3) > .space-x-3.items-center.flex > div:nth-child(2)"
+            ".opacity-60.rounded-lg.duration-300:nth-child(3) > .space-x-3.items-center.flex > div:nth-child(2)"
           ]
         },
         {
@@ -13212,7 +12645,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-gray-300\">Solo Week Executed</h4>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(3) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-60.rounded-lg.duration-300:nth-child(3) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         },
         {
@@ -13232,7 +12665,7 @@
           "impact": null,
           "html": "<p class=\"text-xs mt-1 text-gray-300\"></p>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(3) > .space-x-3.items-center.flex > div:nth-child(2) > .mt-1.text-gray-300"
+            ".opacity-60.rounded-lg.duration-300:nth-child(3) > .space-x-3.items-center.flex > div:nth-child(2) > .mt-1.text-gray-300"
           ]
         },
         {
@@ -13252,7 +12685,7 @@
           "impact": null,
           "html": "<div class=\"p-3 rounded-lg border transition-all duration-300 bg-gray-800 border-gray-700 opacity-60\">",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(4)"
+            ".opacity-60.rounded-lg.duration-300:nth-child(4)"
           ]
         },
         {
@@ -13272,7 +12705,7 @@
           "impact": null,
           "html": "<div class=\"flex items-center space-x-3\"><div class=\"text-4xl filter grayscale\">🪨</div><div><h4 class=\"text-md font-bold text-gray-300\">Daily Foundation Set</h4><p class=\"text-xs mt-1 text-gray-300\"></p></div></div>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(4) > .space-x-3.items-center.flex"
+            ".opacity-60.rounded-lg.duration-300:nth-child(4) > .space-x-3.items-center.flex"
           ]
         },
         {
@@ -13292,7 +12725,7 @@
           "impact": null,
           "html": "<div class=\"text-4xl filter grayscale\">🪨</div>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(4) > .space-x-3.items-center.flex > .text-4xl.filter.grayscale"
+            ".opacity-60.rounded-lg.duration-300:nth-child(4) > .space-x-3.items-center.flex > .text-4xl.filter.grayscale"
           ]
         },
         {
@@ -13312,7 +12745,7 @@
           "impact": null,
           "html": "<div><h4 class=\"text-md font-bold text-gray-300\">Daily Foundation Set</h4><p class=\"text-xs mt-1 text-gray-300\"></p></div>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(4) > .space-x-3.items-center.flex > div:nth-child(2)"
+            ".opacity-60.rounded-lg.duration-300:nth-child(4) > .space-x-3.items-center.flex > div:nth-child(2)"
           ]
         },
         {
@@ -13332,7 +12765,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-gray-300\">Daily Foundation Set</h4>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(4) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-60.rounded-lg.duration-300:nth-child(4) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         },
         {
@@ -13352,7 +12785,7 @@
           "impact": null,
           "html": "<p class=\"text-xs mt-1 text-gray-300\"></p>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(4) > .space-x-3.items-center.flex > div:nth-child(2) > .mt-1.text-gray-300"
+            ".opacity-60.rounded-lg.duration-300:nth-child(4) > .space-x-3.items-center.flex > div:nth-child(2) > .mt-1.text-gray-300"
           ]
         },
         {
@@ -13372,7 +12805,7 @@
           "impact": null,
           "html": "<div class=\"p-3 rounded-lg border transition-all duration-300 bg-gray-800 border-gray-700 opacity-60\">",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(5)"
+            ".opacity-60.rounded-lg.duration-300:nth-child(5)"
           ]
         },
         {
@@ -13392,7 +12825,7 @@
           "impact": null,
           "html": "<div class=\"flex items-center space-x-3\"><div class=\"text-4xl filter grayscale\">📊</div><div><h4 class=\"text-md font-bold text-gray-300\">Weekly Review Done</h4><p class=\"text-xs mt-1 text-gray-300\"></p></div></div>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(5) > .space-x-3.items-center.flex"
+            ".opacity-60.rounded-lg.duration-300:nth-child(5) > .space-x-3.items-center.flex"
           ]
         },
         {
@@ -13412,7 +12845,7 @@
           "impact": null,
           "html": "<div class=\"text-4xl filter grayscale\">📊</div>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(5) > .space-x-3.items-center.flex > .text-4xl.filter.grayscale"
+            ".opacity-60.rounded-lg.duration-300:nth-child(5) > .space-x-3.items-center.flex > .text-4xl.filter.grayscale"
           ]
         },
         {
@@ -13432,7 +12865,7 @@
           "impact": null,
           "html": "<div><h4 class=\"text-md font-bold text-gray-300\">Weekly Review Done</h4><p class=\"text-xs mt-1 text-gray-300\"></p></div>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(5) > .space-x-3.items-center.flex > div:nth-child(2)"
+            ".opacity-60.rounded-lg.duration-300:nth-child(5) > .space-x-3.items-center.flex > div:nth-child(2)"
           ]
         },
         {
@@ -13452,7 +12885,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-gray-300\">Weekly Review Done</h4>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(5) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-60.rounded-lg.duration-300:nth-child(5) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         },
         {
@@ -13472,7 +12905,7 @@
           "impact": null,
           "html": "<p class=\"text-xs mt-1 text-gray-300\"></p>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(5) > .space-x-3.items-center.flex > div:nth-child(2) > .mt-1.text-gray-300"
+            ".opacity-60.rounded-lg.duration-300:nth-child(5) > .space-x-3.items-center.flex > div:nth-child(2) > .mt-1.text-gray-300"
           ]
         },
         {
@@ -13492,7 +12925,7 @@
           "impact": null,
           "html": "<div class=\"p-3 rounded-lg border transition-all duration-300 bg-gray-800 border-gray-700 opacity-60\">",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(6)"
+            ".opacity-60.rounded-lg.duration-300:nth-child(6)"
           ]
         },
         {
@@ -13512,7 +12945,7 @@
           "impact": null,
           "html": "<div class=\"flex items-center space-x-3\"><div class=\"text-4xl filter grayscale\">✅</div><div><h4 class=\"text-md font-bold text-gray-300\">All Systems Green</h4><p class=\"text-xs mt-1 text-gray-300\"></p></div></div>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(6) > .space-x-3.items-center.flex"
+            ".opacity-60.rounded-lg.duration-300:nth-child(6) > .space-x-3.items-center.flex"
           ]
         },
         {
@@ -13532,7 +12965,7 @@
           "impact": null,
           "html": "<div class=\"text-4xl filter grayscale\">✅</div>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(6) > .space-x-3.items-center.flex > .text-4xl.filter.grayscale"
+            ".opacity-60.rounded-lg.duration-300:nth-child(6) > .space-x-3.items-center.flex > .text-4xl.filter.grayscale"
           ]
         },
         {
@@ -13552,7 +12985,7 @@
           "impact": null,
           "html": "<div><h4 class=\"text-md font-bold text-gray-300\">All Systems Green</h4><p class=\"text-xs mt-1 text-gray-300\"></p></div>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(6) > .space-x-3.items-center.flex > div:nth-child(2)"
+            ".opacity-60.rounded-lg.duration-300:nth-child(6) > .space-x-3.items-center.flex > div:nth-child(2)"
           ]
         },
         {
@@ -13572,7 +13005,7 @@
           "impact": null,
           "html": "<h4 class=\"text-md font-bold text-gray-300\">All Systems Green</h4>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(6) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
+            ".opacity-60.rounded-lg.duration-300:nth-child(6) > .space-x-3.items-center.flex > div:nth-child(2) > h4"
           ]
         },
         {
@@ -13592,7 +13025,7 @@
           "impact": null,
           "html": "<p class=\"text-xs mt-1 text-gray-300\"></p>",
           "target": [
-            ".opacity-60.duration-300.p-3:nth-child(6) > .space-x-3.items-center.flex > div:nth-child(2) > .mt-1.text-gray-300"
+            ".opacity-60.rounded-lg.duration-300:nth-child(6) > .space-x-3.items-center.flex > div:nth-child(2) > .mt-1.text-gray-300"
           ]
         },
         {
@@ -13719,6 +13152,24 @@
           "all": [],
           "none": [],
           "impact": null,
+          "html": "<button data-testid=\"grounding-rose-butto...\" class=\"relative w-24 h-24 r...\" role=\"button\" aria-label=\"Activate Grounding R...\" type=\"button\" tabindex=\"0\">",
+          "target": [
+            ".w-24"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "tabindex",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element does not have a tabindex greater than 0"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
           "html": "<div class=\"flex-grow overflow-y-auto pr-2 max-h-96\" tabindex=\"0\">",
           "target": [
             ".pr-2"
@@ -13779,9 +13230,9 @@
               },
               "relatedNodes": [
                 {
-                  "html": "<section aria-labelledby=\"workspace-launchpad-rf\" class=\"\">",
+                  "html": "<section aria-labelledby=\"workspace-launchpad-r6\" class=\"\">",
                   "target": [
-                    "section[aria-labelledby=\"workspace-launchpad-rf\"]"
+                    "section[aria-labelledby=\"workspace-launchpad-r6\"]"
                   ]
                 }
               ],
@@ -13792,9 +13243,9 @@
           "all": [],
           "none": [],
           "impact": "moderate",
-          "html": "<section aria-labelledby=\"workspace-launchpad-rd\" class=\"\">",
+          "html": "<section aria-labelledby=\"workspace-launchpad-r5\" class=\"\">",
           "target": [
-            "section[aria-labelledby=\"workspace-launchpad-rd\"]"
+            "section[aria-labelledby=\"workspace-launchpad-r5\"]"
           ],
           "failureSummary": "Fix any of the following:\n  The landmark must have a unique aria-label, aria-labelledby, or title to make landmarks distinguishable"
         }
