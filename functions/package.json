@@ -1,0 +1,17 @@
+{
+  "name": "wonky-functions",
+  "private": true,
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^11.5.0",
+    "firebase-functions": "^4.4.1",
+    "node-fetch": "^3.4.0"
+  }
+  ,
+  "devDependencies": {
+    "jest": "^29.0.0"
+  },
+  "scripts": {
+    "test": "jest"
+  }
+}

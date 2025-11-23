@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Wonky Sprout OS — an engineering solution for neurodivergent life management. A family-first app driven by a canonical reducer and deterministic testing patterns.">
+    <meta name="keywords" content="Wonky Sprout, family app, neurodivergent, state management, React, TypeScript, Vite, Playwright">
+    <link rel="canonical" href="https://github.com/classicwilly/margie_fay" />
+    <!-- Open Graph -->
+    <meta property="og:title" content="Wonky Sprout OS" />
+    <meta property="og:description" content="Family-first productivity and life-management UI crafted with deterministic state handling and testable reducers." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://github.com/classicwilly/margie_fay" />
+    <meta property="og:image" content="/og-image.svg" />
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Wonky Sprout OS" />
+    <meta name="twitter:description" content="Family-first productivity and life-management UI crafted with deterministic state handling and testable reducers." />
+    <meta name="twitter:image" content="/og-image.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="%VITE_GOOGLE_CLIENT_ID%">
+    <title>Wonky Sprout OS</title>
+    <script>
+        // Tailwind CSS custom configuration for the specific dark mode palette.
+        // Guard against CDN-less builds (e.g., production builds that include tailwind via PostCSS)
+        if (typeof tailwind !== 'undefined' && tailwind) {
+            tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'background-dark': '#0d1117',
+                        'card-dark': '#161b22',
+                        'text-light': '#c9d1d9',
+                        'accent-teal': '#1abc9c',
+                        'accent-blue': '#58a6ff',
+                        'accent-green': '#2ecc71',
+                    }
+                }
+            }
+            }
+        }
+    </script>
+<style>
+    @media print {
+        .no-print {
+            display: none !important;
+        }
+        body {
+            background-color: white !important;
+            color: black !important;
+            font-size: 12pt;
+        }
+        #root {
+            display: block;
+            width: 100%;
+        }
+        main {
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        .printable-content, .printable-content * {
+            background-color: white !important;
+            color: black !important;
+            border-color: #ddd !important;
+            box-shadow: none !important;
+        }
+        .printable-content section[aria-labelledby] > div {
+             page-break-inside: avoid;
+             break-inside: avoid;
+        }
+        .printable-content > section[aria-labelledby] {
+            page-break-before: always;
+            break-before: page;
+            margin-top: 2rem;
+        }
+        .printable-content h1, .printable-content h2, .printable-content h3 {
+            page-break-after: avoid;
+            break-after: avoid;
+        }
+        .printable-content section {
+            margin-bottom: 1.5rem;
+        }
+        .printable-content input[type="checkbox"] {
+            -webkit-appearance: checkbox !important;
+            -moz-appearance: checkbox !important;
+            appearance: checkbox !important;
+            border: 1px solid #000 !important;
+            display: inline-block !important;
+            width: 1rem !important;
+            height: 1rem !important;
+            vertical-align: middle;
+            margin-right: 0.5rem;
+        }
+         .printable-content input[type="checkbox"] + span {
+            display: inline-block;
+        }
+        .printable-content label span {
+            text-decoration: none !important;
+            opacity: 1 !important;
+            color: black !important;
+        }
+        a {
+            text-decoration: none;
+            color: black;
+        }
+    }
+</style>
+<!--
+    importmap disabled for local dev & tests — avoid loading React from CDN which can cause duplicate React instances
+    See: react invalid hook call in e2e runs when import map pulls different React versions.
+    To re-enable, ensure the CDN version matches package.json and testing environment.
+    <script type="importmap">{ "imports": { "react": "https://aistudiocdn.com/react@^18.2.0", "react-dom/": "https://aistudiocdn.com/react-dom@^18.2.0/", "react/": "https://aistudiocdn.com/react@^18.2.0/", "@google/genai": "https://aistudiocdn.com/@google/genai@^1.29.0" } }</script>
+-->
+<!--
+        Optional importmap toggle: Allows local manual testing with CDN React by adding ?use_importmap=true to the URL
+        Note: This is intentionally off by default to prevent duplicate React during automated tests. For CI or Playwright runs, do not set this flag.
+        Example manual dev usage: https://localhost:3000/?use_importmap=true
+-->
+<script>
+    (function() {
+        try {
+            const url = new URL(window.location.href);
+            const useMap = url.searchParams.get('use_importmap') === 'true';
+            if (!useMap) return;
+            const s = document.createElement('script');
+            s.type = 'importmap';
+            s.textContent = JSON.stringify({
+                imports: {
+                    react: 'https://aistudiocdn.com/react@^18.2.0',
+                    'react-dom/': 'https://aistudiocdn.com/react-dom@^18.2.0/',
+                    'react/': 'https://aistudiocdn.com/react@^18.2.0/',
+                    '@google/genai': 'https://aistudiocdn.com/@google/genai@^1.29.0'
+                }
+            });
+            document.head.appendChild(s);
+            console.warn('Import map enabled via URL param: use_importmap=true — this can build duplicate React instances');
+        } catch (e) {
+            console.warn('Import map toggle error', e);
+        }
+    })();
+</script>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@graph": [
+                {
+                    "@type": "SoftwareApplication",
+                    "name": "Wonky Sprout OS",
+                    "url": "https://github.com/classicwilly/margie_fay",
+                    "description": "An engineering solution for neurodivergent life management. Canonical app state and testable reducer patterns make this workspace reliable and easy to test.",
+                    "applicationCategory": "ProductivityApplication",
+                    "softwareVersion": "1.0.0",
+                    "operatingSystem": "Web",
+                    "author": {
+                        "@type": "Person",
+                        "name": "classicwilly"
+                    },
+                    "featureList": ["Google Workspace Integration", "Calendar automation", "Drive SOPs", "Sheets analytics", "Gmail templates"]
+                },
+                {
+                    "@type": "Organization",
+                    "name": "Wonky Sprout",
+                    "url": "https://github.com/classicwilly/margie_fay",
+                    "logo": "https://opengraph.githubassets.com/***/classicwilly/margie_fay"
+                }
+            ]
+        }
+    </script>
+    <!-- Playwright/CI friendly runtime: force the `__PLAYWRIGHT_AI_STUB__` if a query param is set or Vite env toggles it -->
+    <script type="module">
+        try {
+            const url = new URL(window.location.href);
+            const useProxy = url.searchParams.get('use_ai_proxy') === 'true';
+            // Vite exposes env prefixed with VITE_ via import.meta.env
+            const envProxy = (import.meta.env && import.meta.env.VITE_PLAYWRIGHT_AI_STUB) === 'true';
+            if (useProxy || envProxy) {
+                window.__PLAYWRIGHT_AI_STUB__ = true;
+                console.info('CLIENT: __PLAYWRIGHT_AI_STUB__ enabled via', useProxy ? 'query param' : 'import.meta.env');
+            }
+            // Allow Playwright to opt-out of DEV bypass so E2E seeding applies
+            const envSkipDev = (import.meta.env && import.meta.env.VITE_PLAYWRIGHT_SKIP_DEV_BYPASS) === 'true';
+            const useSkipDevParam = url.searchParams.get('skip_dev_bypass') === 'true';
+            if (useSkipDevParam || envSkipDev) {
+                window.__PLAYWRIGHT_SKIP_DEV_BYPASS__ = true;
+                console.info('CLIENT: __PLAYWRIGHT_SKIP_DEV_BYPASS__ enabled via', useSkipDevParam ? 'query param' : 'import.meta.env');
+            }
+            // Allow Playwright to force a view via URL parameter for deterministic rendering
+            const forceView = url.searchParams.get('force_e2e_view');
+            if (forceView) {
+                try { window.__E2E_FORCE_VIEW__ = forceView; } catch (e) { /* ignore */ }
+                console.info('CLIENT: __E2E_FORCE_VIEW__ set via query param', forceView);
+            }
+        } catch (e) {
+            // ignore in older browsers or if import.meta is not available
+            console.warn('index.html proxy toggle failed', e);
+        }
+    </script>
+<!-- index.css is imported via `src/main.tsx` and bundled by Vite; including it here causes dev server MIME issues during tests. -->
+<!-- <link rel="stylesheet" href="/index.css"> -->
+</head>
+<body class="bg-background-dark text-text-light font-sans antialiased">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-50 focus:bg-accent-blue focus:text-background-dark focus:p-3 focus:rounded-br-md">Skip to main content</a>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+</body>
+</html>

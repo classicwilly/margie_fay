@@ -1,0 +1,10 @@
+{
+  "name": "Wonky Sprout OS",
+  "description": "An engineering solution for neurodivergent life management. This is a public Flight Protocol Vault designed to transform chaos into structure.",
+  "keywords": ["family", "neurodivergent", "task-management", "pomodoro", "habit-tracker", "playwright"],
+  "homepage": "https://github.com/classicwilly/margie_fay",
+  "license": "MIT",
+  "repository": "https://github.com/classicwilly/margie_fay",
+  "topics": ["productivity", "neurodiversity", "react", "typescript", "vite"],
+  "requestFramePermissions": []
+}

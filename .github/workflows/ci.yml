@@ -1,0 +1,73 @@
+ 
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Cache node modules
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install
+        run: npm ci --legacy-peer-deps
+      - name: Lint
+        run: npm run lint
+      - name: Test (with coverage)
+        run: npm run test:coverage
+      - name: Upload coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: vitest-coverage
+          path: coverage
+      - name: Build
+        run: npm run build
+
+  a11y:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install
+        run: npm ci --legacy-peer-deps
+      - name: Start app
+        run: npm run preview &
+      - name: Run Axe Playwright a11y check
+        run: npx playwright test tests/e2e/a11y.spec.ts --reporter junit
+      - name: Upload a11y results
+        uses: actions/upload-artifact@v4
+        with:
+          name: axe-results
+          path: playwright-axe-results
+
+  codeql:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: javascript
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v2
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2

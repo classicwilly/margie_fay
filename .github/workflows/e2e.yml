@@ -1,0 +1,94 @@
+name: E2E Tests
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  playwright:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node.js 20.19
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.19
+
+      - name: Install
+        run: npm ci --legacy-peer-deps
+
+      - name: Start app
+        run: npm run preview &
+
+      - name: Run E2E
+        uses: microsoft/playwright-github-action@v1
+        with:
+          run: npx playwright test --reporter=junit
+
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report
+
+  a11y:
+    needs: playwright
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install
+        run: npm ci --legacy-peer-deps
+      - name: Start app
+        run: npm run preview &
+      - name: Run Axe Accessibility scan
+        run: npx playwright test tests/e2e/a11y.spec.ts --reporter=junit
+      - name: Upload Axe results
+        uses: actions/upload-artifact@v4
+        with:
+          name: axe-results
+          path: playwright-axe-results
+
+  visual-percy:
+    needs: playwright
+    runs-on: ubuntu-latest
+    if: ${{ secrets.PERCY_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install
+        run: npm ci --legacy-peer-deps
+      - name: Install Percy Playwright plugin
+        run: |
+          # Install the Playwright Percy plugin only when running visual tests.
+          # This prevents blocking local installs when Percy is not required.
+          npm install --no-save @percy/playwright || true
+      - name: Start app
+        run: npm run preview &
+      - name: Run Percy visual tests
+        run: npx percy exec -- npx playwright test --reporter=junit
+
+  visual-approval:
+    needs: playwright
+    runs-on: ubuntu-latest
+    environment: visual-approval
+    steps:
+      - name: Download Playwright report
+        uses: actions/download-artifact@v3
+        with:
+          name: playwright-report
+
+      - name: Check for visual diffs
+        run: |
+          # Playwright will fail the test on diffs by default, but the report includes comparisons for manual review.
+          echo "Artifacts downloaded to playwright-report. A maintainer should approve or decline visual changes."
+          ls -al playwright-report || true

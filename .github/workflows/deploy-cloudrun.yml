@@ -1,0 +1,41 @@
+name: Deploy to Cloud Run
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
+
+      - name: Build and push container
+        run: |
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/wonky:latest .
+          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/wonky:latest
+
+      - name: Deploy to Cloud Run
+        uses: google-github-actions/deploy-cloudrun@v1
+        with:
+          service: wonky
+          image: gcr.io/${{ secrets.GCP_PROJECT_ID }}/wonky:latest
+          region: ${{ secrets.GCP_REGION }}
+          allow-unauthenticated: true
+          env_vars: |
+            NODE_ENV=production
+            GEMINI_MODEL=${{ secrets.GEMINI_MODEL }}
+            ALLOWED_ORIGINS=${{ secrets.ALLOWED_ORIGINS }}
+          secrets: |
+            GEMINI_API_KEY:${{ secrets.GEMINI_API_KEY }}
+            REDIS_URL:${{ secrets.REDIS_URL }}
+            SENTRY_DSN:${{ secrets.SENTRY_DSN }}

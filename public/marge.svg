@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <rect width="128" height="128" rx="16" ry="16" fill="#6b2a3f" />
+  <circle cx="64" cy="44" r="28" fill="#f7a6c0" />
+  <circle cx="54" cy="40" r="4" fill="#000" />
+  <circle cx="74" cy="40" r="4" fill="#000" />
+  <path d="M50 64 Q64 74 78 64" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round" />
+  <text x="64" y="103" font-size="14" text-anchor="middle" fill="#fff">MARGE</text>
+</svg>

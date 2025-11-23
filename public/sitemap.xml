@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://github.com/classicwilly/margie_fay</loc>
+    <priority>0.80</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://github.com/classicwilly/margie_fay/</loc>
+    <priority>0.80</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://github.com/classicwilly/margie_fay/tree/main/docs</loc>
+    <priority>0.65</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://classicwilly.github.io/margie_fay/GOOGLE_WORKFLOW_EXAMPLE.md</loc>
+    <priority>0.75</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+</urlset>

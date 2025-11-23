@@ -1,0 +1,224 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------ */
+/* GLOBAL COLOR DEFINITIONS (From tailwind.config.js) 
+/* Injected as raw CSS variables for robust styling */
+/* ------------------------------------------------ */
+:root {
+  --background-dark: #0f172a;
+  --surface-900: #10152b;
+  --surface-800: #1c2442;
+  --surface-700: #334155;
+  --accent-teal: #2dd4bf;
+  --accent-pink: #ec4899;
+  --text-light: #f1f5f9;
+  --text-muted: #94a3b8;
+}
+
+@layer base {
+  body {
+    /* Use plain CSS for page background so PostCSS doesn't try to resolve custom 'bg-*' utilities */
+    background-color: var(--background-dark);
+    color: var(--text-light);
+    background-image: radial-gradient(circle at 50% 0%, #10152b 0%, #070a1a 70%);
+    font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+  /* Card: Final Aesthetic - Deep surface, border, and blur */
+  .card-base {
+    @reference rounded-xl;
+    @reference p-6;
+    @reference border;
+    @reference transition-all;
+    @reference duration-300;
+    @reference ease-out;
+    background-color: var(--surface-800);
+    border-color: var(--surface-700);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+  }
+  
+  /* Inner Card for dense data */
+  .card-inner {
+    @reference rounded-lg;
+    @reference p-4;
+    @reference border;
+    background-color: var(--surface-900);
+    border-color: rgba(255, 255, 255, 0.05);
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background-color: var(--background-dark); }
+  ::-webkit-scrollbar-thumb { background-color: var(--surface-700); border-radius: 9999px; }
+  ::-webkit-scrollbar-thumb:hover { background-color: var(--accent-teal); }
+
+  /* Buttons */
+  .btn-primary {
+    @reference px-4;
+    @reference py-2;
+    @reference rounded-lg;
+    @reference font-semibold;
+    background-color: var(--accent-teal);
+    color: var(--background-dark);
+    transition: background-color 0.2s ease;
+  }
+  .btn-primary:hover { background-color: #2dd4bfcc; }
+
+  /* Floating Action Button (FAB) */
+  .fab {
+    @reference fixed;
+    @reference rounded-full;
+    @reference p-4;
+    @reference text-2xl;
+    @reference transition-transform;
+    background-color: var(--accent-pink);
+    color: var(--text-light);
+    box-shadow: 0 0 15px var(--accent-pink);
+    z-index: 99999;
+    pointer-events: auto;
+    transform: translateZ(0); /* Composite layer promotion */
+    bottom: 1.5rem; /* FAB positioning */
+    right: 1.5rem;
+  }
+}
+
+/* Slider Styling (Must remain outside @layer blocks to override user agent styles) */
+input[type=range].slider-thumb-teal::-webkit-slider-thumb { -webkit-appearance: none; height: 20px; width: 20px; border-radius: 50%; background: var(--accent-teal); box-shadow: 0 0 10px var(--accent-teal); margin-top: -8px; }
+input[type=range].slider-thumb-pink::-webkit-slider-thumb { -webkit-appearance: none; height: 20px; width: 20px; border-radius: 50%; background: var(--accent-pink); box-shadow: 0 0 10px var(--accent-pink); margin-top: -8px; }
+
+/* Global utilities */
+.select-none {
+  -webkit-user-select: none; /* Safari 3+, iOS 3+ */
+  user-select: none;
+}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Final consolidated minimal CSS - no @apply usage */
+:root {
+  --color-bg-dark: #0f172a;
+  --color-surface-900: #10152B;
+  --color-surface-800: #1C2442;
+  --color-surface-700: #334155;
+  --color-accent-teal: #2dd4bf;
+  --color-accent-pink: #ec4899;
+  --color-accent-blue: #3b82f6;
+  --color-accent-green: #22c55e;
+  --color-accent-yellow: #facc15;
+  --color-text-light: #f1f5f9;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-light);
+    background-image: radial-gradient(circle at 50% 0%, #10152B 0%, #070a1a 70%);
+    font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+  /* Card */
+  .card-base {
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    border: 1px solid var(--color-surface-700);
+    background-color: rgba(16,21,43,0.85);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+  }
+  .card-inner {
+    border-radius: 0.5rem;
+    padding: 1rem;
+    background-color: rgba(16, 21, 43, 0.45);
+    border: 1px solid rgba(255,255,255,0.04);
+  }
+
+  /* Persona Accent Utility Classes */
+  .border-accent-pink { border-color: var(--color-accent-pink) !important; }
+  .bg-accent-pink { background-color: var(--color-accent-pink) !important; }
+  .text-accent-pink { color: var(--color-accent-pink) !important; }
+  .shadow-neon-pink { box-shadow: 0 0 16px var(--color-accent-pink) !important; }
+
+  .border-accent-blue { border-color: var(--color-accent-blue) !important; }
+  .bg-accent-blue { background-color: var(--color-accent-blue) !important; }
+  .text-accent-blue { color: var(--color-accent-blue) !important; }
+  .shadow-neon-blue { box-shadow: 0 0 16px var(--color-accent-blue) !important; }
+
+  .border-accent-green { border-color: var(--color-accent-green) !important; }
+  .bg-accent-green { background-color: var(--color-accent-green) !important; }
+  .text-accent-green { color: var(--color-accent-green) !important; }
+  .shadow-neon-green { box-shadow: 0 0 16px var(--color-accent-green) !important; }
+
+  .border-accent-yellow { border-color: var(--color-accent-yellow) !important; }
+  .bg-accent-yellow { background-color: var(--color-accent-yellow) !important; }
+  .text-accent-yellow { color: var(--color-accent-yellow) !important; }
+  .shadow-neon-yellow { box-shadow: 0 0 16px var(--color-accent-yellow) !important; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background-color: var(--color-bg-dark); }
+  ::-webkit-scrollbar-thumb { background-color: var(--color-surface-700); border-radius: 9999px; }
+  ::-webkit-scrollbar-thumb:hover { background-color: var(--color-accent-teal); }
+
+  /* Buttons */
+  .btn-primary {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    background-color: var(--color-accent-teal);
+    color: var(--color-bg-dark);
+    transition: background-color 200ms ease;
+  }
+  .btn-primary:hover { background-color: rgba(45,212,191,0.85); }
+
+  /* Floating Action Button */
+  .fab {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    border-radius: 9999px;
+    padding: 1rem;
+    font-size: 1.5rem;
+    transition: transform 150ms ease;
+    z-index: 99999;
+    pointer-events: auto;
+    transform: translateZ(0);
+    will-change: transform;
+    background-color: var(--color-accent-pink);
+    color: #fff;
+    box-shadow: 0 10px 32px rgba(0,0,0,0.5);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  .fab:hover { transform: scale(1.05); }
+  .fab-enforced { z-index: 99999 !important; transform: translateZ(0) !important; pointer-events: auto !important; }
+}
+
+/* Slider */
+input[type=range].slider-thumb-teal::-webkit-slider-thumb { -webkit-appearance: none; height: 20px; width: 20px; border-radius: 50%; background: var(--color-accent-teal); box-shadow: 0 0 10px var(--color-accent-teal); margin-top: -8px; }
+input[type=range].slider-thumb-pink::-webkit-slider-thumb { -webkit-appearance: none; height: 20px; width: 20px; border-radius: 50%; background: var(--color-accent-pink); box-shadow: 0 0 10px var(--color-accent-pink); margin-top: -8px; }
+input[type=range].slider-thumb-teal::-moz-range-thumb { border: none; height: 20px; width: 20px; border-radius: 50%; background: var(--color-accent-teal); box-shadow: 0 0 10px var(--color-accent-teal); }
+input[type=range].slider-thumb-pink::-moz-range-thumb { border: none; height: 20px; width: 20px; border-radius: 50%; background: var(--color-accent-pink); box-shadow: 0 0 10px var(--color-accent-pink); }
+
+.select-none { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
+.text-gradient-accent { background: linear-gradient(90deg, #ec4899 0%, #2dd4bf 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.glow-accent { box-shadow: 0 0 12px rgba(45,212,191,0.25), 0 0 36px rgba(236,72,153,0.06); }
+.confetti { position: fixed; pointer-events: none; top: 0; left: 0; width: 100%; height: 100%; overflow: visible; }
+@keyframes confetti-fall { from { transform: translateY(-40vh); } to { transform: translateY(120vh); } }
+
+/* Avoid using @apply and any unknown tailwind utility classes to prevent PostCSS errors */

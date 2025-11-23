@@ -1,0 +1,40 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Only authenticated users can access their own profile and subcollections
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+
+      match /health/logs/{logId} {
+        allow create: if request.auth != null && request.auth.uid == userId;
+        allow read: if resource.data.privacy == "public" || (request.auth != null && request.auth.uid == userId);
+        allow update, delete: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+
+    // Collection for AI prompts; only the user may create/delete their own prompts, but we block read access by default
+    match /ai_prompts/{promptId} {
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
+      allow update, delete: if request.auth != null && request.auth.uid == resource.data.userId;
+      allow read: if false; // prompts may be private and / or processed server-side only
+    }
+
+    // Public resources - read-only for all users
+    match /resources/{resourceId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+
+    // Telemetry - create only, no reads
+    match /telemetry/{telemetryId} {
+      allow create: if request.auth != null;
+      allow read: if false;
+      allow update, delete: if false;
+    }
+
+    // Fallback: deny everything else explicitly
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
