@@ -30,7 +30,10 @@
     "e2e:watch": "npx concurrently -k 'npm run dev' 'cross-env PLAYWRIGHT_REUSE_EXISTING_SERVER=true npm run e2e'",
     "show-latest-trace": "pwsh -NoProfile -ExecutionPolicy Bypass -File ./scripts/show-latest-trace.ps1",
     "show-latest-trace:node": "node ./scripts/show-latest-trace.js",
-    "verify-dashboard": "node ./scripts/verify-dashboard.js"
+    "verify-dashboard": "node ./scripts/verify-dashboard.js",
+    "verify-naming": "node ./scripts/verify-naming.mjs",
+    "prepare": "husky install",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@google/genai": "^1.30.0",
@@ -43,13 +46,13 @@
     "express-rate-limit": "^7.0.1",
     "firebase": "^12.6.0",
     "framer-motion": "^12.23.24",
+    "googleapis": "^121.0.0",
     "helmet": "^7.0.0",
     "ioredis": "^5.3.0",
     "lucide-react": "^0.554.0",
     "marked": "^5.1.1",
     "path": "^0.12.7",
     "playwright": "^1.56.1",
-    "googleapis": "^121.0.0",
     "postcss": "^8.5.6",
     "prom-client": "^15.1.3",
     "react": "^19.2.0",
@@ -84,16 +87,26 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "firebase-admin": "^11.11.1",
     "firebase-functions": "^3.24.1",
+    "husky": "^9.1.7",
     "jsdom": "^27.2.0",
+    "lint-staged": "^16.2.7",
     "module-alias": "^2.2.3",
     "prettier": "^3.6.2",
     "serve": "^14.1.1",
     "tailwindcss": "^4.1.17",
+    "ts-morph": "^27.0.2",
     "typescript": "~5.8.2",
     "typescript-eslint": "^8.47.0",
     "vite": "^6.2.0",
     "vitest": "^4.0.9",
     "web-vitals": "^3.3.0"
+  },
+  "lint-staged": {
+    "**/*.{ts,tsx}": [
+      "npm run lint:fix",
+      "npm run format",
+      "git add"
+    ]
   },
   "cookie-parser": "^1.4.6",
   "overrides": {
