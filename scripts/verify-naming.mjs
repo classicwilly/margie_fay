@@ -10,6 +10,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const tsconfigPath = path.join(__dirname, '..', 'tsconfig.json');
 const project = new Project({ tsConfigFilePath: tsconfigPath });
+const repoRoot = path.resolve(__dirname, '..');
 
 function isKebabCase(name) {
   return /^[a-z][a-z0-9-]*$/.test(name);
