@@ -1,0 +1,5 @@
+[
+  {"from": "components/Header.tsx", "to": "components/ui/header.tsx"},
+  {"from": "components/Button.tsx", "to": "components/ui/button.tsx"},
+  {"from": "components/Modal.tsx", "to": "components/ui/modal.tsx"}
+]

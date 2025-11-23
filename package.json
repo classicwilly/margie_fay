@@ -34,6 +34,8 @@
     "verify-naming": "node ./scripts/verify-naming.mjs",
     "prepare": "husky install",
     "format": "prettier --write ."
+    ,
+    "sync-to-ws-os": "node ./scripts/deploy/sync-to-ws-os.mjs"
   },
   "dependencies": {
     "@google/genai": "^1.30.0",

@@ -1,22 +1,4 @@
-import React from 'react';
-
-type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: 'primary' | 'secondary' | 'danger';
-  size?: 'sm' | 'md';
-};
-
-const base = 'btn';
-const variantClass = {
-  primary: 'btn-primary',
-  secondary: 'btn-secondary',
-  danger: 'btn-danger',
-};
-
-const sizeClass = {
-  sm: 'btn-sm',
-  md: '',
-};
-
-export const Button = ({ variant = 'primary', size = 'md', className = '', ...props }: ButtonProps) => {
-  return <button {...props} className={`${base} ${variantClass[variant]} ${sizeClass[size]} ${className}`} />;
-};
+// DEPRECATED SHIM: components\Button.tsx -> components\ui\button.tsx
+// This file keeps existing imports working temporarily during the migration.
+export * from './ui/button';
+export { default } from './ui/button';
