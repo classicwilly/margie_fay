@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
-import { googleWorkspaceService } from '../src/services/googleWorkspaceService';
+import { useState, useEffect, useCallback } from "react";
+import { googleWorkspaceService } from "../src/services/googleWorkspaceService";
 
 declare global {
   interface Window {
@@ -36,8 +36,8 @@ export const useGoogleAuth = () => {
         return;
       }
 
-      const script = document.createElement('script');
-      script.src = 'https://accounts.google.com/gsi/client';
+      const script = document.createElement("script");
+      script.src = "https://accounts.google.com/gsi/client";
       script.async = true;
       script.defer = true;
       script.onload = initializeGoogleAuth;
@@ -47,7 +47,7 @@ export const useGoogleAuth = () => {
     const initializeGoogleAuth = () => {
       try {
         window.google.accounts.id.initialize({
-          client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID || '',
+          client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID || "",
           callback: handleCredentialResponse,
           auto_select: false,
           cancel_on_tap_outside: true,
@@ -56,15 +56,15 @@ export const useGoogleAuth = () => {
         // Check if user is already signed in
         window.google.accounts.id.prompt((notification: any) => {
           if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-            setAuthState(prev => ({ ...prev, isLoading: false }));
+            setAuthState((prev) => ({ ...prev, isLoading: false }));
           }
         });
       } catch (error) {
-        console.error('Error initializing Google Auth:', error);
-        setAuthState(prev => ({
+        console.error("Error initializing Google Auth:", error);
+        setAuthState((prev) => ({
           ...prev,
           isLoading: false,
-          error: 'Failed to initialize Google authentication',
+          error: "Failed to initialize Google authentication",
         }));
       }
     };
@@ -74,7 +74,7 @@ export const useGoogleAuth = () => {
         const token = response.credential;
 
         // Decode JWT to get user info
-        const payload = JSON.parse(atob(token.split('.')[1]));
+        const payload = JSON.parse(atob(token.split(".")[1]));
         const user = {
           name: payload.name,
           email: payload.email,
@@ -92,11 +92,11 @@ export const useGoogleAuth = () => {
           error: null,
         });
       } catch (error) {
-        console.error('Error handling credential response:', error);
-        setAuthState(prev => ({
+        console.error("Error handling credential response:", error);
+        setAuthState((prev) => ({
           ...prev,
           isLoading: false,
-          error: 'Failed to authenticate with Google',
+          error: "Failed to authenticate with Google",
         }));
       }
     };
@@ -106,12 +106,12 @@ export const useGoogleAuth = () => {
 
   const signIn = useCallback(() => {
     if (window.google?.accounts?.id) {
-      setAuthState(prev => ({ ...prev, isLoading: true, error: null }));
+      setAuthState((prev) => ({ ...prev, isLoading: true, error: null }));
       window.google.accounts.id.prompt();
     } else {
-      setAuthState(prev => ({
+      setAuthState((prev) => ({
         ...prev,
-        error: 'Google authentication not initialized',
+        error: "Google authentication not initialized",
       }));
     }
   }, []);

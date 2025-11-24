@@ -6,12 +6,7 @@ import {
   createUserWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import {
-  getFirestore,
-  doc,
-  setDoc,
-  onSnapshot,
-} from "firebase/firestore";
+import { getFirestore, doc, setDoc, onSnapshot } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -21,7 +16,7 @@ const firebaseConfig = {
   storageBucket: "wonky-sprout-os.firebasestorage.app",
   messagingSenderId: "574841005144",
   appId: "1:574841005144:web:1505078ff0c76925b5162d",
-  measurementId: "G-FGZEZ0XPBJ"
+  measurementId: "G-FGZEZ0XPBJ",
 };
 
 // Initialize Firebase
@@ -33,12 +28,12 @@ const dbInstance = getFirestore(app);
 // --- Real Firestore Service ---
 export const db = {
   setDoc: (userId, data) => {
-    const userDocRef = doc(dbInstance, 'users', userId);
+    const userDocRef = doc(dbInstance, "users", userId);
     // Overwrite the document completely, as our app syncs the full state object.
     return setDoc(userDocRef, data);
   },
   onSnapshot: (userId, callback) => {
-    const userDocRef = doc(dbInstance, 'users', userId);
+    const userDocRef = doc(dbInstance, "users", userId);
     return onSnapshot(userDocRef, (docSnap) => {
       if (docSnap.exists()) {
         callback(docSnap.data());

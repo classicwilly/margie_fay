@@ -1,14 +1,16 @@
-import { MemorialEntry } from '../data/memorials';
+import { MemorialEntry } from "../data/memorials";
 
-const STORAGE_KEY = '__WONKY_MEMORIALS__';
+const STORAGE_KEY = "__WONKY_MEMORIALS__";
 
 export function loadMemorials(): MemorialEntry[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return [];
+    if (!raw) {
+      return [];
+    }
     return JSON.parse(raw) as MemorialEntry[];
   } catch (e) {
-    console.warn('Failed to load memorials', e);
+    console.warn("Failed to load memorials", e);
     return [];
   }
 }
@@ -17,7 +19,7 @@ export function saveMemorials(items: MemorialEntry[]) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
   } catch (e) {
-    console.warn('Failed to save memorials', e);
+    console.warn("Failed to save memorials", e);
   }
 }
 

@@ -1,7 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { useGoogleAuth } from '../hooks/useGoogleAuth';
-import { googleWorkspaceService, GoogleCalendarEvent, GoogleTask, GoogleEmail, GoogleDriveFile } from '../src/services/googleWorkspaceService';
-import { getGrandmaAdvice } from '../src/services/geminiService';
+import React, { useState, useEffect } from "react";
+import { useGoogleAuth } from "../hooks/useGoogleAuth";
+import {
+  googleWorkspaceService,
+  GoogleCalendarEvent,
+  GoogleTask,
+  GoogleEmail,
+  GoogleDriveFile,
+} from "../src/services/googleWorkspaceService";
+import { getGrandmaAdvice } from "../src/services/geminiService";
 
 interface DashboardProps {
   events: GoogleCalendarEvent[];
@@ -10,11 +16,12 @@ interface DashboardProps {
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ events, loading, error }) => {
-  const { isAuthenticated, user, signIn, signOut, accessToken } = useGoogleAuth();
+  const { isAuthenticated, user, signIn, signOut, accessToken } =
+    useGoogleAuth();
   const [tasks, setTasks] = useState<GoogleTask[]>([]);
   const [emails, setEmails] = useState<GoogleEmail[]>([]);
   const [driveFiles, setDriveFiles] = useState<GoogleDriveFile[]>([]);
-  const [geminiGuidance, setGeminiGuidance] = useState<string>('');
+  const [geminiGuidance, setGeminiGuidance] = useState<string>("");
   const [workspaceLoading, setWorkspaceLoading] = useState(false);
 
   useEffect(() => {
@@ -37,10 +44,14 @@ const Dashboard: React.FC<DashboardProps> = ({ events, loading, error }) => {
       setDriveFiles(driveData);
 
       // Generate Gemini guidance based on current workspace state
-      const guidance = await generateWorkspaceGuidance(tasksData, emailsData, events);
+      const guidance = await generateWorkspaceGuidance(
+        tasksData,
+        emailsData,
+        events,
+      );
       setGeminiGuidance(guidance);
     } catch (err) {
-      console.error('Error loading workspace data:', err);
+      console.error("Error loading workspace data:", err);
     } finally {
       setWorkspaceLoading(false);
     }
@@ -49,11 +60,11 @@ const Dashboard: React.FC<DashboardProps> = ({ events, loading, error }) => {
   const generateWorkspaceGuidance = async (
     tasks: GoogleTask[],
     emails: GoogleEmail[],
-    events: GoogleCalendarEvent[]
+    events: GoogleCalendarEvent[],
   ): Promise<string> => {
     const context = {
-      pendingTasks: tasks.filter(t => !t.completed).length,
-      unreadEmails: emails.filter(e => e.isUnread).length,
+      pendingTasks: tasks.filter((t) => !t.completed).length,
+      unreadEmails: emails.filter((e) => e.isUnread).length,
       todayEvents: events.length,
       recentFiles: driveFiles.length,
     };
@@ -75,12 +86,14 @@ Provide concise, actionable guidance as Grandma Margie would, focusing on time m
   };
 
   const createQuickTask = async (title: string) => {
-    if (!isAuthenticated) return;
+    if (!isAuthenticated) {
+      return;
+    }
     try {
       await googleWorkspaceService.createTask(title);
       loadWorkspaceData(); // Refresh data
     } catch (err) {
-      console.error('Error creating task:', err);
+      console.error("Error creating task:", err);
     }
   };
 
@@ -88,11 +101,12 @@ Provide concise, actionable guidance as Grandma Margie would, focusing on time m
     return (
       <div className="card-base bg-card-dark rounded-lg shadow-lg border border-accent-teal p-8 text-center">
         <h1 className="text-3xl font-mono font-bold text-accent-teal mb-6">
-          Margie's Cockpit - Dashboard
+          Margie's Workshop - Dashboard
         </h1>
         <div className="space-y-4">
           <p className="text-lg text-text-light">
-            Connect your Google Workspace to unlock the full power of seamless task flow.
+            Connect your Google Workspace to unlock the full power of seamless
+            task flow.
           </p>
           <button
             onClick={signIn}
@@ -109,7 +123,7 @@ Provide concise, actionable guidance as Grandma Margie would, focusing on time m
     <div className="card-base bg-card-dark rounded-lg shadow-lg border border-accent-teal p-8">
       <div className="flex justify-between items-center mb-6 border-b border-surface-700 pb-4">
         <h1 className="text-3xl font-mono font-bold text-accent-teal">
-          Margie's Cockpit - Dashboard
+          Margie's Workshop - Dashboard
         </h1>
         <div className="flex items-center space-x-4">
           <span className="text-text-light">Welcome, {user?.name}</span>
@@ -132,13 +146,17 @@ Provide concise, actionable guidance as Grandma Margie would, focusing on time m
           {error && <p className="text-red-400 text-sm">{error}</p>}
           <div className="space-y-2 max-h-48 overflow-y-auto">
             {events.slice(0, 5).map((event) => (
-              <div key={event.id} className="text-sm p-2 bg-surface-800 rounded">
-                <div className="font-semibold text-accent-pink">{event.summary}</div>
+              <div
+                key={event.id}
+                className="text-sm p-2 bg-surface-800 rounded"
+              >
+                <div className="font-semibold text-accent-pink">
+                  {event.summary}
+                </div>
                 <div className="text-text-muted">
                   {event.start.dateTime
                     ? new Date(event.start.dateTime).toLocaleTimeString()
-                    : 'All day'
-                  }
+                    : "All day"}
                 </div>
               </div>
             ))}
@@ -151,26 +169,35 @@ Provide concise, actionable guidance as Grandma Margie would, focusing on time m
         {/* Tasks */}
         <div className="card-base bg-card-dark rounded-lg shadow-lg border border-accent-green p-6">
           <h2 className="text-xl font-semibold text-accent-green mb-4 flex items-center">
-            ✅ Tasks ({tasks.filter(t => !t.completed).length})
+            ✅ Tasks ({tasks.filter((t) => !t.completed).length})
           </h2>
-          {workspaceLoading && <p className="text-text-muted">Loading tasks...</p>}
+          {workspaceLoading && (
+            <p className="text-text-muted">Loading tasks...</p>
+          )}
           <div className="space-y-2 max-h-48 overflow-y-auto">
-            {tasks.filter(t => !t.completed).slice(0, 5).map((task) => (
-              <div key={task.id} className="text-sm p-2 bg-surface-800 rounded flex items-center">
-                <input
-                  type="checkbox"
-                  className="mr-2"
-                  aria-label={`Mark task "${task.title}" as complete`}
-                />
-                <span className="text-accent-green">{task.title}</span>
-              </div>
-            ))}
-            {tasks.filter(t => !t.completed).length === 0 && !workspaceLoading && (
-              <p className="text-text-muted text-sm">No pending tasks</p>
-            )}
+            {tasks
+              .filter((t) => !t.completed)
+              .slice(0, 5)
+              .map((task) => (
+                <div
+                  key={task.id}
+                  className="text-sm p-2 bg-surface-800 rounded flex items-center"
+                >
+                  <input
+                    type="checkbox"
+                    className="mr-2"
+                    aria-label={`Mark task "${task.title}" as complete`}
+                  />
+                  <span className="text-accent-green">{task.title}</span>
+                </div>
+              ))}
+            {tasks.filter((t) => !t.completed).length === 0 &&
+              !workspaceLoading && (
+                <p className="text-text-muted text-sm">No pending tasks</p>
+              )}
           </div>
           <button
-            onClick={() => createQuickTask('New task from Wonky Sprout')}
+            onClick={() => createQuickTask("New task from Wonky Sprout")}
             className="mt-3 text-accent-green hover:text-accent-green/80 text-sm underline"
           >
             + Add Task
@@ -180,15 +207,24 @@ Provide concise, actionable guidance as Grandma Margie would, focusing on time m
         {/* Emails */}
         <div className="card-base bg-card-dark rounded-lg shadow-lg border border-accent-blue p-6">
           <h2 className="text-xl font-semibold text-accent-blue mb-4 flex items-center">
-            📧 Recent Emails ({emails.filter(e => e.isUnread).length} unread)
+            📧 Recent Emails ({emails.filter((e) => e.isUnread).length} unread)
           </h2>
-          {workspaceLoading && <p className="text-text-muted">Loading emails...</p>}
+          {workspaceLoading && (
+            <p className="text-text-muted">Loading emails...</p>
+          )}
           <div className="space-y-2 max-h-48 overflow-y-auto">
             {emails.slice(0, 5).map((email) => (
-              <div key={email.id} className="text-sm p-2 bg-surface-800 rounded">
-                <div className="font-semibold text-accent-blue truncate">{email.subject}</div>
+              <div
+                key={email.id}
+                className="text-sm p-2 bg-surface-800 rounded"
+              >
+                <div className="font-semibold text-accent-blue truncate">
+                  {email.subject}
+                </div>
                 <div className="text-text-muted truncate">{email.from}</div>
-                {email.isUnread && <span className="text-accent-pink text-xs">●</span>}
+                {email.isUnread && (
+                  <span className="text-accent-pink text-xs">●</span>
+                )}
               </div>
             ))}
             {emails.length === 0 && !workspaceLoading && (
@@ -202,11 +238,15 @@ Provide concise, actionable guidance as Grandma Margie would, focusing on time m
           <h2 className="text-xl font-semibold text-accent-purple mb-4 flex items-center">
             📁 Recent Files
           </h2>
-          {workspaceLoading && <p className="text-text-muted">Loading files...</p>}
+          {workspaceLoading && (
+            <p className="text-text-muted">Loading files...</p>
+          )}
           <div className="space-y-2 max-h-48 overflow-y-auto">
             {driveFiles.slice(0, 5).map((file) => (
               <div key={file.id} className="text-sm p-2 bg-surface-800 rounded">
-                <div className="font-semibold text-accent-purple truncate">{file.name}</div>
+                <div className="font-semibold text-accent-purple truncate">
+                  {file.name}
+                </div>
                 <div className="text-text-muted text-xs">
                   {new Date(file.modifiedTime).toLocaleDateString()}
                 </div>

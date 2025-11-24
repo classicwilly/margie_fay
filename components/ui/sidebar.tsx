@@ -1,5 +1,5 @@
-import React from 'react';
-import CockpitNavigation from './CockpitNavigation';
+import React from "react";
+import WorkshopNavigation from "./WorkshopNavigation";
 
 const Sidebar: React.FC = () => {
   return (
@@ -10,7 +10,7 @@ const Sidebar: React.FC = () => {
         </div>
       </div>
       <div className="flex-1 w-full">
-        <CockpitNavigation />
+        <WorkshopNavigation />
       </div>
     </div>
   );

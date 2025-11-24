@@ -1,22 +1,34 @@
-import React from 'react';
+import React from "react";
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: 'primary' | 'secondary' | 'danger';
-  size?: 'sm' | 'md';
+  variant?: "primary" | "secondary" | "danger";
+  size?: "sm" | "md";
 };
 
-const base = 'btn';
+const base = "btn";
 const variantClass = {
-  primary: 'btn-primary',
-  secondary: 'btn-secondary',
-  danger: 'btn-danger',
+  primary: "btn-primary",
+  secondary: "btn-secondary",
+  danger: "btn-danger",
 };
 
 const sizeClass = {
-  sm: 'btn-sm',
-  md: '',
+  sm: "btn-sm",
+  md: "",
 };
 
-export const Button = ({ variant = 'primary', size = 'md', className = '', ...props }: ButtonProps) => {
-  return <button {...props} className={`${base} ${variantClass[variant]} ${sizeClass[size]} ${className}`} />;
+export const Button = ({
+  variant = "primary",
+  size = "md",
+  className = "",
+  ...props
+}: ButtonProps) => {
+  return (
+    <button
+      {...props}
+      className={`${base} ${variantClass[variant]} ${sizeClass[size]} ${className}`}
+    />
+  );
 };
+
+export default Button;

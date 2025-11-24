@@ -29,10 +29,10 @@ $env:WONKY_E2E_EXTEND_TEST = 'true'; npm run e2e
 ```
 
 2. If you prefer opt-in per-test, import the extended `test` from the fixture
-  module in a single test file (this does not require the alias):
+   module in a single test file (this does not require the alias):
 
 ```ts
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 ```
 
 When the opt-in global shim is enabled, tests can import from
@@ -48,17 +48,33 @@ Example usage in a test (seed state and set forced view):
 
 ```ts
 await page.addInitScript((key) => {
-  try { window.localStorage.removeItem(key as string); } catch (e) { /* ignore */ }
-  try { (window as any).__E2E_FORCE_VIEW__ = 'willows-dashboard'; } catch (e) { /* ignore */ }
+  try {
+    window.localStorage.removeItem(key as string);
+  } catch (e) {
+    /* ignore */
+  }
+  try {
+    (window as any).__E2E_FORCE_VIEW__ = "willows-dashboard";
+  } catch (e) {
+    /* ignore */
+  }
 }, storageKey);
 
 // Then seed a full state so Willow shows reward-store and gem-collector modules
 await page.addInitScript((seedKey) => {
-  const state = { dashboardType: 'willow', view: 'willows-dashboard', initialSetupComplete: true, willowDashboardModules: [ 'reward-store-module', 'willow-gem-collector-module' ] };
+  const state = {
+    dashboardType: "willow",
+    view: "willows-dashboard",
+    initialSetupComplete: true,
+    willowDashboardModules: [
+      "reward-store-module",
+      "willow-gem-collector-module",
+    ],
+  };
   window.localStorage.setItem(seedKey as string, JSON.stringify(state));
 }, storageKey);
 
-await page.reload({ waitUntil: 'load' });
+await page.reload({ waitUntil: "load" });
 ```
 
 ## E2E / App pre-hydration (new)
@@ -106,6 +122,7 @@ npm run e2e
 ```
 
 ---
+
 If you want me to make the global opt-in on by default (or convert more tests
 to use the new fixtures), tell me which mode you prefer and I can update the
 `package.json` scripts accordingly. Note: currently the repo defaults to

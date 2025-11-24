@@ -1,10 +1,12 @@
 Firebase guide for Wonky Sprout OS
 
 Overview
+
 - Firebase is a good choice for an MVP backend: Authentication, Firestore for flexible data storage, Cloud Functions for server logic, Hosting for static site, and optional App Check + Security rules for safety.
 - If you will store sensitive health data (PHI), Firebase might need extra legal considerations — you must sign a BAA with Google and ensure HIPAA compliance for production. For strictly non-PHI or de-identified health insight collection, Firebase is fine.
 
 Recommended architecture
+
 - Authentication: Firebase Auth (email/password, Google sign-in). Keep identity tokens short-lived.
 - Database: Cloud Firestore. Use per-user document namespaces (e.g., `users/{uid}/health_logs/{logId}`) with strong rules.
 - Server logic: Cloud Functions for heavy tasks (e.g., scheduling notifications, proxying AI calls—don’t store raw PII without consent).
@@ -12,6 +14,7 @@ Recommended architecture
 - Storage: Cloud Storage for non-sensitive attachments (images). For sensitive attachments, consider encrypting on client and storing minimal metadata.
 
 YP Firestore schema (short):
+
 - users/{uid}
   - profile: { displayName, email, timezone, consentFlags }
 - users/{uid}/health/logs/{logId}
@@ -19,7 +22,7 @@ YP Firestore schema (short):
   - date: timestamp
   - tags: []
   - payload: { symptom: string, severity: number, notes: string }
-  - privacy: 'private' | 'share_with_provider'  // user-controlled
+  - privacy: 'private' | 'share_with_provider' // user-controlled
 - resources/{resourceId}
   - title, description, category, tags, publishedAt
 - telemetry/events/{eventId}
@@ -30,10 +33,10 @@ Security rules sketch:
 
 rules_version = '2';
 service cloud.firestore {
-  match /databases/{database}/documents {
-    // Users can read/write their profile, restricted by auth
-    match /users/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
+match /databases/{database}/documents {
+// Users can read/write their profile, restricted by auth
+match /users/{userId} {
+allow read, write: if request.auth != null && request.auth.uid == userId;
 
       match /health/logs/{logId} {
         allow read, create: if request.auth != null && request.auth.uid == userId;
@@ -51,10 +54,12 @@ service cloud.firestore {
       // avoid read access to raw telemetry
       allow read: if false;
     }
-  }
+
+}
 }
 
 Notes & best practices
+
 - Avoid storing unencrypted PHI. If you must store PHI/health data, get a BAA from Google and design audit logs.
 - Encrypt locally sensitive text before sending if you want an extra layer (client encrypts with user's recovery key).
 - For AI flows: validate and scrub PII before sending to external APIs; use the `useAIPromptSafety` hook for prompt scanning.
@@ -67,6 +72,7 @@ Notes & best practices
 Next: If you'd like, I can scaffold minimal `firebase.json` + Cloud Functions proxies for AI flows (to keep server-side API keys safe).
 
 Deploy & local test steps (quick):
+
 - Install Firebase CLI: `npm install -g firebase-tools` and log in: `firebase login`.
 - Use the emulator for local testing without real credentials: `firebase emulators:start --only functions,firestore,auth`
 - To run the new function tests: `cd functions && npm install && npm test`. Unit tests for the PII scrub run locally and do not need emulators.
@@ -74,18 +80,20 @@ Deploy & local test steps (quick):
 - Build your client and start a preview server (if necessary) with `npm run build` or `npm run dev` depending on your local setup.
 
 Deploy functions to Firebase (production):
+
 - Set env vars: for example `firebase functions:config:set ai.url="https://ai.example.com" ai.key="__KEY__"`
 - Deploy functions: `firebase deploy --only functions`
 
 Notes on App Check:
+
 - If you enable App Check, modify `functions/index.js` to reject requests without an App Check token. The example code in `functions/index.js` shows a soft-fail approach that lets you keep testing locally without App Check.
 
 Client example: calling the AI proxy from the browser
 
 ```js
 // Acquire ID token & App Check token from Firebase SDK, then call Cloud Function
-import { getAuth } from 'firebase/auth';
-import { getAppCheckToken } from 'firebase/app-check';
+import { getAuth } from "firebase/auth";
+import { getAppCheckToken } from "firebase/app-check";
 
 async function callAiproxy(prompt) {
   const auth = getAuth();
@@ -93,12 +101,12 @@ async function callAiproxy(prompt) {
   const appCheckResponse = await getAppCheckToken();
   const appCheckToken = appCheckResponse && appCheckResponse.token;
 
-  const res = await fetch('/aiProxy', {
-    method: 'POST',
+  const res = await fetch("/aiProxy", {
+    method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
-      'X-Firebase-AppCheck': appCheckToken,
-      'Content-Type': 'application/json',
+      "X-Firebase-AppCheck": appCheckToken,
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({ prompt }),
   });

@@ -1,9 +1,15 @@
-import fetch from 'node-fetch';
-import { redactPII } from '../../server/aiUtils';
+import fetch from "node-fetch";
+import { redactPII } from "../../server/aiUtils";
 
-type GenerateOptions = { personaKey?: string; maxTokens?: number };
+interface GenerateOptions {
+  personaKey?: string;
+  maxTokens?: number;
+}
 
-export async function generateWithLLM(prompt: string, opts: GenerateOptions = {}) {
+export async function generateWithLLM(
+  prompt: string,
+  opts: GenerateOptions = {},
+) {
   // Perform DLP redaction for PII and return placeholder if missing API key
   const { safePrompt } = redactPII(prompt);
 
@@ -14,7 +20,10 @@ export async function generateWithLLM(prompt: string, opts: GenerateOptions = {}
 
   // TODO: Replace with actual Gemini SDK / API requests, with proper auth from server.
   // For now we return a placeholder string to avoid making external calls in CI.
-  const end = (opts.personaKey === 'grandma') ? 'Love, Grandma.' : `—${opts.personaKey || 'AI'}.`;
+  const end =
+    opts.personaKey === "grandma"
+      ? "Love, Grandma."
+      : `—${opts.personaKey || "AI"}.`;
   return `${safePrompt} ${end}`;
 }
 

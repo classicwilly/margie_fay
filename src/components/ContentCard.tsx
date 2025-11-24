@@ -1,1 +1,1 @@
-export { default } from '../../components/ContentCard';
+export { default } from "../../components/ContentCard";

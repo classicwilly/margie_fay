@@ -1,39 +1,51 @@
-
-
-import React, { useState } from 'react';
-import { useAppState } from '@contexts/AppStateContext';
-import ContentCard from '../ContentCard.js';
-import useSafeAI from '../../hooks/useSafeAI';
-import { SecureMarkdown } from '../../utils/secureMarkdownRenderer.js';
-import { useAIPromptSafety } from '../../hooks/useAIPromptSafety.js';
-import AIConsentModal from '@components/AIConsentModal';
-import PIIWarningModal from '@components/PIIWarningModal';
+import React, { useState } from "react";
+import { useAppState } from "@contexts/AppStateContext";
+import ContentCard from "../ContentCard.js";
+import useSafeAI from "../../hooks/useSafeAI";
+import { SecureMarkdown } from "../../utils/secureMarkdownRenderer.js";
+import { useAIPromptSafety } from "../../hooks/useAIPromptSafety.js";
+import AIConsentModal from "@components/AIConsentModal";
+import PIIWarningModal from "@components/PIIWarningModal";
 
 const AIFinancialAnalysis = () => {
-    const { appState } = useAppState();
-    const { expenses, financialBudgets } = appState;
-    const [analysis, setAnalysis] = useState('');
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
-    const { 
-        checkAndExecute, 
-        isPiiModalOpen, piiMatches, handlePiiConfirm, handlePiiCancel,
-        isConsentModalOpen, handleConfirm, handleCancel, dontShowAgain, setDontShowAgain 
-    } = useAIPromptSafety();
+  const { appState } = useAppState();
+  const { expenses, financialBudgets } = appState;
+  const [analysis, setAnalysis] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const {
+    checkAndExecute,
+    isPiiModalOpen,
+    piiMatches,
+    handlePiiConfirm,
+    handlePiiCancel,
+    isConsentModalOpen,
+    handleConfirm,
+    handleCancel,
+    dontShowAgain,
+    setDontShowAgain,
+  } = useAIPromptSafety();
 
-    const generatePrompt = () => {
-        const now = new Date();
-        const currentMonthExpenses = expenses
-            .filter(exp => new Date(exp.date).getMonth() === now.getMonth() && new Date(exp.date).getFullYear() === now.getFullYear())
-            .map(exp => `- $${exp.amount.toFixed(2)} on ${exp.description} (${exp.category}) on ${new Date(exp.date).toLocaleDateString()}`)
-            .join('\n');
+  const generatePrompt = () => {
+    const now = new Date();
+    const currentMonthExpenses = expenses
+      .filter(
+        (exp) =>
+          new Date(exp.date).getMonth() === now.getMonth() &&
+          new Date(exp.date).getFullYear() === now.getFullYear(),
+      )
+      .map(
+        (exp) =>
+          `- $${exp.amount.toFixed(2)} on ${exp.description} (${exp.category}) on ${new Date(exp.date).toLocaleDateString()}`,
+      )
+      .join("\n");
 
-        const budgets = Object.entries(financialBudgets)
-            // FIX: Cast amount to number to allow toFixed call.
-            .map(([cat, amount]) => `- ${cat}: $${Number(amount).toFixed(2)}`)
-            .join('\n');
+    const budgets = Object.entries(financialBudgets)
+      // FIX: Cast amount to number to allow toFixed call.
+      .map(([cat, amount]) => `- ${cat}: $${Number(amount).toFixed(2)}`)
+      .join("\n");
 
-        return `
+    return `
             You are a financial analyst AI for a neurodivergent user's personal operating system. Your task is to analyze their spending for the current month and provide concise, actionable insights. Avoid generic advice.
 
             **Core Directives:**
@@ -52,56 +64,86 @@ const AIFinancialAnalysis = () => {
 
             Now, generate the financial analysis. If data is insufficient, state that clearly.
         `;
-    };
-    
-    const { generate } = useSafeAI();
+  };
 
-    const handleAnalysis = async (safePrompt?: string) => {
-        setLoading(true);
-        setError('');
-        setAnalysis('');
-        const prompt = generatePrompt();
-        try {
-            const result = await generate(safePrompt ?? prompt, { model: 'gemini-2.5-flash', timeoutMs: 20000, skipPromptSafety: true });
-            setAnalysis(result?.text || (result?.json ? JSON.stringify(result.json) : ''));
-        } catch (e) {
-            setError(`Analysis failed: ${e.message || 'Unknown error'}`);
-        } finally {
-            setLoading(false);
-        }
-    };
+  const { generate } = useSafeAI();
 
-    const triggerAnalysis = () => {
-        checkAndExecute(generatePrompt(), handleAnalysis);
-    };
+  const handleAnalysis = async (safePrompt?: string) => {
+    setLoading(true);
+    setError("");
+    setAnalysis("");
+    const prompt = generatePrompt();
+    try {
+      const result = await generate(safePrompt ?? prompt, {
+        model: "gemini-2.5-flash",
+        timeoutMs: 20000,
+        skipPromptSafety: true,
+      });
+      setAnalysis(
+        result?.text || (result?.json ? JSON.stringify(result.json) : ""),
+      );
+    } catch (e) {
+      setError(`Analysis failed: ${e.message || "Unknown error"}`);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    return (
-        <ContentCard title="🤖 AI Financial Analyst">
-             {isConsentModalOpen && <AIConsentModal onConfirm={handleConfirm} onCancel={handleCancel} dontShowAgain={dontShowAgain} setDontShowAgain={setDontShowAgain} />}
-             {isPiiModalOpen && <PIIWarningModal isOpen={isPiiModalOpen} onCancel={handlePiiCancel} onConfirm={handlePiiConfirm} matches={piiMatches} />}
-             <p className="text-text-light text-opacity-80 mb-4">
-                Let the AI analyze your current month's spending to identify patterns, check budget compliance, and surface key observations.
-            </p>
-            <button
-                onClick={triggerAnalysis}
-                disabled={loading}
-                className="w-full px-6 py-2 bg-accent-blue text-background-dark font-bold rounded hover:bg-blue-400 disabled:bg-gray-600"
-            >
-               {loading ? 'Analyzing...' : '✨ Run Financial Analysis'}
-            </button>
-            
-            <div className="mt-4 flex-grow p-3 bg-gray-800 rounded-md min-h-[150px] border border-gray-700 overflow-y-auto">
-                {loading && <div className="flex items-center justify-center h-full"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent-blue"></div><p className="ml-3">Analyzing finances...</p></div>}
-                {error && <div className="text-red-400 p-4">{error}</div>}
-                {analysis && (
-                    <div className="prose prose-invert prose-sm max-w-none">
-                        <SecureMarkdown content={analysis} />
-                    </div>
-                )}
-                {!loading && !error && !analysis && <p className="text-center text-text-light text-opacity-80 p-4">Run analysis to see financial insights.</p>}
-            </div>
-        </ContentCard>
-    );
+  const triggerAnalysis = () => {
+    checkAndExecute(generatePrompt(), handleAnalysis);
+  };
+
+  return (
+    <ContentCard title="🤖 AI Financial Analyst">
+      {isConsentModalOpen && (
+        <AIConsentModal
+          onConfirm={handleConfirm}
+          onCancel={handleCancel}
+          dontShowAgain={dontShowAgain}
+          setDontShowAgain={setDontShowAgain}
+        />
+      )}
+      {isPiiModalOpen && (
+        <PIIWarningModal
+          isOpen={isPiiModalOpen}
+          onCancel={handlePiiCancel}
+          onConfirm={handlePiiConfirm}
+          matches={piiMatches}
+        />
+      )}
+      <p className="text-text-light text-opacity-80 mb-4">
+        Let the AI analyze your current month's spending to identify patterns,
+        check budget compliance, and surface key observations.
+      </p>
+      <button
+        onClick={triggerAnalysis}
+        disabled={loading}
+        className="w-full px-6 py-2 bg-accent-blue text-background-dark font-bold rounded hover:bg-blue-400 disabled:bg-gray-600"
+      >
+        {loading ? "Analyzing..." : "✨ Run Financial Analysis"}
+      </button>
+
+      <div className="mt-4 flex-grow p-3 bg-gray-800 rounded-md min-h-[150px] border border-gray-700 overflow-y-auto">
+        {loading && (
+          <div className="flex items-center justify-center h-full">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent-blue"></div>
+            <p className="ml-3">Analyzing finances...</p>
+          </div>
+        )}
+        {error && <div className="text-red-400 p-4">{error}</div>}
+        {analysis && (
+          <div className="prose prose-invert prose-sm max-w-none">
+            <SecureMarkdown content={analysis} />
+          </div>
+        )}
+        {!loading && !error && !analysis && (
+          <p className="text-center text-text-light text-opacity-80 p-4">
+            Run analysis to see financial insights.
+          </p>
+        )}
+      </div>
+    </ContentCard>
+  );
 };
 
 export default AIFinancialAnalysis;

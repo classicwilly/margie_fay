@@ -3,6 +3,7 @@
 Purpose: Provide a documented, auditable, and privacy-first workflow to integrate your Wonky Sprout OS with Google Workspace tools (e.g., Drive, Tasks, Keep). The goal is to automate manual syncs while minimizing PII leakage, protecting children's privacy, and maintaining an audit trail.
 
 High-level Principles
+
 - Explicit consent: Each integration requires a clear parental/guardian consent step.
 - Minimal scope: Only request OAuth scopes strictly needed (e.g., tasks.readonly). Avoid full-drive scopes.
 - Prompt Sanitization: Remove PII and any sensitive content before sending to servers/AI.
@@ -10,6 +11,7 @@ High-level Principles
 - Logging & Audit: Record who authorized and when an integration was used, plus request metadata.
 
 Implementation Steps
+
 1. Prepare server-side OAuth flow
    - Use OAuth 2.0 with restricted scopes and a single server-side refresh token.
    - Prefer service accounts for system-level imports where user identity is not required.
@@ -27,9 +29,11 @@ Implementation Steps
    - Allow administrators to revoke or rollback recent actions within 30 minutes.
 
 Testing & Validation
+
 - Add unit tests that stub the server proxy and check that `promptSanitizer` removes PII.
 - Add Playwright E2E test that covers: user consents -> server call made -> audit record created.
 
 Notes
+
 - No automation should assume parental consent by default — always explicit and visible.
 - For child accounts, disable automated AI-suggested actions — force manual review.

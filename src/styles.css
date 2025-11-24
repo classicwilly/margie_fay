@@ -22,8 +22,23 @@
     /* Use plain CSS for page background so PostCSS doesn't try to resolve custom 'bg-*' utilities */
     background-color: var(--background-dark);
     color: var(--text-light);
-    background-image: radial-gradient(circle at 50% 0%, #10152b 0%, #070a1a 70%);
-    font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+    background-image: radial-gradient(
+      circle at 50% 0%,
+      #10152b 0%,
+      #070a1a 70%
+    );
+    font-family:
+      "Inter",
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      "Helvetica Neue",
+      Arial,
+      "Noto Sans",
+      sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     min-height: 100vh;
@@ -45,7 +60,7 @@
     -webkit-backdrop-filter: blur(4px);
     backdrop-filter: blur(4px);
   }
-  
+
   /* Inner Card for dense data */
   .card-inner {
     @reference rounded-lg;
@@ -56,10 +71,19 @@
   }
 
   /* Custom Scrollbar */
-  ::-webkit-scrollbar { width: 8px; }
-  ::-webkit-scrollbar-track { background-color: var(--background-dark); }
-  ::-webkit-scrollbar-thumb { background-color: var(--surface-700); border-radius: 9999px; }
-  ::-webkit-scrollbar-thumb:hover { background-color: var(--accent-teal); }
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: var(--background-dark);
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--surface-700);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--accent-teal);
+  }
 
   /* Buttons */
   .btn-primary {
@@ -71,7 +95,9 @@
     color: var(--background-dark);
     transition: background-color 0.2s ease;
   }
-  .btn-primary:hover { background-color: #2dd4bfcc; }
+  .btn-primary:hover {
+    background-color: #2dd4bfcc;
+  }
 
   /* Floating Action Button (FAB) */
   .fab {
@@ -92,8 +118,24 @@
 }
 
 /* Slider Styling (Must remain outside @layer blocks to override user agent styles) */
-input[type=range].slider-thumb-teal::-webkit-slider-thumb { -webkit-appearance: none; height: 20px; width: 20px; border-radius: 50%; background: var(--accent-teal); box-shadow: 0 0 10px var(--accent-teal); margin-top: -8px; }
-input[type=range].slider-thumb-pink::-webkit-slider-thumb { -webkit-appearance: none; height: 20px; width: 20px; border-radius: 50%; background: var(--accent-pink); box-shadow: 0 0 10px var(--accent-pink); margin-top: -8px; }
+input[type="range"].slider-thumb-teal::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: var(--accent-teal);
+  box-shadow: 0 0 10px var(--accent-teal);
+  margin-top: -8px;
+}
+input[type="range"].slider-thumb-pink::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: var(--accent-pink);
+  box-shadow: 0 0 10px var(--accent-pink);
+  margin-top: -8px;
+}
 
 /* Global utilities */
 .select-none {
@@ -107,8 +149,8 @@ input[type=range].slider-thumb-pink::-webkit-slider-thumb { -webkit-appearance: 
 /* Final consolidated minimal CSS - no @apply usage */
 :root {
   --color-bg-dark: #0f172a;
-  --color-surface-900: #10152B;
-  --color-surface-800: #1C2442;
+  --color-surface-900: #10152b;
+  --color-surface-800: #1c2442;
   --color-surface-700: #334155;
   --color-accent-teal: #2dd4bf;
   --color-accent-pink: #ec4899;
@@ -122,8 +164,22 @@ input[type=range].slider-thumb-pink::-webkit-slider-thumb { -webkit-appearance: 
   body {
     background-color: var(--color-bg-dark);
     color: var(--color-text-light);
-    background-image: radial-gradient(circle at 50% 0%, #10152B 0%, #070a1a 70%);
-    font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    background-image: radial-gradient(
+      circle at 50% 0%,
+      #10152b 0%,
+      #070a1a 70%
+    );
+    font-family:
+      Inter,
+      system-ui,
+      -apple-system,
+      "Segoe UI",
+      Roboto,
+      "Helvetica Neue",
+      Arial,
+      "Noto Sans",
+      "Segoe UI Emoji",
+      "Segoe UI Symbol";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     min-height: 100vh;
@@ -136,8 +192,8 @@ input[type=range].slider-thumb-pink::-webkit-slider-thumb { -webkit-appearance: 
     border-radius: 0.75rem;
     padding: 1.5rem;
     border: 1px solid var(--color-surface-700);
-    background-color: rgba(16,21,43,0.85);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+    background-color: rgba(16, 21, 43, 0.85);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
     -webkit-backdrop-filter: blur(6px);
     backdrop-filter: blur(6px);
   }
@@ -145,35 +201,76 @@ input[type=range].slider-thumb-pink::-webkit-slider-thumb { -webkit-appearance: 
     border-radius: 0.5rem;
     padding: 1rem;
     background-color: rgba(16, 21, 43, 0.45);
-    border: 1px solid rgba(255,255,255,0.04);
+    border: 1px solid rgba(255, 255, 255, 0.04);
   }
 
   /* Persona Accent Utility Classes */
-  .border-accent-pink { border-color: var(--color-accent-pink) !important; }
-  .bg-accent-pink { background-color: var(--color-accent-pink) !important; }
-  .text-accent-pink { color: var(--color-accent-pink) !important; }
-  .shadow-neon-pink { box-shadow: 0 0 16px var(--color-accent-pink) !important; }
+  .border-accent-pink {
+    border-color: var(--color-accent-pink) !important;
+  }
+  .bg-accent-pink {
+    background-color: var(--color-accent-pink) !important;
+  }
+  .text-accent-pink {
+    color: var(--color-accent-pink) !important;
+  }
+  .shadow-neon-pink {
+    box-shadow: 0 0 16px var(--color-accent-pink) !important;
+  }
 
-  .border-accent-blue { border-color: var(--color-accent-blue) !important; }
-  .bg-accent-blue { background-color: var(--color-accent-blue) !important; }
-  .text-accent-blue { color: var(--color-accent-blue) !important; }
-  .shadow-neon-blue { box-shadow: 0 0 16px var(--color-accent-blue) !important; }
+  .border-accent-blue {
+    border-color: var(--color-accent-blue) !important;
+  }
+  .bg-accent-blue {
+    background-color: var(--color-accent-blue) !important;
+  }
+  .text-accent-blue {
+    color: var(--color-accent-blue) !important;
+  }
+  .shadow-neon-blue {
+    box-shadow: 0 0 16px var(--color-accent-blue) !important;
+  }
 
-  .border-accent-green { border-color: var(--color-accent-green) !important; }
-  .bg-accent-green { background-color: var(--color-accent-green) !important; }
-  .text-accent-green { color: var(--color-accent-green) !important; }
-  .shadow-neon-green { box-shadow: 0 0 16px var(--color-accent-green) !important; }
+  .border-accent-green {
+    border-color: var(--color-accent-green) !important;
+  }
+  .bg-accent-green {
+    background-color: var(--color-accent-green) !important;
+  }
+  .text-accent-green {
+    color: var(--color-accent-green) !important;
+  }
+  .shadow-neon-green {
+    box-shadow: 0 0 16px var(--color-accent-green) !important;
+  }
 
-  .border-accent-yellow { border-color: var(--color-accent-yellow) !important; }
-  .bg-accent-yellow { background-color: var(--color-accent-yellow) !important; }
-  .text-accent-yellow { color: var(--color-accent-yellow) !important; }
-  .shadow-neon-yellow { box-shadow: 0 0 16px var(--color-accent-yellow) !important; }
+  .border-accent-yellow {
+    border-color: var(--color-accent-yellow) !important;
+  }
+  .bg-accent-yellow {
+    background-color: var(--color-accent-yellow) !important;
+  }
+  .text-accent-yellow {
+    color: var(--color-accent-yellow) !important;
+  }
+  .shadow-neon-yellow {
+    box-shadow: 0 0 16px var(--color-accent-yellow) !important;
+  }
 
   /* Scrollbar */
-  ::-webkit-scrollbar { width: 8px; }
-  ::-webkit-scrollbar-track { background-color: var(--color-bg-dark); }
-  ::-webkit-scrollbar-thumb { background-color: var(--color-surface-700); border-radius: 9999px; }
-  ::-webkit-scrollbar-thumb:hover { background-color: var(--color-accent-teal); }
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: var(--color-bg-dark);
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--color-surface-700);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-accent-teal);
+  }
 
   /* Buttons */
   .btn-primary {
@@ -184,7 +281,9 @@ input[type=range].slider-thumb-pink::-webkit-slider-thumb { -webkit-appearance: 
     color: var(--color-bg-dark);
     transition: background-color 200ms ease;
   }
-  .btn-primary:hover { background-color: rgba(45,212,191,0.85); }
+  .btn-primary:hover {
+    background-color: rgba(45, 212, 191, 0.85);
+  }
 
   /* Floating Action Button */
   .fab {
@@ -201,24 +300,89 @@ input[type=range].slider-thumb-pink::-webkit-slider-thumb { -webkit-appearance: 
     will-change: transform;
     background-color: var(--color-accent-pink);
     color: #fff;
-    box-shadow: 0 10px 32px rgba(0,0,0,0.5);
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.5);
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
   }
-  .fab:hover { transform: scale(1.05); }
-  .fab-enforced { z-index: 99999 !important; transform: translateZ(0) !important; pointer-events: auto !important; }
+  .fab:hover {
+    transform: scale(1.05);
+  }
+  .fab-enforced {
+    z-index: 99999 !important;
+    transform: translateZ(0) !important;
+    pointer-events: auto !important;
+  }
 }
 
 /* Slider */
-input[type=range].slider-thumb-teal::-webkit-slider-thumb { -webkit-appearance: none; height: 20px; width: 20px; border-radius: 50%; background: var(--color-accent-teal); box-shadow: 0 0 10px var(--color-accent-teal); margin-top: -8px; }
-input[type=range].slider-thumb-pink::-webkit-slider-thumb { -webkit-appearance: none; height: 20px; width: 20px; border-radius: 50%; background: var(--color-accent-pink); box-shadow: 0 0 10px var(--color-accent-pink); margin-top: -8px; }
-input[type=range].slider-thumb-teal::-moz-range-thumb { border: none; height: 20px; width: 20px; border-radius: 50%; background: var(--color-accent-teal); box-shadow: 0 0 10px var(--color-accent-teal); }
-input[type=range].slider-thumb-pink::-moz-range-thumb { border: none; height: 20px; width: 20px; border-radius: 50%; background: var(--color-accent-pink); box-shadow: 0 0 10px var(--color-accent-pink); }
+input[type="range"].slider-thumb-teal::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: var(--color-accent-teal);
+  box-shadow: 0 0 10px var(--color-accent-teal);
+  margin-top: -8px;
+}
+input[type="range"].slider-thumb-pink::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: var(--color-accent-pink);
+  box-shadow: 0 0 10px var(--color-accent-pink);
+  margin-top: -8px;
+}
+input[type="range"].slider-thumb-teal::-moz-range-thumb {
+  border: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: var(--color-accent-teal);
+  box-shadow: 0 0 10px var(--color-accent-teal);
+}
+input[type="range"].slider-thumb-pink::-moz-range-thumb {
+  border: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: var(--color-accent-pink);
+  box-shadow: 0 0 10px var(--color-accent-pink);
+}
 
-.select-none { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
-.text-gradient-accent { background: linear-gradient(90deg, #ec4899 0%, #2dd4bf 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.glow-accent { box-shadow: 0 0 12px rgba(45,212,191,0.25), 0 0 36px rgba(236,72,153,0.06); }
-.confetti { position: fixed; pointer-events: none; top: 0; left: 0; width: 100%; height: 100%; overflow: visible; }
-@keyframes confetti-fall { from { transform: translateY(-40vh); } to { transform: translateY(120vh); } }
+.select-none {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.text-gradient-accent {
+  background: linear-gradient(90deg, #ec4899 0%, #2dd4bf 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.glow-accent {
+  box-shadow:
+    0 0 12px rgba(45, 212, 191, 0.25),
+    0 0 36px rgba(236, 72, 153, 0.06);
+}
+.confetti {
+  position: fixed;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+@keyframes confetti-fall {
+  from {
+    transform: translateY(-40vh);
+  }
+  to {
+    transform: translateY(120vh);
+  }
+}
 
 /* Avoid using @apply and any unknown tailwind utility classes to prevent PostCSS errors */

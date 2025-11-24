@@ -1,12 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from "react";
 
-type ModalProps = {
+interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   ariaLabelledBy?: string;
   children?: React.ReactNode;
   preventBackgroundClick?: boolean;
-};
+}
 
 const focusableSelector = [
   'a[href]:not([tabindex="-1"])',
@@ -15,27 +15,41 @@ const focusableSelector = [
   'input:not([type=hidden]):not([tabindex="-1"])',
   'select:not([tabindex="-1"])',
   '[tabindex]:not([tabindex="-1"])',
-].join(',');
+].join(",");
 
-export const Modal = ({ isOpen, onClose, ariaLabelledBy, children, preventBackgroundClick = false }: ModalProps) => {
+export const Modal = ({
+  isOpen,
+  onClose,
+  ariaLabelledBy,
+  children,
+  preventBackgroundClick = false,
+}: ModalProps) => {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const lastActive = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen) {
+      return;
+    }
     lastActive.current = document.activeElement as HTMLElement | null;
 
-    const focusable = wrapperRef.current?.querySelector<HTMLElement>(focusableSelector);
+    const focusable =
+      wrapperRef.current?.querySelector<HTMLElement>(focusableSelector);
     (focusable || wrapperRef.current)?.focus();
 
     const handleKey = (ev: KeyboardEvent) => {
-      if (ev.key === 'Escape') {
+      if (ev.key === "Escape") {
         onClose();
       }
-      if (ev.key === 'Tab') {
+      if (ev.key === "Tab") {
         // Focus trap
-        const nodes = wrapperRef.current?.querySelectorAll<HTMLElement>(focusableSelector) || [];
-        if (!nodes || nodes.length === 0) return;
+        const nodes =
+          wrapperRef.current?.querySelectorAll<HTMLElement>(
+            focusableSelector,
+          ) || [];
+        if (!nodes || nodes.length === 0) {
+          return;
+        }
         const first = nodes[0];
         const last = nodes[nodes.length - 1];
         if (ev.shiftKey && document.activeElement === first) {
@@ -48,24 +62,30 @@ export const Modal = ({ isOpen, onClose, ariaLabelledBy, children, preventBackgr
       }
     };
 
-    document.addEventListener('keydown', handleKey);
-    document.body.style.overflow = 'hidden';
+    document.addEventListener("keydown", handleKey);
+    document.body.style.overflow = "hidden";
 
     return () => {
-      document.removeEventListener('keydown', handleKey);
-      document.body.style.overflow = '';
-      if (lastActive.current) lastActive.current.focus();
+      document.removeEventListener("keydown", handleKey);
+      document.body.style.overflow = "";
+      if (lastActive.current) {
+        lastActive.current.focus();
+      }
     };
   }, [isOpen, onClose]);
 
-  if (!isOpen) return null;
+  if (!isOpen) {
+    return null;
+  }
 
   return (
     <div
       className="fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center"
       onMouseDown={(e) => {
         // only close when background clicked (not when clicking the dialog itself)
-        if (!preventBackgroundClick && e.target === e.currentTarget) onClose();
+        if (!preventBackgroundClick && e.target === e.currentTarget) {
+          onClose();
+        }
       }}
       role="presentation"
     >
@@ -80,5 +100,7 @@ export const Modal = ({ isOpen, onClose, ariaLabelledBy, children, preventBackgr
         {children}
       </div>
     </div>
-    );
-  };
+  );
+};
+
+export default Modal;

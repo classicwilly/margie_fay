@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export const Skeleton: React.FC<{ lines?: number }> = ({ lines = 3 }) => (
   <div className="space-y-2 w-full">

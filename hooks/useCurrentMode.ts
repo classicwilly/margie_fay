@@ -1,9 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
-export type OperatingMode = 'Solo Execution' | 'Family Structure';
+export type OperatingMode = "Solo Execution" | "Family Structure";
 
 export function useCurrentMode(): OperatingMode {
-  const [currentMode, setCurrentMode] = useState<OperatingMode>(getModeForDate(new Date()));
+  const [currentMode, setCurrentMode] = useState<OperatingMode>(
+    getModeForDate(new Date()),
+  );
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -22,16 +24,19 @@ export function getModeForDate(date: Date): OperatingMode {
   const hour = date.getHours();
 
   // Friday 4 PM (16:00) -> Monday 6 PM (18:00) is Family Structure Mode
-  if (day === 5 && hour >= 16) { // Friday after 4 PM
-    return 'Family Structure';
+  if (day === 5 && hour >= 16) {
+    // Friday after 4 PM
+    return "Family Structure";
   }
-  if (day === 6 || day === 0) { // Saturday or Sunday
-    return 'Family Structure';
+  if (day === 6 || day === 0) {
+    // Saturday or Sunday
+    return "Family Structure";
   }
-  if (day === 1 && hour < 18) { // Monday before 6 PM
-    return 'Family Structure';
+  if (day === 1 && hour < 18) {
+    // Monday before 6 PM
+    return "Family Structure";
   }
 
   // All other times are Solo Execution Mode
-  return 'Solo Execution';
+  return "Solo Execution";
 }

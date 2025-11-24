@@ -1,6 +1,6 @@
-import '@playwright/test';
+import "@playwright/test";
 
-declare module '@playwright/test' {
+declare module "@playwright/test" {
   interface TestArgs {
     // The worker-scoped storage key provided by our extended fixture.
     storageKey: string;

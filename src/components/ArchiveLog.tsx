@@ -1,1 +1,1 @@
-export { default } from '../../components/ArchiveLog';
+export { default } from "../../components/ArchiveLog";

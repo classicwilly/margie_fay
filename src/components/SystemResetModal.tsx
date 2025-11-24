@@ -1,1 +1,1 @@
-export { default } from '../../components/SystemResetModal';
+export { default } from "../../components/SystemResetModal";

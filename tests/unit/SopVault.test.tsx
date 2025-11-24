@@ -1,32 +1,34 @@
-import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
-import SopVault from '../../components/SopVault';
-import * as AppStateContext from '../../src/contexts/AppStateContext';
+import React from "react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { describe, it, expect, vi } from "vitest";
+import SopVault from "../../components/SopVault";
+import * as AppStateContext from "../../src/contexts/AppStateContext";
 
-describe('SopVault Component', () => {
-  it('Importing neuro templates calls dispatch with ADD_SOP', async () => {
+describe("SopVault Component", () => {
+  it("Importing neuro templates calls dispatch with ADD_SOP", async () => {
     const providerProps = {
       value: {
         appState: {
           userSops: [],
           userSopTemplates: [],
           neuroPrefs: {},
-          activeProfileStackId: 'default',
+          activeProfileStackId: "default",
           // FIX: Add missing state objects to prevent runtime errors
-          modifiedSops: {}, 
+          modifiedSops: {},
           snoozedTaskIds: [],
-          tasks: []
+          tasks: [],
         },
-        dispatch: vi.fn()
-      }
+        dispatch: vi.fn(),
+      },
     };
 
-    const useAppStateSpy = vi.spyOn(AppStateContext as any, 'useAppState').mockReturnValue(providerProps.value as any);
+    const useAppStateSpy = vi
+      .spyOn(AppStateContext as any, "useAppState")
+      .mockReturnValue(providerProps.value as any);
     render(<SopVault />);
 
     // STEP 1: Open the Import Menu
-    const mainImportBtn = screen.getByRole('button', { name: /Import/i });
+    const mainImportBtn = screen.getByRole("button", { name: /Import/i });
     fireEvent.click(mainImportBtn);
 
     // STEP 2: Click the "Neurodivergent" Option
@@ -38,7 +40,7 @@ describe('SopVault Component', () => {
     // We expect ADD_SOP because the reducer splits the import into individual adds
     await waitFor(() => {
       expect(providerProps.value.dispatch).toHaveBeenCalledWith(
-        expect.objectContaining({ type: 'ADD_SOP' })
+        expect.objectContaining({ type: "ADD_SOP" }),
       );
     });
     useAppStateSpy.mockRestore();

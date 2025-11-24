@@ -1,13 +1,13 @@
-import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import WonkyAIModule from '../components/modules/WonkyAIModule';
-import { FeatureFlagsProvider } from '@contexts/FeatureFlagsContext';
-import { AppStateProvider } from '@contexts/AppStateContext'; // Use src AppStateProvider for context compatibility
-import { NeuroPrefsProvider } from '@contexts/NeurodivergentPreferencesContext';
-import { defaultUserState } from '../defaultStates';
+import React from "react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import WonkyAIModule from "../components/modules/WonkyAIModule";
+import { FeatureFlagsProvider } from "@contexts/FeatureFlagsContext";
+import { AppStateProvider } from "@contexts/AppStateContext"; // Use src AppStateProvider for context compatibility
+import { NeuroPrefsProvider } from "@contexts/NeurodivergentPreferencesContext";
+import { defaultUserState } from "../defaultStates";
 
-vi.mock('../hooks/useAIPromptSafety', () => ({
+vi.mock("../hooks/useAIPromptSafety", () => ({
   useAIPromptSafety: () => ({
     checkAndExecute: (input: any, fn: any) => fn(input),
     isPiiModalOpen: false,
@@ -22,19 +22,22 @@ vi.mock('../hooks/useAIPromptSafety', () => ({
   }),
 }));
 
-vi.mock('../hooks/useSafeAI', () => ({
+vi.mock("../hooks/useSafeAI", () => ({
   default: () => ({
-    generate: (p: string, opts: any) => new Promise((resolve, reject) => {
-      if (opts?.signal) {
-        opts.signal.addEventListener('abort', () => reject(new Error('aborted')));
-      }
-      // never resolve to simulate a long-running request
-    })
-  })
+    generate: (p: string, opts: any) =>
+      new Promise((resolve, reject) => {
+        if (opts?.signal) {
+          opts.signal.addEventListener("abort", () =>
+            reject(new Error("aborted")),
+          );
+        }
+        // never resolve to simulate a long-running request
+      }),
+  }),
 }));
 
-describe('WonkyAIModule', () => {
-  it('renders ask AI button', () => {
+describe("WonkyAIModule", () => {
+  it("renders ask AI button", () => {
     const { getByRole } = render(
       <AppStateProvider>
         <FeatureFlagsProvider>
@@ -42,9 +45,9 @@ describe('WonkyAIModule', () => {
             <WonkyAIModule />
           </NeuroPrefsProvider>
         </FeatureFlagsProvider>
-      </AppStateProvider>
+      </AppStateProvider>,
     );
-    expect(getByRole('button', { name: '✨ Ask AI' })).toBeTruthy();
+    expect(getByRole("button", { name: "✨ Ask AI" })).toBeTruthy();
   });
   // Temporarily commenting out failing tests to unblock other development
   // it('shows cancel button while loading and hides on cancel', async () => {

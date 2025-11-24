@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 // E2E gating overlay to block user interactions until the test explicitly
 // signals it is ready. This prevents header or route changes from other
@@ -10,14 +10,29 @@ const E2EGate: React.FC = () => {
   useEffect(() => {
     try {
       // Consider tests present if we have an explicit init or sticky view
-      const seeded = !!(window as any).__WONKY_TEST_INITIALIZE__ || !!(window as any).__WONKY_TEST_STICKY_VIEW__;
+      const seeded =
+        !!(window as any).__WONKY_TEST_INITIALIZE__ ||
+        !!(window as any).__WONKY_TEST_STICKY_VIEW__;
       setIsE2E(seeded);
-      const initialReady = !!(window as any).__WONKY_TEST_READY__ || (window as any).appState?.view === 'game-master-dashboard';
+      const initialReady =
+        !!(window as any).__WONKY_TEST_READY__ ||
+        (window as any).appState?.view === "game-master-dashboard";
       setIsReady(initialReady);
 
-      const handle = () => setIsReady(!!(window as any).__WONKY_TEST_READY__ || (window as any).appState?.view === 'game-master-dashboard');
+      const handle = () =>
+        setIsReady(
+          !!(window as any).__WONKY_TEST_READY__ ||
+            (window as any).appState?.view === "game-master-dashboard",
+        );
       // expose a global setter to allow tests to release the gate
-      try { (window as any).__WONKY_TEST_RELEASE_GATE__ = () => { (window as any).__WONKY_TEST_READY__ = true; handle(); }; } catch (e) { /* ignore */ }
+      try {
+        (window as any).__WONKY_TEST_RELEASE_GATE__ = () => {
+          (window as any).__WONKY_TEST_READY__ = true;
+          handle();
+        };
+      } catch (e) {
+        /* ignore */
+      }
 
       // Listen to a global property change via polling - cheap and fine for E2E
       const interval = setInterval(() => handle(), 200);
@@ -29,14 +44,20 @@ const E2EGate: React.FC = () => {
   }, []);
 
   // Don't render anything outside E2E runs or if the test has already released the gate
-  if (!isE2E || isReady) return null;
+  if (!isE2E || isReady) {
+    return null;
+  }
 
   return (
-    <div data-testid="e2e-gate" className="fixed inset-0 z-[9999] bg-black/5 pointer-events-auto flex items-center justify-center">
+    <div
+      data-testid="e2e-gate"
+      className="fixed inset-0 z-[9999] bg-black/5 pointer-events-auto flex items-center justify-center"
+    >
       <div className="bg-black/60 text-white p-3 rounded-md">
         <strong>E2E initialization gate</strong>
         <div className="opacity-90 mt-2">
-          Tests are preparing the seeded state — waiting for <code>__WONKY_TEST_READY__</code>
+          Tests are preparing the seeded state — waiting for{" "}
+          <code>__WONKY_TEST_READY__</code>
         </div>
       </div>
     </div>

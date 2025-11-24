@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 // FIX: Explicitly typed component with React.FC and a props interface to handle the `key` prop correctly.
 interface ActionableCueProps {

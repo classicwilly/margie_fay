@@ -1,0 +1,3 @@
+// Disabled ESM config - retained as a backup for migration
+// Please migrate to `eslint.config.cjs` when updating rules
+export default null;

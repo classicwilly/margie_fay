@@ -1,8 +1,8 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from "react";
 
-type Flags = {
+interface Flags {
   aiEnabled: boolean;
-};
+}
 
 const DEFAULTS: Flags = {
   aiEnabled: true,
@@ -13,26 +13,28 @@ const FeatureFlagsContext = createContext<{
   setFlag: (k: keyof Flags, v: any) => void;
 }>({ flags: DEFAULTS, setFlag: () => {} });
 
-export const FeatureFlagsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const FeatureFlagsProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   // Read persisted user-level overrides from localStorage for now
   const [flags, setFlags] = useState<Flags>(() => {
     try {
-      if (typeof window !== 'undefined') {
-        const raw = window.localStorage.getItem('wonky_flags');
+      if (typeof window !== "undefined") {
+        const raw = window.localStorage.getItem("wonky_flags");
         if (raw) {
           return { ...DEFAULTS, ...JSON.parse(raw) };
         }
       }
     } catch (e) {
-      console.warn('Error reading wonky_flags', e);
+      console.warn("Error reading wonky_flags", e);
     }
     return DEFAULTS;
   });
 
   useEffect(() => {
     try {
-      if (typeof window !== 'undefined') {
-        window.localStorage.setItem('wonky_flags', JSON.stringify(flags));
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem("wonky_flags", JSON.stringify(flags));
       }
     } catch (e) {
       // ignore
@@ -40,10 +42,14 @@ export const FeatureFlagsProvider: React.FC<{ children: React.ReactNode }> = ({ 
   }, [flags]);
 
   const setFlag = (k: keyof Flags, v: any) => {
-    setFlags(prev => ({ ...prev, [k]: v }));
+    setFlags((prev) => ({ ...prev, [k]: v }));
   };
 
-  return <FeatureFlagsContext.Provider value={{ flags, setFlag }}>{children}</FeatureFlagsContext.Provider>;
+  return (
+    <FeatureFlagsContext.Provider value={{ flags, setFlag }}>
+      {children}
+    </FeatureFlagsContext.Provider>
+  );
 };
 
 export const useFeatureFlags = () => useContext(FeatureFlagsContext);

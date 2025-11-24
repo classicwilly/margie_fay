@@ -13,11 +13,11 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
       - name: Deploy docs
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs
           publish_branch: gh-pages
-          commit_message: 'chore(docs): update Google Workspace showcase and workspace overview'
+          commit_message: "chore(docs): update Google Workspace showcase and workspace overview"

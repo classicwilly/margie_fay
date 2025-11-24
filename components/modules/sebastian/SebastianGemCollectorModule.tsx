@@ -1,15 +1,17 @@
-
-import React from 'react';
-import GemCollector from '../../GemCollector';
-import { useAppState } from '@contexts/AppStateContext';
+import React from "react";
+import GemCollector from "../../GemCollector";
+import { useAppState } from "@contexts/AppStateContext";
 
 const SebastianGemCollectorModule = () => {
-    const { appState } = useAppState();
-    const { collectedGems } = appState;
+  const { appState } = useAppState();
+  const { collectedGems } = appState;
 
-    return (
-        <GemCollector name="Sebastian" collectedGems={collectedGems.sebastian || []} />
-    );
+  return (
+    <GemCollector
+      name="Sebastian"
+      collectedGems={collectedGems.sebastian || []}
+    />
+  );
 };
 
 export default SebastianGemCollectorModule;

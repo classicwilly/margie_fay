@@ -1,5 +1,11 @@
 [
-  {"from": "components/Sidebar.tsx", "to": "components/ui/sidebar.tsx"},
-  {"from": "components/DeepFocusContainer.tsx", "to": "components/ui/deep-focus-container.tsx"},
-  {"from": "components/CockpitNavigation.tsx", "to": "components/ui/cockpit-navigation.tsx"}
+  { "from": "components/Sidebar.tsx", "to": "components/ui/sidebar.tsx" },
+  {
+    "from": "components/DeepFocusContainer.tsx",
+    "to": "components/ui/deep-focus-container.tsx"
+  },
+  {
+    "from": "components/CockpitNavigation.tsx",
+    "to": "components/ui/cockpit-navigation.tsx"
+  }
 ]

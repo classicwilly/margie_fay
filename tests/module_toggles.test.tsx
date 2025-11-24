@@ -1,0 +1,32 @@
+import React from "react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import "../src/modules/index";
+import { AppStateProvider, useAppState } from "../src/contexts/AppStateContext";
+import SettingsView from "../src/views/SettingsView";
+import { getModuleRoutes } from "../src/module_registry";
+
+describe("Module toggles UI", () => {
+  it("disables a module when toggled off", async () => {
+    // Render the settings view inside the app state provider
+    render(
+      <AppStateProvider>
+        <SettingsView />
+      </AppStateProvider>,
+    );
+
+    // Wait for the toggle for the template-sample module
+    const toggle = await screen.findByTestId("toggle-module-template-sample");
+    expect(toggle).toBeInTheDocument();
+    // Ensure it starts enabled (isEnabledByDefault = true in the sample manifest)
+    expect((toggle as HTMLInputElement).checked).toBeTruthy();
+
+    // Toggle it off
+    fireEvent.click(toggle);
+
+    await waitFor(() => {
+      expect((toggle as HTMLInputElement).checked).toBeFalsy();
+    });
+    // Confirm module routes are updated via module registry using app state
+    // We cannot directly access the new app state here, but verifying UI toggled suffices for now
+  });
+});

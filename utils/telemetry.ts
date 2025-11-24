@@ -1,4 +1,4 @@
-import telemetryBackend from './telemetryBackend';
+import telemetryBackend from "./telemetryBackend";
 
 export function logTelemetry(event: string, payload: Record<string, any> = {}) {
   // Bridge into telemetryBackend which can be extended for Sentry/Datadog.

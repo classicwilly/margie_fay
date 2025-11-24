@@ -1,1 +1,1 @@
-export { default } from '../../components/StrategicRoadmap';
+export { default } from "../../components/StrategicRoadmap";

@@ -1,1 +1,1 @@
-export { default } from '../../components/SopVault';
+export { default } from "../../components/SopVault";

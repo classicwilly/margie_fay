@@ -1,6 +1,9 @@
 // Small memory TTL cache used for dev and single-instance server deployments.
 // Note: In serverless environments this is short-lived. For production consider Redis or Memcached.
-type CacheEntry<T> = { value: T; expiresAt: number };
+interface CacheEntry<T> {
+  value: T;
+  expiresAt: number;
+}
 
 class MemoryCache<T> {
   private store = new Map<string, CacheEntry<T>>();
@@ -10,7 +13,9 @@ class MemoryCache<T> {
   }
   get(key: string): T | null {
     const e = this.store.get(key);
-    if (!e) return null;
+    if (!e) {
+      return null;
+    }
     if (Date.now() > e.expiresAt) {
       this.store.delete(key);
       return null;

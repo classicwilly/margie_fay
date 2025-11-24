@@ -1,1 +1,1 @@
-export { default } from './Cockpit';
+export { default } from "./Cockpit";

@@ -1,1 +1,1 @@
-export { default } from '../../../components/insights/HabitHeatmap';
+export { default } from "../../../components/insights/HabitHeatmap";

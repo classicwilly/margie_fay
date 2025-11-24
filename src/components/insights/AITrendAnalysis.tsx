@@ -1,1 +1,1 @@
-export { default } from '../../../components/insights/AITrendAnalysis';
+export { default } from "../../../components/insights/AITrendAnalysis";

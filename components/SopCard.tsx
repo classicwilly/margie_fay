@@ -1,8 +1,7 @@
-
-import React from 'react';
-import { Sop, ViewType } from '../types';
-import { useAppState } from '@contexts/AppStateContext';
-import { Button } from './Button';
+import React from "react";
+import { Sop, ViewType } from "../types";
+import { useAppState } from "@contexts/AppStateContext";
+import { Button } from "./Button";
 
 interface SopCardProps {
   sop: Sop;
@@ -12,13 +11,16 @@ const SopCard: React.FC<SopCardProps> = ({ sop }) => {
   const { dispatch } = useAppState();
 
   const handleSetView = (view: ViewType) => {
-    dispatch({ type: 'SET_VIEW', payload: view });
+    dispatch({ type: "SET_VIEW", payload: view });
   };
-  
+
   const cardContent = (
     <>
       <div className="flex-grow">
-        <h2 data-testid={`sop-card-title-${sop.id}`} className="text-2xl font-semibold text-accent-green mb-3 break-words">
+        <h2
+          data-testid={`sop-card-title-${sop.id}`}
+          className="text-2xl font-semibold text-accent-green mb-3 break-words"
+        >
           {sop.title}
         </h2>
         <p className="text-text-light text-opacity-80 leading-relaxed">
@@ -27,7 +29,7 @@ const SopCard: React.FC<SopCardProps> = ({ sop }) => {
       </div>
     </>
   );
-  
+
   if (sop.viewId) {
     return (
       <button

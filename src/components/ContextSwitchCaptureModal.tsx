@@ -1,1 +1,1 @@
-export { default } from '../../components/ContextSwitchCaptureModal';
+export { default } from "../../components/ContextSwitchCaptureModal";

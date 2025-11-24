@@ -51,8 +51,8 @@ How the workflow operates
 - `src/contexts/userReducer.ts`: pure state transitions and helpers
 - `defaultStates.ts`: canonical default app state for new users
 - `src/components`: modular UI layers driven by `AppState`
- - `docs/GOOGLE_WORKFLOW_EXAMPLE.md`: an example "race car brain" flow showing how Calendar/Drive/Sheets/Gmail orchestration works
- - `src/components/GoogleWorkspaceShowcase.tsx` + server routes `server/googleWorkspaceRoutes.js`: a demo UI component and safe API proxy for Google Workspace integration
+- `docs/GOOGLE_WORKFLOW_EXAMPLE.md`: an example "race car brain" flow showing how Calendar/Drive/Sheets/Gmail orchestration works
+- `src/components/GoogleWorkspaceShowcase.tsx` + server routes `server/googleWorkspaceRoutes.js`: a demo UI component and safe API proxy for Google Workspace integration
 
 How to extend safely
 

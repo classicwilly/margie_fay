@@ -1,1 +1,1 @@
-export { default } from '../../components/PIIWarningModal';
+export { default } from "../../components/PIIWarningModal";

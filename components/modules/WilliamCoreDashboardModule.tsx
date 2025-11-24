@@ -1,6 +1,5 @@
-
-import React from 'react';
-import ContentCard from '../ContentCard';
+import React from "react";
+import ContentCard from "../ContentCard";
 
 const WilliamCoreDashboardModule = () => {
   return (
@@ -10,7 +9,9 @@ const WilliamCoreDashboardModule = () => {
           This module has been deprecated and replaced.
         </p>
         <p className="text-sm text-text-light text-opacity-80 mt-2">
-          Its functionality has been integrated into the 'Daily Command Module', which is now the new core module for your dashboard. You can safely remove this module in 'Mod Mode'.
+          Its functionality has been integrated into the 'Daily Command Module',
+          which is now the new core module for your dashboard. You can safely
+          remove this module in 'Mod Mode'.
         </p>
       </div>
     </ContentCard>

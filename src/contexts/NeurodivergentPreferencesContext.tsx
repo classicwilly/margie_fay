@@ -1,15 +1,15 @@
-import React, { createContext, useContext } from 'react';
-import { useAppState } from './AppStateContext';
+import React, { createContext, useContext } from "react";
+import { useAppState } from "./AppStateContext";
 
-export type NeuroPrefs = {
+export interface NeuroPrefs {
   simplifiedUi: boolean;
   reduceAnimations: boolean;
   largerText: boolean;
   focusModeDuration: number;
   microStepsMode: boolean;
-  assistTone: 'concise' | 'helpful';
+  assistTone: "concise" | "helpful";
   autoAdvanceSteps: boolean;
-};
+}
 
 const defaultPrefs: NeuroPrefs = {
   simplifiedUi: true,
@@ -17,7 +17,7 @@ const defaultPrefs: NeuroPrefs = {
   largerText: false,
   focusModeDuration: 15,
   microStepsMode: true,
-  assistTone: 'concise',
+  assistTone: "concise",
   autoAdvanceSteps: false,
 };
 
@@ -26,13 +26,15 @@ const NeuroPrefsContext = createContext<{
   setPrefs: (p: Partial<NeuroPrefs>) => void;
 }>({ prefs: defaultPrefs, setPrefs: () => {} });
 
-export const NeuroPrefsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const NeuroPrefsProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const { appState, dispatch } = useAppState();
 
   const prefs = (appState?.neuroPrefs ?? defaultPrefs) as NeuroPrefs;
 
   const setPrefs = (p: Partial<NeuroPrefs>) => {
-    dispatch({ type: 'SET_NEURO_PREFS', payload: p });
+    dispatch({ type: "SET_NEURO_PREFS", payload: p });
   };
 
   return (

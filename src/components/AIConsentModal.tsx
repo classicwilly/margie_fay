@@ -1,1 +1,1 @@
-export { default } from '../../components/AIConsentModal';
+export { default } from "../../components/AIConsentModal";

@@ -1,1 +1,1 @@
-export { default } from '../../components/DailyDebrief';
+export { default } from "../../components/DailyDebrief";

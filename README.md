@@ -18,12 +18,13 @@ This repo is intentionally organized so that the core application behavior is ce
 For a high-level view of the architecture and workflow, see `docs/WORKSPACE_OVERVIEW.md` and `metadata.json`.
 
 Try the Google Workspace showcase locally
+
 - Start server: `npm run start:server`
 - Start dev server: `npm run dev` (if you want to interact with UI)
 - Navigate to the dashboard where you can add the module `google-workspace-showcase` to a dashboard to see the demo and run the sample server-side demo functions.
 
-
 OAuth sign-in: user-level access (optional)
+
 - Create a Google Cloud Web OAuth client and set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` in your environment.
 - Set `GOOGLE_OAUTH_REDIRECT_URI` to `http://localhost:8080/api/google/oauth2callback` or set it in the Google Cloud console as an authorized redirect URI.
 - Start the server and navigate to the Showcase module where a Sign-in button appears — sign in to access Drive/Calendar/Gmail features for your user account.
@@ -81,14 +82,15 @@ For production, set `GEMINI_API_KEY` in your host environment for the Express se
 TIP: Press Ctrl/Cmd+G to focus the Ask AI input (Grandma/Grandpa persona).
 
 ### New: Grandpa persona
---------------------
+
+---
+
 We added a new 'Grandpa' persona for the Ask AI module. You can pick the persona from the 'AI persona' selector in the Ask AI module. "Grandpa" gives direct, practical, and sometimes blunt advice with a down-to-earth tone.
 
 Example:
 
 - Question: "My sink is clogged, what would Grandpa do?"
 - Grandpa's guidance: "First, shut off the water if it's running. Remove visible gunk with gloves. Use a plunger for 5 minutes. If the plunger doesn't work, remove the trap and clear it. Reassemble and test. If it still drains slowly, call a plumber. Love, Grandpa."
-
 
 ## Production deployment notes
 

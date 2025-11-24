@@ -1,8 +1,10 @@
-import { getCLS, getFID, getLCP } from 'web-vitals';
-import { trackEvent } from './telemetryBackend';
+import { getCLS, getFID, getLCP } from "web-vitals";
+import { trackEvent } from "./telemetryBackend";
 
 export function initWebVitals() {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") {
+    return;
+  }
 
   const sendToTelemetry = (name: string) => (metric: any) => {
     try {
@@ -14,7 +16,7 @@ export function initWebVitals() {
     } catch (e) {}
   };
 
-  getCLS(sendToTelemetry('cls'));
-  getFID(sendToTelemetry('fid'));
-  getLCP(sendToTelemetry('lcp'));
+  getCLS(sendToTelemetry("cls"));
+  getFID(sendToTelemetry("fid"));
+  getLCP(sendToTelemetry("lcp"));
 }

@@ -2,7 +2,7 @@
 // Google Calendar API wrapper hook for event parsing and pre-task anxiety mitigation
 // Milestone 1: Vision-Driven Roadmap
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 export interface CalendarEvent {
   id: string;
@@ -19,12 +19,14 @@ export function useCalendarEvents(authToken: string) {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!authToken) return;
+    if (!authToken) {
+      return;
+    }
     setLoading(true);
     setError(null);
 
     // Fetch events from Google Calendar API
-    fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
+    fetch("https://www.googleapis.com/calendar/v3/calendars/primary/events", {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
@@ -40,7 +42,7 @@ export function useCalendarEvents(authToken: string) {
               end: item.end?.dateTime || item.end?.date,
               description: item.description,
               location: item.location,
-            }))
+            })),
           );
         } else {
           setEvents([]);
@@ -48,7 +50,7 @@ export function useCalendarEvents(authToken: string) {
         setLoading(false);
       })
       .catch((err) => {
-        setError(err.message || 'Failed to fetch events');
+        setError(err.message || "Failed to fetch events");
         setLoading(false);
       });
   }, [authToken]);

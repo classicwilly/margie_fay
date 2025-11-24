@@ -14,34 +14,42 @@ async function run() {
   // is more compatible across versions and avoids export-map related
   // runtime failures (ERR_PACKAGE_PATH_NOT_EXPORTED).
   try {
-    const { spawnSync } = await import('child_process');
+    const { spawnSync } = await import("child_process");
 
     // register test shim so that `@playwright/test` resolves to our fixtures
     try {
-      await import('./../tests/e2e/register_shim.cjs');
+      await import("./../tests/e2e/register_shim.cjs");
     } catch (shimErr) {
-      console.info('No test shim found or could not register:', shimErr?.message || shimErr);
+      console.info(
+        "No test shim found or could not register:",
+        shimErr?.message || shimErr,
+      );
     }
 
     // Check Node.js version for Vite compatibility and warn if too low.
-    const semver = (version) => version.split('.').map(n => parseInt(n, 10));
-    const nodeVer = semver(process.versions.node || '0.0.0');
-    const required = semver('20.19.0');
+    const semver = (version) => version.split(".").map((n) => parseInt(n, 10));
+    const nodeVer = semver(process.versions.node || "0.0.0");
+    const required = semver("20.19.0");
     for (let i = 0; i < 3; i++) {
       if ((nodeVer[i] || 0) < (required[i] || 0)) {
-        console.error(`Your Node.js ${process.versions.node} is older than recommended ${required.join('.')} for Vite. Tests may fail. Please upgrade Node.js.`);
+        console.error(
+          `Your Node.js ${process.versions.node} is older than recommended ${required.join(".")} for Vite. Tests may fail. Please upgrade Node.js.`,
+        );
         break;
       }
       if ((nodeVer[i] || 0) > (required[i] || 0)) break;
     }
 
-    const shimRel = './tests/e2e/register_shim.cjs';
-    const env = { ...process.env, NODE_OPTIONS: `${process.env.NODE_OPTIONS || ''} -r ${shimRel}` };
-    const args = ['playwright', 'test', ...process.argv.slice(2)];
-    const r = spawnSync('npx', args, { stdio: 'inherit', shell: true, env });
+    const shimRel = "./tests/e2e/register_shim.cjs";
+    const env = {
+      ...process.env,
+      NODE_OPTIONS: `${process.env.NODE_OPTIONS || ""} -r ${shimRel}`,
+    };
+    const args = ["playwright", "test", ...process.argv.slice(2)];
+    const r = spawnSync("npx", args, { stdio: "inherit", shell: true, env });
     process.exit(r.status || 0);
   } catch (e) {
-    console.error('Failed to spawn Playwright CLI via script', e);
+    console.error("Failed to spawn Playwright CLI via script", e);
     process.exit(1);
   }
 }

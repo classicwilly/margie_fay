@@ -1,13 +1,13 @@
-import { google } from 'googleapis';
+import { google } from "googleapis";
 
 // Google Workspace API scopes we need
 export const GOOGLE_SCOPES = [
-  'https://www.googleapis.com/auth/calendar.readonly',
-  'https://www.googleapis.com/auth/gmail.readonly',
-  'https://www.googleapis.com/auth/tasks.readonly',
-  'https://www.googleapis.com/auth/drive.readonly',
-  'https://www.googleapis.com/auth/documents.readonly',
-  'https://www.googleapis.com/auth/spreadsheets.readonly',
+  "https://www.googleapis.com/auth/calendar.readonly",
+  "https://www.googleapis.com/auth/gmail.readonly",
+  "https://www.googleapis.com/auth/tasks.readonly",
+  "https://www.googleapis.com/auth/drive.readonly",
+  "https://www.googleapis.com/auth/documents.readonly",
+  "https://www.googleapis.com/auth/spreadsheets.readonly",
 ];
 
 // Types for Google Workspace data
@@ -79,9 +79,9 @@ class GoogleWorkspaceService {
       // For web apps, we'll use Google Identity Services
       // This would typically be handled by a Google Sign-In button
       // For now, we'll assume the token is provided
-      console.log('Google Workspace sign-in initiated');
+      console.log("Google Workspace sign-in initiated");
     } catch (error) {
-      console.error('Error signing into Google Workspace:', error);
+      console.error("Error signing into Google Workspace:", error);
       throw error;
     }
   }
@@ -97,29 +97,31 @@ class GoogleWorkspaceService {
     });
 
     // Initialize API clients
-    this.calendar = google.calendar({ version: 'v3', auth: this.auth });
-    this.gmail = google.gmail({ version: 'v1', auth: this.auth });
-    this.tasks = google.tasks({ version: 'v1', auth: this.auth });
-    this.drive = google.drive({ version: 'v3', auth: this.auth });
+    this.calendar = google.calendar({ version: "v3", auth: this.auth });
+    this.gmail = google.gmail({ version: "v1", auth: this.auth });
+    this.tasks = google.tasks({ version: "v1", auth: this.auth });
+    this.drive = google.drive({ version: "v3", auth: this.auth });
   }
 
-  async getCalendarEvents(maxResults: number = 10): Promise<GoogleCalendarEvent[]> {
+  async getCalendarEvents(
+    maxResults: number = 10,
+  ): Promise<GoogleCalendarEvent[]> {
     if (!this.calendar) {
-      throw new Error('Not authenticated with Google Calendar');
+      throw new Error("Not authenticated with Google Calendar");
     }
 
     try {
       const response = await this.calendar.events.list({
-        calendarId: 'primary',
+        calendarId: "primary",
         timeMin: new Date().toISOString(),
         maxResults,
         singleEvents: true,
-        orderBy: 'startTime',
+        orderBy: "startTime",
       });
 
       return response.data.items.map((event: any) => ({
         id: event.id,
-        summary: event.summary || 'No title',
+        summary: event.summary || "No title",
         description: event.description,
         start: event.start,
         end: event.end,
@@ -127,115 +129,129 @@ class GoogleWorkspaceService {
         location: event.location,
       }));
     } catch (error) {
-      console.error('Error fetching calendar events:', error);
+      console.error("Error fetching calendar events:", error);
       throw error;
     }
   }
 
   async getTasks(): Promise<GoogleTask[]> {
     if (!this.tasks) {
-      throw new Error('Not authenticated with Google Tasks');
+      throw new Error("Not authenticated with Google Tasks");
     }
 
     try {
       const response = await this.tasks.tasks.list({
-        tasklist: '@default',
+        tasklist: "@default",
       });
 
-      return response.data.items?.map((task: any) => ({
-        id: task.id,
-        title: task.title,
-        notes: task.notes,
-        due: task.due,
-        completed: task.completed !== null,
-        status: task.status,
-      })) || [];
+      return (
+        response.data.items?.map((task: any) => ({
+          id: task.id,
+          title: task.title,
+          notes: task.notes,
+          due: task.due,
+          completed: task.completed !== null,
+          status: task.status,
+        })) || []
+      );
     } catch (error) {
-      console.error('Error fetching tasks:', error);
+      console.error("Error fetching tasks:", error);
       throw error;
     }
   }
 
   async getRecentEmails(maxResults: number = 10): Promise<GoogleEmail[]> {
     if (!this.gmail) {
-      throw new Error('Not authenticated with Gmail');
+      throw new Error("Not authenticated with Gmail");
     }
 
     try {
       const response = await this.gmail.users.messages.list({
-        userId: 'me',
+        userId: "me",
         maxResults,
-        q: 'is:unread',
+        q: "is:unread",
       });
 
-      if (!response.data.messages) return [];
+      if (!response.data.messages) {
+        return [];
+      }
 
       const emails = await Promise.all(
         response.data.messages.map(async (message: any) => {
           const details = await this.gmail.users.messages.get({
-            userId: 'me',
+            userId: "me",
             id: message.id,
           });
 
           const headers = details.data.payload.headers;
-          const subject = headers.find((h: any) => h.name === 'Subject')?.value || '';
-          const from = headers.find((h: any) => h.name === 'From')?.value || '';
-          const date = headers.find((h: any) => h.name === 'Date')?.value || '';
+          const subject =
+            headers.find((h: any) => h.name === "Subject")?.value || "";
+          const from = headers.find((h: any) => h.name === "From")?.value || "";
+          const date = headers.find((h: any) => h.name === "Date")?.value || "";
 
           return {
             id: message.id,
             threadId: message.threadId,
             labelIds: details.data.labelIds || [],
-            snippet: details.data.snippet || '',
+            snippet: details.data.snippet || "",
             subject,
             from,
             date,
-            isUnread: details.data.labelIds?.includes('UNREAD') || false,
+            isUnread: details.data.labelIds?.includes("UNREAD") || false,
           };
-        })
+        }),
       );
 
       return emails;
     } catch (error) {
-      console.error('Error fetching emails:', error);
+      console.error("Error fetching emails:", error);
       throw error;
     }
   }
 
-  async getRecentDriveFiles(maxResults: number = 10): Promise<GoogleDriveFile[]> {
+  async getRecentDriveFiles(
+    maxResults: number = 10,
+  ): Promise<GoogleDriveFile[]> {
     if (!this.drive) {
-      throw new Error('Not authenticated with Google Drive');
+      throw new Error("Not authenticated with Google Drive");
     }
 
     try {
       const response = await this.drive.files.list({
         pageSize: maxResults,
-        fields: 'files(id, name, mimeType, modifiedTime, webViewLink, thumbnailLink)',
-        orderBy: 'modifiedTime desc',
+        fields:
+          "files(id, name, mimeType, modifiedTime, webViewLink, thumbnailLink)",
+        orderBy: "modifiedTime desc",
       });
 
-      return response.data.files?.map((file: any) => ({
-        id: file.id,
-        name: file.name,
-        mimeType: file.mimeType,
-        modifiedTime: file.modifiedTime,
-        webViewLink: file.webViewLink,
-        thumbnailLink: file.thumbnailLink,
-      })) || [];
+      return (
+        response.data.files?.map((file: any) => ({
+          id: file.id,
+          name: file.name,
+          mimeType: file.mimeType,
+          modifiedTime: file.modifiedTime,
+          webViewLink: file.webViewLink,
+          thumbnailLink: file.thumbnailLink,
+        })) || []
+      );
     } catch (error) {
-      console.error('Error fetching Drive files:', error);
+      console.error("Error fetching Drive files:", error);
       throw error;
     }
   }
 
-  async createTask(title: string, notes?: string, due?: string): Promise<GoogleTask> {
+  async createTask(
+    title: string,
+    notes?: string,
+    due?: string,
+  ): Promise<GoogleTask> {
     if (!this.tasks) {
-      throw new Error('Not authenticated with Google Tasks');
+      throw new Error("Not authenticated with Google Tasks");
     }
 
     try {
       const response = await this.tasks.tasks.insert({
-        tasklist: '@default',
+        tasklist: "@default",
         requestBody: {
           title,
           notes,
@@ -252,7 +268,7 @@ class GoogleWorkspaceService {
         status: response.data.status,
       };
     } catch (error) {
-      console.error('Error creating task:', error);
+      console.error("Error creating task:", error);
       throw error;
     }
   }
@@ -262,15 +278,15 @@ class GoogleWorkspaceService {
     startTime: string,
     endTime: string,
     description?: string,
-    location?: string
+    location?: string,
   ): Promise<GoogleCalendarEvent> {
     if (!this.calendar) {
-      throw new Error('Not authenticated with Google Calendar');
+      throw new Error("Not authenticated with Google Calendar");
     }
 
     try {
       const response = await this.calendar.events.insert({
-        calendarId: 'primary',
+        calendarId: "primary",
         requestBody: {
           summary,
           description,
@@ -294,7 +310,7 @@ class GoogleWorkspaceService {
         location: response.data.location,
       };
     } catch (error) {
-      console.error('Error creating calendar event:', error);
+      console.error("Error creating calendar event:", error);
       throw error;
     }
   }

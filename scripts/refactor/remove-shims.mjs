@@ -2,21 +2,27 @@
 // remove-shims.mjs
 // Detect deprecated shims and delete them if no project imports remain
 
-import path from 'path';
-import { fileURLToPath } from 'url';
-import fs from 'fs';
-import childProcess from 'child_process';
-import { Project } from 'ts-morph';
+import path from "path";
+import { fileURLToPath } from "url";
+import fs from "fs";
+import childProcess from "child_process";
+import { Project } from "ts-morph";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const repoRoot = path.resolve(__dirname, '..', '..');
+const repoRoot = path.resolve(__dirname, "..", "..");
 
 function exec(cmd) {
-  try { return childProcess.execSync(cmd, { cwd: repoRoot }).toString().trim(); } catch (e) { return null; }
+  try {
+    return childProcess.execSync(cmd, { cwd: repoRoot }).toString().trim();
+  } catch (e) {
+    return null;
+  }
 }
 
-const project = new Project({ tsConfigFilePath: path.join(repoRoot, 'tsconfig.json') });
+const project = new Project({
+  tsConfigFilePath: path.join(repoRoot, "tsconfig.json"),
+});
 const sourceFiles = project.getSourceFiles();
 
 const shimCandidates = [];
@@ -29,16 +35,16 @@ for (const sf of sourceFiles) {
 }
 
 if (shimCandidates.length === 0) {
-  console.log('No shims found');
+  console.log("No shims found");
   process.exit(0);
 }
 
-console.log('Found shim candidates:', shimCandidates.length);
+console.log("Found shim candidates:", shimCandidates.length);
 const removals = [];
 
 for (const shim of shimCandidates) {
   // determine the export target
-  const content = fs.readFileSync(shim, 'utf8');
+  const content = fs.readFileSync(shim, "utf8");
   const match = content.match(/from\s+['"]([^'"]+)['"]/m);
   if (!match) continue;
   const relTo = match[1];
@@ -50,7 +56,10 @@ for (const shim of shimCandidates) {
   for (const sf of sourceFiles) {
     const imports = sf.getImportDeclarations();
     for (const imp of imports) {
-      if (imp.getModuleSpecifierValue() === './' + path.basename(shim).replace(/\.(tsx|ts|js|jsx)$/, '')) {
+      if (
+        imp.getModuleSpecifierValue() ===
+        "./" + path.basename(shim).replace(/\.(tsx|ts|js|jsx)$/, "")
+      ) {
         importers.push(sf.getFilePath());
       }
     }
@@ -62,13 +71,13 @@ for (const shim of shimCandidates) {
 }
 
 if (removals.length === 0) {
-  console.log('No shims are removable yet; imports still reference them');
+  console.log("No shims are removable yet; imports still reference them");
   process.exit(0);
 }
 
-console.log('Will remove the following shims:', removals);
+console.log("Will remove the following shims:", removals);
 // Create branch and commit removal
-const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
 const branch = `refactor/remove-shims-${timestamp}`;
 exec(`git checkout -b ${branch}`);
 for (const f of removals) {
@@ -77,5 +86,5 @@ for (const f of removals) {
 }
 exec(`git commit -m "chore(refactor): remove stale shims (${branch})"`);
 const push = exec(`git push -u origin ${branch}`);
-if (!push) console.warn('Push failed: run git push -u origin', branch);
-else console.log('Pushed branch and ready to create PR:', branch);
+if (!push) console.warn("Push failed: run git push -u origin", branch);
+else console.log("Pushed branch and ready to create PR:", branch);

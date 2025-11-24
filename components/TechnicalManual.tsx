@@ -1,6 +1,5 @@
-
-import React from 'react';
-import ProtocolView from './ProtocolView.js';
+import React from "react";
+import ProtocolView from "./ProtocolView.js";
 
 const TechnicalManual = () => {
   return (

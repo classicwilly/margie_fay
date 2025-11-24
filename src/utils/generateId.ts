@@ -1,12 +1,18 @@
 export function generateId(prefix?: string) {
   // If deterministic IDs are requested in the environment, honor that first
   try {
-    if (typeof process !== 'undefined' && process.env && process.env.TEST_DETERMINISTIC_IDS === 'true') {
-      const seed = Number(process.env.TEST_DETERMINISTIC_IDS_SEED || '1') || 1;
-      if (!(globalThis as any).__WONKY_DET_ID_COUNTER__) (globalThis as any).__WONKY_DET_ID_COUNTER__ = { seed, i: 0 };
+    if (
+      typeof process !== "undefined" &&
+      process.env &&
+      process.env.TEST_DETERMINISTIC_IDS === "true"
+    ) {
+      const seed = Number(process.env.TEST_DETERMINISTIC_IDS_SEED || "1") || 1;
+      if (!(globalThis as any).__WONKY_DET_ID_COUNTER__) {
+        (globalThis as any).__WONKY_DET_ID_COUNTER__ = { seed, i: 0 };
+      }
       const c = (globalThis as any).__WONKY_DET_ID_COUNTER__;
       c.i += 1;
-      const body = `det-${seed}-${String(c.i).padStart(6, '0')}`;
+      const body = `det-${seed}-${String(c.i).padStart(6, "0")}`;
       return prefix ? `${prefix}-${body}` : body;
     }
   } catch (e) {
@@ -14,7 +20,10 @@ export function generateId(prefix?: string) {
   }
 
   try {
-    if (typeof crypto !== 'undefined' && typeof (crypto as any).randomUUID === 'function') {
+    if (
+      typeof crypto !== "undefined" &&
+      typeof (crypto as any).randomUUID === "function"
+    ) {
       const uuid = (crypto as any).randomUUID();
       return prefix ? `${prefix}-${uuid}` : uuid;
     }

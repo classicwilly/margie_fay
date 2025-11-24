@@ -19,21 +19,20 @@ We mark core tests with the `@smoke` tag in Playwright to run them faster in PRs
 
 ### Import map & duplicate-React
 
-
 If you must enable a CDN React for manual testing, ensure the CDN version exactly matches the package.json React version (same major/minor) to avoid mismatched renderers.
 
 #### Runtime import map toggle (dev)
 
 - For local development and manual tests you can enable the importmap by adding `?use_importmap=true` to the app URL, e.g., `http://localhost:3000/?use_importmap=true`. This injects the CDN importmap at runtime — useful for quick experiments but not recommended for automated tests.
-
   - TIP: For deterministic AI responses during local test runs, we added `applyAiStub(page, { force: true })` to `tests/e2e/ai_flow.spec.ts`. You can also call `applyAiStub(page, { force: true })` in other tests to avoid nondeterministic AI responses while running locally.
 
   - NOTE: Playwright-friendly guard — when `__PLAYWRIGHT_AI_STUB__` is set (via `/?use_ai_proxy=true` or `VITE_PLAYWRIGHT_AI_STUB=true`), the `useLiveSession` hook will not open a live vendor websocket, nor will it request the microphone. This prevents headless test runners from attempting to access hardware or upstream sockets; the hook returns a resolved, no-op session so UI states continue to work deterministically.
+
 - Keep the toggle off for CI and Playwright runs — the `env_check.spec.ts` will fail if multiple React renderers are detected.
 
 Run smoke tests locally with:
 
-```pwsh
+````pwsh
 $env:PLAYWRIGHT_AI_STUB='true'
 npx playwright test --grep @smoke --project=chromium
 
@@ -49,7 +48,7 @@ Example debug run (headed + single worker + list reporter):
 $env:PLAYWRIGHT_REUSE_EXISTING_SERVER='true'
 $env:PLAYWRIGHT_AI_STUB='true'
 npx playwright test --grep @smoke --project=chromium --workers=1 --reporter=list --headed
-```
+````
 
 ### E2E pre-hydration & removed fallback
 

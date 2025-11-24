@@ -1,7 +1,7 @@
 export function errorCaptureScript() {
   // This function will be serialized and run in page context.
   // It mirrors `registerGlobalErrorHandlers` but for test runner usage.
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
 
   window.onerror = function (message, source, lineno, colno, error) {
     try {
@@ -13,9 +13,18 @@ export function errorCaptureScript() {
         stack: error?.stack || null,
         timestamp: new Date().toISOString(),
       };
-      try { window.localStorage.setItem('wonky-last-error', JSON.stringify(payload)); } catch (e) { /* ignore */ }
-      console.error('WONKY_E2E_ERROR', payload);
-    } catch (e) { /* ignore */ }
+      try {
+        window.localStorage.setItem(
+          "wonky-last-error",
+          JSON.stringify(payload),
+        );
+      } catch (e) {
+        /* ignore */
+      }
+      console.error("WONKY_E2E_ERROR", payload);
+    } catch (e) {
+      /* ignore */
+    }
   };
 
   window.onunhandledrejection = function (event) {
@@ -26,9 +35,18 @@ export function errorCaptureScript() {
         stack: reason?.stack || null,
         timestamp: new Date().toISOString(),
       };
-      try { window.localStorage.setItem('wonky-last-unhandledrejection', JSON.stringify(payload)); } catch (e) { /* ignore */ }
-      console.error('WONKY_E2E_UNHANDLED_REJECTION', payload);
-    } catch (e) { /* ignore */ }
+      try {
+        window.localStorage.setItem(
+          "wonky-last-unhandledrejection",
+          JSON.stringify(payload),
+        );
+      } catch (e) {
+        /* ignore */
+      }
+      console.error("WONKY_E2E_UNHANDLED_REJECTION", payload);
+    } catch (e) {
+      /* ignore */
+    }
   };
 }
 
@@ -42,30 +60,72 @@ export async function installErrorCapture(page: any) {
 
     window.onerror = function (message, source, lineno, colno, error) {
       try {
-        const s = (error && error.stack) || `${message} @ ${source}:${lineno}:${colno}`;
-        try { window.localStorage.setItem('wonky-last-error', JSON.stringify({ message, stack: s, ts: new Date().toISOString() })); } catch (e) { /* ignore */ }
-      } catch (e) { /* ignore */ }
+        const s =
+          (error && error.stack) || `${message} @ ${source}:${lineno}:${colno}`;
+        try {
+          window.localStorage.setItem(
+            "wonky-last-error",
+            JSON.stringify({ message, stack: s, ts: new Date().toISOString() }),
+          );
+        } catch (e) {
+          /* ignore */
+        }
+      } catch (e) {
+        /* ignore */
+      }
       // Emit to Playwright console
-      console.error('PW_WINDOW_ONERROR', message, source, lineno, colno, error && error.stack);
+      console.error(
+        "PW_WINDOW_ONERROR",
+        message,
+        source,
+        lineno,
+        colno,
+        error && error.stack,
+      );
     };
 
     window.onunhandledrejection = function (event: any) {
       try {
         const s = event?.reason?.stack || String(event?.reason);
-        try { window.localStorage.setItem('wonky-last-error', JSON.stringify({ message: String(event?.reason), stack: s, ts: new Date().toISOString() })); } catch (e) { /* ignore */ }
-      } catch (e) { /* ignore */ }
-      console.error('PW_UNHANDLEDREJECTION', event?.reason);
+        try {
+          window.localStorage.setItem(
+            "wonky-last-error",
+            JSON.stringify({
+              message: String(event?.reason),
+              stack: s,
+              ts: new Date().toISOString(),
+            }),
+          );
+        } catch (e) {
+          /* ignore */
+        }
+      } catch (e) {
+        /* ignore */
+      }
+      console.error("PW_UNHANDLEDREJECTION", event?.reason);
     };
 
     // Also intercept console.error to persist messages
     const origError = console.error.bind(console);
     console.error = (...args: any[]) => {
       try {
-        const msg = args.map(a => (a && a.stack) || String(a)).join(' ');
-        try { window.localStorage.setItem('wonky-last-error', JSON.stringify({ message: msg, stack: msg, ts: new Date().toISOString() })); } catch (e) { /* ignore */ }
-      } catch (e) { /* ignore */ }
+        const msg = args.map((a) => (a && a.stack) || String(a)).join(" ");
+        try {
+          window.localStorage.setItem(
+            "wonky-last-error",
+            JSON.stringify({
+              message: msg,
+              stack: msg,
+              ts: new Date().toISOString(),
+            }),
+          );
+        } catch (e) {
+          /* ignore */
+        }
+      } catch (e) {
+        /* ignore */
+      }
       origError(...args);
     };
-
   });
 }

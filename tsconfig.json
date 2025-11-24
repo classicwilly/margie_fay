@@ -31,6 +31,14 @@
       "@utils/*": ["src/utils/*"]
     }
   },
-  "include": ["src", "components", "contexts", "hooks", "services", "utils", "data"],
+  "include": [
+    "src",
+    "components",
+    "contexts",
+    "hooks",
+    "services",
+    "utils",
+    "data"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

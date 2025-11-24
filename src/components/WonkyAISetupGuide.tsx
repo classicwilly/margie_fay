@@ -1,1 +1,1 @@
-export { default } from '../../components/WonkyAISetupGuide';
+export { default } from "../../components/WonkyAISetupGuide";

@@ -1,0 +1,13 @@
+// Legacy config backup: renamed because the repo now uses flat eslint config (eslint.config.cjs).
+module.exports = {
+  root: true,
+  env: { browser: true, es2021: true },
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    ecmaVersion: 2022,
+    sourceType: "module",
+    ecmaFeatures: { jsx: true },
+  },
+  rules: {},
+  settings: { react: { version: "detect" } },
+};

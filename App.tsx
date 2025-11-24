@@ -1,74 +1,103 @@
-import React from 'react';
-import { AppStateProvider, useAppState } from './src/contexts/AppStateContext';
-import { OscilloscopeProvider } from './src/contexts/OscilloscopeContext';
-import { Header } from './components/Header';
-import Sidebar from './components/Sidebar';
-import Dashboard from './components/Dashboard';
-import Garden from './components/Garden';
-import OnboardingStepper from './components/OnboardingStepper';
-import { useGoogleAuth } from './hooks/useGoogleAuth';
-import { googleWorkspaceService } from './src/services/googleWorkspaceService';
+import React, { useEffect } from "react";
+import DemoPage from "./DemoPage";
+import Workshop from "./components/Workshop";
+import OriginStory from "./components/OriginStory";
+import ContextSwitchRestoreModal from "./components/ContextSwitchRestoreModal";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { getModuleRoutes } from "./src/module_registry";
+// Import the module index so module manifests register themselves with the ModuleManager
+import "./src/modules/index";
+import { initModules, startModules, stopModules } from "./src/module_registry";
 
-const AppContent: React.FC = () => {
-  const { appState } = useAppState();
-  const { view } = appState;
-  const { isAuthenticated, accessToken } = useGoogleAuth();
+import { AppStateProvider, useAppState } from "./src/contexts/AppStateContext";
+import { OscilloscopeProvider } from "./src/contexts/OscilloscopeContext";
 
-  // Load calendar events when authenticated
-  const [events, setEvents] = React.useState<any[]>([]);
-  const [loading, setLoading] = React.useState(false);
-  const [error, setError] = React.useState<string | null>(null);
+import { useNavigate } from "react-router-dom";
 
-  React.useEffect(() => {
-    if (isAuthenticated && accessToken) {
-      loadCalendarEvents();
-    }
-  }, [isAuthenticated, accessToken]);
-
-  const loadCalendarEvents = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const calendarEvents = await googleWorkspaceService.getCalendarEvents(10);
-      setEvents(calendarEvents);
-    } catch (err) {
-      setError('Failed to load calendar events');
-      console.error('Error loading calendar events:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const renderView = () => {
-    switch (view) {
-      case 'dashboard':
-        return <Dashboard events={events} loading={loading} error={error} />;
-      case 'garden':
-        return <Garden />;
-      default:
-        return <Dashboard events={events} loading={loading} error={error} />;
-    }
-  };
-
+const NavButton: React.FC<{ to: string; className?: string; children: React.ReactNode; [key: string]: any }> = ({ to, className, children, ...rest }) => {
+  const navigate = useNavigate();
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white">
-      <Header openResetModal={() => {}} />
-      <div className="flex">
-        <Sidebar />
-        <main className="flex-1 p-8">
-          {renderView()}
-          {!appState.initialSetupComplete && <OnboardingStepper />}
-        </main>
-      </div>
-    </div>
+    <button
+      type="button"
+      className={className}
+      
+      onClick={() => navigate(to)}
+      {...rest}
+    >
+      {children}
+    </button>
   );
 };
 
 const App: React.FC = () => {
+  useEffect(() => {
+    // Initialize modules on app start; starting is handled inside the Router
+    (async () => {
+      try {
+        await initModules();
+      } catch (err) {
+        console.error("ModuleManager init error", err);
+      }
+    })();
+  }, []);
+  const AppRouter: React.FC = () => {
+    const { appState } = useAppState() as any;
+    const moduleRoutes = getModuleRoutes(appState?.moduleStates);
+    useEffect(() => {
+      (async () => {
+        try {
+          await startModules(appState?.moduleStates);
+        } catch (e) {
+          console.error("startModules failed", e);
+        }
+      })();
+      return () => {
+        (async () => {
+          try {
+            await stopModules();
+          } catch (e) {
+            /* ignore */
+          }
+        })();
+      };
+    }, [appState?.moduleStates]);
+    return (
+        <BrowserRouter>
+          <nav className="bg-white shadow p-2" role="navigation" aria-label="top nav">
+            <ul className="flex gap-4 list-none p-0 m-0">
+              <li><NavButton to="/" className="font-medium text-green-700" data-workshop-testid="nav-workshop" data-testid="nav-workshop" role="menuitem">Home</NavButton></li>
+              <li><NavButton to="/template-sample" className="text-gray-700 hover:underline" data-workshop-testid="nav-template-sample" role="menuitem">template-sample</NavButton></li>
+              <li><NavButton to="/grandpa-helper" className="text-gray-700 hover:underline" data-workshop-testid="nav-grandpa-helper" role="menuitem">grandpa-helper</NavButton></li>
+              <li><NavButton to="/housekeeping" className="text-gray-700 hover:underline" data-workshop-testid="nav-housekeeping" role="menuitem">housekeeping</NavButton></li>
+              <li><NavButton to="/system" className="text-gray-700 hover:underline" data-workshop-testid="nav-system" data-testid="nav-system" role="menuitem">System</NavButton></li>
+              <li><NavButton to="/weekly-review" className="text-gray-700 hover:underline" data-workshop-testid="nav-weekly-review" role="menuitem">Weekly Review</NavButton></li>
+                <li><NavButton to="/child-dashboard" className="text-gray-700 hover:underline" data-workshop-testid="nav-child-dashboard" data-testid="nav-child-dashboard" role="menuitem">Child Dashboard</NavButton></li>
+              <li><NavButton to="/bio-hacks" className="text-gray-700 hover:underline" data-workshop-testid="nav-bio-hacks" data-testid="nav-bio-hacks" aria-label="💊 The Apothecary" role="menuitem">Bio Hacks</NavButton></li>
+              <li><NavButton to="/critical-tasks" className="text-gray-700 hover:underline" data-workshop-testid="nav-critical-tasks" role="menuitem">Critical Tasks</NavButton></li>
+              <li><NavButton to="/achievements" className="text-gray-700 hover:underline" data-workshop-testid="nav-achievements" role="menuitem">Achievements</NavButton></li>
+              <li><NavButton to="/origin" className="text-gray-700 hover:underline" data-workshop-testid="nav-origin" role="menuitem">Origin</NavButton></li>
+            </ul>
+          </nav>
+          <Routes>
+          {/* Keep a legacy demo route for quick preview, render Workshop on root as the new name */}
+          <Route path="/demo" element={<DemoPage />} />
+          <Route path="/" element={<Workshop />} />
+          <Route path="/origin" element={<OriginStory />} />
+          {moduleRoutes.map((r) => {
+            const Cmp = r.component as React.ComponentType<any>;
+            return <Route key={r.id} path={r.path} element={<Cmp />} />;
+          })}
+        </Routes>
+        {/* Global modals that are conditionally rendered via AppState */}
+        <ContextSwitchRestoreModal />
+      </BrowserRouter>
+    );
+  };
+
   return (
     <AppStateProvider>
       <OscilloscopeProvider>
-        <AppContent />
+        <AppRouter />
       </OscilloscopeProvider>
     </AppStateProvider>
   );
