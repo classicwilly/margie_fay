@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@google/genai": "^1.30.0",
-    "@sentry/browser": "^7.78.0",
+    "@sentry/browser": "^10.27.0",
     "@tailwindcss/postcss": "^4.1.17",
     "@vitejs/plugin-react": "^5.1.1",
     "dompurify": "^3.0.5",
