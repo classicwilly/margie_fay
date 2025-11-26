@@ -22,6 +22,21 @@ jobs:
       - name: Run security scan (repo)
         run: npm run security:scan
 
+  format-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install
+        run: npm ci --legacy-peer-deps
+      - name: Prettier check
+        run: |
+          echo "Running Prettier format check...";
+          npx prettier --check . || (echo "Formatting errors found; run 'npx prettier --write .' and commit the changes" && exit 1)
+
   build:
     runs-on: ubuntu-latest
 
