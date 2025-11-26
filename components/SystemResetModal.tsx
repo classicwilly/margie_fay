@@ -93,7 +93,7 @@ const SystemResetModal: React.FC<SystemResetModalProps> = ({
                   onClick={handleResetChecklists}
                   variant="danger"
                   size="sm"
-                  className="flex-grow"
+                  className="grow"
                 >
                   Confirm Reset
                 </Button>
@@ -101,7 +101,7 @@ const SystemResetModal: React.FC<SystemResetModalProps> = ({
                   onClick={() => setConfirmation(null)}
                   variant="secondary"
                   size="sm"
-                  className="flex-grow"
+                  className="grow"
                 >
                   Cancel
                 </Button>
@@ -132,7 +132,7 @@ const SystemResetModal: React.FC<SystemResetModalProps> = ({
                   onClick={handleResetRewards}
                   variant="danger"
                   size="sm"
-                  className="flex-grow"
+                  className="grow"
                 >
                   Confirm Reset
                 </Button>
@@ -140,7 +140,7 @@ const SystemResetModal: React.FC<SystemResetModalProps> = ({
                   onClick={() => setConfirmation(null)}
                   variant="secondary"
                   size="sm"
-                  className="flex-grow"
+                  className="grow"
                 >
                   Cancel
                 </Button>

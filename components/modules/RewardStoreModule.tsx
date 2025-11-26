@@ -1,10 +1,10 @@
-import React from "react";
+import type { FC } from "react";
 import { useAppState } from "@contexts/AppStateContext";
 import ContentCard from "../ContentCard.js";
 import { Button } from "../Button";
 import { REWARD_TIERS } from "../../constants.js";
 
-const RewardStoreModule = () => {
+const RewardStoreModule: FC = () => {
   const { appState, dispatch } = useAppState();
   const {
     dashboardType,
@@ -21,7 +21,7 @@ const RewardStoreModule = () => {
   const personaRedeemed = redeemedRewards[dashboardType] || [];
   const personaAcknowledged = acknowledgedRedemptions[dashboardType] || [];
 
-  const handleRedeem = (threshold) => {
+  const handleRedeem = (threshold: number) => {
     dispatch({
       type: "REDEEM_REWARD",
       payload: { persona: dashboardType, threshold },

@@ -1,7 +1,7 @@
-import React from "react";
+import type { FC } from "react";
 import ContentCard from "../ContentCard";
 
-const EssentialsTrackerModule = () => {
+const EssentialsTrackerModule: FC = () => {
   return (
     <ContentCard title="🥗 Daily Essentials">
       <p className="text-text-light text-opacity-80 text-center p-4">

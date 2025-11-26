@@ -1,8 +1,8 @@
-import React from "react";
+import type { FC } from "react";
 import { ViewType } from "../types";
 import { useAppState } from "@contexts/AppStateContext";
 
-const ProtocolCard: React.FC<{
+const ProtocolCard: FC<{
   title: string;
   description: string;
   viewId: ViewType;
@@ -22,9 +22,7 @@ const ProtocolCard: React.FC<{
         <span className="mr-3">{emoji}</span>
         {title}
       </h3>
-      <p className="mb-4 text-text-light text-opacity-80 flex-grow">
-        {description}
-      </p>
+      <p className="mb-4 text-text-light text-opacity-80 grow">{description}</p>
       <span className="w-full mt-auto p-3 bg-accent-blue bg-opacity-80 text-background-dark rounded-md text-center font-bold">
         Open Dashboard
       </span>
@@ -32,7 +30,7 @@ const ProtocolCard: React.FC<{
   );
 };
 
-const KidsCorner: React.FC = () => {
+const KidsCorner: FC = () => {
   return (
     <div className="max-w-4xl mx-auto">
       <header className="text-center mb-10" data-testid="kids-corner-header">

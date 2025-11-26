@@ -167,7 +167,7 @@ const DailyReport = () => {
                         className="h-5 w-5 mr-3"
                         aria-label={`Event: ${item.title}`}
                       />
-                      <span className="font-bold text-accent-blue w-20 flex-shrink-0">
+                      <span className="font-bold text-accent-blue w-20 shrink-0">
                         {new Date(item.date).toLocaleTimeString([], {
                           hour: "2-digit",
                           minute: "2-digit",

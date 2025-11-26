@@ -1,5 +1,6 @@
 import { test, expect } from "./playwright-fixtures";
 import { ensureAppView, retryClick } from "./helpers/retryHelpers";
+import byWorkshopOrCockpitTestId from "./helpers/locators";
 import percySnapshot from "@percy/playwright";
 
 test("Apothecary — Navigation and content verification @smoke", async ({
@@ -50,7 +51,9 @@ test("Apothecary — Navigation and content verification @smoke", async ({
 
   // 2) Click the Apothecary button — prefer deterministic test ids but
   // fall back to role-based regex lookups which might include emoji.
-  let apothecaryBtn = page.getByTestId("nav-bio-hacks").first();
+  let apothecaryBtn = page
+    .locator(byWorkshopOrCockpitTestId("nav-bio-hacks"))
+    .first();
   if (!(await apothecaryBtn.count())) {
     apothecaryBtn = page
       .getByRole("button", { name: /The Apothecary|Apothecary|💊/i })

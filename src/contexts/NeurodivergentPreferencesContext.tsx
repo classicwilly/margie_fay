@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from "react";
+import { createContext, useContext, type FC, type ReactNode } from "react";
 import { useAppState } from "./AppStateContext";
 
 export interface NeuroPrefs {
@@ -26,7 +26,7 @@ const NeuroPrefsContext = createContext<{
   setPrefs: (p: Partial<NeuroPrefs>) => void;
 }>({ prefs: defaultPrefs, setPrefs: () => {} });
 
-export const NeuroPrefsProvider: React.FC<{ children: React.ReactNode }> = ({
+export const NeuroPrefsProvider: FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const { appState, dispatch } = useAppState();

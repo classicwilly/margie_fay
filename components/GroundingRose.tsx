@@ -35,6 +35,7 @@ export const GroundingRose = ({
         whileHover={{ scale: 1.05, rotate: 3 }}
         whileTap={{ scale: 0.95 }}
         data-testid="grounding-rose-button"
+        data-workshop-testid="grounding-rose-button"
         className={`relative w-32 h-32 md:w-40 md:h-40 rounded-full bg-accent-pink/20 flex items-center justify-center text-6xl md:text-7xl cursor-pointer shadow-neon-md transition-all duration-300 hover:bg-accent-pink/30 border border-accent-pink ${className || ""}`}
         role="button"
         aria-label="Activate Grounding Rose"
@@ -46,6 +47,7 @@ export const GroundingRose = ({
           <div
             data-testid="grounding-rose-ripple"
             className="absolute inset-0 bg-accent-pink rounded-full opacity-70 animate-ping"
+            data-workshop-testid="grounding-rose-ripple"
             style={{ animationDuration: "600ms" }}
           />
         )}
@@ -53,7 +55,7 @@ export const GroundingRose = ({
 
       {/* Grounding Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/80 backdrop-blur-sm">
+        <div className="fixed inset-0 z-60 flex items-center justify-center bg-black/80 backdrop-blur-sm">
           <div className="bg-card-dark rounded-2xl p-8 w-[90%] max-w-lg text-center">
             <h2 className="text-2xl font-bold text-neon-pink mb-4">
               Grounding — Take 3

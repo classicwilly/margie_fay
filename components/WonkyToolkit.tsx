@@ -1,9 +1,10 @@
-import React from "react";
+// Removed default `React` import (JSX runtime handles it)
+import type { FC } from "react";
 import { useAppState } from "@contexts/AppStateContext";
 import { Button } from "./Button";
 import ContentCard from "./ContentCard";
 
-const WonkyToolkit: React.FC = () => {
+const WonkyToolkit: FC = () => {
   const { appState, dispatch } = useAppState();
 
   const startPomodoro = () => {

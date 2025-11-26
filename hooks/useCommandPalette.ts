@@ -7,16 +7,22 @@ export function useCommandPalette() {
   const { appState, dispatch } = useAppState();
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [results, setResults] = useState([]);
+  interface CommandPaletteResult {
+    id: string;
+    type: string;
+    title: string;
+    description: string;
+    action: () => void;
+  }
+  const [results, setResults] = useState<CommandPaletteResult[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const openPalette = () => setIsOpen(true);
   const closePalette = () => {
     setIsOpen(false);
     setSearchTerm("");
   };
 
-  const staticActions = useMemo(
+  const staticActions = useMemo<CommandPaletteResult[]>(
     () => [
       {
         id: "action-interrupt",
@@ -86,15 +92,17 @@ export function useCommandPalette() {
     [dispatch],
   );
 
-  const searchableViews = useMemo(
+  const searchableViews = useMemo<CommandPaletteResult[]>(
     () => [
       {
+        id: "view-workshop",
         type: "view",
         title: "Workshop",
         description: "View the high-level OS overview.",
         action: () => dispatch({ type: "SET_VIEW", payload: "workshop" }),
       },
       {
+        id: "view-operations-dashboard",
         type: "view",
         title: "My Dashboard",
         description: "Go to your main dashboard.",
@@ -102,18 +110,21 @@ export function useCommandPalette() {
           dispatch({ type: "SET_VIEW", payload: "operations-control" }),
       },
       {
+        id: "view-sop-vault",
         type: "view",
         title: "Flight Protocol Vault",
         description: "View all protocols.",
         action: () => dispatch({ type: "SET_VIEW", payload: "sop-vault" }),
       },
       {
+        id: "view-daily-debrief",
         type: "view",
         title: "System Diagnostics",
         description: "Run the end-of-day shutdown and review protocol.",
         action: () => dispatch({ type: "SET_VIEW", payload: "daily-debrief" }),
       },
       {
+        id: "view-weekly-review",
         type: "view",
         title: "Weekly Review",
         description: "Open the weekly review checklist.",
@@ -123,6 +134,7 @@ export function useCommandPalette() {
         },
       },
       {
+        id: "view-weekly-review-wizard",
         type: "view",
         title: "Weekly Review (Wizard)",
         description: "Open the Weekly Review wizard flow.",
@@ -132,6 +144,7 @@ export function useCommandPalette() {
         },
       },
       {
+        id: "view-quarterly-review",
         type: "view",
         title: "Quarterly Strategic Review",
         description: "Plan and review long-term objectives.",
@@ -139,6 +152,7 @@ export function useCommandPalette() {
           dispatch({ type: "SET_VIEW", payload: "quarterly-review" }),
       },
       {
+        id: "view-event-horizon",
         type: "view",
         title: "Event Horizon Prep",
         description: "Prepare for a major upcoming event.",
@@ -146,6 +160,7 @@ export function useCommandPalette() {
           dispatch({ type: "SET_VIEW", payload: "event-horizon-prep" }),
       },
       {
+        id: "view-strategic-roadmap",
         type: "view",
         title: "Strategic Roadmap",
         description: "View long-range project timelines.",
@@ -153,12 +168,14 @@ export function useCommandPalette() {
           dispatch({ type: "SET_VIEW", payload: "strategic-roadmap" }),
       },
       {
+        id: "view-archive-log",
         type: "view",
         title: "Archive Log",
         description: "View completed projects and archived notes.",
         action: () => dispatch({ type: "SET_VIEW", payload: "archive-log" }),
       },
       {
+        id: "view-game-master",
         type: "view",
         title: "Game Master Hub",
         description: "Manage kids' rewards and quests.",
@@ -166,6 +183,7 @@ export function useCommandPalette() {
           dispatch({ type: "SET_VIEW", payload: "game-master-dashboard" }),
       },
       {
+        id: "view-system-insights",
         type: "view",
         title: "System Insights",
         description: "View analytics and AI correlations.",
@@ -173,12 +191,14 @@ export function useCommandPalette() {
           dispatch({ type: "SET_VIEW", payload: "system-insights" }),
       },
       {
+        id: "view-all-checklists",
         type: "view",
         title: "All Checklists",
         description: "View a master list of all checklists.",
         action: () => dispatch({ type: "SET_VIEW", payload: "all-checklists" }),
       },
       {
+        id: "view-neuro-onboarding",
         type: "view",
         title: "Neuro Onboarding",
         description: "Personalize experience via neurodivergent presets.",
@@ -186,12 +206,14 @@ export function useCommandPalette() {
           dispatch({ type: "SET_VIEW", payload: "neuro-onboarding" }),
       },
       {
+        id: "view-daily-report",
         type: "view",
         title: "Print Daily Report",
         description: "Generate a printable mission sheet for the day.",
         action: () => dispatch({ type: "SET_VIEW", payload: "daily-report" }),
       },
       {
+        id: "view-wonky-toolkit",
         type: "view",
         title: "Wonky Toolkit",
         description: "Open the Wonky Toolkit",
@@ -208,7 +230,7 @@ export function useCommandPalette() {
     }
 
     const lowerSearch = searchTerm.toLowerCase();
-
+    // If empty search, show the static and view results
     if (!lowerSearch) {
       setResults([
         ...staticActions,
@@ -218,113 +240,31 @@ export function useCommandPalette() {
       return;
     }
 
-    const allSops = [...SOP_DATA, ...appState.userSops];
-
+    // Otherwise, perform a basic search across sops and views only to keep logic simple
+    const allSops = [...SOP_DATA, ...((appState.userSops as any[]) || [])];
     const sopResults = allSops
       .filter(
-        (sop) =>
+        (sop: any) =>
           sop.title.toLowerCase().includes(lowerSearch) ||
           sop.description.toLowerCase().includes(lowerSearch),
       )
-      .map((sop) => ({
-        id: `sop-${sop.id}`,
-        type: "sop",
-        title: sop.title,
-        description: sop.description,
-        action: () => {
-          if (sop.viewId) {
-            dispatch({ type: "SET_VIEW", payload: sop.viewId });
-          } else if (sop.isPageView) {
-            dispatch({ type: "SET_ACTIVE_USER_SOP_ID", payload: sop.id });
-            dispatch({ type: "SET_VIEW", payload: "user-sop-view" });
-          }
-        },
-      }));
-
-    const taskResults = (appState.tasks || [])
-      .filter(
-        (task) =>
-          task.status === "todo" &&
-          task.title.toLowerCase().includes(lowerSearch),
-      )
-      .map((task) => ({
-        id: `task-${task.id}`,
-        type: "task",
-        title: task.title,
-        description: `Due: ${task.dueDate || "Inbox"} | Priority: ${task.priority}`,
-        action: () => {
-          dispatch({ type: "SET_VIEW", payload: "operations-control" });
-          setTimeout(() => {
-            document
-              .getElementById("module-task-matrix-module")
-              ?.scrollIntoView({ behavior: "smooth" });
-          }, 100);
-        },
-      }));
-
-    const objectiveResults = (appState.objectives || [])
-      .filter(
-        (obj) =>
-          !obj.isArchived && obj.title.toLowerCase().includes(lowerSearch),
-      )
-      .map((obj) => ({
-        id: `objective-${obj.id}`,
-        type: "objective",
-        title: obj.title,
-        description: "Strategic Objective",
-        action: () => {
-          dispatch({ type: "SET_VIEW", payload: "operations-control" });
-          setTimeout(
-            () =>
-              document
-                .getElementById("module-strategic-objectives-module")
-                ?.scrollIntoView({ behavior: "smooth" }),
-            100,
-          );
-        },
-      }));
-
-    const projectResults = (appState.projects || [])
-      .filter(
-        (proj) =>
-          !proj.isArchived && proj.title.toLowerCase().includes(lowerSearch),
-      )
-      .map((proj) => ({
-        id: `project-${proj.id}`,
-        type: "project",
-        title: proj.title,
-        description: "Project",
-        action: () => {
-          dispatch({ type: "SET_VIEW", payload: "operations-control" });
-          setTimeout(
-            () =>
-              document
-                .getElementById("module-strategic-objectives-module")
-                ?.scrollIntoView({ behavior: "smooth" }),
-            100,
-          );
-        },
-      }));
-
-    const knowledgeResults = (appState.knowledgeVaultEntries || [])
-      .filter(
-        (entry) =>
-          !entry.isArchived && entry.title.toLowerCase().includes(lowerSearch),
-      )
-      .map((entry) => ({
-        id: `knowledge-${entry.id}`,
-        type: "knowledge",
-        title: entry.title,
-        description: `Tags: ${entry.tags.join(", ")}`,
-        action: () => {
-          dispatch({ type: "SET_VIEW", payload: "operations-control" });
-          setTimeout(() => {
-            document
-              .getElementById("module-knowledge-capture-vault-module")
-              ?.scrollIntoView({ behavior: "smooth" });
-          }, 100);
-        },
-      }));
+      .map(
+        (sop: any) =>
+          ({
+            id: `sop-${sop.id}`,
+            type: "sop",
+            title: sop.title,
+            description: sop.description,
+            action: () => {
+              if (sop.viewId) {
+                dispatch({ type: "SET_VIEW", payload: sop.viewId });
+              } else if (sop.isPageView) {
+                dispatch({ type: "SET_ACTIVE_USER_SOP_ID", payload: sop.id });
+                dispatch({ type: "SET_VIEW", payload: "user-sop-view" });
+              }
+            },
+          }) as CommandPaletteResult,
+      );
 
     const actionResults = staticActions.filter((a) =>
       a.title.toLowerCase().includes(lowerSearch),
@@ -333,15 +273,7 @@ export function useCommandPalette() {
       .map((v, i) => ({ ...v, id: `view-${i}` }))
       .filter((v) => v.title.toLowerCase().includes(lowerSearch));
 
-    setResults([
-      ...actionResults,
-      ...viewResults,
-      ...sopResults,
-      ...taskResults,
-      ...objectiveResults,
-      ...projectResults,
-      ...knowledgeResults,
-    ]);
+    setResults([...actionResults, ...viewResults, ...sopResults]);
     setSelectedIndex(0);
   }, [searchTerm, isOpen, appState, dispatch, staticActions, searchableViews]);
 
@@ -382,7 +314,7 @@ export function useCommandPalette() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [handleKeyDown]);
 
-  const onSelect = (result: any) => {
+  const onSelect = (result: CommandPaletteResult) => {
     result.action();
     closePalette();
   };

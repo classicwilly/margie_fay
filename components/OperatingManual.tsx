@@ -1,7 +1,7 @@
-import React from "react";
+import type { FC } from "react";
 import ProtocolView from "./ProtocolView.js";
 
-const OperatingManual = () => {
+const OperatingManual: FC = () => {
   return (
     <ProtocolView
       sourceDocument="Operating Manual"

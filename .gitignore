@@ -11,6 +11,8 @@ node_modules
 dist
 dist-ssr
 *.local
+*.env
+*.env.*
 playwright-report
 test-results
 coverage

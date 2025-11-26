@@ -1,16 +1,21 @@
-import React from "react";
+import type { FC } from "react";
 import { useAppState } from "@contexts/AppStateContext";
 
 import ContentCard from "../ContentCard"; // Adjusted path
 
-const StatusButton = ({
+const StatusButton: FC<{
+  label: string;
+  isActive: boolean;
+  onClick: () => void;
+  activeClass?: string;
+}> = ({
   label,
   isActive,
   onClick,
   activeClass = "bg-accent-blue text-white",
 }) => {
   const baseClass =
-    "px-3 py-1 rounded-md text-sm font-semibold transition-colors w-full break-words";
+    "px-3 py-1 rounded-md text-sm font-semibold transition-colors w-full break-word";
   const inactiveClass = "bg-gray-700 hover:bg-gray-600";
   return (
     <button
@@ -25,11 +30,12 @@ const StatusButton = ({
   );
 };
 
-const StatusTrackerModule = () => {
+const StatusTrackerModule: FC = () => {
   const { appState, dispatch } = useAppState();
 
-  const setMood = (mood) => dispatch({ type: "SET_MOOD", payload: mood });
-  const setEnergy = (energy) =>
+  const setMood = (mood: string) =>
+    dispatch({ type: "SET_MOOD", payload: mood });
+  const setEnergy = (energy: string) =>
     dispatch({ type: "SET_ENERGY", payload: energy });
 
   return (

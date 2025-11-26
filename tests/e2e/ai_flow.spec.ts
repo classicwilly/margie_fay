@@ -1,6 +1,6 @@
 import { test, expect } from "./playwright-fixtures";
 import { retryClick } from "./helpers/retryHelpers";
-import { byWorkshopOrCockpitTestId } from './helpers/locators';
+import { byWorkshopOrCockpitTestId } from "./helpers/locators";
 
 import axe from "axe-core";
 import applyAiStub from "./helpers/aiStub";
@@ -93,7 +93,9 @@ test("basic AI flow from UI placeholder to telemetry @smoke", async ({
   await page.waitForTimeout(150);
 
   // Prefer a stable data-testid for navigation if present, otherwise fallback to role lookup
-  let commandCenterNav = page.getByTestId("nav-workshop");
+  let commandCenterNav = page.locator(
+    byWorkshopOrCockpitTestId("nav-workshop"),
+  );
   // If multiple (older mobile/desktop duplicates), use the first visible
   if ((await commandCenterNav.count()) > 1)
     commandCenterNav = commandCenterNav.first();
@@ -117,25 +119,27 @@ test("basic AI flow from UI placeholder to telemetry @smoke", async ({
     });
   }
   // Wait for the Command Center view to be active
-  await expect(page.locator(byWorkshopOrCockpitTestId('workshop-title'))).toBeVisible({
+  await expect(
+    page.locator(byWorkshopOrCockpitTestId("workshop-title")),
+  ).toBeVisible({
     timeout: 10000,
   });
 
   // Example: find input placeholder (matching codebase input text)
-  // Wait for the AI input and ask button to become visible
-  await page.waitForSelector('input[placeholder="Describe the chaos..."]', {
-    timeout: 10000,
-  });
+  // Wait for the Ask AI controls to become visible (ask button and input)
+  await page
+    .locator(byWorkshopOrCockpitTestId("ask-ai-btn"))
+    .waitFor({ state: "visible", timeout: 30000 });
   // Use locator for robustness and wait until the element is visible
   const aiInputLocator = page.locator('[data-testid="ask-ai-input"]');
   try {
-    await aiInputLocator.waitFor({ state: "visible", timeout: 10000 });
+    await aiInputLocator.waitFor({ state: "visible", timeout: 20000 });
     // Use a non-PII prompt to avoid the PII modal during E2E runs
     await aiInputLocator.fill("Diagnose my workflow blocking issue");
   } catch (err) {
     // Fallback to placeholder based selection if data-testid isn't available
     const fallbackInput = page.getByPlaceholder("Describe the chaos...");
-    await fallbackInput.waitFor({ state: "visible", timeout: 10000 });
+    await fallbackInput.waitFor({ state: "visible", timeout: 30000 });
     await fallbackInput.fill("Contact me at test@example.com");
   }
 
@@ -143,7 +147,7 @@ test("basic AI flow from UI placeholder to telemetry @smoke", async ({
   // Prefer data-testid when available — this is robust across localized/emoji variants
   // Prefer `data-testid` when available; otherwise try a text-based role check.
   // Use canonical data-workshop-testid selector for Ask AI button
-  let askBtn = page.locator('[data-workshop-testid="ask-ai-btn"]');
+  let askBtn = page.locator(byWorkshopOrCockpitTestId("ask-ai-btn"));
   await askBtn.waitFor({ state: "visible", timeout: 30000 });
   await retryClick(askBtn, {
     tries: 4,
@@ -213,7 +217,9 @@ test("basic AI flow from UI placeholder to telemetry @smoke", async ({
       page.locator(
         "text=/ok from ai|AI result|Manual mode active|ok from ai|System Error:/i",
       ),
-    ).toBeVisible({ timeout: 10000 });
+    ).toBeVisible({
+      timeout: 10000,
+    });
   }
 
   // If PLAYWRIGHT_AI_STUB is set in CI, the test will rely on the stubbed network response

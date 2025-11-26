@@ -176,7 +176,7 @@ export interface Quest {
 export interface ProfileStack {
   id: string;
   name: string;
-  persona: DashboardType;
+  persona: DashboardType | string;
   audio: string;
   visual: string;
   oral: string;
@@ -274,6 +274,7 @@ export interface AppState {
   triageTaskId: string | null;
   childProfiles: { willow: ChildProfile; sebastian: ChildProfile };
   sharedExpenses: SharedExpense[];
+  personaOverrides?: Record<string, string>;
   savedContext: { prompt: string; response: string; taskId?: string } | null;
   isContextCaptureModalOpen: boolean;
   isContextRestoreModalOpen: boolean;
@@ -398,6 +399,8 @@ export type AppAction =
   | { type: "DELETE_SOP_TEMPLATE"; payload: string }
   | { type: "SET_ACTIVE_SOP_TEMPLATE"; payload: string | null }
   | { type: "SET_NEW_SOP_TYPE"; payload: string | null }
+  | { type: "CONFIRM_VIEW_CHANGE" }
+  | { type: "SET_CONTEXT_RESTORE_MODAL_OPEN"; payload: boolean }
   | { type: "ADD_QUEST"; payload: Quest }
   | { type: "UPDATE_QUEST"; payload: Quest }
   | { type: "DELETE_QUEST"; payload: string }
@@ -455,10 +458,10 @@ export type AppAction =
   | { type: "ADD_CHAT_MESSAGE"; payload: Omit<ChatMessage, "id" | "timestamp"> }
   | { type: "REMOVE_CHAT_MESSAGE"; payload: string }
   | { type: "SET_NEURO_PREFS"; payload: Partial<NeuroPrefs> }
-  | { type: "DISMISS_NUDGE"; payload: string };
+  | { type: "DISMISS_NUDGE"; payload: string }
 
   // Housekeeping actions
   | { type: "CLEAR_INBOX" }
-  | { type: "ARCHIVE_OLD_ENTRIES"; payload?: { days?: number } };
-  | { type: "HOUSEKEEPING_RUN" };
+  | { type: "ARCHIVE_OLD_ENTRIES"; payload?: { days?: number } }
+  | { type: "HOUSEKEEPING_RUN" }
   | { type: "RESTORE_ARCHIVED_TASKS" };

@@ -1,9 +1,10 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
+import type { FC } from "react";
 import useProgressVar from "@hooks/useProgressVar";
 import ContentCard from "./ContentCard";
 import { ALL_GEMS, REWARD_TIERS } from "../constants";
 
-const Gem: React.FC<{ emoji: string; label: string; collected: boolean }> = ({
+const Gem: FC<{ emoji: string; label: string; collected: boolean }> = ({
   emoji,
   label,
   collected,
@@ -33,7 +34,7 @@ interface GemCollectorProps {
   collectedGems: string[];
 }
 
-const GemCollector: React.FC<GemCollectorProps> = ({ name, collectedGems }) => {
+const GemCollector: FC<GemCollectorProps> = ({ name, collectedGems }) => {
   const progressRef = useRef<HTMLDivElement | null>(null);
   const collectedCount = collectedGems.length;
   const totalCount = ALL_GEMS.length;
@@ -62,7 +63,7 @@ const GemCollector: React.FC<GemCollectorProps> = ({ name, collectedGems }) => {
             >
               <div
                 ref={progressRef}
-                className="bg-gradient-to-r from-accent-blue to-accent-green h-4 rounded-full transition-all duration-500 progress-fill"
+                className="bg-linear-to-r from-accent-blue to-accent-green h-4 rounded-full transition-all duration-500 progress-fill"
               />
               <span className="sr-only">
                 Dopamine progress: {Math.round(progressPercentage)}%

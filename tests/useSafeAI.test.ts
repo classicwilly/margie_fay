@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { renderHook } from "@testing-library/react";
-import React from "react";
 import { act } from "@testing-library/react";
+import React from "react";
 import useSafeAI from "../hooks/useSafeAI";
 import { FeatureFlagsProvider } from "@contexts/FeatureFlagsContext";
 import * as telemetry from "../utils/telemetry";

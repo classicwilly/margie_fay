@@ -1,21 +1,35 @@
-import React, { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback } from "react";
 import { generateId } from "@utils/generateId";
 
+interface TranscriptEntry {
+  id: string;
+  type: "user" | "ai" | string;
+  content: string;
+  [key: string]: any;
+}
+
 export function useTranscript() {
-  const [transcript, setTranscript] = useState([]);
+  const [transcript, setTranscript] = useState<TranscriptEntry[]>([]);
   const [userStreamingText, setUserStreamingText] = useState("");
   const [aiStreamingText, setAiStreamingText] = useState("");
 
   const currentInputTranscriptionRef = useRef("");
   const currentOutputTranscriptionRef = useRef("");
 
-  const addEntry = useCallback((entry) => {
-    const newEntry = { ...entry, id: `${entry.type}-${generateId()}` };
-    setTranscript((prev) => [...prev, newEntry]);
-    return newEntry.id;
-  }, []);
+  const addEntry = useCallback(
+    (entry: { type: string; content?: string; [key: string]: any }) => {
+      const newEntry = {
+        ...entry,
+        id: `${entry.type}-${generateId()}`,
+        content: entry.content ?? "",
+      };
+      setTranscript((prev) => [...prev, newEntry]);
+      return newEntry.id;
+    },
+    [],
+  );
 
-  const updateEntry = useCallback((id, newContent) => {
+  const updateEntry = useCallback((id: string, newContent: string) => {
     setTranscript((prev) =>
       prev.map((entry) =>
         entry.id === id ? { ...entry, content: newContent } : entry,
@@ -23,7 +37,7 @@ export function useTranscript() {
     );
   }, []);
 
-  const handleStreamingMessage = useCallback((message) => {
+  const handleStreamingMessage = useCallback((message: any) => {
     if (message.serverContent?.inputTranscription) {
       currentInputTranscriptionRef.current +=
         message.serverContent.inputTranscription.text;
@@ -40,7 +54,7 @@ export function useTranscript() {
       const finalAiOutput = currentOutputTranscriptionRef.current.trim();
 
       if (finalUserInput || finalAiOutput) {
-        const newEntries = [];
+        const newEntries: TranscriptEntry[] = [];
         if (finalUserInput) {
           newEntries.push({
             id: `user-${generateId()}`,

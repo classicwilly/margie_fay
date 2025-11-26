@@ -1,7 +1,7 @@
-import React from "react";
+import type { FC } from "react";
 import ProtocolView from "./ProtocolView.js";
 
-const CoParentingCommunicationProtocol = () => {
+const CoParentingCommunicationProtocol: FC = () => {
   return (
     <ProtocolView
       sourceDocument="Co-Parenting Communication Protocol"

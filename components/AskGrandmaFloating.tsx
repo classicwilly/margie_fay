@@ -1,6 +1,6 @@
-import React from "react";
+import type { FC } from "react";
 
-const AskGrandmaFloating: React.FC = () => {
+const AskGrandmaFloating: FC = () => {
   const openGrandma = () => {
     // Dispatch both legacy and new events so either listener will respond
     const legacy = new CustomEvent("set-grandma-query", {

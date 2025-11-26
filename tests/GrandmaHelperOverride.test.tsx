@@ -1,9 +1,9 @@
-import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { describe, it, expect, beforeAll, vi } from "vitest";
 import SettingsView from "../src/views/SettingsView";
 import GrandmaHelper from "../components/GrandmaHelper";
 import { AppStateProvider } from "@contexts/AppStateContext";
+import { UserProvider } from "@contexts/UserContext";
 
 describe("GrandmaHelper uses display name override", () => {
   beforeAll(() => {
@@ -11,10 +11,12 @@ describe("GrandmaHelper uses display name override", () => {
   });
   it("shows the overridden persona name in the header", async () => {
     render(
-      <AppStateProvider>
-        <SettingsView />
-        <GrandmaHelper />
-      </AppStateProvider>,
+      <UserProvider>
+        <AppStateProvider>
+          <SettingsView />
+          <GrandmaHelper />
+        </AppStateProvider>
+      </UserProvider>,
     );
 
     // Update override

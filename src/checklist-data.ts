@@ -1,4 +1,25 @@
-import type { ChecklistSectionData } from "./types.js";
+// Minimal local types to keep the `src` layer compilable. These mirror the
+// canonical types found in the root-level `checklist-data.tsx` used by the UI.
+export interface ChecklistItemData {
+  id: string;
+  label: string;
+  gemAwardId?: string;
+  gemRecipient?: string;
+  achievementAwardId?: string;
+  large?: boolean;
+  [key: string]: any;
+}
+
+export interface ChecklistSectionData {
+  id: string;
+  title: string;
+  sourceDocument: string;
+  items?: ChecklistItemData[];
+  subSections?: ChecklistSectionData[];
+  description?: string;
+  validation?: string;
+  [key: string]: any;
+}
 
 export const ALL_CHECKLIST_DATA: ChecklistSectionData[] = [
   // EssentialsTracker (from CommandCenter)

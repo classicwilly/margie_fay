@@ -1,0 +1,51 @@
+name: Discord bot CI & Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Authenticate to Google Cloud (optional)
+        if: secrets.GCP_SA_KEY
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+      - name: Configure Docker for GCR
+        env:
+          PROJECT_ID: ${{ secrets.GCP_PROJECT }}
+        run: |
+          if [ -n "$PROJECT_ID" ]; then gcloud auth configure-docker --quiet || true; fi
+      - name: Build and push Discord bot container
+        env:
+          IMAGE: gcr.io/${{ secrets.GCP_PROJECT }}/wonky-discord-bot:latest
+        run: |
+          docker build -t "$IMAGE" -f Dockerfile.discord-bot .
+          echo "Pushing image $IMAGE"
+          docker push "$IMAGE"
+  deploy-to-cloud-run:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    if: ${{ secrets.GCP_SA_KEY && secrets.GCP_PROJECT && (secrets.DISCORD_SERVICE_BOT_TOKEN != '') }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+      - name: Deploy to Cloud Run
+        env:
+          IMAGE: gcr.io/${{ secrets.GCP_PROJECT }}/wonky-discord-bot:latest
+        run: |
+          gcloud run deploy wonky-discord-bot --image "$IMAGE" --region=us-central1 --allow-unauthenticated --platform=managed --set-env-vars=REDIS_URL="${{ secrets.REDIS_URL }}"

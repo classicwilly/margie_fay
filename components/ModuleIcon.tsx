@@ -1,4 +1,4 @@
-import React from "react";
+import type { FC } from "react";
 
 interface ModuleIconProps {
   iconPath: string;
@@ -6,12 +6,7 @@ interface ModuleIconProps {
   onClick: () => void;
   id?: string;
 }
-const ModuleIcon: React.FC<ModuleIconProps> = ({
-  iconPath,
-  label,
-  onClick,
-  id,
-}) => {
+const ModuleIcon: FC<ModuleIconProps> = ({ iconPath, label, onClick, id }) => {
   return (
     <button
       data-testid={id ? `module-launcher-${id}` : undefined}

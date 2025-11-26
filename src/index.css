@@ -33,8 +33,8 @@
   top: 100%;
   right: 0;
 }
-@tailwind base;
-@tailwind components;
+@import "tailwindcss/preflight";
+@tailwind utilities;
 @tailwind utilities;
 
 /* Final consolidated minimal CSS - no @apply usage */
@@ -95,6 +95,42 @@
     -moz-osx-font-smoothing: grayscale;
     min-height: 100vh;
   }
+}
+
+/* Respect user preference for reduced motion: disable animations & transitions */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Simplified mode: increase legibility, reduce sensory noise */
+.simplified-mode {
+  --neon-shadow: none;
+  --neon-font:
+    "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, "Noto Sans";
+}
+.simplified-mode body,
+.simplified-mode .card-base {
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+.simplified-mode .glow-neon,
+.simplified-mode .shadow-neon,
+.simplified-mode .btn-neon,
+.simplified-mode .text-neon-green,
+.simplified-mode .text-neon-blue {
+  text-shadow: none !important;
+  box-shadow: none !important;
+}
+.simplified-mode .btn-neon {
+  background: var(--neon-green);
+  box-shadow: none;
 }
 
 @layer components {
@@ -460,8 +496,8 @@ input[type="range"].slider-thumb-pink::-moz-range-thumb {
 }
 
 /* Avoid using @apply and any unknown tailwind utility classes to prevent PostCSS errors */
-@tailwind base;
-@tailwind components;
+@import "tailwindcss/preflight";
+@tailwind utilities;
 @tailwind utilities;
 
 /* Final consolidated minimal CSS - no @apply usage */
@@ -648,8 +684,8 @@ input[type="range"].slider-thumb-pink::-moz-range-thumb {
 }
 
 /* Avoid using @apply and any unknown tailwind utility classes to prevent PostCSS errors */
-@tailwind base;
-@tailwind components;
+@import "tailwindcss/preflight";
+@tailwind utilities;
 @tailwind utilities;
 
 /* Consolidated Production-safe CSS - no @apply usages */
@@ -836,8 +872,8 @@ input[type="range"].slider-thumb-pink::-moz-range-thumb {
 }
 
 /* END: Consolidated CSS - Avoid @apply and unknown utilities */
-@tailwind base;
-@tailwind components;
+@import "tailwindcss/preflight";
+@tailwind utilities;
 @tailwind utilities;
 
 /* Production-safe minimal CSS: use color variables and raw properties */
@@ -985,8 +1021,8 @@ input[type="range"].slider-thumb-pink::-webkit-slider-thumb {
     transform: translateY(120vh);
   }
 }
-@tailwind base;
-@tailwind components;
+@import "tailwindcss/preflight";
+@tailwind utilities;
 @tailwind utilities;
 
 :root {
@@ -1119,9 +1155,9 @@ input[type="range"].slider-thumb-pink::-webkit-slider-thumb {
     transform: translateY(120vh);
   }
 }
-@tailwind base;
-@tailwind base;
-@tailwind components;
+@import "tailwindcss/preflight";
+@import "tailwindcss/preflight";
+@tailwind utilities;
 @tailwind utilities;
 
 /* Production-safe consolidated CSS - single block only */
@@ -1431,8 +1467,8 @@ input[type="range"].slider-thumb-pink::-webkit-slider-thumb {
     transform: translateY(120vh);
   }
 }
-@tailwind base;
-@tailwind components;
+@import "tailwindcss/preflight";
+@tailwind utilities;
 @tailwind utilities;
 
 /* Final consolidated global CSS */
@@ -1494,8 +1530,8 @@ input[type="range"].slider-thumb-pink::-webkit-slider-thumb {
     transform: translateY(120vh);
   }
 }
-@tailwind base;
-@tailwind components;
+@import "tailwindcss/preflight";
+@tailwind utilities;
 @tailwind utilities;
 
 /* Minimal consolidated global styles for E2E stability */
@@ -1551,8 +1587,8 @@ input[type="range"].slider-thumb-pink::-webkit-slider-thumb {
     transform: translateY(120vh);
   }
 }
-@tailwind base;
-@tailwind components;
+@import "tailwindcss/preflight";
+@tailwind utilities;
 @tailwind utilities;
 
 /* Global CSS - Final version (single consolidated block) */
@@ -1779,8 +1815,8 @@ input[type="range"].slider-thumb-pink::-moz-range-thumb {
     transform: translateY(120vh) rotate(360deg) scale(1);
   }
 }
-@tailwind base;
-@tailwind components;
+@import "tailwindcss/preflight";
+@tailwind utilities;
 @tailwind utilities;
 
 /* Global CSS (Finalized Dark Theme + Components + Utilities) */
@@ -2008,8 +2044,8 @@ input[type="range"].slider-thumb-pink::-moz-range-thumb {
   }
 }
 
-@tailwind base;
-@tailwind components;
+@import "tailwindcss/preflight";
+@tailwind utilities;
 @tailwind utilities;
 
 /* Global CSS (Consolidated Dark Theme + Components + Utilities) */
@@ -2039,8 +2075,8 @@ input[type="range"].slider-thumb-pink::-moz-range-thumb {
   /* Card */
   .card-base {
     @apply bg-surface-800/80 backdrop-blur-sm rounded-xl p-6 border border-surface-700 shadow-lg hover:shadow-neon-sm hover:border-accent-teal/50 transition-all duration-300 ease-out;
-    backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
   }
   .card-inner {
     @apply bg-surface-900/50 rounded-lg p-4 border border-white/5;
@@ -2234,8 +2270,8 @@ input[type="range"].slider-thumb-pink::-moz-range-thumb {
     transform: translateY(120vh) rotate(360deg) scale(1);
   }
 }
-@tailwind base;
-@tailwind components;
+@import "tailwindcss/preflight";
+@tailwind utilities;
 @tailwind utilities;
 
 /* Root variables used in Tailwind tokens and fallbacks */
@@ -2462,8 +2498,8 @@ input[type="range"].slider-thumb-pink::-moz-range-thumb {
     transform: translateY(120vh) rotate(360deg) scale(1);
   }
 }
-@tailwind base;
-@tailwind components;
+@import "tailwindcss/preflight";
+@tailwind utilities;
 @tailwind utilities;
 
 @layer base {
@@ -2601,8 +2637,8 @@ input[type="range"].slider-thumb-pink::-moz-range-thumb {
   -webkit-user-select: none;
   user-select: none;
 }
-@tailwind base;
-@tailwind components;
+@import "tailwindcss/preflight";
+@tailwind utilities;
 @tailwind utilities;
 
 :root {

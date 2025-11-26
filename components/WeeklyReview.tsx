@@ -1,11 +1,11 @@
-import React from "react";
+import type { FC } from "react";
 import { QuickJump } from "./QuickJump";
 import ChecklistItem from "./ChecklistItem";
 import ContentCard from "./ContentCard";
 import { ALL_CHECKLIST_DATA } from "../checklist-data.tsx";
 import { useNeuroPrefs } from "../src/contexts/NeurodivergentPreferencesContext";
 
-const WeeklyReview: React.FC = () => {
+const WeeklyReview: FC = () => {
   const { prefs } = useNeuroPrefs();
   const { microStepsMode } = prefs;
   const sections = [

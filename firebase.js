@@ -8,15 +8,16 @@ import {
 } from "firebase/auth";
 import { getFirestore, doc, setDoc, onSnapshot } from "firebase/firestore";
 
-// Your web app's Firebase configuration
+// Your web app's Firebase configuration. Prefer setting VITE_ env variables in your dev environment.
 const firebaseConfig = {
-  apiKey: "AIzaSyDEjslq9YSa14XuT-MxYAYizmxbB_8eT6w",
-  authDomain: "wonky-sprout-os.firebaseapp.com",
-  projectId: "wonky-sprout-os",
-  storageBucket: "wonky-sprout-os.firebasestorage.app",
-  messagingSenderId: "574841005144",
-  appId: "1:574841005144:web:1505078ff0c76925b5162d",
-  measurementId: "G-FGZEZ0XPBJ",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "REPLACE_ME",
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "REPLACE_ME",
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "REPLACE_ME",
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "REPLACE_ME",
+  messagingSenderId:
+    import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "REPLACE_ME",
+  appId: import.meta.env.VITE_FIREBASE_APP_ID || "REPLACE_ME",
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || "REPLACE_ME",
 };
 
 // Initialize Firebase

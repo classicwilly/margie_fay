@@ -1,13 +1,10 @@
-import React from "react";
+import { Component, type ErrorInfo, type ReactNode } from "react";
 
 interface State {
   hasError: boolean;
 }
 
-export class ErrorBoundary extends React.Component<
-  { children: React.ReactNode },
-  State
-> {
+export class ErrorBoundary extends Component<{ children: ReactNode }, State> {
   constructor(props: any) {
     super(props);
     this.state = { hasError: false };
@@ -22,7 +19,9 @@ export class ErrorBoundary extends React.Component<
       ) {
         // We can't access the error value here, but set a flag to help tests
         (window as any).__WONKY_LAST_ERROR__ = (window as any)
-          .__WONKY_LAST_ERROR__ || { message: "Unknown React render error" };
+          .__WONKY_LAST_ERROR__ || {
+          message: "Unknown React render error",
+        };
       }
     } catch (e) {
       /* ignore */
@@ -30,7 +29,7 @@ export class ErrorBoundary extends React.Component<
     return { hasError: true };
   }
 
-  componentDidCatch(error: Error, info: React.ErrorInfo) {
+  componentDidCatch(error: Error, info: ErrorInfo) {
     // Conservative logging; this is intentionally direct and actionable.
     console.error("[ErrorBoundary] Uncaught error:", error, info);
     try {
@@ -73,7 +72,7 @@ export class ErrorBoundary extends React.Component<
           (window as any).__WONKY_LAST_ERROR__ ? (
             <pre
               data-testid="wonky-last-error"
-              className="mt-4 text-left text-xs break-words"
+              className="mt-4 text-left text-xs break-word"
             >
               {JSON.stringify((window as any).__WONKY_LAST_ERROR__, null, 2)}
             </pre>

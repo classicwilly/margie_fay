@@ -1,4 +1,11 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  type FC,
+  type ReactNode,
+} from "react";
 
 interface Flags {
   aiEnabled: boolean;
@@ -13,7 +20,7 @@ const FeatureFlagsContext = createContext<{
   setFlag: (k: keyof Flags, v: any) => void;
 }>({ flags: DEFAULTS, setFlag: () => {} });
 
-export const FeatureFlagsProvider: React.FC<{ children: React.ReactNode }> = ({
+export const FeatureFlagsProvider: FC<{ children: ReactNode }> = ({
   children,
 }) => {
   // Read persisted user-level overrides from localStorage for now

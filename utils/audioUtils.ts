@@ -1,14 +1,21 @@
 // --- Audio Utility Functions ---
-export function encode(bytes) {
+export function encode(bytes: Uint8Array | number[]) {
   let binary = "";
-  const len = bytes.byteLength;
-  for (let i = 0; i < len; i++) {
-    binary += String.fromCharCode(bytes[i]);
+  if (Array.isArray(bytes)) {
+    const len = bytes.length;
+    for (let i = 0; i < len; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+  } else {
+    const len = (bytes as Uint8Array).byteLength;
+    for (let i = 0; i < len; i++) {
+      binary += String.fromCharCode((bytes as Uint8Array)[i]);
+    }
   }
   return btoa(binary);
 }
 
-export function decode(base64) {
+export function decode(base64: string): Uint8Array {
   const binaryString = atob(base64);
   const len = binaryString.length;
   const bytes = new Uint8Array(len);
@@ -18,8 +25,21 @@ export function decode(base64) {
   return bytes;
 }
 
-export async function decodeAudioData(data, ctx, sampleRate, numChannels) {
-  const dataInt16 = new Int16Array(data.buffer);
+export async function decodeAudioData(
+  data: { buffer: ArrayBuffer } | ArrayBuffer | Uint8Array | Int16Array,
+  ctx: any,
+  sampleRate: number,
+  numChannels: number,
+): Promise<any> {
+  let dataBuffer: ArrayBuffer;
+  if (data instanceof ArrayBuffer) {
+    dataBuffer = data;
+  } else if (ArrayBuffer.isView(data as ArrayBuffer) || (data as any).buffer) {
+    dataBuffer = (data as any).buffer as ArrayBuffer;
+  } else {
+    dataBuffer = new ArrayBuffer(0);
+  }
+  const dataInt16 = new Int16Array(dataBuffer);
   const frameCount = dataInt16.length / numChannels;
   const buffer = ctx.createBuffer(numChannels, frameCount, sampleRate);
 
@@ -32,7 +52,7 @@ export async function decodeAudioData(data, ctx, sampleRate, numChannels) {
   return buffer;
 }
 
-export function createBlob(data) {
+export function createBlob(data: Float32Array | number[]) {
   const l = data.length;
   const int16 = new Int16Array(l);
   for (let i = 0; i < l; i++) {

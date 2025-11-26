@@ -1,4 +1,4 @@
-import React from "react";
+import type { FC } from "react";
 import { MemorialEntry } from "../data/memorials";
 import { Button } from "./Button";
 
@@ -10,10 +10,10 @@ interface Props {
 
 const formatDate = (d?: string) => (d ? new Date(d).toLocaleDateString() : "");
 
-const MemorialCard: React.FC<Props> = ({ entry, onCelebrate, onAddMemory }) => {
+const MemorialCard: FC<Props> = ({ entry, onCelebrate, onAddMemory }) => {
   return (
     <div className="card-base w-full flex items-start gap-4 rounded-lg shadow-lg border border-accent-teal bg-card-dark p-6">
-      <div className="flex-shrink-0">
+      <div className="shrink-0">
         <img
           src={entry.photo || "/grandma.png"}
           alt={entry.name}

@@ -1,4 +1,11 @@
-import React, { createContext, useContext, useReducer, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useReducer,
+  type ReactNode,
+  type Dispatch,
+  type FC,
+} from "react";
 
 // --- TYPES ---
 type PersonaKey = "grandma" | "grandpa" | "bob" | "marge";
@@ -98,14 +105,16 @@ const reducer = (
 const OscilloscopeContext = createContext<
   | {
       state: OscilloscopeState;
-      dispatch: React.Dispatch<Action>;
+      dispatch: Dispatch<Action>;
       getPersonaName: (key: PersonaKey | string) => string;
       getPersonaRole: (key: PersonaKey | string) => string; // Added utility
     }
   | undefined
 >(undefined);
 
-export const OscilloscopeProvider = ({ children }: { children: ReactNode }) => {
+export const OscilloscopeProvider: FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   // Utility Function: getPersonaName (used by GrandmaHelper)

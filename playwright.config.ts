@@ -40,16 +40,26 @@ export default defineConfig({
     { name: "firefox", use: { ...devices["Desktop Firefox"] } },
   ],
   webServer: {
-    command: "npm run dev",
-    // Match base URL used for navigation to the web server. Allow override with PLAYWRIGHT_BASE_URL.
-    url: process.env.PLAYWRIGHT_BASE_URL ?? "http://localhost:3000",
+    // Explicitly configure the preview server command to bind to a fixed port
+    // and to be strict about port binding. This helps Playwright detect
+    // if a server is already running and avoid race conditions.
+    command:
+      process.env.PLAYWRIGHT_USE_PREVIEW_SERVER === "true"
+        ? "npm run build && npm run preview"
+        : "npm run dev",
+    // By default prefer the preview server URL and common preview port 4173.
+    url: process.env.PLAYWRIGHT_BASE_URL ?? "http://localhost:4173",
     // By default we reuse an existing server locally (for faster iteration) but
     // start a fresh server in CI to keep runs deterministic. To override in
     // local environments set PLAYWRIGHT_REUSE_EXISTING_SERVER=true or run a
     // fresh server via `npm run dev` before running tests and set the env var.
-    reuseExistingServer: process.env.CI
-      ? false
-      : process.env.PLAYWRIGHT_REUSE_EXISTING_SERVER !== "false",
+    // For local debugging we want Playwright to reuse an existing server
+    // by default so you can run dev server and run tests without collisions.
+    reuseExistingServer:
+      process.env.PLAYWRIGHT_REUSE_EXISTING_SERVER === "true"
+        ? true
+        : process.env.PLAYWRIGHT_USE_PREVIEW_SERVER !== "true" &&
+          process.env.CI !== "true",
     timeout: 240_000,
   },
 });

@@ -1,6 +1,8 @@
+// ...existing code...
 import React, { useState, useEffect } from "react";
 import { useAppState } from "@contexts/AppStateContext";
-import { ALL_WILLOW_MODULES_CONFIG } from "../constants";
+import { ALL_WILLOW_MODULES_CONFIG } from "../src/constants";
+import Button from "./ui/button";
 
 // FIX: Explicitly typed component with React.FC and a props interface to handle the `key` prop correctly.
 interface TabButtonProps {
@@ -35,7 +37,7 @@ const WillowsDashboardBuilder = () => {
     setTempEnabledModules(willowDashboardModules);
   }, [willowDashboardModules]);
 
-  const handleToggleModule = (moduleId, enable) => {
+  const handleToggleModule = (moduleId: string, enable: boolean) => {
     setTempEnabledModules((prev) => {
       if (enable && !prev.includes(moduleId)) {
         return [...prev, moduleId];
@@ -69,7 +71,7 @@ const WillowsDashboardBuilder = () => {
   };
 
   const modulesForTab = ALL_WILLOW_MODULES_CONFIG.filter(
-    (m) => m.category === activeTab,
+    (m: any) => m.category === activeTab,
   );
 
   return (
@@ -102,7 +104,7 @@ const WillowsDashboardBuilder = () => {
         </div>
         <div className="p-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {modulesForTab.map((module) => (
+            {modulesForTab.map((module: any) => (
               <div
                 key={module.id}
                 className={`flex items-center justify-between p-3 bg-gray-800 rounded-md border border-gray-700 ${!module.isRemovable ? "opacity-70" : ""}`}
@@ -147,10 +149,10 @@ const WillowsDashboardBuilder = () => {
       </div>
 
       <div className="flex justify-end space-x-4 mt-8">
-        <Button onClick={handleCancel} variant="secondary">
+        <Button onClick={handleCancel} variant="secondary" type="button">
           Cancel
         </Button>
-        <Button onClick={handleSave} variant="primary">
+        <Button onClick={handleSave} variant="primary" type="button">
           Save Changes
         </Button>
       </div>

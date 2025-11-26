@@ -154,6 +154,7 @@ export type AppAction =
   | { type: "CLEAR_CONTEXT" }
   | { type: "SET_CONTEXT_CAPTURE_MODAL_OPEN"; payload: boolean }
   | { type: "SET_CONTEXT_RESTORE_MODAL_OPEN"; payload: boolean }
+  | { type: "CONFIRM_VIEW_CHANGE" }
   | {
       type: "ADD_TOAST";
       payload: { id: string; emoji: string; message: string };
@@ -172,12 +173,12 @@ export type AppAction =
   | {
       type: "SET_MODULE_STATE";
       payload: { id: string; enabled: boolean | null | undefined };
-    };
+    }
 
   // Housekeeping actions
   | { type: "CLEAR_INBOX" }
-  | { type: "ARCHIVE_OLD_ENTRIES"; payload?: { days?: number } };
-  | { type: "RESTORE_ARCHIVED_TASKS" };
+  | { type: "ARCHIVE_OLD_ENTRIES"; payload?: { days?: number } }
+  | { type: "RESTORE_ARCHIVED_TASKS" }
   | { type: "HOUSEKEEPING_RUN" };
 
 // The type for the context value.

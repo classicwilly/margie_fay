@@ -1,7 +1,8 @@
 import "./styles.css";
-import React from "react";
 import ReactDOM from "react-dom/client";
+import { StrictMode } from "react";
 import App from "./App";
+import { registerGlobalErrorHandlers } from "./utils/globalErrorHandlers";
 import { AppStateProvider } from "@contexts/AppStateContext";
 
 const rootElement = document.getElementById("root")!;
@@ -92,7 +93,9 @@ try {
           try {
             (window as any).__WONKY_E2E_LOG_PUSH__(
               "PREHYDRATE_TEST_INIT_DASHBOARD",
-              { dashboardType: earlyInit.dashboardType },
+              {
+                dashboardType: earlyInit.dashboardType,
+              },
             );
           } catch (e) {
             /* ignore */
@@ -146,11 +149,15 @@ try {
           /* ignore */
         }
         try {
+          const initialSetupCompleteValue =
+            typeof earlyInit.initialSetupComplete === "boolean"
+              ? earlyInit.initialSetupComplete
+              : true;
           (window as any).appState = {
             ...((window as any).appState || {}),
             view: earlyInit.view,
             dashboardType: earlyInit.dashboardType,
-            initialSetupComplete: earlyInit.initialSetupComplete || true,
+            initialSetupComplete: initialSetupCompleteValue,
           };
         } catch (e) {
           /* ignore */
@@ -309,9 +316,9 @@ registerGlobalErrorHandlers();
 // seeded state is available synchronously.
 const root = ReactDOM.createRoot(rootElement);
 root.render(
-  <React.StrictMode>
+  <StrictMode>
     <AppStateProvider>
       <App />
     </AppStateProvider>
-  </React.StrictMode>,
+  </StrictMode>,
 );

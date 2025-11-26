@@ -167,7 +167,7 @@ const AITrendAnalysis = () => {
         find patterns and generate questions for your Weekly Review.
       </p>
 
-      <div className="flex-grow p-3 bg-gray-800 rounded-md min-h-[200px] border border-gray-700 overflow-y-auto">
+      <div className="grow p-3 bg-gray-800 rounded-md min-h-[200px] border border-gray-700 overflow-y-auto">
         {loading && (
           <div className="flex items-center justify-center h-full">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent-blue"></div>

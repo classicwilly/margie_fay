@@ -1,9 +1,9 @@
-import React from "react";
+import type { FC, ReactNode } from "react";
 import { useAppState } from "@contexts/AppStateContext";
 
 interface ChecklistItemProps {
   id: string;
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
   large?: boolean;
   gemAwardId?: string;
@@ -11,7 +11,7 @@ interface ChecklistItemProps {
   achievementAwardId?: string;
 }
 
-const ChecklistItem: React.FC<ChecklistItemProps> = ({
+const ChecklistItem: FC<ChecklistItemProps> = ({
   id,
   children,
   className = "",
@@ -57,7 +57,7 @@ const ChecklistItem: React.FC<ChecklistItemProps> = ({
           className={`${checkboxSize} rounded bg-gray-700 border-gray-600 text-accent-blue focus:ring-accent-blue focus:ring-offset-background-dark focus:ring-2 mr-4 flex-shrink-0`}
         />
         <span
-          className={`${checked ? "line-through text-text-light text-opacity-50" : ""} break-words`}
+          className={`${checked ? "line-through text-text-light text-opacity-50" : ""} break-word`}
         >
           {children}
         </span>

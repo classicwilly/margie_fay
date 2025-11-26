@@ -1,9 +1,9 @@
-import React from "react";
+import type { FC } from "react";
 import { useAppState } from "@contexts/AppStateContext";
 import { Mood, Energy } from "../types";
 import ContentCard from "./ContentCard";
 
-const StatusButton: React.FC<{
+const StatusButton: FC<{
   label: string;
   isActive: boolean;
   onClick: () => void;
@@ -15,7 +15,7 @@ const StatusButton: React.FC<{
   activeClass = "bg-accent-blue text-white",
 }) => {
   const baseClass =
-    "px-3 py-1 rounded-md text-sm font-semibold transition-colors w-full break-words";
+    "px-3 py-1 rounded-md text-sm font-semibold transition-colors w-full break-word";
   const inactiveClass = "bg-gray-700 hover:bg-gray-600";
   return (
     <button
@@ -30,7 +30,7 @@ const StatusButton: React.FC<{
   );
 };
 
-const StatusTracker: React.FC = () => {
+const StatusTracker: FC = () => {
   const { appState, dispatch } = useAppState();
 
   const setMood = (mood: Mood) => dispatch({ type: "SET_MOOD", payload: mood });

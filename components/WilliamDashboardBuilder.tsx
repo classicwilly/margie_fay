@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAppState } from "@contexts/AppStateContext";
-import { ALL_WILLIAM_MODULES_CONFIG } from "../constants";
+import { ALL_WILLIAM_MODULES_CONFIG } from "../src/constants";
 import { Button } from "./Button";
 
 // FIX: Explicitly typed component with React.FC and a props interface to handle the `key` prop correctly.
@@ -36,7 +36,7 @@ const WilliamDashboardBuilder = () => {
     setTempEnabledModules(williamDashboardModules);
   }, [williamDashboardModules]);
 
-  const handleToggleModule = (moduleId, enable) => {
+  const handleToggleModule = (moduleId: string, enable: boolean) => {
     setTempEnabledModules((prev) => {
       if (enable && !prev.includes(moduleId)) {
         return [...prev, moduleId];
@@ -71,7 +71,7 @@ const WilliamDashboardBuilder = () => {
   };
 
   const modulesForTab = ALL_WILLIAM_MODULES_CONFIG.filter(
-    (m) => m.category === activeTab,
+    (m: any) => m.category === activeTab,
   );
 
   return (
@@ -94,7 +94,7 @@ const WilliamDashboardBuilder = () => {
           >
             {Object.entries(moduleCategories).map(([key, label]) => {
               const modulesInCategory = ALL_WILLIAM_MODULES_CONFIG.filter(
-                (m) => m.category === key,
+                (m: any) => m.category === key,
               );
               if (modulesInCategory.length === 0) {
                 return null;
@@ -112,7 +112,7 @@ const WilliamDashboardBuilder = () => {
         </div>
         <div className="p-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {modulesForTab.map((module) => (
+            {modulesForTab.map((module: any) => (
               <div
                 key={module.id}
                 className={`flex items-center justify-between p-3 bg-gray-800 rounded-md border border-gray-700 ${!module.isRemovable ? "opacity-70" : ""}`}

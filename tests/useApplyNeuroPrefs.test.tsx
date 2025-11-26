@@ -1,4 +1,3 @@
-import React from "react";
 import { render, fireEvent, renderHook } from "@testing-library/react";
 import { describe, it, expect, vi, afterEach } from "vitest";
 import { AppStateProvider } from "@contexts/AppStateContext";

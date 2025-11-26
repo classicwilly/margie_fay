@@ -1,10 +1,10 @@
-import React from "react";
+import { useState, type FC } from "react";
 import AIConsentModal from "./AIConsentModal";
 import { useAppState } from "../src/contexts/AppStateContext";
 
-const OnboardingAIConsent: React.FC<{ onNext: () => void }> = ({ onNext }) => {
-  const { appState, dispatch } = useAppState();
-  const [open, setOpen] = React.useState(true);
+const OnboardingAIConsent: FC<{ onNext: () => void }> = ({ onNext }) => {
+  const { dispatch } = useAppState();
+  const [open, setOpen] = useState(true);
 
   const handleConfirm = () => {
     setOpen(false);

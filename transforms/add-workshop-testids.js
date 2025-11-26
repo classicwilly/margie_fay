@@ -19,23 +19,26 @@ function walk(dir) {
     } else if (/\.(tsx|ts|jsx|js)$/i.test(entry.name)) {
       let content = fs.readFileSync(full, 'utf8');
       let original = content;
-      // 1) plain string case: data-testid="cockpit-foo" data-workshop-testid="workshop-foo" content = content.replace(/data-testid=("|')cockpit-([\w-]+)\1/g, (m, quote, id) => {
-        const attr = `data-workshop-testid=${quote}workshop-${id}${quote}`;
-        if (m.includes('data-workshop-testid=')) return m; // exists
-        return `${m} ${attr}`;
-      });
-      // 2) template literal case: data-testid={`cockpit-${stack.id}`} data-workshop-testid={`workshop-${stack.id}`} data-workshop-testid={`workshop-${stack.id}`}
-      content = content.replace(/data-testid=\{\s*`cockpit-([^`]*)`\s*\}/g, (m, inner) => {
-        const workshop = `data-workshop-testid={\`workshop-${inner}\`}`;
+      // 1) plain string case: data-testid="cockpit-foo" -> add data-workshop-testid="workshop-foo"
+      content = content.replace(/data-testid=("|')cockpit-([\w-]+)\1/g, (m, quote, id) => {
+        // if workshop testid already exists, skip
         if (m.includes('data-workshop-testid=')) return m;
-        return `${m} ${workshop}`;
+        const attr = ` data-workshop-testid=${quote}workshop-${id}${quote}`;
+        return `${m}${attr}`;
+      });
+      // 2) template literal case: data-testid={`cockpit-${stack.id}`} data-workshop-testid={`workshop-${stack.id}`} data-workshop-testid={`workshop-${stack.id}`} data-workshop-testid={`workshop-${stack.id}`}
+      // 2) template literal case: data-testid={`cockpit-${stack.id}`}
+      content = content.replace(/data-testid=\{\s*`cockpit-([^`]*)`\s*\}/g, (m, inner) => {
+        if (m.includes('data-workshop-testid=')) return m;
+        const workshop = ` data-workshop-testid={\`workshop-${inner}\`}`;
+        return `${m}${workshop}`;
       });
       // 3) other template expression with variable concatenation: data-testid={'cockpit-'+id}
-      content = content.replace(/data-testid=\{\s*('|")cockpit-\'\s*\+\s*([^}]+)\s*\1\}/g, (m, quote, expr) => {
-        // this is a rough heuristic; inject workshop dynamic expression as well
-        const workshopExpr = `data-workshop-testid={\`workshop-\${${expr}}\`}`;
+      // 3) concatenated template case: data-testid={'cockpit-'+id} -> add data-workshop-testid={`workshop-${id}`}
+      content = content.replace(/data-testid=\{\s*'cockpit-'\s*\+\s*([^}]+)\s*\}/g, (m, expr) => {
         if (m.includes('data-workshop-testid=')) return m;
-        return `${m} ${workshopExpr}`;
+        const workshopExpr = ` data-workshop-testid={\`workshop-\${${expr}}\`}`;
+        return `${m}${workshopExpr}`;
       });
 
       if (content !== original) {

@@ -21,7 +21,10 @@
     "noFallthroughCasesInSwitch": true,
 
     /* Aliases */
+    // 'baseUrl' is deprecated in TS 7.0. See https://aka.ms/ts6 for migration info.
     "baseUrl": ".",
+    "ignoreDeprecations": "6.0",
+    "forceConsistentCasingInFileNames": true,
     "paths": {
       "@components/*": ["components/*", "src/components/*"],
       "@contexts/*": ["src/contexts/*", "contexts/*"],
@@ -29,7 +32,9 @@
       "@services/*": ["src/services/*"],
       "@types": ["src/types.ts"],
       "@utils/*": ["src/utils/*"]
-    }
+    },
+    "typeRoots": ["src/types", "node_modules/@types"],
+    "types": ["node"]
   },
   "include": [
     "src",

@@ -92,7 +92,7 @@ exports.aiProxy = functions.https.onRequest(async (req, res) => {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { prompt, config } = req.body || {};
+  const { prompt, config, personaKey } = req.body || {};
   if (!prompt) return res.status(400).json({ error: "Missing prompt" });
 
   // TODO: confirm that you scrub any PII here if your use-case requires it
@@ -101,8 +101,22 @@ exports.aiProxy = functions.https.onRequest(async (req, res) => {
   try {
     // Sanitize prompt server-side to avoid leaking PII to third-party AI
     const { scrubPII, hashUserId } = require("./pii_sanitizer");
+    const PERSONAS = {
+      grandma:
+        "You are Grandma: warm, patient, and encouraging. Use short sentences, step-by-step instructions, and one clear default if the user cannot decide. Provide calming language and repeat key details once at the end.",
+      grandpa:
+        "You are Grandpa: direct, clear, and pragmatic. Keep messages short, show the one best action and a brief reason. Avoid long explanations.",
+      bob: "You are Bob: a practical manager. Always return an ordered checklist with 'Start Here' as first step and an estimated duration for each step. Be concise and action-oriented.",
+      marge:
+        "You are Marge: empathetic and validating. Start by validating the user's feeling in 1-2 sentences, then offer 1-2 gentle, actionable suggestions.",
+      calm_guide:
+        "You are Calm Guide: always give a single, safe, minimally risky recommendation with one sentence rationale and a quick 'If you disagree, say 'more'; otherwise 'do it'. Keep it concise.",
+    };
     const { text: sanitized, found } = scrubPII(prompt);
-    const promptForAi = sanitized;
+    const personaInstruction = personaKey ? PERSONAS[personaKey] || null : null;
+    const promptForAi = personaInstruction
+      ? `${personaInstruction}\n\n${sanitized}`
+      : sanitized;
     // If a custom AI backend is configured, use it. Otherwise, default to Google Generative AI (Gemini)
     const aiKey =
       process.env.AI_BACKEND_KEY ||
@@ -136,7 +150,13 @@ exports.aiProxy = functions.https.onRequest(async (req, res) => {
         // merged headers - may contain x-api-key via env or Functions config
         ...headers,
       },
-      body: JSON.stringify({ prompt: promptForAi, config }),
+      body: JSON.stringify({
+        prompt: [
+          { role: "system", content: personaInstruction || "" },
+          { role: "user", content: sanitized },
+        ],
+        config,
+      }),
     });
 
     const json = await aiResponse.json();

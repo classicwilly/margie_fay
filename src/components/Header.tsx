@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useAppState } from "@contexts/AppStateContext";
-import { ViewType } from "../../types";
+import type { ViewType } from "../../types";
 
 interface HeaderProps {
   openResetModal: () => void;
@@ -8,17 +8,26 @@ interface HeaderProps {
 
 const NavItem: React.FC<{
   label: string;
-  view: ViewType;
+  view: ViewType | string;
   icon?: string;
   dataTestId?: string;
   dataWorkshopTestId?: string;
   ariaLabel?: string;
-}> = ({ label, view, icon, dataTestId, dataWorkshopTestId }) => {
-  const ariaLabelProp = (arguments[0] as any)?.ariaLabel;
+  role?: string;
+}> = ({
+  label,
+  view,
+  icon,
+  dataTestId,
+  dataWorkshopTestId,
+  ariaLabel,
+  role,
+}) => {
+  const ariaLabelProp = ariaLabel;
   const { appState, dispatch } = useAppState();
   const isActive = appState.view === view;
 
-    return (
+  return (
     <button
       onClick={() => dispatch({ type: "SET_VIEW", payload: view })}
       className={`px-3 py-2 rounded-md text-sm font-semibold transition-colors duration-200 flex items-center gap-2 ${
@@ -27,10 +36,15 @@ const NavItem: React.FC<{
           : "text-text-light hover:bg-gray-700"
       }`}
       {...(dataTestId ? { "data-testid": dataTestId } : {})}
-      {...(dataWorkshopTestId ? { "data-workshop-testid": dataWorkshopTestId } : {})}
+      {...(dataWorkshopTestId
+        ? { "data-workshop-testid": dataWorkshopTestId }
+        : {})}
       {...(ariaLabelProp ? { "aria-label": ariaLabelProp } : {})}
-      {...(typeof (view as any).ariaLabel === 'string' ? { 'aria-label': (view as any).ariaLabel } : {})}
+      {...(typeof (view as any).ariaLabel === "string"
+        ? { "aria-label": (view as any).ariaLabel }
+        : {})}
       aria-current={isActive ? "page" : undefined}
+      {...(role ? { role } : {})}
     >
       {icon && <span className="text-lg">{icon}</span>}
       <span className="truncate">{label}</span>
@@ -40,39 +54,39 @@ const NavItem: React.FC<{
 
 interface DropdownMenuProps {
   openResetModal: () => void;
-  onItemClick: (view: ViewType) => void;
+  onItemClick: (view?: ViewType | string) => void;
   isModMode: boolean;
-  allDropdownItems: {
+  allDropdownItems: Array<{
     id: string;
     label: string;
     type: string;
-    view?: ViewType;
+    view?: ViewType | string;
     allowedDashboardTypes: string[];
     dataTestId?: string;
+    dataWorkshopTestId?: string;
     modModeOnly?: boolean;
     className?: string;
     weeklyReviewMode?: string;
     action?: (() => void) | null;
-  }[];
-  visibleDropdownItems: {
+  }>;
+  visibleDropdownItems: Array<{
     id: string;
     label: string;
     type: string;
-    view?: ViewType;
+    view?: ViewType | string;
     allowedDashboardTypes: string[];
     dataTestId?: string;
+    dataWorkshopTestId?: string;
     modModeOnly?: boolean;
     className?: string;
     weeklyReviewMode?: string;
     action?: (() => void) | null;
-  }[];
+  }>;
 }
 
 const DropdownMenu: React.FC<DropdownMenuProps & { isOpen?: boolean }> = ({
   openResetModal,
   onItemClick,
-  isModMode,
-  allDropdownItems,
   visibleDropdownItems,
   isOpen = true,
 }) => {
@@ -82,9 +96,14 @@ const DropdownMenu: React.FC<DropdownMenuProps & { isOpen?: boolean }> = ({
     (item) => item.type !== "separator",
   );
 
-  if (!isOpen) return null;
+  if (!isOpen) {
+    return null;
+  }
   return (
-    <div className="absolute right-0 mt-2 w-56 origin-top-right bg-card-dark rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border border-gray-700 z-20" data-workshop-testid="nav-system-dropdown">
+    <div
+      className="absolute right-0 mt-2 w-56 origin-top-right bg-card-dark rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border border-gray-700 z-20"
+      data-workshop-testid="nav-system-dropdown"
+    >
       <div
         className="py-1"
         role="menu"
@@ -93,12 +112,14 @@ const DropdownMenu: React.FC<DropdownMenuProps & { isOpen?: boolean }> = ({
       >
         {finalDropdownItems.map((item) => (
           <button
-            key={item.view + item.id}
-            onClick={() => onItemClick(item.view || "")}
+            key={`${item.view ?? ""}-${item.id}`}
+            onClick={() => onItemClick(item.view)}
             className="block w-full text-left px-4 py-2 text-sm text-text-light hover:bg-gray-700"
             role="menuitem"
             {...(item.dataTestId ? { "data-testid": item.dataTestId } : {})}
-            {...(item.dataWorkshopTestId ? { "data-workshop-testid": item.dataWorkshopTestId } : { "data-workshop-testid": `nav-${item.id}` })}
+            {...(item.dataWorkshopTestId
+              ? { "data-workshop-testid": item.dataWorkshopTestId }
+              : { "data-workshop-testid": `nav-${item.id}` })}
           >
             {item.label}
           </button>
@@ -138,10 +159,31 @@ const Header: React.FC<HeaderProps> = ({ openResetModal }) => {
   const modSwitchRef = useRef<HTMLButtonElement | null>(null);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const mobileDropdownRef = useRef<HTMLDivElement>(null);
 
   const handleToggleModMode = () => {
     dispatch({ type: "TOGGLE_MOD_MODE" });
+  };
+
+  const handleLogout = () => {
+    /* Lightweight logout action for UI — avoid destructive ops here */
+    try {
+      localStorage.removeItem("wonky-auth-token");
+    } catch (e) {
+      /* ignore */
+    }
+    dispatch({ type: "SET_VIEW", payload: "manifesto" as ViewType });
+  };
+
+  const handleDropdownToggle = () => {
+    setDropdownOpen((prev) => !prev);
+  };
+
+  const handleDropdownItemClick = (view?: ViewType | string) => {
+    if (!view) {
+      return;
+    }
+    dispatch({ type: "SET_VIEW", payload: view as ViewType });
+    setDropdownOpen(false);
   };
 
   useEffect(() => {
@@ -583,6 +625,47 @@ const Header: React.FC<HeaderProps> = ({ openResetModal }) => {
     }
   }
 
+  // Navigation configuration grouped by dashboard type. Keep this simple and
+  // drive visibility from `allowedDashboardTypes` on each item for now so we
+  // can avoid a separate central config and quash TypeScript errors.
+  const navItemConfig: Record<
+    string,
+    { desktop: typeof allDropdownItems; mobile: typeof allDropdownItems }
+  > = {
+    william: {
+      desktop: allDropdownItems.filter((i) =>
+        i.allowedDashboardTypes.includes("william"),
+      ),
+      mobile: allDropdownItems.filter((i) =>
+        i.allowedDashboardTypes.includes("william"),
+      ),
+    },
+    willow: {
+      desktop: allDropdownItems.filter((i) =>
+        i.allowedDashboardTypes.includes("willow"),
+      ),
+      mobile: allDropdownItems.filter((i) =>
+        i.allowedDashboardTypes.includes("willow"),
+      ),
+    },
+    sebastian: {
+      desktop: allDropdownItems.filter((i) =>
+        i.allowedDashboardTypes.includes("sebastian"),
+      ),
+      mobile: allDropdownItems.filter((i) =>
+        i.allowedDashboardTypes.includes("sebastian"),
+      ),
+    },
+    "co-parenting": {
+      desktop: allDropdownItems.filter((i) =>
+        i.allowedDashboardTypes.includes("co-parenting"),
+      ),
+      mobile: allDropdownItems.filter((i) =>
+        i.allowedDashboardTypes.includes("co-parenting"),
+      ),
+    },
+  };
+
   const navItems = navItemConfig[
     dashboardType as keyof typeof navItemConfig
   ] || { desktop: [], mobile: [] };
@@ -617,25 +700,33 @@ const Header: React.FC<HeaderProps> = ({ openResetModal }) => {
           🌱 Wonky Sprout OS
         </button>
 
-        <nav className="hidden md:flex items-center gap-2 flex-wrap">
+        <nav
+          className="hidden md:flex items-center gap-2 flex-wrap"
+          role="menubar"
+        >
           {effectiveNav.desktop.map((item) => {
             const navCockpit =
               item.view === "workshop" || item.view === "workshop";
             const dataTestId = navCockpit
               ? "nav-workshop"
               : item.view === "weekly-review"
-              ? "nav-weekly-review"
-              : item.view === "willows-dashboard" || item.view === "sebastians-dashboard"
-              ? "nav-child-dashboard"
-              : undefined;
+                ? "nav-weekly-review"
+                : item.view === "willows-dashboard" ||
+                    item.view === "sebastians-dashboard"
+                  ? "nav-child-dashboard"
+                  : undefined;
             const dataWorkshopTestId =
               item.view === "workshop" ? "nav-workshop" : undefined;
             return (
               <NavItem
-                key={item.view}
-                {...item}
+                key={(item as any).id ?? item.view ?? ""}
+                label={item.label}
+                view={item.view ?? ""}
+                icon={(item as any).icon ?? undefined}
                 dataTestId={dataTestId}
                 dataWorkshopTestId={dataWorkshopTestId}
+                ariaLabel={(item as any).ariaLabel ?? undefined}
+                role="menuitem"
               />
             );
           })}
@@ -651,6 +742,7 @@ const Header: React.FC<HeaderProps> = ({ openResetModal }) => {
               label="Game Master Hub"
               view="game-master-dashboard"
               dataTestId="nav-game-master"
+              role="menuitem"
             />
           )}
           <div className="relative">
@@ -661,6 +753,7 @@ const Header: React.FC<HeaderProps> = ({ openResetModal }) => {
               className={`px-3 py-2 rounded-md text-sm font-semibold flex items-center gap-1 ${isDropdownOpen ? "bg-white/5" : "text-sanctuary-text-secondary hover:bg-white/5"}`}
               aria-label="System"
               data-workshop-testid="nav-system"
+              role="menuitem"
             >
               System
               <svg
@@ -709,21 +802,30 @@ const Header: React.FC<HeaderProps> = ({ openResetModal }) => {
           </button>
         </div>
       </div>
-      <nav className="md:hidden flex items-center gap-2 flex-wrap mt-3 pt-3 border-t border-sanctuary-border">
+      <nav
+        className="md:hidden flex items-center gap-2 flex-wrap mt-3 pt-3 border-t border-sanctuary-border"
+        role="menubar"
+      >
         {effectiveNav.mobile.map((item) => {
-          const navCockpit = item.view === "workshop" || item.view === "workshop";
+          const navCockpit =
+            item.view === "workshop" || item.view === "workshop";
           const dataTestId = navCockpit
             ? "nav-workshop"
             : item.view === "weekly-review"
-            ? "nav-weekly-review"
-            : undefined;
-          const dataWorkshopTestId = item.view === "workshop" ? "nav-workshop" : undefined;
+              ? "nav-weekly-review"
+              : undefined;
+          const dataWorkshopTestId =
+            item.view === "workshop" ? "nav-workshop" : undefined;
           return (
             <NavItem
-              key={item.view}
-              {...item}
+              key={(item as any).id ?? item.view ?? ""}
+              label={item.label}
+              view={item.view ?? ""}
+              icon={(item as any).icon ?? undefined}
               dataTestId={dataTestId}
               dataWorkshopTestId={dataWorkshopTestId}
+              ariaLabel={(item as any).ariaLabel ?? undefined}
+              role="menuitem"
             />
           );
         })}
@@ -734,6 +836,7 @@ const Header: React.FC<HeaderProps> = ({ openResetModal }) => {
             className={`px-3 py-2 rounded-md text-sm font-semibold flex items-center gap-1 ${isDropdownOpen ? "bg-white/5" : "text-sanctuary-text-secondary hover:bg-white/5"}`}
             aria-label="System"
             data-workshop-testid="nav-system-mobile"
+            role="menuitem"
           >
             System
             <svg

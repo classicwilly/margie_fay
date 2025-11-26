@@ -1,4 +1,4 @@
-import React from "react";
+// Removed default `React` import (JSX runtime handles it)
 import { useAppState } from "@contexts/AppStateContext";
 
 interface TextInputItemProps {
@@ -26,10 +26,7 @@ const TextInputItem: React.FC<TextInputItemProps> = ({
 
   return (
     <div className="flex items-center gap-2 w-full">
-      <label
-        htmlFor={id}
-        className="text-text-light text-opacity-90 flex-shrink-0"
-      >
+      <label htmlFor={id} className="text-text-light text-opacity-90 shrink-0">
         {label}
       </label>
       <input
@@ -38,7 +35,7 @@ const TextInputItem: React.FC<TextInputItemProps> = ({
         value={value}
         onChange={handleChange}
         placeholder={placeholder}
-        className="flex-grow p-2 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue w-full"
+        className="grow p-2 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue w-full"
       />
     </div>
   );

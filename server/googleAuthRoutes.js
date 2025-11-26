@@ -85,6 +85,49 @@ router.get("/oauth2callback", async (req, res) => {
   }
 });
 
+// Helper to return a google auth client for a session and auto-refresh tokens
+async function getAuthorizedClientForSession(req) {
+  const sessionId = req.cookies && req.cookies.gwsess;
+  if (!sessionId) return null;
+  const cache = req.app.get("cache");
+  if (!cache) return null;
+  const tokens = await cache.get(`google_tokens:${sessionId}`);
+  if (!tokens) return null;
+  const oAuth2Client = getOAuth2Client();
+  if (!oAuth2Client) return null;
+  oAuth2Client.setCredentials(tokens);
+  // If token expired or near expiry, refresh it
+  try {
+    const now = Date.now();
+    const expiry = tokens.expiry_date || 0;
+    // If expiry within next 60 seconds, refresh
+    if (expiry - now < 60 * 1000) {
+      const res = await oAuth2Client.getAccessToken();
+      // google-auth populates credentials with refresh token changes
+      const updatedCreds = oAuth2Client.credentials;
+      // Persist updated tokens to cache
+      await cache.set(`google_tokens:${sessionId}`, updatedCreds);
+    }
+  } catch (e) {
+    console.warn("Token refresh failed", e?.message || e);
+  }
+  return oAuth2Client;
+}
+
+// Helper: Require OAuth session and return client, else 401
+async function requireAuthClient(req, res, next) {
+  try {
+    const client = await getAuthorizedClientForSession(req);
+    if (!client)
+      return res.status(401).json({ error: "Not signed into Google" });
+    req.googleAuthClient = client;
+    next();
+  } catch (e) {
+    console.error("requireAuthClient error", e);
+    return res.status(500).json({ error: "OAuth client error" });
+  }
+}
+
 // Who am I? Return basic profile info for the signed-in user using stored tokens
 router.get("/me", async (req, res) => {
   try {
@@ -124,6 +167,187 @@ router.post("/logout", async (req, res) => {
     res.clearCookie("gwsess");
   }
   return res.json({ ok: true });
+});
+
+// List events for signed-in user
+router.get("/events", requireAuthClient, async (req, res) => {
+  try {
+    const calendar = google.calendar({
+      version: "v3",
+      auth: req.googleAuthClient,
+    });
+    const eventsResp = await calendar.events.list({
+      calendarId: "primary",
+      timeMin: new Date().toISOString(),
+      maxResults: 20,
+      singleEvents: true,
+      orderBy: "startTime",
+    });
+    res.json({ events: eventsResp.data.items || [] });
+  } catch (e) {
+    console.error("list events error", e);
+    res.status(500).json({ error: "Could not list events" });
+  }
+});
+
+router.get("/emails", requireAuthClient, async (req, res) => {
+  try {
+    const gmail = google.gmail({ version: "v1", auth: req.googleAuthClient });
+    const max = Number(req.query.max || 10);
+    const messagesResp = await gmail.users.messages.list({
+      userId: "me",
+      maxResults: max,
+      q: "is:unread",
+    });
+    const messages = messagesResp.data.messages || [];
+    const emails = await Promise.all(
+      messages.map(async (m) => {
+        const detail = await gmail.users.messages.get({
+          userId: "me",
+          id: m.id,
+        });
+        const headers = detail.data.payload?.headers || [];
+        const subject = headers.find((h) => h.name === "Subject")?.value || "";
+        const from = headers.find((h) => h.name === "From")?.value || "";
+        const date = headers.find((h) => h.name === "Date")?.value || "";
+        return {
+          id: m.id,
+          threadId: detail.data.threadId,
+          labelIds: detail.data.labelIds || [],
+          snippet: detail.data.snippet || "",
+          subject,
+          from,
+          date,
+          isUnread: detail.data.labelIds?.includes("UNREAD") || false,
+        };
+      }),
+    );
+    return res.json({ emails });
+  } catch (e) {
+    console.error("list emails error", e);
+    return res.status(500).json({ error: "Failed to list emails" });
+  }
+});
+
+router.get("/tasks", requireAuthClient, async (req, res) => {
+  try {
+    const tasksApi = google.tasks({
+      version: "v1",
+      auth: req.googleAuthClient,
+    });
+    const response = await tasksApi.tasks.list({ tasklist: "@default" });
+    return res.json({ tasks: response.data.items || [] });
+  } catch (e) {
+    console.error("list tasks error", e);
+    return res.status(500).json({ error: "Failed to list tasks" });
+  }
+});
+
+router.get("/drive", requireAuthClient, async (req, res) => {
+  try {
+    const driveApi = google.drive({
+      version: "v3",
+      auth: req.googleAuthClient,
+    });
+    const max = Number(req.query.max || 10);
+    const response = await driveApi.files.list({
+      pageSize: max,
+      fields:
+        "files(id, name, mimeType, modifiedTime, webViewLink, thumbnailLink)",
+      orderBy: "modifiedTime desc",
+    });
+    return res.json({ files: response.data.files || [] });
+  } catch (e) {
+    console.error("list drive error", e);
+    return res.status(500).json({ error: "Failed to list drive files" });
+  }
+});
+
+router.post("/calendar/create", requireAuthClient, async (req, res) => {
+  try {
+    const { summary, startTime, endTime, description, location } = req.body;
+    const calendar = google.calendar({
+      version: "v3",
+      auth: req.googleAuthClient,
+    });
+    const response = await calendar.events.insert({
+      calendarId: "primary",
+      requestBody: {
+        summary,
+        description,
+        location,
+        start: { dateTime: startTime },
+        end: { dateTime: endTime },
+      },
+    });
+    req.app.get("auditLogger")?.("calendar.create", {
+      summary,
+      session: req.cookies?.gwsess,
+    });
+    return res.json({ event: response.data });
+  } catch (e) {
+    console.error("create calendar event error", e);
+    return res.status(500).json({ error: "Could not create event" });
+  }
+});
+
+router.post("/drive/create", requireAuthClient, async (req, res) => {
+  try {
+    const { name, content, mimeType } = req.body;
+    const drive = google.drive({ version: "v3", auth: req.googleAuthClient });
+    const response = await drive.files.create({
+      requestBody: { name, mimeType },
+      media: { mimeType, body: content },
+    });
+    req.app.get("auditLogger")?.("drive.create", {
+      name,
+      session: req.cookies?.gwsess,
+    });
+    return res.json({ file: response.data });
+  } catch (e) {
+    console.error("drive create error", e);
+    return res.status(500).json({ error: "Could not create file" });
+  }
+});
+
+router.post("/tasks/create", requireAuthClient, async (req, res) => {
+  try {
+    const { title, notes, due } = req.body;
+    const tasksApi = google.tasks({
+      version: "v1",
+      auth: req.googleAuthClient,
+    });
+    const response = await tasksApi.tasks.insert({
+      tasklist: "@default",
+      requestBody: { title, notes, due },
+    });
+    req.app.get("auditLogger")?.("tasks.create", {
+      title,
+      session: req.cookies?.gwsess,
+    });
+    return res.json({ task: response.data });
+  } catch (e) {
+    console.error("tasks create error", e);
+    return res.status(500).json({ error: "Could not create task" });
+  }
+});
+
+router.post("/gmail/send", requireAuthClient, async (req, res) => {
+  try {
+    const { raw } = req.body; // raw RFC 2822 formatted message
+    const gmail = google.gmail({ version: "v1", auth: req.googleAuthClient });
+    const response = await gmail.users.messages.send({
+      userId: "me",
+      requestBody: { raw },
+    });
+    req.app.get("auditLogger")?.("gmail.send", {
+      session: req.cookies?.gwsess,
+    });
+    return res.json({ result: response.data });
+  } catch (e) {
+    console.error("gmail send error", e);
+    return res.status(500).json({ error: "Could not send message" });
+  }
 });
 
 export default router;

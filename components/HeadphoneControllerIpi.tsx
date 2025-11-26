@@ -1,4 +1,4 @@
-import React from "react";
+import type { FC, ReactNode } from "react";
 import ContentCard from "./ContentCard";
 import ChecklistItem from "./ChecklistItem";
 import { QuickJump } from "./QuickJump";
@@ -6,11 +6,11 @@ import { QuickJump } from "./QuickJump";
 import { ALL_CHECKLIST_DATA } from "../checklist-data.tsx";
 import { SecureMarkdown } from "../utils/secureMarkdownRenderer.js";
 
-const Citation: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+const Citation: FC<{ children: ReactNode }> = ({ children }) => (
   <em className="text-text-light text-opacity-70 text-sm"> {children}</em>
 );
 
-const HeadphoneControllerIpi: React.FC = () => {
+const HeadphoneControllerIpi: FC = () => {
   const protocolData = ALL_CHECKLIST_DATA.filter(
     (s) => s.sourceDocument === "Headphone Controller IPI",
   );

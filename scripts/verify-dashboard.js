@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /*
 ES module Playwright script to verify main dashboard elements for Workshop Module load correctly.
-Looks for elements with `data-testid="cockpit-active-stack" data-workshop-testid="workshop-active-stack" ` and `data-testid="cockpit-open-builder" data-workshop-testid="workshop-open-builder" `.
+Looks for elements with `data-testid="cockpit-active-stack" data-workshop-testid="workshop-active-stack" data-workshop-testid="workshop-active-stack" ` and `data-testid="cockpit-open-builder" data-workshop-testid="workshop-open-builder" data-workshop-testid="workshop-open-builder" `.
 
 Usage: node ./scripts/verify-dashboard.js
 Environment variables: PLAYWRIGHT_BASE_URL (default: http://localhost:4173)
@@ -205,8 +205,10 @@ try {
     console.warn("Could not evaluate debug vars on page");
   }
 
-  const cockpitSelector = '[data-testid="cockpit-active-stack" data-workshop-testid="workshop-active-stack" ]';
-  const builderSelector = '[data-testid="cockpit-open-builder" data-workshop-testid="workshop-open-builder" ]';
+  const cockpitSelector =
+    '[data-testid="cockpit-active-stack" data-workshop-testid="workshop-active-stack" data-workshop-testid="workshop-active-stack" ]';
+  const builderSelector =
+    '[data-testid="cockpit-open-builder" data-workshop-testid="workshop-open-builder" data-workshop-testid="workshop-open-builder" ]';
 
   console.log("Waiting for cockpit active stack selector...");
   // Wait for appState to show initialSetupComplete true AND view to be `view-cockpit-module` before checking for DOM
@@ -228,11 +230,15 @@ try {
   }
   // If header nav has a workshop or cockpit link, click it to ensure the view is opened
   try {
-    const navWorkshopExists = await page.$('[data-workshop-testid="nav-workshop"]');
+    const navWorkshopExists = await page.$(
+      '[data-workshop-testid="nav-workshop"]',
+    );
     const navCockpitExists = await page.$('[data-testid="nav-cockpit"]');
     if (navWorkshopExists) {
       try {
-        await page.click('[data-workshop-testid="nav-workshop"]', { timeout: 5000 });
+        await page.click('[data-workshop-testid="nav-workshop"]', {
+          timeout: 5000,
+        });
         await page.waitForTimeout(500);
         console.log("Clicked nav-workshop");
       } catch (e) {
@@ -343,7 +349,9 @@ try {
   try {
     await page.waitForFunction(
       () => !!window.appState && window.appState.initialSetupComplete === true,
-      { timeout: 25000 },
+      {
+        timeout: 25000,
+      },
     );
   } catch (err) {
     console.warn(

@@ -1,4 +1,3 @@
-import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import WonkyToolkit from "@components/WonkyToolkit";
 import { AppStateProvider } from "@contexts/AppStateContext";

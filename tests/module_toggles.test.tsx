@@ -1,7 +1,7 @@
-import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "../src/modules/index";
 import { AppStateProvider, useAppState } from "../src/contexts/AppStateContext";
+import { UserProvider } from "@contexts/UserContext";
 import SettingsView from "../src/views/SettingsView";
 import { getModuleRoutes } from "../src/module_registry";
 
@@ -9,9 +9,11 @@ describe("Module toggles UI", () => {
   it("disables a module when toggled off", async () => {
     // Render the settings view inside the app state provider
     render(
-      <AppStateProvider>
-        <SettingsView />
-      </AppStateProvider>,
+      <UserProvider>
+        <AppStateProvider>
+          <SettingsView />
+        </AppStateProvider>
+      </UserProvider>,
     );
 
     // Wait for the toggle for the template-sample module

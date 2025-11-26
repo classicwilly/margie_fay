@@ -270,7 +270,7 @@ const KnowledgeCaptureVaultModule = () => {
           </Button>
         </div>
 
-        <div className="flex-grow space-y-2 overflow-y-auto max-h-96 pr-2">
+        <div className="grow space-y-2 overflow-y-auto max-h-96 pr-2">
           {filteredEntries.length > 0 ? (
             filteredEntries.map((entry) => (
               <details

@@ -1,13 +1,13 @@
-import React from "react";
+import type { FC } from "react";
 import { useAppState } from "@contexts/AppStateContext";
-import { ALL_WILLIAM_MODULES_CONFIG } from "../constants";
+import { ALL_WILLIAM_MODULES_CONFIG } from "../src/constants";
 import ModuleIcon from "./ModuleIcon";
 
-const DashboardLauncher = () => {
+const DashboardLauncher: FC = () => {
   const { appState, dispatch } = useAppState();
   const { williamDashboardModules } = appState;
 
-  const handleLaunch = (moduleId) => {
+  const handleLaunch = (moduleId: string) => {
     dispatch({ type: "SET_VIEW", payload: `view-${moduleId}` });
   };
 

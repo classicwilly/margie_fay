@@ -1,15 +1,19 @@
-import React, { useState } from "react";
+import { useState, type FC } from "react";
 import { useAppState } from "@contexts/AppStateContext";
 import { getAllModules } from "../module_registry";
+import DiscordAdminSettings from "../components/DiscordAdminSettings";
+import { useUser } from "../contexts/UserContext";
 
 const DEFAULT_PERSONAS = ["Grandma", "Grandpa", "Bob", "Marge"];
 
-const SettingsView: React.FC = () => {
+const SettingsView: FC = () => {
   const { appState, dispatch, getPersonaDisplayName } = useAppState();
   const initialOverrides = appState?.personaOverrides || {};
   const [overrides, setOverrides] = useState<Record<string, string>>({
     ...initialOverrides,
   });
+  const { user } = useUser();
+  const isAdmin = !!user?.roles?.includes("admin");
 
   const handleChange = (key: string, value: string) => {
     setOverrides((prev) => ({ ...prev, [key]: value }));
@@ -102,6 +106,7 @@ const SettingsView: React.FC = () => {
           Save
         </button>
       </div>
+      <DiscordAdminSettings isAdmin={isAdmin} />
     </div>
   );
 };

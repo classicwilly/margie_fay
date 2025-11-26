@@ -1,7 +1,7 @@
-import React from "react";
+import type { FC } from "react";
 import type { ModuleManifest } from "../../types/module";
 
-const TemplateSampleView: React.FC = () => {
+const TemplateSampleView: FC = () => {
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold">Template Sample Module</h2>

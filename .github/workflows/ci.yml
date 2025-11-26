@@ -7,6 +7,21 @@ on:
     branches: [main]
 
 jobs:
+  secret-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install
+        run: npm ci --legacy-peer-deps
+      - name: Run gitleaks action
+        uses: zricethezav/gitleaks-action@v2
+      - name: Run security scan (repo)
+        run: npm run security:scan
+
   build:
     runs-on: ubuntu-latest
 
@@ -25,6 +40,10 @@ jobs:
           node-version: "20"
       - name: Install
         run: npm ci --legacy-peer-deps
+      - name: Security (scan) - PII & secrets
+        run: npm run security:scan
+      - name: TypeScript typecheck
+        run: npx tsc --noEmit
       - name: Generate modules index
         run: npm run generate:modules
       - name: Validate module manifests
@@ -33,6 +52,8 @@ jobs:
         run: npm run validate:heuristics
       - name: Lint
         run: npm run lint
+      - name: npm audit (fail on high)
+        run: npm audit --audit-level=high
       - name: Test (with coverage)
         run: npm run test:coverage
       - name: Upload coverage
@@ -56,8 +77,18 @@ jobs:
         run: npm ci --legacy-peer-deps
       - name: Start app
         run: npm run preview &
-      - name: Run Axe Playwright a11y check
-        run: npx playwright test tests/e2e/a11y.spec.ts --reporter junit
+      - name: Wait for preview server
+        run: npx wait-on http://localhost:4173
+      - name: Run Axe Playwright a11y & neurodiversity checks
+        run: npx playwright test tests/e2e/a11y.spec.ts tests/e2e/neurodiversity.spec.ts --reporter junit
+      - name: Parse Axe violations and fail on severity
+        run: |
+          if [ -f playwright-axe-results/axe-results.json ]; then
+            node ./scripts/parse-axe-violations.cjs;
+          else
+            echo "[a11y] No axe results found at playwright-axe-results/axe-results.json";
+            exit 1;
+          fi
       - name: Upload a11y results
         uses: actions/upload-artifact@v4
         with:

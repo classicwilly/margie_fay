@@ -1,12 +1,9 @@
-import React from "react";
+import type { FC } from "react";
 import { useGoogleAuth } from "../hooks/useGoogleAuth";
 import { useAppState } from "../src/contexts/AppStateContext";
 
-const OnboardingGoogleConnect: React.FC<{ onNext: () => void }> = ({
-  onNext,
-}) => {
+const OnboardingGoogleConnect: FC<{ onNext: () => void }> = ({ onNext }) => {
   const { signIn, signOut, isAuthenticated, user } = useGoogleAuth();
-  const { appState } = useAppState();
 
   return (
     <div>

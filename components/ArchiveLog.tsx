@@ -1,8 +1,8 @@
-import React, { useState, useMemo } from "react";
+import { useState, useMemo, type FC } from "react";
 import { useAppState } from "@contexts/AppStateContext";
 import ContentCard from "./ContentCard.js";
 
-const ArchiveLog = () => {
+const ArchiveLog: FC = () => {
   const { appState, dispatch } = useAppState();
   const { projects, objectives, knowledgeVaultEntries } = appState;
   const [activeTab, setActiveTab] = useState("projects");

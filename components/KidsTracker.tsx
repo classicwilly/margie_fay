@@ -1,16 +1,16 @@
-import React from "react";
+import type { FC } from "react";
 import { useAppState } from "@contexts/AppStateContext";
 import { KidLocation } from "../types";
 import ContentCard from "./ContentCard";
 import TextInputItem from "./TextInputItem";
 
-const StatusButton: React.FC<{
+const StatusButton: FC<{
   label: string;
   isActive: boolean;
   onClick: () => void;
 }> = ({ label, isActive, onClick }) => {
   const baseClass =
-    "px-2 py-1 rounded-md text-xs font-semibold transition-colors w-full break-words";
+    "px-2 py-1 rounded-md text-xs font-semibold transition-colors w-full break-word";
   const activeClass = "bg-accent-blue text-background-dark";
   const inactiveClass = "bg-gray-700 hover:bg-gray-600";
   return (
@@ -23,7 +23,7 @@ const StatusButton: React.FC<{
   );
 };
 
-const KidStatus: React.FC<{
+const KidStatus: FC<{
   name: "Willow" | "Sebastian";
   idPrefix: string;
   emoji: string;
@@ -72,7 +72,7 @@ const KidStatus: React.FC<{
   );
 };
 
-const KidsTracker: React.FC = () => {
+const KidsTracker: FC = () => {
   return (
     <ContentCard title="👨‍👧‍👦 Kids Status">
       <div className="space-y-4">

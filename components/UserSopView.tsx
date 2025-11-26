@@ -1,4 +1,4 @@
-import React from "react";
+// Removed default `React` import (JSX runtime handles it)
 import { useAppState } from "@contexts/AppStateContext";
 import ContentCard from "./ContentCard.js";
 import { Button } from "./Button";
@@ -83,7 +83,7 @@ const UserSopView = () => {
 
       <ContentCard title="Protocol Steps">
         <ul className="list-none space-y-2 text-lg">
-          {(sop.steps || []).map((step, index) => (
+          {(sop.steps || []).map((step: any, index: number) => (
             <ChecklistItem
               key={`user-sop-${sop.id}-step-${index}`}
               id={`user-sop-${sop.id}-step-${index}`}
@@ -97,7 +97,7 @@ const UserSopView = () => {
       {sop.cues && sop.cues.length > 0 && (
         <ContentCard title="Actionable Cues" className="mt-6">
           <div className="flex flex-wrap">
-            {sop.cues.map((cue, index) => (
+            {sop.cues.map((cue: any, index: number) => (
               <ActionableCue
                 key={`user-sop-${sop.id}-cue-${index}`}
                 text={cue}

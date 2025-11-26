@@ -1,11 +1,11 @@
-import React from "react";
+import type { FC } from "react";
 import ChecklistItem from "./ChecklistItem";
 import GemCollector from "./GemCollector";
 import ContentCard from "./ContentCard";
 import { useAppState } from "@contexts/AppStateContext";
 import { ALL_CHECKLIST_DATA } from "../checklist-data.tsx";
 
-const BashsCorner: React.FC = () => {
+const BashsCorner: FC = () => {
   const { appState } = useAppState();
   const { collectedGems } = appState;
   const protocolData = ALL_CHECKLIST_DATA.filter(

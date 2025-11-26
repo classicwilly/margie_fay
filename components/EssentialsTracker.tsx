@@ -1,9 +1,9 @@
-import React from "react";
+import type { FC } from "react";
 import ContentCard from "./ContentCard";
 import ChecklistItem from "./ChecklistItem";
 import { ALL_CHECKLIST_DATA } from "../checklist-data.tsx";
 
-const EssentialsTracker: React.FC = () => {
+const EssentialsTracker: FC = () => {
   const essentialsData = ALL_CHECKLIST_DATA.find(
     (section) => section.id === "essentials-tracker",
   );

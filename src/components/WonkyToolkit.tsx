@@ -1,9 +1,9 @@
-import React from "react";
+import type { FC } from "react";
 import { useAppState } from "@contexts/AppStateContext";
 import { Button } from "./Button";
 import ContentCard from "./ContentCard";
 
-const WonkyToolkit: React.FC = () => {
+const WonkyToolkit: FC = () => {
   const { appState, dispatch } = useAppState();
 
   const startPomodoro = () => {
@@ -85,7 +85,14 @@ const WonkyToolkit: React.FC = () => {
             <Button onClick={() => dispatch({ type: "RESET_BRAIN_DUMP" })}>
               Clear Brain Dump
             </Button>
-            <Button onClick={() => dispatch({ type: "START_FOCUS_MODE" })}>
+            <Button
+              onClick={() =>
+                dispatch({
+                  type: "START_FOCUS_MODE",
+                  payload: { firstTaskId: null },
+                })
+              }
+            >
               Start Focus Mode
             </Button>
           </div>

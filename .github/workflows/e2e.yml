@@ -22,6 +22,8 @@ jobs:
 
       - name: Start app
         run: npm run preview &
+      - name: Wait for preview server
+        run: npx wait-on http://localhost:4173
 
       - name: Run E2E
         uses: microsoft/playwright-github-action@v1
@@ -49,6 +51,14 @@ jobs:
         run: npm run preview &
       - name: Run Axe Accessibility scan
         run: npx playwright test tests/e2e/a11y.spec.ts --reporter=junit
+      - name: Parse Axe violations and fail on severity
+        run: |
+          if [ -f playwright-axe-results/axe-results.json ]; then
+            node ./scripts/parse-axe-violations.cjs;
+          else
+            echo "[a11y] No axe results found at playwright-axe-results/axe-results.json";
+            exit 1;
+          fi
       - name: Upload Axe results
         uses: actions/upload-artifact@v4
         with:

@@ -1,4 +1,3 @@
-import React from "react";
 import type { ModuleManifest } from "../../types/module";
 import HousekeepingModule from "../../../components/modules/housekeeping/HousekeepingModule";
 
@@ -22,4 +21,3 @@ const manifest: ModuleManifest = {
 };
 
 export default manifest;
-

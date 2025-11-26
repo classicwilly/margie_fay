@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import useSafeAI from "../../../hooks/useSafeAI";
+import { useState, useEffect } from "react";
+import { useSafeAI } from "../../../hooks/useSafeAI";
 import ContentCard from "../../ContentCard"; // Adjusted path
 import { SecureMarkdown } from "../../../utils/secureMarkdownRenderer";
 import { useAIPromptSafety } from "../../../hooks/useAIPromptSafety";
-import AIConsentModal from "@components/AIConsentModal";
-import PIIWarningModal from "@components/PIIWarningModal";
+import AIConsentModal from "../../AIConsentModal";
+import PIIWarningModal from "../../PIIWarningModal";
 
 const AICommunicationCoachModule = () => {
   const [mode, setMode] = useState("translate");
@@ -19,6 +19,8 @@ const AICommunicationCoachModule = () => {
   const [analysisLoading, setAnalysisLoading] = useState(false);
   const [analysisError, setAnalysisError] = useState("");
   const [draftedReply, setDraftedReply] = useState("");
+
+  const generate = useSafeAI();
 
   const {
     checkAndExecute,
@@ -65,7 +67,6 @@ const AICommunicationCoachModule = () => {
 
     try {
       await checkAndExecute(originalText, async (safePrompt) => {
-        const { generate } = useSafeAI();
         const result = await generate(safePrompt, {
           model: "gemini-2.5-flash",
           config: { systemInstruction },
@@ -105,7 +106,6 @@ const AICommunicationCoachModule = () => {
 
     try {
       await checkAndExecute(incomingText, async (safePrompt) => {
-        const { generate } = useSafeAI();
         const result = await generate(safePrompt, {
           model: "gemini-2.5-flash",
           config: { systemInstruction },

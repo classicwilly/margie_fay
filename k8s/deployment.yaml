@@ -1,16 +1,60 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: wonky-sprout-os
+  name: wonky-sprout-os-client
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
-      app: wonky-sprout-os
+      app: wonky-sprout-os-client
   template:
     metadata:
       labels:
         app: wonky-sprout-os
+    spec:
+      containers:
+        - name: client
+          image: ghcr.io/yourorg/wonky-sprout-os:client-latest
+          ports:
+            - containerPort: 5173
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+        - name: server
+          image: ghcr.io/yourorg/wonky-sprout-os:server-latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: GEMINI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: wonky-secrets
+                  key: GEMINI_API_KEY
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+            limits:
+              cpu: "1000m"
+              memory: "1024Mi"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wonky-sprout-os-web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: wonky-sprout-os-web
+  template:
+    metadata:
+      labels:
+        app: wonky-sprout-os-web
     spec:
       containers:
         - name: web
@@ -43,14 +87,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: wonky-sprout-os
+  name: wonky-sprout-os-service
 spec:
-  type: ClusterIP
   selector:
-    app: wonky-sprout-os
+    app: wonky-sprout-os-web
   ports:
-    - port: 80
+    - protocol: TCP
+      port: 80
       targetPort: 8080
+  type: LoadBalancer
 ---
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler

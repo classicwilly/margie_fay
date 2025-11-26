@@ -1,7 +1,7 @@
-import React from "react";
+import type { FC } from "react";
 import GrandmaHelper from "./components/GrandmaHelper";
 
-const WonkyAIModule: React.FC = () => {
+const WonkyAIModule: FC = () => {
   return (
     <div className="relative bg-gradient-to-br from-background-dark to-primary-dark-300 p-6 rounded-lg shadow-neon-md border border-primary-dark-200 overflow-hidden">
       <GrandmaHelper />

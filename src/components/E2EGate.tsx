@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, type FC } from "react";
 
 // E2E gating overlay to block user interactions until the test explicitly
 // signals it is ready. This prevents header or route changes from other
 // app flows from racing with seeded test state.
-const E2EGate: React.FC = () => {
+const E2EGate: FC = () => {
   const [isE2E, setIsE2E] = useState(false);
   const [isReady, setIsReady] = useState(false);
 

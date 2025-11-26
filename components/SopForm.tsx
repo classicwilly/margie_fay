@@ -155,7 +155,7 @@ const SopForm: React.FC = () => {
                   type="text"
                   value={step}
                   onChange={(e) => handleStepChange(index, e.target.value)}
-                  className="flex-grow p-3 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue"
+                  className="grow p-3 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue"
                   placeholder="Action to be executed (e.g., Water: Consume 500ml)."
                   aria-label={`Protocol Step ${index + 1} content`}
                   required={index === 0}
@@ -220,7 +220,7 @@ const SopForm: React.FC = () => {
                   type="text"
                   value={cue}
                   onChange={(e) => handleCueChange(index, e.target.value)}
-                  className="flex-grow p-3 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue"
+                  className="grow p-3 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue"
                   placeholder={`Cue ${index + 1}: Quick reminder.`}
                   aria-label={`Actionable Cue ${index + 1} content`}
                 />

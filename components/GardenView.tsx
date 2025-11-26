@@ -1,4 +1,4 @@
-import React from "react";
+// React import not required with automatic JSX transform
 import { useAppState } from "@contexts/AppStateContext";
 import { useSystemHealth } from "../hooks/useSystemHealth.js";
 import { useNeuroPrefs } from "../src/contexts/NeurodivergentPreferencesContext";
@@ -68,7 +68,7 @@ const LivingSprout = () => {
               key={i}
               className={`flex items-start ${d.type === "negative" ? "text-neon-yellow" : "text-neon-green"}`}
             >
-              <span className="mr-2 flex-shrink-0">
+              <span className="mr-2 shrink-0">
                 {d.type === "negative" ? "[WARN]" : "[ OK ]"}
               </span>
               <span>{d.message}</span>

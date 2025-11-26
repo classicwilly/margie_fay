@@ -1,4 +1,3 @@
-import React from "react";
 import { useAppState } from "@contexts/AppStateContext";
 import { Button } from "@components/Button";
 
@@ -51,7 +50,7 @@ const SopCard = ({
 
   const cardContent = (
     <>
-      <div className="flex-grow">
+      <div className="grow">
         <h2 className="text-2xl font-semibold text-accent-green group-hover:text-accent-teal mb-3 break-words">
           {sop.title}
         </h2>
@@ -72,7 +71,7 @@ const SopCard = ({
             </Button>
           )}
           {isTemplate && (
-            <p className="text-xs text-gray-500 italic flex-grow text-left self-center">
+            <p className="text-xs text-gray-500 italic grow text-left self-center">
               Templates cannot be edited.
             </p>
           )}

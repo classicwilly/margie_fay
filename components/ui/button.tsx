@@ -1,7 +1,7 @@
-import React from "react";
+import type { ButtonHTMLAttributes, FC } from "react";
 
-type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: "primary" | "secondary" | "danger";
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+  variant?: "primary" | "secondary" | "danger" | "outline" | "ghost";
   size?: "sm" | "md";
 };
 
@@ -10,6 +10,8 @@ const variantClass = {
   primary: "btn-primary",
   secondary: "btn-secondary",
   danger: "btn-danger",
+  outline: "btn-outline",
+  ghost: "btn-ghost",
 };
 
 const sizeClass = {
@@ -17,7 +19,7 @@ const sizeClass = {
   md: "",
 };
 
-export const Button = ({
+export const Button: FC<ButtonProps> = ({
   variant = "primary",
   size = "md",
   className = "",

@@ -1,4 +1,4 @@
-import React from "react";
+import type { FC } from "react";
 
 interface AIConsentModalProps {
   onConfirm: () => void;
@@ -10,7 +10,7 @@ interface AIConsentModalProps {
 import { Modal } from "./Modal";
 import { Button } from "./Button";
 
-const AIConsentModal: React.FC<AIConsentModalProps> = ({
+const AIConsentModal: FC<AIConsentModalProps> = ({
   onConfirm,
   onCancel,
   dontShowAgain,

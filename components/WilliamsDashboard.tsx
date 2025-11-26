@@ -1,26 +1,25 @@
-import React from "react";
+import type { FC } from "react";
 import { useAppState } from "@contexts/AppStateContext";
 import { useSystemHealth } from "../hooks/useSystemHealth";
-import { DailyBriefingModule } from "./modules/william/DailyBriefingModule.tsx";
+import DailyBriefingModule from "./modules/william/DailyBriefingModule.tsx";
 import DashboardLauncher from "./DashboardLauncher";
 import SystemNudgeModule from "./modules/william/SystemNudgeModule";
 import { Button } from "./Button";
 import { useProactiveAI } from "../hooks/useProactiveAI";
-import CockpitModule from "./modules/william/CockpitModule";
 import WorkshopModule from "./modules/william/WorkshopModule";
 import ProfileStackBuilder from "../src/components/ProfileStackBuilder";
 
-const WilliamsDashboard = () => {
+const WilliamsDashboard: FC = () => {
   const { appState, dispatch } = useAppState();
   const { statusMood, statusEnergy } = appState;
-  const { score, stateColor } = useSystemHealth();
+  const { score } = useSystemHealth();
   const nudges = useProactiveAI(appState, dispatch);
 
   const handleCustomizeDashboard = () => {
     dispatch({ type: "SET_VIEW", payload: "william-dashboard-builder" });
   };
 
-  const handleDismissNudge = (nudgeId) => {
+  const handleDismissNudge = (nudgeId: string) => {
     dispatch({ type: "DISMISS_NUDGE", payload: nudgeId });
   };
 
@@ -54,9 +53,8 @@ const WilliamsDashboard = () => {
         </div>
       )}
 
-      {(appState.view === "view-workshop-module" || appState.view === "view-cockpit-module") && (
-        <WorkshopModule />
-      )}
+      {(appState.view === "view-workshop-module" ||
+        appState.view === "view-cockpit-module") && <WorkshopModule />}
       {appState.view === "profile-stack-builder" && <ProfileStackBuilder />}
 
       {!(

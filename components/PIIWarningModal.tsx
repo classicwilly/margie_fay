@@ -1,9 +1,26 @@
-import React from "react";
+import type { FC, MouseEvent } from "react";
 
 import { Modal } from "./Modal";
 import { Button } from "./Button";
 
-const PIIWarningModal = ({ isOpen, onCancel, onConfirm, matches }) => {
+interface PIIWarningMatch {
+  type: string;
+  value: string;
+}
+
+interface PIIWarningModalProps {
+  isOpen: boolean;
+  onCancel: () => void;
+  onConfirm: () => void;
+  matches: PIIWarningMatch[];
+}
+
+const PIIWarningModal: FC<PIIWarningModalProps> = ({
+  isOpen,
+  onCancel,
+  onConfirm,
+  matches,
+}) => {
   return (
     <Modal
       isOpen={isOpen}
@@ -45,6 +62,7 @@ const PIIWarningModal = ({ isOpen, onCancel, onConfirm, matches }) => {
         <div className="flex justify-end space-x-4 mt-8">
           <Button
             data-testid="pii-edit-prompt"
+            data-workshop-testid="pii-edit-prompt"
             variant="secondary"
             onClick={onCancel}
           >

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import useDecisionParalysis from "../../hooks/useDecisionParalysis";
 import { motion } from "framer-motion";
 import { useOscilloscope } from "@contexts/OscilloscopeContext";
 import {
@@ -6,9 +7,12 @@ import {
   getGrandpaAdvice,
   getBobAdvice,
   getMargeAdvice,
+  getAdvice,
 } from "../services/geminiService";
 import { sanitizePrompt } from "../utils/sanitizePrompt";
-import { Briefcase, Gavel, Hammer, Heart } from "lucide-react"; // Example Lucide icons
+import AIConsentModal from "./AIConsentModal";
+import { generateContent } from "../services/geminiService";
+// Lucide icons removed - unused in this component
 
 // --- Persona Data (Matching Context Keys) ---
 const PERSONA_UI = {
@@ -18,6 +22,18 @@ const PERSONA_UI = {
     helper: getGrandmaAdvice,
     color: "text-accent-pink",
     role: "Structural Fix",
+    traits: [
+      "plants",
+      "cooking",
+      "emotional-support",
+      "housekeeping",
+      "makeup",
+      "art",
+      "music",
+      "first-aid",
+      "fashion",
+      "communication",
+    ],
   },
   grandpa: {
     key: "grandpa",
@@ -25,6 +41,18 @@ const PERSONA_UI = {
     helper: getGrandpaAdvice,
     color: "text-accent-teal",
     role: "Systems Integrity",
+    traits: [
+      "buckminster-fuller",
+      "physics",
+      "math",
+      "quantum-entanglement",
+      "cars",
+      "woodworking",
+      "coding",
+      "diy",
+      "3d-printing",
+      "communication",
+    ],
   },
   bob: {
     key: "bob",
@@ -40,6 +68,20 @@ const PERSONA_UI = {
     color: "text-purple-400",
     role: "Empathetic Planner",
   },
+  random: {
+    key: "random",
+    icon: "🎲",
+    helper: (q: string) => getAdvice("random", q),
+    color: "text-accent-yellow",
+    role: "Surprise Me",
+  },
+  calm_guide: {
+    key: "calm_guide",
+    icon: "🧭",
+    helper: (q: string) => getAdvice("calm_guide", q),
+    color: "text-accent-blue",
+    role: "Fallback Guide",
+  },
 };
 
 export const GrandmaHelper: React.FC = () => {
@@ -49,6 +91,8 @@ export const GrandmaHelper: React.FC = () => {
   const [response, setResponse] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [redactedWarning, setRedactedWarning] = useState(false);
+  const [consentModalOpen, setConsentModalOpen] = useState(false);
+  const [dontShowConsentAgain, setDontShowConsentAgain] = useState(false);
 
   const activePersona = PERSONA_UI[state.activePersona];
 
@@ -65,11 +109,21 @@ export const GrandmaHelper: React.FC = () => {
     const { cleanedQuery, redacted } = sanitizePrompt(userQuery);
     if (redacted) {
       setRedactedWarning(true);
+      // Consent flow: if the user hasn't opted to skip the consent modal, show it
+      if (!dontShowConsentAgain) {
+        setConsentModalOpen(true);
+        setIsLoading(false);
+        return;
+      }
     }
 
     try {
       // Use the helper function associated with the active persona
-      const advice = await activePersona.helper(cleanedQuery);
+      // Ensure we handle direct calls or generic `getAdvice`
+      const advice =
+        typeof activePersona.helper === "function"
+          ? await activePersona.helper(cleanedQuery)
+          : await getAdvice(state.activePersona as any, cleanedQuery);
       setResponse(advice);
     } catch (error) {
       console.error("LLM Call Failed:", error);
@@ -82,7 +136,10 @@ export const GrandmaHelper: React.FC = () => {
     }
   };
 
+  const { isIndecisive, recordEvent, reset } = useDecisionParalysis();
+
   const handlePersonaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    recordEvent();
     dispatch({ type: "SET_PERSONA", payload: e.target.value as "grandma" });
   };
 
@@ -90,6 +147,41 @@ export const GrandmaHelper: React.FC = () => {
     const quickQuery = "I feel stuck and overwhelmed, what is my first step?";
     setQuery(quickQuery);
     handleAsk(quickQuery);
+  };
+
+  const acceptCalmGuide = async () => {
+    reset();
+    setIsLoading(true);
+    setResponse("");
+    const safeQ = sanitizePrompt(query || "I can't decide").cleanedQuery;
+    const advice = await getAdvice("calm_guide", safeQ);
+    setResponse(advice);
+    setIsLoading(false);
+  };
+
+  const handleConfirmConsent = async () => {
+    setConsentModalOpen(false);
+    setIsLoading(true);
+    setResponse("");
+    const safeQ = sanitizePrompt(query || "I can't decide").cleanedQuery;
+    try {
+      const advice = await generateContent({
+        prompt: safeQ,
+        personaKey: state.activePersona as any,
+        allowPII: true,
+      } as any);
+      setResponse(advice);
+    } catch (err) {
+      console.error("consent ask failed", err);
+      setResponse("Sorry  — Grandma couldn't be reached.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleCancelConsent = () => {
+    setConsentModalOpen(false);
+    // We'll keep redacted warning on and not send the request
   };
 
   return (
@@ -117,6 +209,16 @@ export const GrandmaHelper: React.FC = () => {
           <p className="text-text-muted text-xs">
             {getPersonaRole(state.activePersona)} ({activePersona.key})
           </p>
+          {"traits" in activePersona &&
+            Array.isArray(activePersona.traits) &&
+            activePersona.traits.length > 0 && (
+              <p
+                className="text-text-muted text-xs mt-1"
+                data-testid="persona-traits"
+              >
+                Expert in: {activePersona.traits.join(", ").replace(/-/g, " ")}
+              </p>
+            )}
         </div>
 
         {/* Persona Selector */}
@@ -124,11 +226,11 @@ export const GrandmaHelper: React.FC = () => {
           value={state.activePersona}
           onChange={handlePersonaChange}
           className="input-base text-sm py-1"
-          aria-label="AI persona selector"
+          aria-label="AI persona"
           data-testid="persona-select"
           disabled={isLoading}
         >
-          {Object.entries(PERSONA_UI).map(([key, persona]) => (
+          {Object.entries(PERSONA_UI).map(([key]) => (
             <option key={key} value={key}>
               {getPersonaName(key)}
             </option>
@@ -138,30 +240,30 @@ export const GrandmaHelper: React.FC = () => {
 
       {/* INPUT AREA */}
       <div className="flex gap-2 relative">
-          <input
-            type="text"
-            placeholder={`What's overwhelming you, ${activePersona.key}?`}
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                handleAsk(query);
-              }
-            }}
-            className="input-base flex-1"
-            data-testid="grandma-input"
-            data-workshop-testid="grandma-input"
-            disabled={isLoading}
-          />
-          <button
-            onClick={() => handleAsk(query)}
-            className={`btn-primary ${isLoading ? "opacity-50" : ""}`}
-            data-testid="grandma-ask-button"
-            data-workshop-testid="grandma-ask-button"
-            disabled={isLoading}
-          >
-            {isLoading ? "TRANSMITTING..." : "ASK"}
-          </button>
+        <input
+          type="text"
+          placeholder={`What's overwhelming you, ${activePersona.key}?`}
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleAsk(query);
+            }
+          }}
+          className="input-base flex-1"
+          data-testid="grandma-input"
+          data-workshop-testid="grandma-input"
+          disabled={isLoading}
+        />
+        <button
+          onClick={() => handleAsk(query)}
+          className={`btn-primary ${isLoading ? "opacity-50" : ""}`}
+          data-testid="grandma-ask-button"
+          data-workshop-testid="grandma-ask-button"
+          disabled={isLoading}
+        >
+          {isLoading ? "TRANSMITTING..." : "ASK"}
+        </button>
       </div>
 
       {/* Quick Action Button (Lemon CTA) - Now uses the FAB utility class */}
@@ -182,6 +284,38 @@ export const GrandmaHelper: React.FC = () => {
       </motion.div>
 
       {/* RESPONSE AREA */}
+      {isIndecisive && (
+        <div
+          className="card-inner border-accent-yellow/40 p-3 rounded-md mt-2 flex items-center gap-3"
+          data-testid="calm-guide-banner"
+        >
+          <div className="text-xl">🧭</div>
+          <div className="flex-1">
+            <div className="text-xs font-semibold">
+              Calm Guide thinks you might be stuck.
+            </div>
+            <div className="text-sm">
+              Would you like a single simple suggestion to move forward?
+            </div>
+          </div>
+          <div className="flex gap-2">
+            <button
+              onClick={acceptCalmGuide}
+              className="btn-compact btn-primary"
+              data-testid="calm-guide-accept"
+            >
+              Yes, pick for me
+            </button>
+            <button
+              onClick={reset}
+              className="btn-compact btn-ghost"
+              data-testid="calm-guide-more"
+            >
+              More options
+            </button>
+          </div>
+        </div>
+      )}
       {response && (
         <motion.div
           className="card-inner mt-4 border-accent-teal/50"
@@ -204,6 +338,14 @@ export const GrandmaHelper: React.FC = () => {
         <div className="text-center py-2 text-accent-teal">
           Calculating Trajectory...
         </div>
+      )}
+      {consentModalOpen && (
+        <AIConsentModal
+          onConfirm={handleConfirmConsent}
+          onCancel={handleCancelConsent}
+          dontShowAgain={dontShowConsentAgain}
+          setDontShowAgain={setDontShowConsentAgain}
+        />
       )}
     </motion.div>
   );

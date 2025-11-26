@@ -11,10 +11,15 @@ const { chromium } = require("playwright");
   // Wait for H1 if present
   let h1 = null;
   try {
-    await page.waitForSelector('h1[data-workshop-testid="workshop-title"], h1[data-testid="cockpit-title"]', {
-      timeout: 10000,
-    });
-    h1 = await page.$('h1[data-workshop-testid="workshop-title"], h1[data-testid="cockpit-title"]');
+    await page.waitForSelector(
+      'h1[data-workshop-testid="workshop-title"], h1[data-testid="cockpit-title"]',
+      {
+        timeout: 10000,
+      },
+    );
+    h1 = await page.$(
+      'h1[data-workshop-testid="workshop-title"], h1[data-testid="cockpit-title"]',
+    );
   } catch (e) {
     // Not found
   }

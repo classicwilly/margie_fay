@@ -1,9 +1,10 @@
-import React from "react";
+import { StrictMode } from "react";
 import "./src/styles.css";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { AIProtectionProvider } from "./src/contexts/AIProtectionContext";
+import { SimplifiedModeProvider } from "./src/contexts/SimplifiedModeContext";
 import telemetryBackend from "./utils/telemetryBackend";
 
 if (typeof document !== "undefined") {
@@ -15,13 +16,15 @@ if (typeof document !== "undefined") {
   } else {
     const root = ReactDOM.createRoot(rootElement);
     root.render(
-      <React.StrictMode>
+      <StrictMode>
         <ErrorBoundary>
           <AIProtectionProvider>
-            <App />
+            <SimplifiedModeProvider>
+              <App />
+            </SimplifiedModeProvider>
           </AIProtectionProvider>
         </ErrorBoundary>
-      </React.StrictMode>,
+      </StrictMode>,
     );
   }
 }

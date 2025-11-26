@@ -1,6 +1,15 @@
-import React, { useState, useMemo } from "react";
+import { useState, useMemo, type FC, type ReactNode } from "react";
 
-const LibraryView = ({
+interface LibraryViewProps {
+  title?: string;
+  subtitle?: string;
+  items: any[];
+  renderItem: (item: any) => ReactNode;
+  searchKeys: string[];
+  headerActions?: ReactNode;
+}
+
+const LibraryView: FC<LibraryViewProps> = ({
   title,
   subtitle,
   items,

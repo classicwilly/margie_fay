@@ -1,11 +1,11 @@
-import React from "react";
+import type { FC } from "react";
 import ContentCard from "./ContentCard";
 import ChecklistItem from "./ChecklistItem";
 import { QuickJump } from "./QuickJump";
 // Fix: Added '.tsx' extension to the import path to ensure the file is treated as a module.
 import { ALL_CHECKLIST_DATA } from "../checklist-data.tsx";
 
-const AccessibilitySafetyProtocol: React.FC = () => {
+const AccessibilitySafetyProtocol: FC = () => {
   const protocolData = ALL_CHECKLIST_DATA.filter(
     (s) => s.sourceDocument === "Accessibility & Safety Protocol",
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import type { FC } from "react";
 import DOMPurify from "dompurify";
 import { marked } from "marked";
 
@@ -14,7 +14,7 @@ interface Props {
 }
 
 // Backwards-compatible SecureMarkdown: accepts either `source` or `content`.
-export const SecureMarkdown: React.FC<Props> = ({ source, content }) => {
+export const SecureMarkdown: FC<Props> = ({ source, content }) => {
   // Convert markdown to HTML, then sanitize strict allow-list
   const mdSource = source ?? content ?? "";
   const html = marked.parse(mdSource || "");

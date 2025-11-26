@@ -14,7 +14,7 @@ handoffTime.setHours(16, 0, 0, 0);
 export const defaultUserState = {
   view: "garden-view", // This will be overwritten by dashboardType
   dashboardType: "william",
-  checkedItems: {},
+  checkedItems: {} as Record<string, boolean>,
   textInputs: {},
   statusMood: "Overwhelmed",
   statusEnergy: "Low",
@@ -22,9 +22,9 @@ export const defaultUserState = {
   kidsSebastianLocation: "School/Other",
   collectedGems: { willow: [], sebastian: [] },
   collectedAchievements: {},
-  userSops: [],
-  userSopTemplates: [],
-  modifiedSops: {},
+  userSops: [] as any[],
+  userSopTemplates: [] as any[],
+  modifiedSops: {} as Record<string, any>,
   isModMode: false,
   calendarEvents: [
     {
@@ -54,9 +54,9 @@ export const defaultUserState = {
   newSopType: null,
   brainDumpText: "...and do all the other shit.",
   sensoryState: { sound: null, sight: null, touch: null },
-  familyLogEntries: [],
+  familyLogEntries: [] as any[],
   generatedSopDraft: null,
-  quickReferenceEntries: [],
+  quickReferenceEntries: [] as any[],
   // FIX: Explicitly type habits and log to prevent incorrect type inference on empty values.
   habitTracker: {
     habits: [] as {
@@ -67,9 +67,9 @@ export const defaultUserState = {
     }[],
     log: {} as Record<string, string[]>,
   },
-  expenses: [],
-  knowledgeVaultEntries: [],
-  recurringTasks: [],
+  expenses: [] as any[],
+  knowledgeVaultEntries: [] as any[],
+  recurringTasks: [] as any[],
   tasks: [
     {
       id: "task-xbox",
@@ -222,6 +222,6 @@ export const defaultUserState = {
   ],
   activeProfileStackId: "racecar-1",
   // Module-specific reducer states are stored under moduleStates keyed by module id
-  moduleStates: {},
+  moduleStates: {} as Record<string, any>,
   lastHousekeepingArchive: null,
 };

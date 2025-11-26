@@ -376,6 +376,24 @@ input[type="range"].slider-thumb-pink::-moz-range-thumb {
   height: 100%;
   overflow: visible;
 }
+/* E2E debug view styling to make the runtime anchor visible during tests */
+.e2e-debug {
+  position: fixed;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 999999;
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  padding: 0.375rem 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 12px;
+  pointer-events: none; /* avoid interfering with UI interactions */
+}
+@media (prefers-reduced-motion: reduce) {
+  .e2e-debug {
+    transition: none;
+  }
+}
 @keyframes confetti-fall {
   from {
     transform: translateY(-40vh);

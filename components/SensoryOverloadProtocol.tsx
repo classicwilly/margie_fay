@@ -1,4 +1,4 @@
-import React from "react";
+import type { FC } from "react";
 import ChecklistItem from "./ChecklistItem";
 import ContentCard from "./ContentCard";
 import { QuickJump } from "./QuickJump";
@@ -8,7 +8,7 @@ import {
   ChecklistSectionData,
 } from "../checklist-data.tsx";
 
-const SensoryOverloadProtocol: React.FC = () => {
+const SensoryOverloadProtocol: FC = () => {
   const protocolData = ALL_CHECKLIST_DATA.filter(
     (s) => s.sourceDocument === "Sensory Overload Protocol",
   );

@@ -1,5 +1,11 @@
 import { test, expect } from "./playwright-fixtures";
-import { ensureAppView, retryClick, waitForModalContent, retryCheck } from "./helpers/retryHelpers";
+import {
+  ensureAppView,
+  retryClick,
+  waitForModalContent,
+  retryCheck,
+} from "./helpers/retryHelpers";
+import byWorkshopOrCockpitTestId from "./helpers/locators";
 
 test("E-Stop — Test E-Stop Protocol opens modal and starts decompression timer @smoke", async ({
   page,
@@ -48,7 +54,7 @@ test("E-Stop — Test E-Stop Protocol opens modal and starts decompression timer
 
   // 2) Find the E-Stop button — prefer workshop test id first and fall back
   // to the legacy `test-airlock-btn` for backward compatibility.
-  let testEstopBtn = page.locator('[data-workshop-testid="test-estop-btn"]');
+  let testEstopBtn = page.locator(byWorkshopOrCockpitTestId("test-estop-btn"));
   if (!(await testEstopBtn.count())) {
     testEstopBtn = page.getByTestId("test-airlock-btn").first();
   }
@@ -77,7 +83,10 @@ test("E-Stop — Test E-Stop Protocol opens modal and starts decompression timer
             (window as any).__WONKY_TEST_FORCE_VIEW__("workshop");
           } else if ((window as any).__E2E_FORCE_VIEW__ !== undefined) {
             (window as any).__E2E_FORCE_VIEW__ = "workshop";
-            (window as any).appState = { ...(window as any).appState || {}, view: "workshop" };
+            (window as any).appState = {
+              ...((window as any).appState || {}),
+              view: "workshop",
+            };
           }
         } catch (e) {
           /* ignore */
@@ -144,7 +153,9 @@ test("E-Stop — Test E-Stop Protocol opens modal and starts decompression timer
     await page.waitForFunction(
       () => !!(window as any).__WONKY_CONTEXT_RESTORE_MODAL_MOUNTED__,
       null,
-      { timeout: 15000 },
+      {
+        timeout: 15000,
+      },
     );
   } catch (e) {
     console.warn("Modal mount signal not observed");
@@ -158,7 +169,9 @@ test("E-Stop — Test E-Stop Protocol opens modal and starts decompression timer
     console.warn("Failed reading ESTOP_MODAL_MOUNTED flag", e);
   }
   // Wait for the functional button to appear, giving it 30 seconds for the portal to attach.
-  const restoreButton = page.getByTestId("context-restore-restore-btn");
+  const restoreButton = page.locator(
+    byWorkshopOrCockpitTestId("context-restore-restore-btn"),
+  );
   await expect(restoreButton).toBeVisible({ timeout: 30000 });
   // Removed explicit style-based wait here — using expect(modal).toBeVisible() above for clarity and timeout handling
   // We assert the restore button is visible earlier and prefer that over role-based checks here
@@ -167,17 +180,22 @@ test("E-Stop — Test E-Stop Protocol opens modal and starts decompression timer
   // Prefer to target the checkbox directly, then fallback to locating by
   // label text. This is resilient in case the task text varies or uses
   // internationalization/formatting changes that make text match brittle.
-  let checkbox = page.getByTestId("physical-task-checkbox").first();
+  let checkbox = page
+    .locator(byWorkshopOrCockpitTestId("physical-task-checkbox"))
+    .first();
   if (!(await checkbox.count())) {
-    const taskContainer = page.getByText(/10 Heavy Chews|Heavy Chews|Heavy Work/i).first();
-    checkbox = taskContainer.locator('[data-testid="physical-task-checkbox"]');
+    const taskContainer = page
+      .getByText(/10 Heavy Chews|Heavy Chews|Heavy Work/i)
+      .first();
+    checkbox = taskContainer.locator(
+      byWorkshopOrCockpitTestId("physical-task-checkbox"),
+    );
   }
 
   // Ensure the modal and modal internals are rendered before trying to click
   await waitForModalContent(page, "context-restore-modal", 15000);
   await expect(checkbox).toBeAttached({ timeout: 10000 });
   await checkbox.scrollIntoViewIfNeeded();
-  await checkbox.waitFor({ state: "visible", timeout: 5000 });
 
   // Ultra-resilient click: ensure the parent is visible and attempt an aggressive click on the checkbox
   await retryCheck(checkbox, { tries: 5, interval: 500, force: true });
@@ -188,7 +206,7 @@ test("E-Stop — Test E-Stop Protocol opens modal and starts decompression timer
   // Diagnostic: log the timer value to make sure test mode accelerated it
   try {
     const timerStr = await page
-      .getByTestId("context-restore-timer")
+      .locator(byWorkshopOrCockpitTestId("context-restore-timer"))
       .innerText();
     console.log("ESTOP_DEBUG_TIMER_AFTER_CHECK", timerStr);
   } catch (e) {
@@ -203,7 +221,9 @@ test("E-Stop — Test E-Stop Protocol opens modal and starts decompression timer
   try {
     await page.waitForFunction(
       () => {
-        const el = document.querySelector('[data-testid="context-restore-timer"]');
+        const el = document.querySelector(
+          byWorkshopOrCockpitTestId("context-restore-timer"),
+        );
         if (!el?.textContent) return false;
         const num = parseInt(el.textContent.trim(), 10);
         return Number.isFinite(num) && num <= 0;
@@ -239,7 +259,7 @@ test("E-Stop — Test E-Stop Protocol opens modal and starts decompression timer
   }
   await expect(restoreButton).toBeEnabled({ timeout: 15000 });
   // Click the restore button and assert the modal closes (this is the real indicator of success)
-  await restoreButton.click();
+  await retryClick(restoreButton, { tries: 3 });
   try {
     await page
       .getByTestId("context-restore-modal")

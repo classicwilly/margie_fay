@@ -1,7 +1,17 @@
-import React from "react";
+import type { FC, MouseEvent } from "react";
 import { Button } from "./Button";
 
-const ImportConfirmationModal = ({ isOpen, onConfirm, onCancel }) => {
+interface ImportConfirmationModalProps {
+  isOpen?: boolean;
+  onConfirm?: (e?: MouseEvent) => void;
+  onCancel?: (e?: MouseEvent) => void;
+}
+
+const ImportConfirmationModal: FC<ImportConfirmationModalProps> = ({
+  isOpen,
+  onConfirm,
+  onCancel,
+}) => {
   if (!isOpen) {
     return null;
   }

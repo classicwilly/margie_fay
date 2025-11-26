@@ -1,6 +1,8 @@
 import express from "express";
 import { requireAuth, auditLoggerFactory } from "./securityMiddleware.js";
 import { google } from "googleapis";
+import { googleConnector } from "./connectors/index.js";
+import offlineConnector from "./connectors/offlineConnector.js";
 
 const router = express.Router();
 
@@ -16,6 +18,7 @@ router.get("/demo", requireAuth, async (req, res) => {
         ? await cache.get(`google_tokens:${sessionId}`)
         : null;
     let auth;
+    let connector = offlineConnector();
     if (
       userTokens &&
       process.env.GOOGLE_CLIENT_ID &&
@@ -38,13 +41,18 @@ router.get("/demo", requireAuth, async (req, res) => {
         "https://www.googleapis.com/auth/gmail.send",
       ]);
       await auth.authorize();
+      // set connector for server-side service account integration
+      connector = { auth, calendar: google.calendar({ version: "v3", auth }) };
     } else {
       return res.json({
         demo: true,
         msg: "No Google credentials available — returning a mock sample.",
       });
     }
-    const calendar = google.calendar({ version: "v3", auth });
+    const calendar =
+      connector && connector.calendar
+        ? connector.calendar
+        : google.calendar({ version: "v3", auth });
     // If this is an OAuth user token, attempt to list their upcoming events. Falls back to a mock sample.
     if (userTokens) {
       try {

@@ -1,4 +1,5 @@
-import React from "react";
+import { useState } from "react";
+import type { FC } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface DropdownMenuProps {
@@ -6,8 +7,8 @@ interface DropdownMenuProps {
   buttonLabel: string;
 }
 
-const DropdownMenu: React.FC<DropdownMenuProps> = ({ items, buttonLabel }) => {
-  const [open, setOpen] = React.useState(false);
+const DropdownMenu: FC<DropdownMenuProps> = ({ items, buttonLabel }) => {
+  const [open, setOpen] = useState(false);
   return (
     <div className="relative inline-block text-left">
       <button
@@ -34,7 +35,9 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ items, buttonLabel }) => {
                 data-testid={
                   item.testId ? item.testId : `dropdown-item-${item.label}`
                 }
-                {...(item.workshopId ? { "data-workshop-testid": item.workshopId } : {})}
+                {...(item.workshopId
+                  ? { "data-workshop-testid": item.workshopId }
+                  : {})}
                 tabIndex={0}
               >
                 {item.label}
@@ -47,7 +50,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ items, buttonLabel }) => {
   );
 };
 
-const Header: React.FC = () => {
+const Header: FC = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -86,11 +89,16 @@ const Header: React.FC = () => {
         >
           Wonky Sprout OS
         </h1>
-        <nav className="flex space-x-2" aria-label="Main navigation">
+        <nav
+          className="flex space-x-2"
+          aria-label="Main navigation"
+          role="menubar"
+        >
           <button
             onClick={() => navigate("/dashboard")}
             className="btn-primary"
             data-testid="nav-dashboard"
+            role="menuitem"
           >
             Dashboard
           </button>
@@ -99,6 +107,7 @@ const Header: React.FC = () => {
             className="btn-primary"
             data-testid="nav-workshop"
             data-workshop-testid="nav-workshop"
+            role="menuitem"
           >
             The Workshop
           </button>
@@ -106,6 +115,7 @@ const Header: React.FC = () => {
             onClick={() => navigate("/agenda")}
             className="btn-primary"
             data-testid="nav-agenda"
+            role="menuitem"
           >
             Today's Agenda
           </button>
@@ -113,6 +123,7 @@ const Header: React.FC = () => {
             onClick={() => navigate("/checklists")}
             className="btn-primary"
             data-testid="nav-checklists"
+            role="menuitem"
           >
             Checklists
           </button>
@@ -120,6 +131,7 @@ const Header: React.FC = () => {
             onClick={() => navigate("/sop-vault")}
             className="btn-primary"
             data-testid="nav-sop-vault"
+            role="menuitem"
           >
             SOP Vault
           </button>
@@ -127,6 +139,7 @@ const Header: React.FC = () => {
             onClick={() => navigate("/child-dashboard")}
             className="btn-primary"
             data-testid="nav-child-dashboard"
+            role="menuitem"
           >
             Child Dashboard
           </button>

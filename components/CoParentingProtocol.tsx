@@ -1,4 +1,4 @@
-import React from "react";
+import type { FC } from "react";
 import ContentCard from "./ContentCard";
 import ChecklistItem from "./ChecklistItem";
 import { QuickJump } from "./QuickJump";
@@ -10,7 +10,7 @@ import {
   ChecklistSectionData,
 } from "../checklist-data.tsx";
 
-const CoParentingProtocol: React.FC = () => {
+const CoParentingProtocol: FC = () => {
   const protocolData = ALL_CHECKLIST_DATA.filter(
     (s) => s.sourceDocument === "Co-Parenting Protocol",
   );

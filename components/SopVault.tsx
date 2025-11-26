@@ -1,14 +1,12 @@
-import React, { useState } from "react";
-import SopCard from "./SopCard";
-import { SOP_DATA } from "../constants";
-import { Sop, ViewType, SopSubCategory } from "../types";
+import { useState } from "react";
+import type { FC } from "react";
+// Intentional: Not referencing SopCard/SOP_DATA here currently. Kept imports removed until vault is fleshed out.
 import { useAppState } from "@contexts/AppStateContext";
 import { Button } from "./Button";
 import { NEURO_SOP_TEMPLATES } from "../src/sops/neuro/neuro_sop_templates";
-import { generateId } from "@utils/generateId";
-import { exportSops } from "../src/utils/importExport";
+// Removed unused utility imports to reduce noise
 
-const SopVault: React.FC = () => {
+const SopVault: FC = () => {
   // CONSOLIDATED: Only keep the clean, modern layout and protocol vault view
   const { dispatch } =
     typeof useAppState === "function" ? useAppState() : { dispatch: () => {} };

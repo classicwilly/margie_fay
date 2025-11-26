@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
 import { renderHook } from "@testing-library/react";
-import React from "react";
 import { act, waitFor } from "@testing-library/react";
+import React from "react";
 import useAIPromptSafety from "../hooks/useAIPromptSafety";
 import { FeatureFlagsProvider } from "@contexts/FeatureFlagsContext";
 import { AIProtectionProvider } from "@contexts/AIProtectionContext";

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import type { KeyboardEvent } from "react";
 import useSafeAI from "@hooks/useSafeAI";
 import { useAIPromptSafety } from "@hooks/useAIPromptSafety";
 import AIConsentModal from "@components/AIConsentModal";
@@ -82,10 +83,13 @@ Your primary function is to be a tool that provides structure, not a coach that 
         result?.text ||
           (result?.json ? JSON.stringify(result.json, null, 2) : ""),
       );
-    } catch (e) {
-      setError(
-        `Error: ${e.message || "Failed to communicate with the AI model."}`,
-      );
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        setError(`Error: ${e.message}`);
+      } else {
+        setError("Error: Failed to communicate with the AI model.");
+      }
+
       console.error(e);
     }
     setLoading(false);
@@ -96,7 +100,7 @@ Your primary function is to be a tool that provides structure, not a coach that 
     checkAndExecute(prompt, handleGenerate);
   };
 
-  const handleEnterPress = (e) => {
+  const handleEnterPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !loading) {
       handleSubmit();
     }
@@ -121,7 +125,7 @@ Your primary function is to be a tool that provides structure, not a coach that 
         />
       )}
       <div className="flex flex-col h-full">
-        <div className="flex-grow overflow-y-auto p-4 bg-gray-800 rounded-md min-h-[200px] max-h-[400px] border border-gray-700 mb-4">
+        <div className="grow overflow-y-auto p-4 bg-gray-800 rounded-md min-h-[200px] max-h-[400px] border border-gray-700 mb-4">
           {loading ? (
             <div className="flex items-start h-full">
               {simplifiedUi ? (
@@ -162,16 +166,18 @@ Your primary function is to be a tool that provides structure, not a coach that 
           <input
             type="text"
             data-testid="ask-ai-input"
+            data-workshop-testid="ask-ai-input"
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             onKeyDown={handleEnterPress}
             placeholder="Describe the chaos..."
-            className="flex-grow p-3 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue"
+            className="grow p-3 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue"
             disabled={loading}
           />
           <div className="flex items-center gap-2">
             <Button
               data-testid="ask-ai-btn"
+              data-workshop-testid="ask-ai-btn"
               onClick={handleSubmit}
               disabled={loading}
               className="disabled:bg-gray-600 disabled:cursor-not-allowed"

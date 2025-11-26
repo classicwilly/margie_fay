@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import type { FC } from "react";
 import useSafeAI from "../hooks/useSafeAI";
 import useAIPromptSafety from "../hooks/useAIPromptSafety";
 import ContentCard from "./ContentCard";
 
-const AICommunicationCoach: React.FC = () => {
+const AICommunicationCoach: FC = () => {
   const [originalText, setOriginalText] = useState("");
   const [translatedText, setTranslatedText] = useState("");
   const [loading, setLoading] = useState(false);

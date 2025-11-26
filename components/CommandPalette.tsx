@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import { useRef, useEffect, type FC } from "react";
 
 const ResultIcon = ({ type }) => {
   const icons = {
@@ -13,7 +13,7 @@ const ResultIcon = ({ type }) => {
   return <span className="text-xl mr-3">{icons[type] || "➡️"}</span>;
 };
 
-export const CommandPalette = ({
+export const CommandPalette: FC<any> = ({
   isOpen,
   searchTerm,
   setSearchTerm,
@@ -116,3 +116,5 @@ export const CommandPalette = ({
     </div>
   );
 };
+
+export default CommandPalette;

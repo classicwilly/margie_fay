@@ -19,8 +19,10 @@ function looksLikePII(input: string) {
   return found;
 }
 
-export function useAIPromptSafety() {
-  const ctx = useContext(AIProtectionContext);
+import type { AIProtectionContextType } from "@contexts/AIProtectionContext";
+
+export function useAIPromptSafety(): AIProtectionContextType {
+  const ctx = useContext(AIProtectionContext) as AIProtectionContextType | null;
   if (ctx) {
     return ctx;
   }

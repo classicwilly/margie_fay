@@ -1,4 +1,4 @@
-import React from "react";
+// Removed default `React` import (JSX runtime handles it)
 import {
   LayoutDashboard,
   BookOpen,

@@ -74,9 +74,53 @@ If you prefer to run them concurrently you can use a tool like `concurrently`:
 npx concurrently "npm run start:server" "npm run dev"
 ```
 
+### Optional: Run the Discord bot worker
+
+The Discord bot worker can be run as a separate process to avoid bundling optional dependencies like `discord.js` into the main server process. To run it locally:
+
+```bash
+npm run start:discord-bot
+```
+
+Set `DISCORD_SERVICE_BOT_TOKEN` and `REDIS_URL` in your environment before starting. For production, run this worker as a separate container or service.
+
+## Discord Integration Tests (Optional)
+
+You can run the Discord integration tests only when you have a test bot and test guild configured (recommended for manual runs and CI). These tests exercise webhook verification, queueing, and the bot worker voice playback paths.
+
+1. Install test dependencies and optional runtime libs:
+
+```bash
+npm ci
+npm install --no-save discord.js @discordjs/voice google-tts-api tweetnacl ioredis node-fetch@2 supertest
+```
+
+2. Set environment variables for your test bot/guild and Redis instance:
+
+```bash
+export DISCORD_INTEGRATION_TEST=true
+export DISCORD_SERVICE_BOT_TOKEN=...  # Your test bot token
+export DISCORD_TEST_GUILD_ID=...      # Guild id for the test server
+export DISCORD_TEST_VOICE_CHANNEL_ID=... # Voice channel id in the test guild
+export REDIS_URL=...                 # A Redis instance for job queueing
+```
+
+3. Run the integration tests (manual):
+
+```bash
+npm run test:discord-integration
+```
+
+Or use the provided GitHub Actions workflow (manual or auto-run, configured by repo secrets) in `.github/workflows/discord-integration-tests.yml` and `.github/workflows/discord-integration-tests-auto.yml`.
+
+Note: The integration tests install optional packages during the CI run and are gated on the presence of repository secrets. They are not required for normal local development and are intentionally optional to keep the dev environment light.
+
+```
+
 ### Security: Gemini API Key & server proxy
 
-Never check production API keys into source control. For local testing, set `VITE_GEMINI_API_KEY` in `.env.local`.
+Never check production API keys into source control.
+For local testing, copy `.env.example` to `.env.local` and set `VITE_GEMINI_API_KEY` (or set environment variables directly). Do not commit `.env.local`.
 For production, set `GEMINI_API_KEY` in your host environment for the Express server or configure the Firebase `functions/aiProxy` with service account permissions and environment variables.
 
 TIP: Press Ctrl/Cmd+G to focus the Ask AI input (Grandma/Grandpa persona).
@@ -101,6 +145,17 @@ Recommended production setup:
 - Use `ALLOWED_ORIGINS` to restrict CORS to the production app domain(s).
 - Use `SENTRY_DSN` to send server errors to Sentry for monitoring.
 - Do not set `VITE_GEMINI_API_KEY` in production; ensure `GEMINI_API_KEY` is only set on the server.
+- AI Personas: The app ships with five core personas (Grandma, Grandpa, Bob, Marge, Random) and a fallback persona (Calm Guide) that helps users who are indecisive. Personas are available client-side in the persona selector and the server merges persona system instructions into Gemini requests.
+   - `random` selects a persona at request time from the available options.
+   - `calm_guide` is used as the fallback recommended path to resolve decision paralysis.
+   - Each persona is accessible via the persona dropdown and can be used in any AI module.
+
+- Offline: The client queues AI requests when offline using a local persistent queue and will flush requests when the app regains network connectivity.
 - Protect the server with a strict rate limit; set `RATE_LIMIT_MAX` and `RATE_LIMIT_WINDOW_MS` to tune throttling.
 
+## Accessibility & Neurodiversity
+
+We care about inclusive design. See `docs/NEURODIVERSITY_GUIDELINES.md` for practical guidance and testing methods to make the app friendly for neurodiverse users. The CI pipeline now runs Axe accessibility checks and includes neurodiversity-focused E2E tests that emulate `prefers-reduced-motion`, keyboard-only navigation, and readability checks.
+
 See `DEPLOY.md` and `RUNBOOK.md` for steps, GitHub Actions examples, and operational runbook.
+```

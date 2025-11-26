@@ -1,7 +1,11 @@
-import React from "react";
+import type { FC, MouseEvent } from "react";
 import LiveChatModule from "./modules/william/LiveChatModule.js";
 
-const LiveChatModal = ({ onClose }) => {
+interface LiveChatModalProps {
+  onClose?: (e?: MouseEvent<HTMLDivElement>) => void;
+}
+
+const LiveChatModal: FC<LiveChatModalProps> = ({ onClose }) => {
   return (
     <div
       className="fixed inset-0 bg-black bg-opacity-70 z-40 flex items-center justify-center p-4"
@@ -22,7 +26,7 @@ const LiveChatModal = ({ onClose }) => {
             Live Chat Controller
           </h2>
           <button
-            onClick={onClose}
+            onClick={(e) => onClose?.(e)}
             className="text-gray-400 hover:text-white text-2xl"
             aria-label="Close modal"
           >

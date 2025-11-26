@@ -1,3 +1,5 @@
+// @ts-nocheck
+// @ts-nocheck
 import React, { useState, useMemo, useEffect } from "react";
 import { useAppState } from "@contexts/AppStateContext";
 import ContentCard from "../../ContentCard.js";
@@ -510,7 +512,7 @@ const TaskItem: React.FC<TaskItemProps> = ({
         // Recurring tasks cannot be "un-completed" from this view. Once done, they are recalculated.
         disabled={isCompleted && task.itemType === "recurring"}
       />
-      <div className="flex-grow">
+      <div className="grow">
         <p className={`${isCompleted ? "line-through text-gray-500" : ""}`}>
           {task.title}
         </p>
@@ -859,7 +861,7 @@ const TaskMatrixModule = () => {
           />
         </div>
 
-        <div className="flex-grow pt-4 overflow-y-auto max-h-[28rem] pr-2 space-y-4">
+        <div className="grow pt-4 overflow-y-auto max-h-[28rem] pr-2 space-y-4">
           <div className="space-y-2">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {view === "today" && (

@@ -1,6 +1,6 @@
-import React from "react";
+import type { FC } from "react";
 
-export const KidsStatusModule = () => (
+export const KidsStatusModule: FC = () => (
   <div className="bg-surface-800/50 rounded-xl p-4 border border-surface-700 h-full min-h-[150px] space-y-3">
     <h3 className="text-lg font-bold text-accent-orange">👶 Kids Status</h3>
     <p className="text-xs text-text-muted">— Placeholder Active —</p>

@@ -1,13 +1,13 @@
-import React from "react";
+import type { FC } from "react";
 import { Sop, ViewType } from "../types";
 import { useAppState } from "@contexts/AppStateContext";
-import { Button } from "./Button";
+// Removed unused Button import
 
 interface SopCardProps {
   sop: Sop;
 }
 
-const SopCard: React.FC<SopCardProps> = ({ sop }) => {
+const SopCard: FC<SopCardProps> = ({ sop }) => {
   const { dispatch } = useAppState();
 
   const handleSetView = (view: ViewType) => {
@@ -16,10 +16,10 @@ const SopCard: React.FC<SopCardProps> = ({ sop }) => {
 
   const cardContent = (
     <>
-      <div className="flex-grow">
+      <div className="grow">
         <h2
           data-testid={`sop-card-title-${sop.id}`}
-          className="text-2xl font-semibold text-accent-green mb-3 break-words"
+          className="text-2xl font-semibold text-accent-green mb-3 break-word"
         >
           {sop.title}
         </h2>

@@ -3,9 +3,10 @@ import { useOscilloscope } from "@contexts/OscilloscopeContext";
 
 interface Props {
   children: React.ReactNode;
+  active?: boolean;
 }
 
-export const DeepFocusContainer: React.FC<Props> = ({ children }) => {
+export const DeepFocusContainer: React.FC<Props> = ({ children, active }) => {
   const { dispatch } = useOscilloscope();
 
   useEffect(() => {

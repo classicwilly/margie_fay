@@ -1,10 +1,13 @@
-import React from "react";
+import type { FC } from "react";
 import { useNeuroPrefs } from "@contexts/NeurodivergentPreferencesContext";
 
-const NeurodivergentOnboarding: React.FC<{ onComplete?: () => void }> = ({
+const NeurodivergentOnboarding: FC<{ onComplete?: () => void }> = ({
   onComplete,
 }) => {
   const { prefs, setPrefs } = useNeuroPrefs();
+  if (typeof window !== "undefined" && console && console.info) {
+    console.info("NEURO: mounting NeurodivergentOnboarding with prefs", prefs);
+  }
 
   const applyPreset = (preset: "autism" | "adhd" | "default") => {
     if (preset === "autism") {

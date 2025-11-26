@@ -8,7 +8,11 @@ const fs = require("fs");
 const path = require("path");
 const { execSync } = require("child_process");
 
-function findFiles(root, patterns, ignoreDirs = ['node_modules', '.git', 'dist', 'coverage']) {
+function findFiles(
+  root,
+  patterns,
+  ignoreDirs = ["node_modules", ".git", "dist", "coverage"],
+) {
   const results = [];
   const entries = fs.readdirSync(root, { withFileTypes: true });
   for (const e of entries) {

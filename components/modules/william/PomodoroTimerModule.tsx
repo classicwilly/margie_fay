@@ -1,20 +1,20 @@
-import React, { useEffect, useRef, useState, useMemo } from "react";
+import { useEffect, useRef, useState, useMemo, type FC } from "react";
 import ContentCard from "../../ContentCard.js";
 import { useAppState } from "@contexts/AppStateContext";
 
-const PomodoroTimerModule = () => {
+const PomodoroTimerModule: FC = () => {
   const { appState, dispatch } = useAppState();
   const { mode, timeLeft, isActive, taskId, workSessionsCompleted } =
     appState.pomodoroState;
   const { tasks, recurringTasks } = appState;
-  const intervalRef = useRef(null);
+  const intervalRef = useRef<number | null>(null);
   const [sessionEnded, setSessionEnded] = useState(false);
 
   const activeTask = useMemo(() => {
     if (!taskId) {
       return null;
     }
-    if (taskId.startsWith("recurring-")) {
+    if (typeof taskId === "string" && taskId.startsWith("recurring-")) {
       return recurringTasks.find(
         (t) => t.id === taskId.replace("recurring-", ""),
       );
@@ -64,7 +64,7 @@ const PomodoroTimerModule = () => {
     }
   };
 
-  const handleModeSwitch = (newMode) => {
+  const handleModeSwitch = (newMode: "work" | "shortBreak" | "longBreak") => {
     dispatch({ type: "POMODORO_SET_MODE", payload: newMode });
     setSessionEnded(false);
   };
@@ -85,13 +85,17 @@ const PomodoroTimerModule = () => {
     setSessionEnded(false);
   };
 
-  const formatTime = (seconds) => {
+  const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
   };
 
-  const ModeButton = ({ targetMode, label }) => (
+  interface ModeButtonProps {
+    targetMode: "work" | "shortBreak" | "longBreak";
+    label: string;
+  }
+  const ModeButton: FC<ModeButtonProps> = ({ targetMode, label }) => (
     <button
       onClick={() => handleModeSwitch(targetMode)}
       className={`px-3 py-1 rounded-md text-sm font-semibold transition-colors w-full ${mode === targetMode ? "bg-accent-blue text-background-dark" : "bg-gray-700 hover:bg-gray-600"}`}

@@ -6,4 +6,5 @@ STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E '^compo
 if [ -n "$STAGED_FILES" ]; then
 	node ./scripts/verify-naming.mjs $STAGED_FILES
 fi
+npx npm run security:scan
 npx lint-staged

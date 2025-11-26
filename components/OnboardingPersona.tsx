@@ -1,9 +1,10 @@
-import React from "react";
+import { useState } from "react";
+import type { FC } from "react";
 import { useAppState } from "../src/contexts/AppStateContext";
 
-const OnboardingPersona: React.FC<{ onNext: () => void }> = ({ onNext }) => {
+const OnboardingPersona: FC<{ onNext: () => void }> = ({ onNext }) => {
   const { appState, dispatch } = useAppState();
-  const [selection, setSelection] = React.useState<"dugout" | "garden">(
+  const [selection, setSelection] = useState<"dugout" | "garden">(
     (appState.dashboardType === "william" ? "dugout" : "garden") as any,
   );
 

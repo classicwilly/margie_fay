@@ -1,8 +1,8 @@
-import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { describe, it, expect, beforeAll, vi } from "vitest";
 import SettingsView from "../src/views/SettingsView";
 import { AppStateProvider } from "@contexts/AppStateContext";
+import { UserProvider } from "@contexts/UserContext";
 
 describe("SettingsView persona overrides", () => {
   beforeAll(() => {
@@ -11,9 +11,11 @@ describe("SettingsView persona overrides", () => {
   });
   it("allows the user to enter a custom display name and saves it to app state", async () => {
     render(
-      <AppStateProvider>
-        <SettingsView />
-      </AppStateProvider>,
+      <UserProvider>
+        <AppStateProvider>
+          <SettingsView />
+        </AppStateProvider>
+      </UserProvider>,
     );
 
     const grandmaInput = screen.getByTestId("persona-override-Grandma");

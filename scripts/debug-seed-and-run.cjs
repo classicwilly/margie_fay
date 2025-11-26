@@ -25,7 +25,9 @@ const { chromium } = require("playwright");
   await page.goto("http://localhost:4173", { waitUntil: "load" });
   await page.waitForLoadState("networkidle");
   console.log("Page loaded after seeding");
-  const found = await page.$('h1[data-workshop-testid="workshop-title"], h1[data-testid="cockpit-title"]');
+  const found = await page.$(
+    'h1[data-workshop-testid="workshop-title"], h1[data-testid="cockpit-title"]',
+  );
   if (found) {
     console.log("Cockpit title present");
     const text = await page.evaluate((el) => el.textContent, found);

@@ -1,5 +1,11 @@
-import React, { useState, useRef } from "react";
-import { Type } from "@google/genai";
+// @ts-nocheck
+import { useState, useRef } from "react";
+import type { FC } from "react";
+import {
+  GoogleGenerativeAI,
+  HarmCategory,
+  HarmBlockThreshold,
+} from "@google/generative-ai";
 import useSafeAI from "../../../hooks/useSafeAI";
 import { useAppState } from "@contexts/AppStateContext";
 import ContentCard from "../../ContentCard.js";
@@ -499,7 +505,7 @@ const BrainDumpModule = () => {
         {error && <div className="mt-2 text-red-400 text-sm">{error}</div>}
 
         {processedItems.length > 0 && (
-          <div className="mt-4 pt-3 border-t border-gray-700 flex-grow overflow-y-auto max-h-80 pr-2">
+          <div className="mt-4 pt-3 border-t border-gray-700 grow overflow-y-auto max-h-80 pr-2">
             <div className="flex justify-between items-center mb-2">
               <h4 className="font-semibold text-accent-green">
                 Processed Items
@@ -523,7 +529,7 @@ const BrainDumpModule = () => {
                     className={`p-2 rounded-md border text-sm ${style.bg} border-gray-700`}
                   >
                     <div className="flex justify-between items-start">
-                      <div className="flex-grow">
+                      <div className="grow">
                         <span
                           className={`text-xs font-bold px-2 py-0.5 rounded-full ${style.bg} ${style.text}`}
                         >

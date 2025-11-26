@@ -1,6 +1,6 @@
-import React from "react";
+import type { FC } from "react";
 
-const BioHacksView: React.FC = () => {
+const BioHacksView: FC = () => {
   const sensoryRecipes = [
     {
       title: "🍋 The Lime Drag",

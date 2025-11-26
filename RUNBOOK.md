@@ -73,3 +73,70 @@ npx concurrently "npm run start:server" "npm run dev"
 ```
 curl -sS -X POST https://<service-url>/api/gemini -H 'Content-Type: application/json' -d '{"prompt":"Say hello, Grandma!"}'
 ```
+
+## Test-only hooks & E2E stability guidance ✅
+
+To keep E2E tests deterministic and maintain CI stability around time-based UI flows (for example, the E-Stop / Context Restore modal), this repository exposes several test-only flags and events. These are intended for CI & E2E test use only and should not affect production behavior.
+
+- `__WONKY_CONTEXT_RESTORE_FORCE_COMPLETE__` — boolean.
+  When set to `true` in test runs, the Context Restore modal skips internal timers
+  and marks itself complete.
+- Event: `wonky:context-restore-force-complete`.
+  Dispatch this event while the modal is open to apply the forced-complete behavior
+  immediately. This is useful to avoid UI timing races.
+- `__E2E_FORCE_VIEW__` / `__WONKY_TEST_FORCE_VIEW__` — used to seed a specific app view (e.g., `workshop`) during E2E runs.
+
+Best practices for tests
+
+- Prefer `data-workshop-testid` attributes for Playwright selectors.
+  Use the helper `byWorkshopOrCockpitTestId` in
+  `tests/e2e/helpers/locators.ts` to prefer the workshop id and fall back to
+  legacy `data-testid` when needed.
+- Use `retryClick`, `retryCheck`, and `waitForModalContent` from
+  `tests/e2e/helpers/retryHelpers.ts` when interacting with elements that might
+  mount inside portals or experience transient delays.
+- Keep test-only flags and events contained to `test` runs only; do not use them to change production logic.
+
+When updating UI or timers that affect flows like the Context Restore modal, follow these three key steps:
+
+1. Add `data-workshop-testid` attributes to any element Playwright relies on.
+   Examples: navigation buttons, decompress timer displays, checkboxes, restore controls.
+2. Update tests to prefer `byWorkshopOrCockpitTestId('name')` for selector stability.
+3. Use `retryClick`/`retryCheck` helpers in tests for interactions where UI may be delayed or inconsistent.
+
+> Tip: Keep the test-only hooks until you see multiple consecutive, stable E2E runs without them.
+
+## Naming policy & `verify-naming` exceptions ⚠️
+
+The repository enforces a kebab-case filename policy via `scripts/verify-naming.mjs`.
+To reduce churn, we intentionally allow PascalCase filenames in selected directories.
+These directories typically contain React components, contexts, hooks, services, or views.
+
+- `components/`
+- `src/components/`
+- `src/contexts/`
+- `src/views/`
+- `src/modules/`
+- `src/services/`
+- `src/hooks/`
+- `src/sops/`
+- `src/integrations/`
+- `src/utils/`
+
+This exception is intentional to limit one-off renames and avoid a repo-wide migration in a single PR.
+If you plan a full kebab-case migration, follow this plan:
+
+1. Update `scripts/verify-naming.mjs` to remove exceptions or configure directories to your desired target.
+2. Use `transforms/rename-to-kebab-case.cjs` in dry-run mode to preview the changes.
+   Apply changes in small batches.
+3. Run the review/QA cycle:
+
+- `npm run lint`
+- `npm run test`
+- `npx playwright test` (full suite)
+
+When committing large rename PRs:
+
+- Break changes into small, reviewable PRs.
+- Verify import rewrites.
+- Run the full lint/test/Playwright suite before merging.

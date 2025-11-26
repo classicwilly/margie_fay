@@ -20,9 +20,11 @@ export function useAchievementEngine() {
       habitTracker,
     } = appState;
 
+    // Add index signature to collectedAchievements
+    const achievementsObj = collectedAchievements as { [key: string]: boolean };
     const checkAndAward = (id: string) => {
       // Check if it's already awarded in the main state or this session
-      if (collectedAchievements[id] || awardedThisSession.current.has(id)) {
+      if (achievementsObj[id] || awardedThisSession.current.has(id)) {
         return;
       }
 
@@ -32,7 +34,7 @@ export function useAchievementEngine() {
         dispatch({
           type: "ADD_TOAST",
           payload: {
-            id: `toast-${id}-${generateId()}`,
+            id: `toast-${id}-${Math.random().toString(36).slice(2)}`,
             emoji: achievement.emoji,
             message: `Achievement Unlocked: ${achievement.label}!`,
           },

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, type FC } from "react";
 import { useAppState } from "@contexts/AppStateContext";
-import { ALL_SEBASTIAN_MODULES_CONFIG } from "../constants";
+import { ALL_SEBASTIAN_MODULES_CONFIG } from "../src/constants";
 import { Button } from "./Button";
 
 // FIX: Explicitly typed component with React.FC and a props interface to handle the `key` prop correctly.
@@ -9,7 +9,7 @@ interface TabButtonProps {
   isActive: boolean;
   onClick: () => void;
 }
-const TabButton: React.FC<TabButtonProps> = ({ label, isActive, onClick }) => (
+const TabButton: FC<TabButtonProps> = ({ label, isActive, onClick }) => (
   <button
     onClick={onClick}
     className={`whitespace-nowrap py-3 px-4 border-b-2 font-medium text-sm transition-colors
@@ -23,7 +23,15 @@ const TabButton: React.FC<TabButtonProps> = ({ label, isActive, onClick }) => (
   </button>
 );
 
-const SebastiansDashboardBuilder = () => {
+interface ModuleInfo {
+  id: string;
+  name: string;
+  description?: string;
+  isRemovable?: boolean;
+  category?: string;
+}
+
+const SebastiansDashboardBuilder: FC = () => {
   const { appState, dispatch } = useAppState();
   const { sebastianDashboardModules } = appState;
 
@@ -36,7 +44,7 @@ const SebastiansDashboardBuilder = () => {
     setTempEnabledModules(sebastianDashboardModules);
   }, [sebastianDashboardModules]);
 
-  const handleToggleModule = (moduleId, enable) => {
+  const handleToggleModule = (moduleId: string, enable: boolean) => {
     setTempEnabledModules((prev) => {
       if (enable && !prev.includes(moduleId)) {
         return [...prev, moduleId];
@@ -69,7 +77,7 @@ const SebastiansDashboardBuilder = () => {
     communication: "Communication",
   };
 
-  const modulesForTab = ALL_SEBASTIAN_MODULES_CONFIG.filter(
+  const modulesForTab = (ALL_SEBASTIAN_MODULES_CONFIG as ModuleInfo[]).filter(
     (m) => m.category === activeTab,
   );
 

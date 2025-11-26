@@ -1,4 +1,4 @@
-import React from "react";
+import type { FC } from "react";
 import OnboardingPersona from "./OnboardingPersona";
 import OnboardingGoogleConnect from "./OnboardingGoogleConnect";
 import OnboardingAIConsent from "./OnboardingAIConsent";
@@ -6,7 +6,7 @@ import { useAppState } from "../src/contexts/AppStateContext";
 
 const steps = ["persona", "prefs", "family", "google", "ai", "demo"];
 
-const OnboardingStepper: React.FC = () => {
+const OnboardingStepper: FC = () => {
   const { appState, dispatch } = useAppState();
   const step = appState.onboardingStep || 0;
 

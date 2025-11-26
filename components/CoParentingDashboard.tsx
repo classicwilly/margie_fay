@@ -1,9 +1,9 @@
-import React from "react";
+import type { FC } from "react";
 import { useAppState } from "@contexts/AppStateContext";
 import { componentMap } from "./componentMap.js";
 import { Button } from "./Button";
 
-const CoParentingDashboard = () => {
+const CoParentingDashboard: FC = () => {
   const { appState, dispatch } = useAppState();
   const { coParentingDashboardModules, isModMode } = appState;
 
@@ -22,7 +22,7 @@ const CoParentingDashboard = () => {
     .map((moduleId) => componentMap[moduleId])
     .filter(Boolean);
 
-  const getGridColsClass = (count) => {
+  const getGridColsClass = (count: number): string => {
     if (count <= 1) {
       return "grid-cols-1";
     }
@@ -75,7 +75,7 @@ const CoParentingDashboard = () => {
       </header>
 
       <div className={`grid gap-8 ${getGridColsClass(enabledModules.length)}`}>
-        {coParentingDashboardModules.map((moduleId) => {
+        {coParentingDashboardModules.map((moduleId: string) => {
           const ModuleComponent = componentMap[moduleId];
           if (!ModuleComponent) {
             return null;

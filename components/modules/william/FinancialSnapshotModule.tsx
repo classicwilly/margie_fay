@@ -119,7 +119,7 @@ const FinancialSnapshotModule = () => {
           </div>
         </div>
 
-        <div className="flex-grow space-y-2 overflow-y-auto max-h-80 pr-2">
+        <div className="grow space-y-2 overflow-y-auto max-h-80 pr-2">
           {categories.map((category) => {
             const spent = Number(monthlySummary[category] || 0);
             const budget = Number(financialBudgets[category] || 0);

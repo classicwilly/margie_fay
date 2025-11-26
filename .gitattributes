@@ -1,0 +1,18 @@
+# Enforce LF line endings across repository for consistency
+* text=auto eol=lf
+
+# Keep shell scripts with LF
+*.sh text eol=lf
+
+# JSON & configs
+*.json text eol=lf
+
+# Mark text files
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.js text eol=lf
+*.cjs text eol=lf
+*.mjs text eol=lf

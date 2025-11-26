@@ -1,4 +1,3 @@
-import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 import HousekeepingModule from "@components/modules/housekeeping/HousekeepingModule";
@@ -12,7 +11,9 @@ describe("HousekeepingModule - basic DOM checks", () => {
       </AppStateProvider>,
     );
 
-    const coinBalance = container.querySelector('[data-workshop-testid="workshop-coin-balance" ]');
+    const coinBalance = container.querySelector(
+      '[data-workshop-testid="workshop-coin-balance" ]',
+    );
     expect(coinBalance).toBeTruthy();
     expect(coinBalance?.getAttribute("role")).toBe("status");
     expect(coinBalance?.getAttribute("aria-live")).toBe("polite");
@@ -25,14 +26,18 @@ describe("HousekeepingModule - basic DOM checks", () => {
       </AppStateProvider>,
     );
     // default index is 0: the modal is hidden by default, open it first
-    const openBtn = container.querySelector('[data-workshop-testid="workshop-start-day-open" ]');
+    const openBtn = container.querySelector(
+      '[data-workshop-testid="workshop-start-day-open" ]',
+    );
     expect(openBtn).toBeTruthy();
     if (openBtn) {
       fireEvent.click(openBtn as Element);
     }
 
     // default index is 0
-    const stepBtn = container.querySelector('[data-workshop-testid="workshop-start-step-0" ]');
+    const stepBtn = container.querySelector(
+      '[data-workshop-testid="workshop-start-step-0" ]',
+    );
     expect(stepBtn).toBeTruthy();
     expect(stepBtn?.getAttribute("data-step-index")).toBe("0");
   });

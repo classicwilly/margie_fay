@@ -1,10 +1,10 @@
-import React from "react";
+import type { FC } from "react";
 
 interface QuickJumpProps {
   sections: { id: string; title: string }[];
 }
 
-export const QuickJump: React.FC<QuickJumpProps> = ({ sections }) => {
+export const QuickJump: FC<QuickJumpProps> = ({ sections }) => {
   const handleJump = (id: string) => {
     const element = document.getElementById(id);
     if (element) {

@@ -1,4 +1,5 @@
 import { test, expect } from "./playwright-fixtures";
+import { byWorkshopOrCockpitTestId } from "./helpers/locators";
 import axe from "axe-core";
 import fs from "fs";
 
@@ -7,7 +8,7 @@ test("axe accessibility scan", async ({ page }) => {
   // Wait for stable header and ensure network idle afterward to catch deferred components
   // Wait for the unique cockpit title testid instead of ambiguous DAY heading
   await page
-    .locator('[data-workshop-testid="workshop-title"]')
+    .locator(byWorkshopOrCockpitTestId("workshop-title"))
     .waitFor({ state: "visible", timeout: 15000 });
   await page.waitForLoadState("networkidle");
   await page.addScriptTag({ content: axe.source });
@@ -20,6 +21,19 @@ test("axe accessibility scan", async ({ page }) => {
   await page.context().storageState();
   fs.mkdirSync("playwright-axe-results", { recursive: true });
   fs.writeFileSync("playwright-axe-results/axe-results.json", out);
+  try {
+    const parsed = JSON.parse(out);
+    console.log(
+      "Axe violations summary:",
+      parsed.violations.map((v: any) => ({
+        id: v.id,
+        impact: v.impact,
+        nodes: v.nodes.length,
+      })),
+    );
+  } catch (e) {
+    /* ignore parse/console errors */
+  }
 
   // Fail if any serious or critical violations
   const severe = result.violations.filter(

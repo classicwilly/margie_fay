@@ -1,5 +1,5 @@
 // FIX: Add React import to fix UMD global error.
-import React from "react";
+import { createElement, type ComponentType } from "react";
 import DayProgressBarModule from "./modules/DayProgressBarModule.js";
 import StatusTrackerModule from "./modules/StatusTrackerModule.js";
 import KidsTrackerModule from "./modules/KidsTrackerModule.js";
@@ -106,12 +106,12 @@ const checklistModuleMappings = ALL_WILLIAM_MODULES_CONFIG.filter((module) =>
   const sourceDocument = module.name.replace("Checklist: ", "");
   // Create a new component on the fly that passes the correct prop
   acc[module.id] = (props) =>
-    React.createElement(GenericChecklistModule, { ...props, sourceDocument });
+    createElement(GenericChecklistModule, { ...props, sourceDocument });
   return acc;
 }, {});
 
 // Add string index signature for dynamic access
-export const componentMap: { [key: string]: React.ComponentType<any> } = {
+export const componentMap: { [key: string]: ComponentType<any> } = {
   ...staticComponentMap,
   ...checklistModuleMappings,
   "profile-stack-builder": ProfileStackBuilder,

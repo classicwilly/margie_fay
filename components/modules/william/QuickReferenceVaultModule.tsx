@@ -1,16 +1,23 @@
-import React, { useState, useMemo } from "react";
+import { useState, useMemo, type FC, type FormEvent } from "react";
 import { useAppState } from "@contexts/AppStateContext";
 import ContentCard from "../../ContentCard.js";
 
-const QuickReferenceVaultModule = () => {
+interface QuickReferenceEntry {
+  id: string;
+  key: string;
+  value: string;
+}
+const QuickReferenceVaultModule: FC = () => {
   const { appState, dispatch } = useAppState();
   const { quickReferenceEntries } = appState;
   const [searchTerm, setSearchTerm] = useState("");
   const [newKey, setNewKey] = useState("");
   const [newValue, setNewValue] = useState("");
-  const [visibleValues, setVisibleValues] = useState({});
+  const [visibleValues, setVisibleValues] = useState<Record<string, boolean>>(
+    {},
+  );
 
-  const handleAddEntry = (e) => {
+  const handleAddEntry = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!newKey.trim() || !newValue.trim()) {
       return;
@@ -27,15 +34,15 @@ const QuickReferenceVaultModule = () => {
     setNewValue("");
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = (id: string) => {
     dispatch({ type: "REMOVE_QUICK_REFERENCE_ENTRY", payload: id });
   };
 
-  const handleCopy = (value) => {
+  const handleCopy = (value: string) => {
     navigator.clipboard.writeText(value);
   };
 
-  const toggleVisibility = (id) => {
+  const toggleVisibility = (id: string) => {
     setVisibleValues((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
@@ -67,7 +74,7 @@ const QuickReferenceVaultModule = () => {
           className="w-full p-2 mb-3 bg-gray-800 border-2 border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue"
         />
 
-        <div className="flex-grow space-y-2 mb-4 overflow-y-auto max-h-64 pr-2">
+        <div className="grow space-y-2 mb-4 overflow-y-auto max-h-64 pr-2">
           {filteredEntries.length > 0 ? (
             filteredEntries.map((entry) => {
               const isVisible = !!visibleValues[entry.id];
@@ -76,7 +83,7 @@ const QuickReferenceVaultModule = () => {
                   key={entry.id}
                   className="p-3 bg-gray-800 rounded-md border border-gray-700"
                 >
-                  <h4 className="font-bold text-accent-teal break-words">
+                  <h4 className="font-bold text-accent-teal wrap-break-word">
                     {entry.key}
                   </h4>
                   <div className="flex items-center gap-2 mt-2">
@@ -85,7 +92,7 @@ const QuickReferenceVaultModule = () => {
                       value={entry.value}
                       readOnly
                       aria-label={`${entry.key} value`}
-                      className="flex-grow p-1 bg-gray-900 border border-gray-600 rounded-md font-mono text-sm"
+                      className="grow p-1 bg-gray-900 border border-gray-600 rounded-md font-mono text-sm"
                     />
                     <button
                       onClick={() => toggleVisibility(entry.id)}

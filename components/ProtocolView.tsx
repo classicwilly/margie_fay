@@ -1,4 +1,4 @@
-import React from "react";
+import type { FC, ReactNode } from "react";
 import ContentCard from "./ContentCard.js";
 import ChecklistItem from "./ChecklistItem.js";
 import { QuickJump } from "./QuickJump.js";
@@ -6,11 +6,11 @@ import { ALL_CHECKLIST_DATA } from "../checklist-data.js";
 import { SecureMarkdown } from "../utils/secureMarkdownRenderer.js";
 
 // FIX: Made the 'footer' prop optional by adding a question mark to its type definition. This resolves errors in multiple components that call ProtocolView without providing a footer, which is valid for many protocols.
-const ProtocolView: React.FC<{
-  sourceDocument: any;
-  title: any;
-  subtitle: any;
-  footer?: React.ReactNode;
+const ProtocolView: FC<{
+  sourceDocument: string;
+  title: string;
+  subtitle?: string;
+  footer?: ReactNode;
 }> = ({ sourceDocument, title, subtitle, footer }) => {
   const protocolData = ALL_CHECKLIST_DATA.filter(
     (s) => s.sourceDocument === sourceDocument,
@@ -26,7 +26,7 @@ const ProtocolView: React.FC<{
 
   const sections = protocolData.map((s) => ({ id: s.id, title: s.title }));
 
-  const renderItems = (items) => {
+  const renderItems = (items?: any[]) => {
     if (!items) {
       return null;
     }
@@ -45,7 +45,7 @@ const ProtocolView: React.FC<{
     );
   };
 
-  const renderSubSections = (subSections) => {
+  const renderSubSections = (subSections?: any[]) => {
     if (!subSections) {
       return null;
     }

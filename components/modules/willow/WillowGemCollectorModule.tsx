@@ -1,8 +1,8 @@
-import React from "react";
+import type { FC } from "react";
 import GemCollector from "../../GemCollector"; // Adjusted path
 import { useAppState } from "@contexts/AppStateContext";
 
-const WillowGemCollectorModule = () => {
+const WillowGemCollectorModule: FC = () => {
   const { appState } = useAppState();
   const { collectedGems } = appState;
 

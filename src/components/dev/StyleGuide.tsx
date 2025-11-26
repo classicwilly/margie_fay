@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function StyleGuide() {
   return (
     <div className="p-8 space-y-8">

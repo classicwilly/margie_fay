@@ -1,10 +1,12 @@
-import React from "react";
+import type { FC } from "react";
 import ChecklistItem from "./ChecklistItem.js";
 import ContentCard from "./ContentCard.js";
 import { ALL_CHECKLIST_DATA } from "../checklist-data.js";
 import { SecureMarkdown } from "../utils/secureMarkdownRenderer.js";
 
-const GenericChecklistModule = ({ sourceDocument }) => {
+const GenericChecklistModule: FC<{ sourceDocument: string }> = ({
+  sourceDocument,
+}) => {
   const checklistData = ALL_CHECKLIST_DATA.filter(
     (section) => section.sourceDocument === sourceDocument,
   );
@@ -17,7 +19,7 @@ const GenericChecklistModule = ({ sourceDocument }) => {
     );
   }
 
-  const renderSection = (section, level = 0) => {
+  const renderSection = (section: any, level = 0) => {
     const titleClass =
       level === 0 ? "text-accent-teal text-xl" : "text-accent-blue text-lg";
     const containerClass =

@@ -1,4 +1,4 @@
-import React from "react";
+import type { FC, MouseEvent } from "react";
 import { useAppState } from "@contexts/AppStateContext";
 import ContentCard from "./ContentCard";
 import EssentialsTrackerModule from "./modules/EssentialsTrackerModule";
@@ -10,10 +10,10 @@ import AchievementTrackerModule from "./modules/AchievementTrackerModule";
 import DayProgressBarModule from "./modules/DayProgressBarModule";
 import StatusTrackerModule from "./modules/StatusTrackerModule";
 import { GroundingRose } from "./GroundingRose";
-const CommandCenter: React.FC = () => {
+const CommandCenter: FC = () => {
   const { appState, dispatch } = useAppState();
 
-  const handleTestAirlock = (e: React.MouseEvent) => {
+  const handleTestAirlock = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     dispatch?.({
       type: "SET_SAVED_CONTEXT",
@@ -27,7 +27,10 @@ const CommandCenter: React.FC = () => {
       {/* Header (Top) */}
       <header className="mb-8 text-center">
         <h1
-          data-testid="cockpit-title" data-workshop-testid="workshop-title" className="text-3xl font-bold text-primary-400 mb-2 pt-4"
+          data-testid="cockpit-title"
+          data-workshop-testid="workshop-title"
+          data-workshop-testid="workshop-title"
+          className="text-3xl font-bold text-primary-400 mb-2 pt-4"
         >
           The Workshop
         </h1>

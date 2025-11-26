@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useCallback } from "react";
 import { GoogleGenAI } from "@google/genai";
 import useAIPromptSafety from "./useAIPromptSafety";

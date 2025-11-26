@@ -1,8 +1,9 @@
-import React from "react";
+import type { FC } from "react";
 import ChecklistItem from "./ChecklistItem.js";
+import type { ChecklistSectionData } from "../checklist-data";
 import { Button } from "./Button";
 
-const ChecklistCard = ({ section }) => {
+const ChecklistCard: FC<{ section: ChecklistSectionData }> = ({ section }) => {
   return (
     <div className="card-base rounded-lg shadow-lg border border-accent-teal bg-card-dark flex flex-col h-full p-6">
       <h3 className="text-2xl font-mono font-bold text-accent-teal mb-2 border-b border-surface-700 pb-2">

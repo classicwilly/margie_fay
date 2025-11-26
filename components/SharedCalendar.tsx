@@ -107,7 +107,7 @@ const SharedCalendar: React.FC = () => {
                 title={event.title}
               >
                 <span
-                  className={`w-2 h-2 rounded-full mr-2 flex-shrink-0 ${eventTypeColors[event.type]}`}
+                  className={`w-2 h-2 rounded-full mr-2 flex-shrink-0 ${eventTypeColors[event.type as CalendarEvent["type"]]}`}
                 ></span>
                 {event.title}
               </div>
@@ -286,7 +286,7 @@ const SharedCalendar: React.FC = () => {
               >
                 <div className="flex items-center">
                   <span
-                    className={`w-3 h-3 rounded-full mr-3 flex-shrink-0 ${eventTypeColors[event.type]}`}
+                    className={`w-3 h-3 rounded-full mr-3 flex-shrink-0 ${eventTypeColors[event.type as CalendarEvent["type"]]}`}
                   ></span>
                   <div>
                     <div className="font-semibold">{event.title}</div>

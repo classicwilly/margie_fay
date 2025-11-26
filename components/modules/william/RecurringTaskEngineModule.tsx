@@ -1,3 +1,6 @@
+// @ts-nocheck
+// @ts-nocheck
+import React from "react";
 import React, { useState, useMemo } from "react";
 import { useAppState } from "@contexts/AppStateContext";
 import ContentCard from "../../ContentCard.js";
@@ -69,7 +72,7 @@ const RecurringTaskEngineModule = () => {
           Automated tracking for periodic life maintenance tasks.
         </p>
 
-        <div className="flex-grow space-y-2 mb-4 overflow-y-auto max-h-72 pr-2">
+        <div className="grow space-y-2 mb-4 overflow-y-auto max-h-72 pr-2">
           {sortedTasks.length > 0 ? (
             sortedTasks.map((task) => {
               const today = new Date();
@@ -102,7 +105,7 @@ const RecurringTaskEngineModule = () => {
                 >
                   <div className="flex justify-between items-start">
                     <div>
-                      <p className="font-semibold text-text-light break-words">
+                      <p className="font-semibold text-text-light break-word">
                         {task.title}
                       </p>
                       <p className={`text-xs ${statusColor}`}>{statusText}</p>

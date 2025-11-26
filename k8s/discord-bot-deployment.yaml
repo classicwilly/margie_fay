@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wonky-discord-bot
+  labels:
+    app: wonky-discord-bot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wonky-discord-bot
+  template:
+    metadata:
+      labels:
+        app: wonky-discord-bot
+    spec:
+      containers:
+        - name: discord-bot
+          image: gcr.io/[PROJECT_ID]/wonky-discord-bot:latest
+          env:
+            - name: DISCORD_SERVICE_BOT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: discord-bot-secrets
+                  key: DISCORD_SERVICE_BOT_TOKEN
+            - name: REDIS_URL
+              value: redis://redis:6379
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wonky-discord-bot
+spec:
+  selector:
+    app: wonky-discord-bot
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

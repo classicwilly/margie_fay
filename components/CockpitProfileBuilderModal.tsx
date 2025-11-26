@@ -40,7 +40,10 @@ const CockpitProfileBuilderModal: React.FC<Props> = ({ onClose, existing }) => {
     <div
       role="dialog"
       aria-modal="true"
-      data-testid="cockpit-modal" data-workshop-testid="workshop-modal" className="fixed inset-0 flex items-center justify-center z-30"
+      data-testid="cockpit-modal"
+      data-workshop-testid="workshop-modal"
+      data-workshop-testid="workshop-modal"
+      className="fixed inset-0 flex items-center justify-center z-30"
     >
       <div className="bg-black/40 absolute inset-0" onClick={onClose}></div>
       <div className="bg-sanctuary-card p-4 rounded shadow z-40 w-[min(800px,95%)]">
@@ -49,7 +52,10 @@ const CockpitProfileBuilderModal: React.FC<Props> = ({ onClose, existing }) => {
           <label className="space-y-1">
             <div className="text-sm text-slate-400">Name</div>
             <input
-              data-testid="cockpit-name-input" data-workshop-testid="workshop-name-input" className="w-full p-2 border rounded"
+              data-testid="cockpit-name-input"
+              data-workshop-testid="workshop-name-input"
+              data-workshop-testid="workshop-name-input"
+              className="w-full p-2 border rounded"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
@@ -57,7 +63,10 @@ const CockpitProfileBuilderModal: React.FC<Props> = ({ onClose, existing }) => {
           <label className="space-y-1">
             <div className="text-sm text-slate-400">Persona</div>
             <select
-              data-testid="cockpit-persona-select" data-workshop-testid="workshop-persona-select" className="w-full p-2 border rounded"
+              data-testid="cockpit-persona-select"
+              data-workshop-testid="workshop-persona-select"
+              data-workshop-testid="workshop-persona-select"
+              className="w-full p-2 border rounded"
               value={persona}
               onChange={(e) => setPersona(e.target.value)}
             >
@@ -69,7 +78,10 @@ const CockpitProfileBuilderModal: React.FC<Props> = ({ onClose, existing }) => {
           <label className="space-y-1">
             <div className="text-sm text-slate-400">Audio</div>
             <select
-              data-testid="cockpit-audio-select" data-workshop-testid="workshop-audio-select" className="w-full p-2 border rounded"
+              data-testid="cockpit-audio-select"
+              data-workshop-testid="workshop-audio-select"
+              data-workshop-testid="workshop-audio-select"
+              className="w-full p-2 border rounded"
               value={audio}
               onChange={(e) => setAudio(e.target.value)}
             >
@@ -81,7 +93,10 @@ const CockpitProfileBuilderModal: React.FC<Props> = ({ onClose, existing }) => {
           <label className="space-y-1">
             <div className="text-sm text-slate-400">Oral</div>
             <select
-              data-testid="cockpit-oral-select" data-workshop-testid="workshop-oral-select" className="w-full p-2 border rounded"
+              data-testid="cockpit-oral-select"
+              data-workshop-testid="workshop-oral-select"
+              data-workshop-testid="workshop-oral-select"
+              className="w-full p-2 border rounded"
               value={oral}
               onChange={(e) => setOral(e.target.value)}
             >
@@ -93,7 +108,10 @@ const CockpitProfileBuilderModal: React.FC<Props> = ({ onClose, existing }) => {
           <label className="col-span-2 space-y-1">
             <div className="text-sm text-slate-400">Visual</div>
             <select
-              data-testid="cockpit-visual-select" data-workshop-testid="workshop-visual-select" className="w-full p-2 border rounded"
+              data-testid="cockpit-visual-select"
+              data-workshop-testid="workshop-visual-select"
+              data-workshop-testid="workshop-visual-select"
+              className="w-full p-2 border rounded"
               value={visual}
               onChange={(e) => setVisual(e.target.value)}
             >
@@ -105,13 +123,19 @@ const CockpitProfileBuilderModal: React.FC<Props> = ({ onClose, existing }) => {
         </div>
         <div className="mt-4 flex justify-end gap-2">
           <button
-            data-testid="cockpit-cancel" data-workshop-testid="workshop-cancel" onClick={onClose}
+            data-testid="cockpit-cancel"
+            data-workshop-testid="workshop-cancel"
+            data-workshop-testid="workshop-cancel"
+            onClick={onClose}
             className="px-3 py-1 border rounded"
           >
             Cancel
           </button>
           <button
-            data-testid="cockpit-save-apply" data-workshop-testid="workshop-save-apply" onClick={handleSave}
+            data-testid="cockpit-save-apply"
+            data-workshop-testid="workshop-save-apply"
+            data-workshop-testid="workshop-save-apply"
+            onClick={handleSave}
             className="px-3 py-1 bg-sanctuary-accent text-white rounded"
           >
             Save & Apply

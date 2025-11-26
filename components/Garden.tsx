@@ -1,6 +1,6 @@
-import React from "react";
+import type { FC } from "react";
 
-const Garden: React.FC = () => {
+const Garden: FC = () => {
   return (
     <div className="card-base bg-card-dark rounded-lg shadow-lg border border-accent-teal p-8">
       <h1 className="text-3xl font-mono font-bold text-accent-teal mb-6 border-b border-surface-700 pb-2">

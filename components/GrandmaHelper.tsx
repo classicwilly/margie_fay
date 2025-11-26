@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { FC } from "react";
 import { useAppState } from "@contexts/AppStateContext";
 import {
   getGrandmaAdvice,
@@ -8,7 +9,7 @@ import {
 } from "../src/services/geminiService";
 import { sanitizePrompt } from "../src/utils/promptSanitizer";
 
-const GrandmaHelper: React.FC = () => {
+const GrandmaHelper: FC = () => {
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [responseText, setResponseText] = useState("");
@@ -53,9 +54,9 @@ const GrandmaHelper: React.FC = () => {
     } catch (e) {
       // persona-specific fallback if generateContent or persona wrapper fails
       if (persona === "grandpa") {
-          setResponseText(
-            "Love, Grandpa. Grandpa is having trouble right now. Try again later."
-          );
+        setResponseText(
+          "Love, Grandpa. Grandpa is having trouble right now. Try again later.",
+        );
       } else if (persona === "bob") {
         setResponseText(
           "Bob is having trouble right now. Try again later. —Bob.",
@@ -190,6 +191,47 @@ const GrandmaHelper: React.FC = () => {
                 ? "BOB HADDCOCK - NEIGHBOR"
                 : "MARGE WATSON - ORGANIZER"}
         </p>
+        {/** Persona Traits display **/}
+        {(() => {
+          const TRAITS: Record<string, string[]> = {
+            grandma: [
+              "plants",
+              "cooking",
+              "emotional support",
+              "housekeeping",
+              "makeup",
+              "art",
+              "music",
+              "first aid",
+              "fashion",
+              "communication",
+            ],
+            grandpa: [
+              "Buckminster Fuller",
+              "physics",
+              "math",
+              "quantum entanglement",
+              "cars",
+              "woodworking",
+              "coding",
+              "DIY",
+              "3D printing",
+              "communication",
+            ],
+          };
+          const t = TRAITS[persona];
+          if (!t || t.length === 0) {
+            return null;
+          }
+          return (
+            <p
+              className="text-xs text-neon-blue mt-1 text-center"
+              data-testid="persona-traits"
+            >
+              Expert in: {t.join(", ")}
+            </p>
+          );
+        })()}
       </div>
       <div className="w-full max-w-md mx-auto">
         <div className="relative flex flex-col gap-4 items-center">

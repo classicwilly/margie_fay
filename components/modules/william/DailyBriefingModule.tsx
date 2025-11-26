@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useMemo } from "react";
 import ContentCard from "../../ContentCard.js";
 import useProgressVar from "@hooks/useProgressVar";

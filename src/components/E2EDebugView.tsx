@@ -1,4 +1,3 @@
-import React from "react";
 import { useAppState } from "@contexts/AppStateContext";
 
 // Small test-only component that exposes the current active view on the page
@@ -52,6 +51,8 @@ const E2EDebugView = () => {
       : "unknown") ||
     "unknown";
   try {
+    // Console info for Playwright logs showing debug view render
+    console.info("E2EDebugView: render", { view, dashboard });
     if ((window as any).__WONKY_E2E_LOG_PUSH__) {
       (window as any).__WONKY_E2E_LOG_PUSH__("E2E_DEBUG_VIEW_RENDER", { view });
     }

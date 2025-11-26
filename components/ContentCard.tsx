@@ -1,8 +1,8 @@
-import React, { useId } from "react";
+import { useId, type FC, type ReactNode } from "react";
 
 interface ContentCardProps {
   title?: string;
-  children: React.ReactNode;
+  children: ReactNode;
   showHeader?: boolean;
   className?: string;
   titleClassName?: string;
@@ -15,7 +15,7 @@ const sanitizeId = (s: string) =>
     .replace(/(^-|-$)/g, "")
     .toLowerCase();
 
-const ContentCard: React.FC<ContentCardProps> = ({
+const ContentCard: FC<ContentCardProps> = ({
   title = "",
   children,
   showHeader = true,
@@ -41,7 +41,7 @@ const ContentCard: React.FC<ContentCardProps> = ({
             {title}
           </h2>
         )}
-        <div className="flex-grow">{children}</div>
+        <div className="grow">{children}</div>
       </div>
     </section>
   );

@@ -1,10 +1,10 @@
-import React from "react";
+import type { FC } from "react";
 
 interface LoadingSpinnerProps {
   message?: string;
 }
 
-const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
+const LoadingSpinner: FC<LoadingSpinnerProps> = ({
   message = "Calibrating System...",
 }) => {
   return (

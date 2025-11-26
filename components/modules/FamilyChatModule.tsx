@@ -42,7 +42,7 @@ const FamilyChatModule = () => {
   return (
     <ContentCard title="💬 Family Chat">
       <div className="flex flex-col h-full min-h-[400px]">
-        <div className="flex-grow overflow-y-auto p-3 bg-gray-800 rounded-md border border-gray-700 mb-4 space-y-4">
+        <div className="grow overflow-y-auto p-3 bg-gray-800 rounded-md border border-gray-700 mb-4 space-y-4">
           {chatMessages.length > 0 ? (
             chatMessages.map((msg) => {
               const isCurrentUser = msg.persona === dashboardType;
@@ -55,14 +55,14 @@ const FamilyChatModule = () => {
                   className={`flex items-end gap-2 ${isCurrentUser ? "justify-end" : "justify-start"}`}
                 >
                   {!isCurrentUser && (
-                    <div className="flex-shrink-0 text-2xl w-8 h-8 flex items-center justify-center bg-card-dark rounded-full">
+                    <div className="shrink-0 text-2xl w-8 h-8 flex items-center justify-center bg-card-dark rounded-full">
                       {details.emoji}
                     </div>
                   )}
                   <div
                     className={`max-w-[70%] p-3 rounded-xl ${isCurrentUser ? "bg-accent-blue text-background-dark rounded-br-none" : "bg-gray-700 text-text-light rounded-bl-none"}`}
                   >
-                    <p className="text-sm break-words">{msg.text}</p>
+                    <p className="text-sm wrap-break-word">{msg.text}</p>
                     <p
                       className={`text-xs mt-1 ${isCurrentUser ? "text-gray-200" : "text-gray-400"} text-opacity-80`}
                     >
@@ -89,7 +89,7 @@ const FamilyChatModule = () => {
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             placeholder="Type a message..."
-            className="flex-grow p-3 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue"
+            className="grow p-3 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue"
             aria-label="Chat message input"
           />
           <button

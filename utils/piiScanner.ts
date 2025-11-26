@@ -20,8 +20,10 @@ const piiPatterns = [
   },
 ];
 
-export function scanForPII(text) {
-  const matches = [];
+export function scanForPII(
+  text: string,
+): Array<{ type: string; value: string }> {
+  const matches: Array<{ type: string; value: string }> = [];
   if (!text) {
     return matches;
   }
@@ -29,7 +31,7 @@ export function scanForPII(text) {
   piiPatterns.forEach((pattern) => {
     const result = text.match(pattern.regex);
     if (result) {
-      result.forEach((value) => {
+      result.forEach((value: string) => {
         matches.push({ type: pattern.type, value });
       });
     }

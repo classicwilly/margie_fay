@@ -9,6 +9,14 @@ export default defineConfig({
     // Exclude E2E tests and packages tests
     include: ["tests/**/*.test.{ts,tsx,js}", "tests/**/*.spec.{ts,tsx,js}"],
     exclude: ["tests/e2e/**", "node_modules/**"],
+    coverage: {
+      provider: "v8",
+      reporter: ["text", "lcov"],
+      lines: 80,
+      functions: 80,
+      branches: 80,
+      statements: 80,
+    },
   },
   resolve: {
     alias: [

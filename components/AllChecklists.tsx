@@ -1,4 +1,4 @@
-import React from "react";
+import type { FC, ReactNode } from "react";
 import ChecklistItem from "./ChecklistItem";
 import ContentCard from "./ContentCard";
 import {
@@ -8,7 +8,7 @@ import {
 import { QuickJump } from "./QuickJump";
 import { exportChecklists, importChecklists } from "../src/utils/importExport";
 
-const AllChecklists: React.FC = () => {
+const AllChecklists: FC = () => {
   const groupedBySource = ALL_CHECKLIST_DATA.reduce<
     Record<string, ChecklistSectionData[]>
   >((acc, section) => {
@@ -35,7 +35,7 @@ const AllChecklists: React.FC = () => {
   const renderSection = (
     section: ChecklistSectionData,
     level: number = 0,
-  ): React.ReactNode => {
+  ): ReactNode => {
     const titleClass =
       level === 0 ? "text-accent-teal text-xl" : "text-accent-blue text-lg";
     const containerClass =

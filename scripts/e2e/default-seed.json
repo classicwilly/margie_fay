@@ -1,0 +1,17 @@
+{
+  "view": "workshop",
+  "dashboardType": "william",
+  "initialSetupComplete": false,
+  "neuroPrefs": {
+    "simplifiedUi": true,
+    "reduceAnimations": true,
+    "largerText": false,
+    "focusModeDuration": 15,
+    "microStepsMode": true,
+    "assistTone": "concise",
+    "autoAdvanceSteps": false
+  },
+  "moduleStates": {},
+  "tasks": [],
+  "checkedItems": {}
+}

@@ -1,11 +1,11 @@
-import React from "react";
+import type { FC } from "react";
 import ChecklistItem from "./ChecklistItem";
 import ContentCard from "./ContentCard";
 import { QuickJump } from "./QuickJump";
 // Fix: Added '.tsx' extension to the import path to ensure the file is treated as a module.
 import { ALL_CHECKLIST_DATA } from "../checklist-data.tsx";
 
-const ExecutiveDysfunctionProtocol: React.FC = () => {
+const ExecutiveDysfunctionProtocol: FC = () => {
   const protocolData = ALL_CHECKLIST_DATA.filter(
     (s) => s.sourceDocument === "Executive Dysfunction Protocol",
   );

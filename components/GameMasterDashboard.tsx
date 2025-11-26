@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import { useState, type FormEvent, type FC } from "react";
 import GemAdminModule from "./modules/GemAdminModule.js";
 import { useAppState } from "@contexts/AppStateContext";
 import ContentCard from "./ContentCard.js";
 import { ALL_GEMS, REWARD_TIERS } from "../constants.js";
 
-const QuestManagement = () => {
+const QuestManagement: FC = () => {
   const { appState, dispatch } = useAppState();
   const { quests } = appState;
 
@@ -27,7 +27,7 @@ const QuestManagement = () => {
     setSteps(steps.filter((_, i) => i !== index));
   };
 
-  const handleCreateQuest = (e: React.FormEvent) => {
+  const handleCreateQuest = (e: FormEvent) => {
     e.preventDefault();
     const filteredSteps = steps.filter((s) => s.trim() !== "");
     if (!title.trim() || !description.trim() || filteredSteps.length === 0) {
@@ -108,7 +108,7 @@ const QuestManagement = () => {
                       type="text"
                       value={step}
                       onChange={(e) => handleStepChange(index, e.target.value)}
-                      className="flex-grow p-2 card-base border border-surface-600"
+                      className="grow p-2 card-base border border-surface-600"
                       placeholder={`Step ${index + 1}`}
                     />
                     {steps.length > 1 && (

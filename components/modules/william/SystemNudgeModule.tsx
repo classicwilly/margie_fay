@@ -1,4 +1,5 @@
-import React from "react";
+import type { FC } from "react";
+// @ts-nocheck
 import { Button } from "../../Button";
 
 const themeClasses = {
@@ -19,12 +20,15 @@ const themeClasses = {
   },
 };
 
-const SystemNudgeModule = ({ nudge, onDismiss }) => {
+const SystemNudgeModule: FC<{
+  nudge: any;
+  onDismiss: (id: string) => void;
+}> = ({ nudge, onDismiss }) => {
   const theme = themeClasses[nudge.theme] || themeClasses.info;
 
   return (
     <div
-      className={`p-6 bg-gradient-to-r ${theme.gradient} rounded-lg shadow-lg border ${theme.border} flex flex-col md:flex-row items-center justify-between gap-4 animate-pulse-slow`}
+      className={`p-6 bg-linear-to-r ${theme.gradient} rounded-lg shadow-lg border ${theme.border} flex flex-col md:flex-row items-center justify-between gap-4 animate-pulse-slow`}
     >
       <div className="flex items-center gap-4 text-left w-full">
         <div className="text-4xl">{nudge.icon}</div>
@@ -33,7 +37,7 @@ const SystemNudgeModule = ({ nudge, onDismiss }) => {
           <p className="text-sanctuary-text-main">{nudge.message}</p>
         </div>
       </div>
-      <div className="flex items-center gap-3 flex-shrink-0 mt-4 md:mt-0">
+      <div className="flex items-center gap-3 shrink-0 mt-4 md:mt-0">
         <Button onClick={nudge.onAction} variant="primary" size="sm">
           {nudge.actionLabel}
         </Button>

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 export default function useProgressVar(
-  ref: React.RefObject<HTMLElement>,
+  ref: React.RefObject<HTMLElement | null>,
   value: string | number,
 ) {
   useEffect(() => {

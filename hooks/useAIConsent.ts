@@ -11,9 +11,11 @@ export function useAIConsent() {
     );
   });
 
-  const [onConfirmCallback, setOnConfirmCallback] = useState(null);
+  const [onConfirmCallback, setOnConfirmCallback] = useState<
+    (() => void) | null
+  >(null);
 
-  const checkConsentAndExecute = useCallback((action) => {
+  const checkConsentAndExecute = useCallback((action: any) => {
     const hasConsented =
       typeof window !== "undefined" &&
       localStorage.getItem(AI_CONSENT_KEY) === "true";
@@ -29,7 +31,7 @@ export function useAIConsent() {
     if (dontShowAgain) {
       localStorage.setItem(AI_CONSENT_KEY, "true");
     }
-    if (onConfirmCallback) {
+    if (typeof onConfirmCallback === "function") {
       onConfirmCallback();
     }
     setConsentModalOpen(false);

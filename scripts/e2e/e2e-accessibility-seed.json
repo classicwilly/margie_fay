@@ -1,0 +1,14 @@
+{
+  "initialSetupComplete": false,
+  "view": "workshop",
+  "dashboardType": "william",
+  "wonky_flags": {
+    "aiEnabled": false,
+    "simplifiedMode": true,
+    "reducedMotion": true
+  },
+  "preferences": {
+    "reducedMotion": true,
+    "simplifiedUI": true
+  }
+}

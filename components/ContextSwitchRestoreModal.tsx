@@ -67,7 +67,9 @@ const ContextSwitchRestoreModal: React.FC = () => {
   // we immediately mark the task complete and accelerate the timer so tests
   // don't flake on timing issues.
   useEffect(() => {
-    if (!isContextRestoreModalOpen) return;
+    if (!isContextRestoreModalOpen) {
+      return;
+    }
     try {
       const forced = (window as any).__WONKY_CONTEXT_RESTORE_FORCE_COMPLETE__;
       if (forced) {
@@ -84,7 +86,10 @@ const ContextSwitchRestoreModal: React.FC = () => {
       window.addEventListener("wonky:context-restore-force-complete", handler);
       return () => {
         try {
-          window.removeEventListener("wonky:context-restore-force-complete", handler);
+          window.removeEventListener(
+            "wonky:context-restore-force-complete",
+            handler,
+          );
         } catch (e) {
           /* ignore */
         }
@@ -187,6 +192,7 @@ const ContextSwitchRestoreModal: React.FC = () => {
           <p
             data-testid="context-restore-timer"
             className="text-center font-mono text-primary-400"
+            data-workshop-testid="context-restore-timer"
           >
             {decompressTime} seconds remaining
           </p>
@@ -202,6 +208,7 @@ const ContextSwitchRestoreModal: React.FC = () => {
             checked={isTaskCompleted}
             onChange={() => setIsTaskCompleted((p) => !p)}
             data-testid="physical-task-checkbox"
+            data-workshop-testid="physical-task-checkbox"
           />
           <span className="text-accent-orange font-bold pl-3">
             {currentTask || "Protocol"}
@@ -210,7 +217,12 @@ const ContextSwitchRestoreModal: React.FC = () => {
 
         {/* ACTION BUTTONS */}
         <div className="flex justify-between pt-4">
-          <button onClick={handleDismiss} data-workshop-testid="context-restore-dismiss-btn">Dismiss</button>
+          <button
+            onClick={handleDismiss}
+            data-workshop-testid="context-restore-dismiss-btn"
+          >
+            Dismiss
+          </button>
           <button
             onClick={handleRestore}
             disabled={!isDecompressionComplete}

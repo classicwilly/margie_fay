@@ -1,4 +1,4 @@
-import React from "react";
+import type { FC } from "react";
 import ContentCard from "./ContentCard";
 import ChecklistItem from "./ChecklistItem";
 import { QuickJump } from "./QuickJump";
@@ -8,7 +8,7 @@ import {
   ChecklistSectionData,
 } from "../checklist-data.tsx";
 
-const CommandCenterSetupSop: React.FC = () => {
+const CommandCenterSetupSop: FC = () => {
   const protocolData = ALL_CHECKLIST_DATA.filter(
     (s) => s.sourceDocument === "Command Center Setup SOP",
   );

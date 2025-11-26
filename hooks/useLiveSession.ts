@@ -2,22 +2,35 @@ import { useState, useRef, useCallback } from "react";
 import { GoogleGenAI } from "@google/genai";
 import { createBlob } from "../utils/audioUtils.js";
 
-export function useLiveSession({ onMessage, config }) {
+// Local lightweight typing for live session object returned by GoogleGenAI
+interface LiveSession {
+  sendRealtimeInput?: (payload: any) => void;
+  sendToolResponse?: (payload: any) => void;
+  close?: () => void;
+}
+
+export function useLiveSession({
+  onMessage,
+  config,
+}: {
+  onMessage?: (m: any) => void;
+  config?: { model?: string; config?: any };
+}) {
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState("");
   const [userVolume, setUserVolume] = useState(0);
 
-  const sessionPromiseRef = useRef(null);
-  const inputAudioContextRef = useRef(null);
-  const scriptProcessorRef = useRef(null);
-  const mediaStreamSourceRef = useRef(null);
-  const analyserNodeRef = useRef(null);
-  const volumeAnimationRef = useRef(null);
-  const mediaStreamRef = useRef(null);
+  const sessionPromiseRef = useRef<Promise<LiveSession> | null>(null);
+  const inputAudioContextRef = useRef<AudioContext | null>(null);
+  const scriptProcessorRef = useRef<ScriptProcessorNode | null>(null);
+  const mediaStreamSourceRef = useRef<MediaStreamAudioSourceNode | null>(null);
+  const analyserNodeRef = useRef<AnalyserNode | null>(null);
+  const volumeAnimationRef = useRef<number | null>(null);
+  const mediaStreamRef = useRef<MediaStream | null>(null);
 
   const stopSession = useCallback((fromCallback = false) => {
     if (!fromCallback && sessionPromiseRef.current) {
-      sessionPromiseRef.current.then((session) => session.close());
+      sessionPromiseRef.current.then((session) => session?.close?.());
     }
 
     if (scriptProcessorRef.current) {
@@ -77,9 +90,14 @@ export function useLiveSession({ onMessage, config }) {
       if (!inputAudioContextRef.current && typeof window !== "undefined") {
         // FIX: Cast window to any to access vendor-prefixed property.
         inputAudioContextRef.current = new (window.AudioContext ||
-          (window as any).webkitAudioContext)({ sampleRate: 16000 });
+          (window as any).webkitAudioContext)({
+          sampleRate: 16000,
+        });
       }
-      if (inputAudioContextRef.current.state === "suspended") {
+      if (
+        inputAudioContextRef.current &&
+        inputAudioContextRef.current.state === "suspended"
+      ) {
         await inputAudioContextRef.current.resume();
       }
 
@@ -91,6 +109,9 @@ export function useLiveSession({ onMessage, config }) {
       const onOpen = () => {
         setStatus("listening");
         const audioCtx = inputAudioContextRef.current;
+        if (!audioCtx) {
+          throw new Error("AudioContext not initialized");
+        }
         mediaStreamSourceRef.current = audioCtx.createMediaStreamSource(stream);
 
         // Audio processing
@@ -99,7 +120,7 @@ export function useLiveSession({ onMessage, config }) {
           const inputData = audioProcessingEvent.inputBuffer.getChannelData(0);
           const pcmBlob = createBlob(inputData);
           sessionPromiseRef.current?.then((session) => {
-            session.sendRealtimeInput({ media: pcmBlob });
+            session?.sendRealtimeInput?.({ media: pcmBlob });
           });
         };
 
@@ -125,14 +146,21 @@ export function useLiveSession({ onMessage, config }) {
         };
         volumeAnimationRef.current = requestAnimationFrame(updateVolume);
 
-        mediaStreamSourceRef.current.connect(analyserNodeRef.current);
-        mediaStreamSourceRef.current.connect(scriptProcessorRef.current);
-        scriptProcessorRef.current.connect(audioCtx.destination); // Connect to output to avoid glitches in some browsers
+        mediaStreamSourceRef.current.connect(
+          analyserNodeRef.current as AnalyserNode,
+        );
+        mediaStreamSourceRef.current.connect(
+          scriptProcessorRef.current as ScriptProcessorNode,
+        );
+        // Connect to output to avoid glitches in some browsers
+        scriptProcessorRef.current.connect(
+          audioCtx.destination as AudioDestinationNode,
+        );
       };
 
-      const onError = (e) => {
+      const onError = (e: any) => {
         console.error("Session error:", e);
-        setError(`Session error: ${e.message || "An unknown error occurred"}`);
+        setError(`Session error: ${e?.message ?? "An unknown error occurred"}`);
         stopSession(true);
       };
 
@@ -141,26 +169,26 @@ export function useLiveSession({ onMessage, config }) {
       };
 
       sessionPromiseRef.current = ai.live.connect({
-        model: config.model,
+        model: config?.model ?? "",
         callbacks: {
           onopen: onOpen,
-          onmessage: onMessage,
+          onmessage: onMessage ?? (() => {}),
           onerror: onError,
           onclose: onClose,
         },
-        config: config.config,
+        config: config?.config,
       });
-    } catch (e) {
+    } catch (e: any) {
       console.error("Failed to start session:", e);
-      setError(`Failed to start: ${e.message}`);
+      setError(`Failed to start: ${e?.message ?? JSON.stringify(e)}`);
       setStatus("error");
       stopSession();
     }
   }, [status, onMessage, config, stopSession]);
 
-  const sendToolResponse = useCallback((response) => {
+  const sendToolResponse = useCallback((response: any) => {
     sessionPromiseRef.current?.then((session) => {
-      session.sendToolResponse(response);
+      session?.sendToolResponse?.(response);
     });
   }, []);
 

@@ -1,7 +1,10 @@
-import React from "react";
+import type { FC } from "react";
 import { useAppState } from "@contexts/AppStateContext";
 
-const SensoryOverloadModal = ({ isOpen, onClose }) => {
+const SensoryOverloadModal: FC<{ isOpen: boolean; onClose: () => void }> = ({
+  isOpen,
+  onClose,
+}) => {
   const { dispatch } = useAppState();
 
   if (!isOpen) {

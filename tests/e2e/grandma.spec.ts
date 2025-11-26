@@ -1,10 +1,11 @@
 import { test, expect, Page } from "@playwright/test";
 import { applyAiStub } from "./helpers/aiStub";
 import { retryClick } from "./helpers/retryHelpers";
+import { byWorkshopOrCockpitTestId } from "./helpers/locators";
 
 // Define a stable click sequence for the floating button
 const clickFloatBtn = async (page: Page) => {
-  const floatBtn = page.locator('[data-workshop-testid="open-ask-ai"]');
+  const floatBtn = page.locator(byWorkshopOrCockpitTestId("open-ask-ai"));
 
   // 1. Wait until the button is visible and enabled (resilient wait)
   await expect(floatBtn).toBeVisible({ timeout: 15000 });
@@ -26,19 +27,19 @@ test.describe("Ask Persona Flows (Grandma, Grandpa, Bob, Marge)", () => {
     page,
   }) => {
     await page.goto("/");
-    await page.locator('[data-workshop-testid="main-content"]').waitFor();
+    await page.locator(byWorkshopOrCockpitTestId("main-content")).waitFor();
 
     await clickFloatBtn(page);
 
     // Focus on the input and type a query
-    const input = page.locator('[data-workshop-testid="grandma-input"]');
+    const input = page.locator(byWorkshopOrCockpitTestId("grandma-input"));
     await expect(input).toBeVisible();
     await input.fill("How do I fix this drawer?");
 
     // Click ASK
-    const ask = page.locator('[data-workshop-testid="grandma-ask-button"]');
+    const ask = page.locator(byWorkshopOrCockpitTestId("grandma-ask-button"));
     await ask.scrollIntoViewIfNeeded();
-    await ask.click();
+    await retryClick(ask, { tries: 3 });
 
     // Assert the response shows and contains the persona signature
     const response = page.locator('[data-testid="grandma-output"]').first();
@@ -51,7 +52,7 @@ test.describe("Ask Persona Flows (Grandma, Grandpa, Bob, Marge)", () => {
     page,
   }) => {
     await page.goto("/");
-    await page.locator('[data-workshop-testid="main-content"]').waitFor();
+    await page.locator(byWorkshopOrCockpitTestId("main-content")).waitFor();
 
     await clickFloatBtn(page);
 
@@ -63,13 +64,15 @@ test.describe("Ask Persona Flows (Grandma, Grandpa, Bob, Marge)", () => {
     // Switch persona to Grandpa
     await personaSelect.selectOption({ value: "grandpa" });
 
-    const input = page.locator('[data-workshop-testid="grandma-input"]');
+    const input = page.locator(byWorkshopOrCockpitTestId("grandma-input"));
     await expect(input).toBeVisible();
     await input.fill("How do I prune these roses?");
 
-    const askBtn = page.locator('[data-workshop-testid="grandma-ask-button"]');
+    const askBtn = page.locator(
+      byWorkshopOrCockpitTestId("grandma-ask-button"),
+    );
     await askBtn.scrollIntoViewIfNeeded();
-    await askBtn.click();
+    await retryClick(askBtn, { tries: 3 });
 
     const response = page.locator('[data-testid="grandma-output"]').first();
     // Wait for output to be present before checking text — allow long wait for AI stubbed responses
@@ -79,7 +82,7 @@ test.describe("Ask Persona Flows (Grandma, Grandpa, Bob, Marge)", () => {
 
   test("shows Bob response when persona switched", async ({ page }) => {
     await page.goto("/");
-    await page.locator('[data-workshop-testid="main-content"]').waitFor();
+    await page.locator(byWorkshopOrCockpitTestId("main-content")).waitFor();
 
     await clickFloatBtn(page);
 
@@ -90,13 +93,15 @@ test.describe("Ask Persona Flows (Grandma, Grandpa, Bob, Marge)", () => {
 
     await personaSelect.selectOption({ value: "bob" });
 
-    const input = page.locator('[data-workshop-testid="grandma-input"]');
+    const input = page.locator(byWorkshopOrCockpitTestId("grandma-input"));
     await expect(input).toBeVisible();
     await input.fill("Can I fix a loose fence post?");
 
-    const askBtn = page.locator('[data-workshop-testid="grandma-ask-button"]');
+    const askBtn = page.locator(
+      byWorkshopOrCockpitTestId("grandma-ask-button"),
+    );
     await askBtn.scrollIntoViewIfNeeded();
-    await askBtn.click();
+    await retryClick(askBtn, { tries: 3 });
 
     const response = page.locator('[data-testid="grandma-output"]').first();
     await response.waitFor({ state: "attached", timeout: 30000 });
@@ -105,7 +110,7 @@ test.describe("Ask Persona Flows (Grandma, Grandpa, Bob, Marge)", () => {
 
   test("shows Marge response when persona switched", async ({ page }) => {
     await page.goto("/");
-    await page.locator('[data-workshop-testid="main-content"]').waitFor();
+    await page.locator(byWorkshopOrCockpitTestId("main-content")).waitFor();
 
     await clickFloatBtn(page);
 
@@ -116,16 +121,88 @@ test.describe("Ask Persona Flows (Grandma, Grandpa, Bob, Marge)", () => {
 
     await personaSelect.selectOption({ value: "marge" });
 
-    const input = page.locator('[data-workshop-testid="grandma-input"]');
+    const input = page.locator(byWorkshopOrCockpitTestId("grandma-input"));
     await expect(input).toBeVisible();
     await input.fill("Help me organize a small pantry");
 
-    const askBtn = page.locator('[data-workshop-testid="grandma-ask-button"]');
+    const askBtn = page.locator(
+      byWorkshopOrCockpitTestId("grandma-ask-button"),
+    );
     await askBtn.scrollIntoViewIfNeeded();
-    await askBtn.click();
+    await retryClick(askBtn, { tries: 3 });
 
     const response = page.locator('[data-testid="grandma-output"]').first();
     await response.waitFor({ state: "attached", timeout: 30000 });
     await expect(response).toHaveText(/—Marge\./i, { timeout: 15000 });
+  });
+
+  test("shows Random persona when selected and returns a supported persona signature", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    await page.locator(byWorkshopOrCockpitTestId("main-content")).waitFor();
+
+    await clickFloatBtn(page);
+
+    const personaSelect = page
+      .locator('select[aria-label="AI persona"]')
+      .first();
+    await personaSelect.waitFor({ state: "visible" });
+
+    await personaSelect.selectOption({ value: "random" });
+
+    const input = page.locator(byWorkshopOrCockpitTestId("grandma-input"));
+    await expect(input).toBeVisible();
+    await input.fill("What's the first step to organize my room?");
+
+    const askBtn = page.locator(
+      byWorkshopOrCockpitTestId("grandma-ask-button"),
+    );
+    await askBtn.scrollIntoViewIfNeeded();
+    await retryClick(askBtn, { tries: 3 });
+
+    const response = page.locator('[data-testid="grandma-output"]').first();
+    await response.waitFor({ state: "attached", timeout: 30000 });
+    // Accept any of the persona signatures since Random picks one of them
+    await expect(response).toHaveText(
+      /Love, Grandma|—Grandpa\.|—Bob\.|—Marge\./i,
+      { timeout: 15000 },
+    );
+  });
+
+  test("Calm Guide triggers on indecision and returns a single suggestion when accepted", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    await page.locator(byWorkshopOrCockpitTestId("main-content")).waitFor();
+
+    await clickFloatBtn(page);
+
+    const personaSelect = page
+      .locator('select[aria-label="AI persona"]')
+      .first();
+    await personaSelect.waitFor({ state: "visible" });
+
+    // Rapidly toggle persona to trigger indecision
+    await personaSelect.selectOption({ value: "grandma" });
+    await personaSelect.selectOption({ value: "grandpa" });
+    await personaSelect.selectOption({ value: "bob" });
+    await personaSelect.selectOption({ value: "marge" });
+    await personaSelect.selectOption({ value: "grandma" });
+
+    // Wait for Calm Guide CTA
+    const calmBanner = page.locator('[data-testid="calm-guide-banner"]');
+    await calmBanner.waitFor({ state: "visible", timeout: 30000 });
+
+    const acceptBtn = calmBanner.locator('[data-testid="calm-guide-accept"]');
+    await retryClick(acceptBtn, { tries: 3 });
+
+    const response = page.locator('[data-testid="grandma-output"]').first();
+    await response.waitFor({ state: "attached", timeout: 30000 });
+    // Calm Guide returns a short suggestion — acceptance implies we got a message
+    await expect(response).toBeVisible();
+    await expect(response).toContainText(
+      /Calm Guide|I can help pick|If you disagree/i,
+    );
   });
 });

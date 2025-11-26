@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, type FC } from "react";
 import { useGoogleAuth } from "../hooks/useGoogleAuth";
 import {
   googleWorkspaceService,
@@ -7,6 +7,7 @@ import {
   GoogleEmail,
   GoogleDriveFile,
 } from "../src/services/googleWorkspaceService";
+import { listCalendarEvents } from "../src/services/connectors";
 import { getGrandmaAdvice } from "../src/services/geminiService";
 
 interface DashboardProps {
@@ -15,7 +16,7 @@ interface DashboardProps {
   error: string | null;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ events, loading, error }) => {
+const Dashboard: FC<DashboardProps> = ({ events, loading, error }) => {
   const { isAuthenticated, user, signIn, signOut, accessToken } =
     useGoogleAuth();
   const [tasks, setTasks] = useState<GoogleTask[]>([]);
@@ -27,6 +28,16 @@ const Dashboard: React.FC<DashboardProps> = ({ events, loading, error }) => {
   useEffect(() => {
     if (isAuthenticated && accessToken) {
       loadWorkspaceData();
+    } else {
+      // If not authenticated we can still show offline or public sample events
+      (async () => {
+        try {
+          const evts = await listCalendarEvents(true);
+          // Client's prop 'events' passed from parent could be updated by parent or state; but for quick demo we won't mutate props
+        } catch (err) {
+          // ignore
+        }
+      })();
     }
   }, [isAuthenticated, accessToken]);
 

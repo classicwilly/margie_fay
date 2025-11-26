@@ -84,68 +84,15 @@ app.use("/api/", limiter);
 
 // Server-side Gemini proxy. This keeps the API key out of client bundles and provides one place
 // for PII sanitization, telemetry, and abuse-mitigation. Use process.env.GEMINI_API_KEY on the server.
-app.post("/api/gemini", async (req, res) => {
-  try {
-    const { prompt, systemInstruction, maxTokens } = req.body || {};
-    if (!prompt) return res.status(400).json({ error: "Missing prompt" });
+import { getPersonaInstruction } from "./server/personas.js";
+import geminiRouter from "./server/geminiProxyRoutes.js";
 
-    // Sanitize prompt with the same PII scrub used in functions/pii_sanitizer.js
-    // We intentionally keep this minimal; in production use a vetted library
-    const piiModule = await import("./functions/pii_sanitizer.js");
-    const { scrubPII } = (piiModule &&
-      (piiModule.scrubPII ? piiModule : piiModule.default)) || {
-      scrubPII: (text) => ({ text, found: [] }),
-    };
-    const { text: sanitized, found } = scrubPII(prompt);
+app.use("/api/gemini", geminiRouter);
 
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey)
-      return res.status(500).json({ error: "Server missing GEMINI_API_KEY" });
-
-    // Forward to Google Generative AI endpoint
-    const model =
-      process.env.GEMINI_MODEL || "gemini-2.5-flash-preview-09-2025";
-    const url = `https://generativeai.googleapis.com/v1/models/${model}:generate`;
-    const body = {
-      prompt: [
-        { role: "system", content: systemInstruction || "" },
-        { role: "user", content: sanitized },
-      ],
-      maxOutputTokens: maxTokens || 512,
-      temperature: 0.6,
-    };
-
-    const cacheKey = crypto
-      .createHash("sha256")
-      .update(`${model}|${sanitized}|${systemInstruction}|${maxTokens}`)
-      .digest("hex");
-    const cached = await (cache && cache.get ? cache.get(cacheKey) : null);
-    if (cached) return res.json({ ...cached, _cached: true });
-
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify(body),
-    });
-    const json = await response.json();
-    // Remove any identifying traces from the response as an extra precaution if necessary
-    try {
-      if (cache && cache.set) cache.set(cacheKey, json);
-    } catch (e) {
-      /* noop */
-    }
-    return res.json({ ...json, _sanitized: !!found.length });
-  } catch (err) {
-    console.error("Gemini proxy error", err);
-    if (Sentry.getCurrentHub().getClient()) {
-      Sentry.captureException(err);
-    }
-    return res.status(500).json({ error: "Gemini proxy error" });
-  }
-});
+// Backwards compatible route: keep POST /api/gemini for anyone hitting exact path
+// (the router handles the route)
+// Backwards compatible /api/gemini POST handler removed — the router `geminiProxyRoutes.js` handles the route instead.
+// The previous fallback logic was intentionally removed to avoid duplicate processing and to keep a single source of truth.
 
 if (promClient) {
   // Custom counters for application telemetry
@@ -217,6 +164,48 @@ import googleWorkspaceRoutes from "./server/googleWorkspaceRoutes.js";
 app.use("/api/google", googleWorkspaceRoutes);
 import googleAuthRoutes from "./server/googleAuthRoutes.js";
 app.use("/api/google", googleAuthRoutes);
+import githubAuthRoutes from "./server/githubAuthRoutes.js";
+app.use("/api/github", githubAuthRoutes);
+import discordAuthRoutes from "./server/discordAuthRoutes.js";
+app.use("/api/discord", discordAuthRoutes);
+import discordWebhooks from "./server/discordWebhooks.js";
+app.use("/api/discord/webhooks", discordWebhooks);
+import discordVoiceRoutes from "./server/discordVoiceRoutes.js";
+app.use("/api/discord/voice", discordVoiceRoutes);
+// Periodically refresh the GitHub App service token if installed
+try {
+  const { createInstallationToken } = await import(
+    "./server/connectors/index.js"
+  );
+  if (process.env.GITHUB_APP_ID && process.env.GITHUB_SERVICE_INSTALLATION_ID) {
+    const rotationInterval = Number(
+      process.env.GITHUB_SERVICE_ROTATION_SECONDS || 60 * 60 * 6,
+    ); // default 6 hours
+    const rotate = async () => {
+      try {
+        const token = await createInstallationToken(
+          process.env.GITHUB_SERVICE_INSTALLATION_ID,
+        );
+        if (token) {
+          await cache.set("github_service_token", { token });
+          process.env.GITHUB_SERVICE_TOKEN = token; // useful for connectors that read env
+          app.get("auditLogger")?.("github.service.rotate", { ts: Date.now() });
+          console.log("Rotated GitHub service token");
+        }
+      } catch (e) {
+        console.warn("Failed to rotate GitHub service token", e?.message || e);
+      }
+    };
+    // Rotate immediately and then on interval
+    rotate();
+    setInterval(rotate, rotationInterval * 1000);
+  }
+} catch (e) {
+  console.warn(
+    "GitHub App token rotation not configured or failed to import",
+    e?.message || e,
+  );
+}
 // Mount security middleware and AI proxy routes
 import aiProxyRoutes from "./server/aiProxyRoutes.js";
 import { auditLoggerFactory } from "./server/securityMiddleware.js";
@@ -224,7 +213,48 @@ import { auditLoggerFactory } from "./server/securityMiddleware.js";
 const auditStore = [];
 app.set("auditStore", auditStore);
 app.set("auditLogger", auditLoggerFactory(app));
+// initialize webhook queue for background processors
+app.set("webhookQueue", []);
 app.use("/api/ai", aiProxyRoutes);
+// Start the webhook processor (polls the webhookQueue and executes jobs)
+import initWebhookProcessor from "./server/webhookProcessor.js";
+import { createQueue } from "./server/queue.js";
+
+// Create a queue instance: prefer Redis when configured
+const queue = createQueue(process.env.REDIS_URL);
+app.set("webhookQueue", queue);
+// Hook queue disconnection for graceful shutdown
+app.set("queueClient", queue);
+initWebhookProcessor(app).catch(() => {});
+// Start the Discord bot worker (if configured). Use a runtime-eval import so
+// bundlers like Vite do not resolve optional Discord dependencies during
+// transform time; only import if an env flag or token indicates the bot
+// should be started.
+try {
+  const enableBot =
+    (process.env.DISCORD_ENABLE_BOT_WORKER || "false").toLowerCase() === "true";
+  const hasToken = !!process.env.DISCORD_SERVICE_BOT_TOKEN;
+  if (enableBot || hasToken) {
+    (async () => {
+      try {
+        const mod = await eval('import("./server/discordBotWorker.js")');
+        const initDiscordBotWorker = mod?.default || mod?.initDiscordBotWorker;
+        if (typeof initDiscordBotWorker === "function") {
+          initDiscordBotWorker(app).catch((e) =>
+            console.warn("Discord bot worker failed to start", e?.message || e),
+          );
+        }
+      } catch (e) {
+        console.warn("Discord bot worker import failed", e?.message || e);
+      }
+    })();
+  }
+} catch (e) {
+  console.warn(
+    "Failed to check Discord bot worker enablement",
+    e?.message || e,
+  );
+}
 
 // Catch-all: Serve SPA for non-API routes. This MUST come AFTER API endpoints above.
 app.get("*", (req, res) => {

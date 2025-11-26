@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useAppState } from "@contexts/AppStateContext";
 import { Button } from "./Button";
 import { generateId } from "@utils/generateId";
-import type { ProfileStack } from "../types";
+import type { ProfileStack, DashboardType } from "../types";
+import type { AppState } from "../contexts/types";
 import { dualTestId } from "@utils/dualTestId";
 
-const personas = ["william", "willow", "sebastian"];
+const personas: DashboardType[] = ["william", "willow", "sebastian"];
 const audioOptions = [
   "none",
   "brown_noise",
@@ -29,7 +30,7 @@ const ProfileStackBuilder = () => {
 
   const [editStack, setEditStack] = useState<ProfileStack | null>(null);
   const [stackName, setStackName] = useState("");
-  const [persona, setPersona] = useState(personas[0]);
+  const [persona, setPersona] = useState<DashboardType>(personas[0]);
   const [audio, setAudio] = useState(audioOptions[0]);
   const [visual, setVisual] = useState(visualOptions[0]);
   const [oral, setOral] = useState(oralOptions[0]);
@@ -46,10 +47,10 @@ const ProfileStackBuilder = () => {
     setNotes("");
   }, [activeProfileStackId]);
 
-  const handleEdit = (stack: ProfileStack) => {
-    setEditStack(stack);
+  const handleEdit = (stack: AppState["profileStacks"][0]) => {
+    setEditStack(stack as ProfileStack);
     setStackName(stack.name);
-    setPersona(stack.persona);
+    setPersona(stack.persona as DashboardType);
     setAudio(stack.audio);
     setVisual(stack.visual);
     setOral(stack.oral);
@@ -61,14 +62,14 @@ const ProfileStackBuilder = () => {
       return;
     }
 
-    const newStack: ProfileStack = {
+    const newStack: AppState["profileStacks"][0] = {
       id: editStack ? editStack.id : generateId(),
       name: stackName.trim(),
       persona,
       audio,
       visual,
       oral,
-      notes,
+      notes: notes || "",
       createdAt: editStack ? editStack.createdAt : new Date().toISOString(),
     };
 
@@ -112,10 +113,10 @@ const ProfileStackBuilder = () => {
           >
             Stack Name:
           </label>
-            <input
+          <input
             type="text"
             id="stack-name"
-              {...dualTestId("cockpit-name-input", "workshop-name-input")}
+            {...dualTestId("cockpit-name-input", "workshop-name-input")}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-800 border-gray-700"
             value={stackName}
             onChange={(e) => setStackName(e.target.value)}
@@ -133,7 +134,7 @@ const ProfileStackBuilder = () => {
             {...dualTestId("cockpit-persona-select", "workshop-persona-select")}
             className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-800 border-gray-700"
             value={persona}
-            onChange={(e) => setPersona(e.target.value)}
+            onChange={(e) => setPersona(e.target.value as DashboardType)}
           >
             {personas.map((p) => (
               <option key={p} value={p}>
@@ -263,10 +264,13 @@ const ProfileStackBuilder = () => {
               </div>
               <div className="flex space-x-2">
                 <Button
-                  onClick={() => handleEdit(stack)}
+                  onClick={() => handleEdit(stack as any)}
                   variant="secondary"
                   size="sm"
-                  {...dualTestId(`cockpit-edit-${stack.id}`, `workshop-edit-${stack.id}`)}
+                  {...dualTestId(
+                    `cockpit-edit-${stack.id}`,
+                    `workshop-edit-${stack.id}`,
+                  )}
                 >
                   Edit
                 </Button>
@@ -274,9 +278,12 @@ const ProfileStackBuilder = () => {
                   onClick={() =>
                     dispatch({ type: "APPLY_PROFILE_STACK", payload: stack.id })
                   }
-                  variant="success"
+                  variant="primary"
                   size="sm"
-                  {...dualTestId(`cockpit-apply-${stack.id}`, `workshop-apply-${stack.id}`)}
+                  {...dualTestId(
+                    `cockpit-apply-${stack.id}`,
+                    `workshop-apply-${stack.id}`,
+                  )}
                 >
                   Apply
                 </Button>
@@ -284,7 +291,10 @@ const ProfileStackBuilder = () => {
                   onClick={() => handleDelete(stack.id)}
                   variant="danger"
                   size="sm"
-                  {...dualTestId(`cockpit-delete-${stack.id}`, `workshop-delete-${stack.id}`)}
+                  {...dualTestId(
+                    `cockpit-delete-${stack.id}`,
+                    `workshop-delete-${stack.id}`,
+                  )}
                 >
                   Delete
                 </Button>

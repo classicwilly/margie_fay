@@ -1,7 +1,7 @@
-import React from "react";
+import type { FC } from "react";
 import ProtocolView from "./ProtocolView.js";
 
-const DeveloperComplianceProtocol = () => {
+const DeveloperComplianceProtocol: FC = () => {
   return (
     <ProtocolView
       sourceDocument="Developer Compliance Protocol"

@@ -1,10 +1,9 @@
-import React from "react";
 import { motion } from "framer-motion";
 import GardenView from "./components/GardenView";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type FC, type ReactNode } from "react";
 import MarkdownStory from "./components/MarkdownStory";
 
-const DemoPage = () => {
+const DemoPage: FC = () => {
   const [story, setStory] = useState("");
   const [memories, setMemories] = useState<string[]>([
     "First family picnic in the Sprout Garden!",
@@ -114,10 +113,10 @@ const DemoPage = () => {
   );
 };
 
-const SectionWithAnimation: React.FC<{
-  children: React.ReactNode;
-  delay: number;
-}> = ({ children, delay }) => (
+const SectionWithAnimation: FC<{ children: ReactNode; delay: number }> = ({
+  children,
+  delay,
+}) => (
   <motion.section
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}

@@ -9,7 +9,7 @@ const SopForm = () => {
   const generatedSopDraft = appState?.generatedSopDraft ?? null;
   const editingSopId = appState?.editingSopId ?? null;
   const userSops = appState?.userSops ?? [];
-  const modifiedSops = appState?.modifiedSops ?? {};
+  const modifiedSops = (appState?.modifiedSops ?? {}) as Record<string, any>;
   const activeSopTemplate = appState?.activeSopTemplate ?? null;
   const newSopType = appState?.newSopType ?? null;
 
@@ -32,12 +32,18 @@ const SopForm = () => {
   );
 
   const isEditingCoreSop = useMemo(
-    () => isEditMode && SOP_DATA.some((s) => s.id === editingSopId),
+    () =>
+      isEditMode &&
+      typeof editingSopId === "string" &&
+      SOP_DATA.some((s) => s.id === editingSopId),
     [isEditMode, editingSopId],
   );
 
   const isCoreSopModified = useMemo(
-    () => isEditingCoreSop && !!modifiedSops[editingSopId],
+    () =>
+      isEditingCoreSop &&
+      editingSopId &&
+      !!modifiedSops[editingSopId as string],
     [isEditingCoreSop, modifiedSops, editingSopId],
   );
 
@@ -47,7 +53,7 @@ const SopForm = () => {
     if (isEditMode) {
       sopToLoad = allSops.find((s) => s.id === editingSopId) || null;
     } else if (generatedSopDraft) {
-      sopToLoad = { ...generatedSopDraft, id: "", category: "" }; // Adapt draft to SOP-like structure
+      sopToLoad = { ...(generatedSopDraft as any), id: "", category: "" }; // Adapt draft to SOP-like structure
       dispatch({ type: "SET_GENERATED_SOP_DRAFT", payload: null });
     } else if (activeSopTemplate) {
       sopToLoad = activeSopTemplate;
@@ -277,7 +283,7 @@ const SopForm = () => {
                   type="text"
                   value={step}
                   onChange={(e) => handleStepChange(index, e.target.value)}
-                  className="flex-grow p-2 bg-gray-800 border border-gray-600 rounded"
+                  className="grow p-2 bg-gray-800 border border-gray-600 rounded"
                   placeholder="Action to be executed..."
                 />
                 {steps.length > 1 && (
@@ -320,7 +326,7 @@ const SopForm = () => {
                   onChange={(e) =>
                     handleTaskTemplateChange(index, "title", e.target.value)
                   }
-                  className="flex-grow p-2 bg-gray-900 border border-gray-600 rounded"
+                  className="grow p-2 bg-gray-900 border border-gray-600 rounded"
                   placeholder="Task title..."
                 />
                 <select
@@ -372,7 +378,7 @@ const SopForm = () => {
                       type="text"
                       value={cue}
                       onChange={(e) => handleCueChange(index, e.target.value)}
-                      className="flex-grow p-2 bg-gray-800 border border-gray-600 rounded"
+                      className="grow p-2 bg-gray-800 border border-gray-600 rounded"
                       placeholder={`Cue ${index + 1}...`}
                     />
                     {cues.length > 1 && (

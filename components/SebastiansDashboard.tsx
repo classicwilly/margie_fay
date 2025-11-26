@@ -1,8 +1,8 @@
-import React from "react";
+import type { FC } from "react";
 import { useAppState } from "@contexts/AppStateContext";
 import { componentMap } from "./componentMap.js";
 
-const SebastiansDashboard = () => {
+const SebastiansDashboard: FC = () => {
   const { appState, dispatch } = useAppState();
   const { sebastianDashboardModules, isModMode } = appState;
 
@@ -10,7 +10,7 @@ const SebastiansDashboard = () => {
     dispatch({ type: "SET_VIEW", payload: "sebastian-dashboard-builder" });
   };
 
-  const getGridColsClass = (count) => {
+  const getGridColsClass = (count: number) => {
     if (count <= 1) {
       return "grid-cols-1";
     }

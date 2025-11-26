@@ -1,8 +1,11 @@
-import React from "react";
+import type { FC, ReactNode } from "react";
 import { useAppState } from "@contexts/AppStateContext";
 import { Button } from "./Button";
 
-const ModuleViewWrapper = ({ title, children }) => {
+const ModuleViewWrapper: FC<{ title?: string; children?: ReactNode }> = ({
+  title,
+  children,
+}) => {
   const { dispatch } = useAppState();
 
   const handleBack = () => {

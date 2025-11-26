@@ -8,24 +8,60 @@ export async function applyAiStub(
   // For CI we rely on PLAYWRIGHT_AI_STUB=true; for local deterministic runs, pass { force: true }.
   if (!opts.force && process.env.PLAYWRIGHT_AI_STUB !== "true") return;
 
-  const body = JSON.stringify({
-    status: "ok",
-    model: "stub-v1",
-    choices: [{ text: opts.text || "ok from ai (stubbed)", index: 0 }],
-    // Provide a JSON payload that `useSafeAI` expects for `application/json` responses
-    summary: opts.summary || "ok from ai",
-    assist: opts.assist || "AI stub assist text",
-    meta: { stub: true },
-  });
-
+  const defaultBody = (persona?: string) => {
+    const signatureMap: Record<string, string> = {
+      grandma: "Love, Grandma",
+      grandpa: "Love, Grandpa",
+      marge: "Love, Margie",
+      bob: "Love, Bob",
+    };
+    const signature = persona
+      ? `\n\n${signatureMap[(persona || "").toLowerCase()] || persona}`
+      : "";
+    return JSON.stringify({
+      status: "ok",
+      model: "stub-v1",
+      choices: [
+        { text: opts.text || `ok from ai (stubbed)${signature}`, index: 0 },
+      ],
+      // Provide a JSON payload that `useSafeAI` expects for `application/json` responses
+      summary: opts.summary || "ok from ai",
+      assist: opts.assist || "AI stub assist text",
+      meta: { stub: true },
+    });
+  };
   // Register the route at both page and context level to ensure the service worker
   // or other worker contexts don't bypass our stubbed responses.
   try {
     await page.context().route("**/aiProxy**", (route) => {
+      // Try to detect persona or other hints in the request body
+      let persona = "";
+      try {
+        const data = route.request().postData();
+        if (data) {
+          const parsed = JSON.parse(data as string);
+          // Support both message-based and explicit persona fields
+          if (parsed.persona) persona = parsed.persona;
+          if (Array.isArray(parsed.messages)) {
+            parsed.messages.forEach((m: any) => {
+              if (
+                typeof m.content === "string" &&
+                /grandma|grandpa|marge|bob/i.test(m.content)
+              ) {
+                const match = (m.content.match(/grandma|grandpa|marge|bob/i) ||
+                  [])[0];
+                if (match) persona = match;
+              }
+            });
+          }
+        }
+      } catch (e) {
+        /* ignore parse errors */
+      }
       route.fulfill({
         status: opts.status || 200,
         headers: { "Content-Type": "application/json" },
-        body,
+        body: defaultBody(persona),
       });
     });
     console.log("AI stub: context route for **/aiProxy** registered");
@@ -37,10 +73,32 @@ export async function applyAiStub(
     );
   }
   await page.route("**/aiProxy**", (route) => {
+    let persona = "";
+    try {
+      const data = route.request().postData();
+      if (data) {
+        const parsed = JSON.parse(data as string);
+        if (parsed.persona) persona = parsed.persona;
+        if (Array.isArray(parsed.messages)) {
+          parsed.messages.forEach((m: any) => {
+            if (
+              typeof m.content === "string" &&
+              /grandma|grandpa|marge|bob/i.test(m.content)
+            ) {
+              const match = (m.content.match(/grandma|grandpa|marge|bob/i) ||
+                [])[0];
+              if (match) persona = match;
+            }
+          });
+        }
+      }
+    } catch (e) {
+      /* ignore parse errors */
+    }
     route.fulfill({
       status: opts.status || 200,
       headers: { "Content-Type": "application/json" },
-      body,
+      body: defaultBody(persona),
     });
   });
   console.log("AI stub: page route for **/aiProxy** registered");

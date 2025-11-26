@@ -138,7 +138,7 @@ const FoundationalProtocols: React.FC = () => {
               <div className="space-y-3">
                 {(formData.steps || []).map((step, index) => (
                   <div key={index} className="flex items-center space-x-2">
-                    <span className="text-text-light font-bold flex-shrink-0 w-8">
+                    <span className="text-text-light font-bold shrink-0 w-8">
                       {index + 1}.
                     </span>
                     <input
@@ -151,7 +151,7 @@ const FoundationalProtocols: React.FC = () => {
                         )
                       }
                       aria-label={`Edit step ${index + 1}`}
-                      className="flex-grow p-3 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue"
+                      className="grow p-3 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue"
                     />
                   </div>
                 ))}

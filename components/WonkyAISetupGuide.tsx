@@ -1,22 +1,26 @@
-import React, { useState } from "react";
+import { useState, type FC } from "react";
+import { usePrefersReducedMotion } from "../src/hooks/usePrefersReducedMotion";
+import { useSimplifiedMode } from "../src/contexts/SimplifiedModeContext";
 import { useAppState } from "@contexts/AppStateContext";
 import ContentCard from "./ContentCard.js";
 import { useFeatureFlags } from "@contexts/FeatureFlagsContext";
-import { ALL_WILLIAM_MODULES_CONFIG } from "../constants.js";
+import { ALL_WILLIAM_MODULES_CONFIG } from "../src/constants";
 
 // NOTE: Filename is legacy. This component is now the full OnboardingGuide.
-const WonkyAISetupGuide = () => {
+const WonkyAISetupGuide: FC = () => {
   const { appState, dispatch } = useAppState();
   const [step, setStep] = useState("apiKey");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const reduced = usePrefersReducedMotion();
+  const { simplifiedMode } = useSimplifiedMode();
+  const [error, setError] = useState<string | null>(null);
 
   // State for dashboard setup step
   const [selectedModules, setSelectedModules] = useState(
     appState.williamDashboardModules,
   );
 
-  const handleToggleModule = (moduleId, enable) => {
+  const handleToggleModule = (moduleId: string, enable: boolean) => {
     setSelectedModules((prev) => {
       if (enable && !prev.includes(moduleId)) {
         return [...prev, moduleId];
@@ -38,8 +42,9 @@ const WonkyAISetupGuide = () => {
     setLoading(true);
     setError(null);
     try {
-      if (typeof window.aistudio?.openSelectKey === "function") {
-        await window.aistudio.openSelectKey();
+      const aistudio = (window as any).aistudio;
+      if (typeof aistudio?.openSelectKey === "function") {
+        await aistudio.openSelectKey();
         handleApiKeySuccess();
       } else {
         setError(
@@ -48,13 +53,19 @@ const WonkyAISetupGuide = () => {
         setLoading(false);
       }
     } catch (e) {
-      if (e.message && e.message.includes("Requested entity was not found.")) {
+      if (
+        typeof e === "object" &&
+        e !== null &&
+        "message" in e &&
+        typeof (e as any).message === "string" &&
+        (e as any).message.includes("Requested entity was not found.")
+      ) {
         setError(
           "Selected API key is invalid or not found. Please select a valid key.",
         );
       } else {
         setError(
-          `Error opening API Key selector: ${e.message || "Unknown error"}`,
+          `Error opening API Key selector: ${(e as any).message || "Unknown error"}`,
         );
       }
       console.error("Error opening API key selector:", e);
@@ -102,7 +113,7 @@ const WonkyAISetupGuide = () => {
           <button
             onClick={handleSelectKey}
             disabled={loading}
-            className="w-full px-8 py-4 bg-accent-blue text-background-dark text-xl font-bold rounded-md hover:bg-blue-400 transition-colors duration-200 disabled:bg-gray-600 disabled:cursor-not-allowed flex items-center justify-center"
+            className={`w-full px-8 py-4 bg-accent-blue text-background-dark text-xl font-bold rounded-md hover:bg-blue-400 ${!reduced && !simplifiedMode ? "transition-colors duration-200" : ""} disabled:bg-gray-600 disabled:cursor-not-allowed flex items-center justify-center`}
             aria-label="Get Started and Select API Key"
           >
             {loading ? "Opening..." : "Select API Key"}
@@ -110,7 +121,7 @@ const WonkyAISetupGuide = () => {
           <div className="mt-4 text-center">
             <button
               onClick={handleSkipAI}
-              className="text-sm text-gray-300 underline"
+              className={`text-sm text-gray-300 underline ${simplifiedMode ? "opacity-90" : ""}`}
             >
               Skip AI & Continue in Manual Mode
             </button>
@@ -188,7 +199,7 @@ const WonkyAISetupGuide = () => {
 
             <button
               onClick={() => setStep("dashboardSetup")}
-              className="w-full px-8 py-4 bg-accent-green text-background-dark text-xl font-bold rounded-md hover:bg-green-500 transition-colors duration-200"
+              className={`w-full px-8 py-4 bg-accent-green text-background-dark text-xl font-bold rounded-md hover:bg-green-500 ${!reduced && !simplifiedMode ? "transition-colors duration-200" : ""}`}
               aria-label="Finish Briefing and Proceed to Dashboard Setup"
             >
               Briefing Complete: Proceed to Dashboard Setup
@@ -201,9 +212,9 @@ const WonkyAISetupGuide = () => {
 
   if (step === "dashboardSetup") {
     // FIX: Specified the exact string literals for the category to satisfy TypeScript.
-    const renderModuleCategory = (category, title) => {
+    const renderModuleCategory = (category: string, title: string) => {
       const modules = ALL_WILLIAM_MODULES_CONFIG.filter(
-        (m) => m.category === category,
+        (m: any) => m.category === category,
       );
       if (modules.length === 0) {
         return null;
@@ -212,7 +223,7 @@ const WonkyAISetupGuide = () => {
       return (
         <ContentCard title={title} titleClassName="text-accent-blue text-2xl">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {modules.map((module) => (
+            {modules.map((module: any) => (
               <div
                 key={module.id}
                 className={`flex flex-col justify-between p-3 bg-gray-800 rounded-md border border-gray-700 h-full ${!module.isRemovable ? "opacity-70" : ""}`}

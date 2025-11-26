@@ -135,14 +135,18 @@ const CriticalTasks = () => {
           onChange={() => handleToggleComplete(task)}
           className="h-5 w-5 rounded bg-gray-700 border-gray-600 text-accent-blue focus:ring-accent-blue"
           aria-label={`Complete task: ${task.title}`}
+          data-workshop-testid="physical-task-checkbox"
         />
-        <span className="flex-grow">{task.title}</span>
+        <span className="grow">{task.title}</span>
       </div>
     );
   };
 
   return (
-    <details className="p-3 bg-gray-800 rounded-md border border-gray-700">
+    <details
+      className="p-3 bg-gray-800 rounded-md border border-gray-700"
+      data-workshop-testid="critical-tasks-module"
+    >
       {isConsentModalOpen && (
         <AIConsentModal
           onConfirm={handleConfirm}

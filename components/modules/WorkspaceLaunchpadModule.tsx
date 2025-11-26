@@ -1,9 +1,9 @@
-import React from "react";
+import type { FC } from "react";
 import ContentCard from "../ContentCard";
 import { Button } from "../Button";
 import { useAppState } from "@contexts/AppStateContext";
 
-export const WorkspaceLaunchpadModule = () => {
+export const WorkspaceLaunchpadModule: FC = () => {
   const { dispatch } = useAppState();
 
   const quickActions = [

@@ -49,7 +49,7 @@ const HabitStreakTrackerModule = () => {
             analysis.
           </p>
 
-          <div className="flex-grow space-y-3 mb-4 overflow-y-auto max-h-72 pr-2">
+          <div className="grow space-y-3 mb-4 overflow-y-auto max-h-72 pr-2">
             {habits.length > 0 ? (
               habits.map((habit) => {
                 const isDoneToday = log[todayStr]?.includes(habit.id);
@@ -60,7 +60,7 @@ const HabitStreakTrackerModule = () => {
                     className={`w-full text-left p-3 rounded-md border transition-colors ${isDoneToday ? "bg-accent-green/10 border-accent-green/30 hover:bg-accent-green/20" : "bg-gray-800 border-gray-700 hover:bg-gray-700"}`}
                   >
                     <div className="flex justify-between items-center">
-                      <p className="font-bold text-accent-teal break-words">
+                      <p className="font-bold text-accent-teal wrap-break-word">
                         {habit.name}
                       </p>
                       <button

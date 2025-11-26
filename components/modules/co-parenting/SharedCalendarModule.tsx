@@ -106,7 +106,7 @@ const SharedCalendarModule = () => {
                 title={event.title}
               >
                 <span
-                  className={`w-2 h-2 rounded-full mr-2 flex-shrink-0 ${eventTypeColors[event.type]}`}
+                  className={`w-2 h-2 rounded-full mr-2 shrink-0 ${eventTypeColors[event.type]}`}
                 ></span>
                 {event.title}
               </div>
@@ -284,7 +284,7 @@ const SharedCalendarModule = () => {
               >
                 <div className="flex items-center">
                   <span
-                    className={`w-3 h-3 rounded-full mr-3 flex-shrink-0 ${eventTypeColors[event.type]}`}
+                    className={`w-3 h-3 rounded-full mr-3 shrink-0 ${eventTypeColors[event.type]}`}
                   ></span>
                   <div>
                     <div className="font-semibold">{event.title}</div>

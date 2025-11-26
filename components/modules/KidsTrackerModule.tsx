@@ -1,12 +1,17 @@
-import React from "react";
+import type { FC } from "react";
 import { useAppState } from "@contexts/AppStateContext";
 
 import ContentCard from "../ContentCard"; // Adjusted path
 import TextInputItem from "../TextInputItem"; // Adjusted path
 
-const StatusButton = ({ label, isActive, onClick }) => {
+interface StatusButtonProps {
+  label: string;
+  isActive: boolean;
+  onClick: () => void;
+}
+const StatusButton: FC<StatusButtonProps> = ({ label, isActive, onClick }) => {
   const baseClass =
-    "px-2 py-1 rounded-md text-xs font-semibold transition-colors w-full break-words";
+    "px-2 py-1 rounded-md text-xs font-semibold transition-colors w-full break-word";
   const activeClass = "bg-accent-blue text-background-dark";
   const inactiveClass = "bg-gray-700 hover:bg-gray-600";
   return (
@@ -19,14 +24,18 @@ const StatusButton = ({ label, isActive, onClick }) => {
   );
 };
 
-const KidStatus = ({ name, idPrefix, emoji }) => {
+const KidStatus: FC<{
+  name: "Willow" | "Sebastian";
+  idPrefix: string;
+  emoji: string;
+}> = ({ name, idPrefix, emoji }) => {
   const { appState, dispatch } = useAppState();
   const isWillow = name === "Willow";
   const location = isWillow
     ? appState.kidsWillowLocation
     : appState.kidsSebastianLocation;
 
-  const setLocation = (loc) => {
+  const setLocation = (loc: string) => {
     dispatch({
       type: "SET_KID_LOCATION",
       payload: { kid: isWillow ? "willow" : "sebastian", location: loc },
@@ -64,7 +73,7 @@ const KidStatus = ({ name, idPrefix, emoji }) => {
   );
 };
 
-const KidsTrackerModule = () => {
+const KidsTrackerModule: FC = () => {
   return (
     <ContentCard title="👶 Kids Status">
       <div className="space-y-4">

@@ -1,7 +1,7 @@
-import React from "react";
+import type { FC } from "react";
 import ProtocolView from "./ProtocolView.js";
 
-const AISafetyProtocol = () => {
+const AISafetyProtocol: FC = () => {
   return (
     <ProtocolView
       sourceDocument="AI Safety Protocol"

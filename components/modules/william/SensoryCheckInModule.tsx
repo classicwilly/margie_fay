@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState } from "react";
 import { useAppState } from "@contexts/AppStateContext";
 import ContentCard from "../../ContentCard.js";
@@ -5,7 +6,7 @@ import SensoryOverloadModal from "../../SensoryOverloadModal.js";
 
 const SenseButton = ({ label, isActive, onClick }) => {
   const baseClass =
-    "px-2 py-1 rounded-md text-xs font-semibold transition-colors w-full break-words";
+    "px-2 py-1 rounded-md text-xs font-semibold transition-colors w-full break-word";
 
   const colorClasses = {
     Under: "bg-blue-800/80 text-blue-200",

@@ -1,10 +1,11 @@
-import React from "react";
+import { useRef } from "react";
+import type { FC } from "react";
 import useProgressVar from "../hooks/useProgressVar";
 import { useAppState } from "@contexts/AppStateContext";
 import ContentCard from "./ContentCard";
 import { ALL_ACHIEVEMENTS, ADULT_REWARD_TIERS, RewardTier } from "../constants";
 
-const Achievement: React.FC<{
+const Achievement: FC<{
   emoji: string;
   label: string;
   collected: boolean;
@@ -60,7 +61,7 @@ const RewardTierCard: React.FC<{ tier: RewardTier; isUnlocked: boolean }> = ({
   );
 };
 
-const AchievementTracker: React.FC = () => {
+const AchievementTracker: FC = () => {
   const { appState } = useAppState();
   // `collectedAchievements` is stored as a map { [id]: { unlockedAt: string } }
   // We derive the count and membership from the map for backward compatibility.
@@ -80,13 +81,13 @@ const AchievementTracker: React.FC = () => {
   const progressPercentage = nextTier
     ? (collectedCount / nextTier.threshold) * 100
     : 100;
-  const progressRef = React.useRef<HTMLDivElement | null>(null);
+  const progressRef = useRef<HTMLDivElement | null>(null);
   useProgressVar(progressRef, progressPercentage);
 
   return (
     <ContentCard title="🏆 Achievement System">
       <div className="flex flex-col h-full">
-        <div className="flex-grow overflow-y-auto pr-2">
+        <div className="grow overflow-y-auto pr-2">
           <div className="mb-4">
             {nextTier ? (
               <>
@@ -104,7 +105,7 @@ const AchievementTracker: React.FC = () => {
                   </span>
                   <div
                     ref={progressRef}
-                    className="bg-gradient-to-r from-accent-blue to-accent-green h-3 rounded-full transition-all duration-500 progress-fill"
+                    className="bg-linear-to-r from-accent-blue to-accent-green h-3 rounded-full transition-all duration-500 progress-fill"
                   />
                 </div>
               </>

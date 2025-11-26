@@ -1,3 +1,13 @@
+// Module configuration type for dashboard modules
+export interface DashboardModuleConfig {
+  id: string;
+  name: string;
+  description: string;
+  category: string;
+  isRemovable?: boolean;
+}
+
+// William's dashboard modules
 import { ALL_CHECKLIST_DATA } from "./checklist-data.js";
 
 export const SOP_DATA = [

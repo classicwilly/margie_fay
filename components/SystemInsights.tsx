@@ -1,4 +1,4 @@
-import React from "react";
+import type { FC } from "react";
 import AITrendAnalysis from "./insights/AITrendAnalysis.js";
 import HabitHeatmap from "./insights/HabitHeatmap.js";
 import ExpenseBreakdown from "./insights/ExpenseBreakdown.js";
@@ -6,7 +6,7 @@ import SpendingVelocityChart from "./insights/SpendingVelocityChart.js";
 import AIFinancialAnalysis from "./insights/AIFinancialAnalysis.js";
 import AIRealtimeDiagnostic from "./insights/AIRealtimeDiagnostic.js";
 
-const SystemInsights = () => {
+const SystemInsights: FC = () => {
   return (
     <div>
       <header className="text-center mb-10">

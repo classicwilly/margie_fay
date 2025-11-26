@@ -1,5 +1,5 @@
 import { test, expect } from "./playwright-fixtures";
-import { byWorkshopOrCockpitTestId } from './helpers/locators';
+import { byWorkshopOrCockpitTestId } from "./helpers/locators";
 
 // Increase timeout for this file because the cockpit flow can be slow to
 // resolve in CI when many components and seeded state are involved.
@@ -114,7 +114,9 @@ test("Workshop Module — shows seeded active stack and can add a new profile st
     console.log("APP STATE VIEW", appView);
   } catch (e) {}
   // Ensure we are in the Workshop view via nav click (fallback for views that require nav triggers)
-  let navWorkshop = page.getByTestId("nav-workshop").first();
+  let navWorkshop = page
+    .locator(byWorkshopOrCockpitTestId("nav-workshop"))
+    .first();
   try {
     if ((await navWorkshop.count()) === 0)
       navWorkshop = page
@@ -202,7 +204,9 @@ test("Workshop Module — shows seeded active stack and can add a new profile st
     /* ignore because this is best-effort */
   }
   // Prefer data-testid when available; otherwise fallback to heading regex for 'DAY' or 'Workshop'
-  let header = page.locator(byWorkshopOrCockpitTestId('workshop-title')).first();
+  let header = page
+    .locator(byWorkshopOrCockpitTestId("workshop-title"))
+    .first();
   if ((await header.count()) === 0)
     header = page
       .getByRole("heading", { name: /DAY|Workshop|Profile|Stack/i })
@@ -210,7 +214,9 @@ test("Workshop Module — shows seeded active stack and can add a new profile st
   await expect(header).toBeVisible({ timeout: 15000 });
 
   // 3. Verify Active Stack Card matches the seeded data, if present; otherwise we'll create a new stack
-  const activeStack = page.locator(byWorkshopOrCockpitTestId('workshop-active-stack')).first();
+  const activeStack = page
+    .locator(byWorkshopOrCockpitTestId("workshop-active-stack"))
+    .first();
   try {
     // Allow the Profile Stack component time to render its initial state
     await page.waitForTimeout(1500);
@@ -233,7 +239,9 @@ test("Workshop Module — shows seeded active stack and can add a new profile st
     await expect(activeStack).toBeVisible({ timeout: 5000 });
   } catch {
     // No active stack seeded in this environment — open the builder and create one
-    let openBtn = page.locator(byWorkshopOrCockpitTestId('workshop-open-builder')).first();
+    let openBtn = page
+      .locator(byWorkshopOrCockpitTestId("workshop-open-builder"))
+      .first();
     // fallback to role-based selectors if the test-id isn't present in the build
     if (!(await page.isClosed()) && (await openBtn.count()) === 0) {
       openBtn = page
@@ -252,7 +260,7 @@ test("Workshop Module — shows seeded active stack and can add a new profile st
         await openBtn.click();
         // Wait for the cockpit modal to appear so queries are scoped to the modal
         await page
-          .getByTestId("workshop-modal")
+          .locator(byWorkshopOrCockpitTestId("workshop-modal"))
           .waitFor({ state: "visible", timeout: 10000 });
       } else {
         console.warn(
@@ -261,33 +269,45 @@ test("Workshop Module — shows seeded active stack and can add a new profile st
       }
       // Build the profile stack: wait longer for the input to show
       if (!(await page.isClosed())) {
-        const modal = page.locator(byWorkshopOrCockpitTestId('workshop-modal'));
-        if (!(await modal.getByTestId("workshop-name-input").count())) {
+        const modal = page.locator(byWorkshopOrCockpitTestId("workshop-modal"));
+        if (
+          !(await modal
+            .locator(byWorkshopOrCockpitTestId("workshop-name-input"))
+            .count())
+        ) {
           await modal
-            .getByTestId("workshop-name-input")
+            .locator(byWorkshopOrCockpitTestId("workshop-name-input"))
             .waitFor({ timeout: 20000 });
         }
         if (!(await page.isClosed()))
           await modal
-            .getByTestId("workshop-name-input")
+            .locator(byWorkshopOrCockpitTestId("workshop-name-input"))
             .fill("Deep Work Mode", { timeout: 20000 });
       }
       // set persona & audio if those controls exist
       if (!(await page.isClosed())) {
-        const modal = page.locator(byWorkshopOrCockpitTestId('workshop-modal'));
-        if ((await modal.getByTestId("workshop-persona-select").count()) > 0) {
+        const modal = page.locator(byWorkshopOrCockpitTestId("workshop-modal"));
+        if (
+          (await modal
+            .locator(byWorkshopOrCockpitTestId("workshop-persona-select"))
+            .count()) > 0
+        ) {
           try {
             await modal
-              .getByTestId("workshop-persona-select")
+              .locator(byWorkshopOrCockpitTestId("workshop-persona-select"))
               .selectOption("william", { timeout: 10000 });
           } catch (e) {
             /* ignore option not present */
           }
         }
-        if ((await modal.getByTestId("workshop-audio-select").count()) > 0) {
+        if (
+          (await modal
+            .locator(byWorkshopOrCockpitTestId("workshop-audio-select"))
+            .count()) > 0
+        ) {
           try {
             await modal
-              .getByTestId("workshop-audio-select")
+              .locator(byWorkshopOrCockpitTestId("workshop-audio-select"))
               .selectOption("audio-basic", { timeout: 10000 });
           } catch (e) {
             /* ignore option not present */
@@ -295,8 +315,12 @@ test("Workshop Module — shows seeded active stack and can add a new profile st
         }
       }
       if (!(await page.isClosed())) {
-        await page.locator(byWorkshopOrCockpitTestId('workshop-save-apply')).click({ timeout: 10000 });
-        await expect(page.locator(byWorkshopOrCockpitTestId('workshop-active-stack'))).toBeVisible({
+        await page
+          .locator(byWorkshopOrCockpitTestId("workshop-save-apply"))
+          .click({ timeout: 10000 });
+        await expect(
+          page.locator(byWorkshopOrCockpitTestId("workshop-active-stack")),
+        ).toBeVisible({
           timeout: 5000,
         });
       }
@@ -307,19 +331,23 @@ test("Workshop Module — shows seeded active stack and can add a new profile st
     }
     if (
       !(await page.isClosed()) &&
-      (await page.locator(byWorkshopOrCockpitTestId('workshop-name-input')).count()) > 0
+      (await page
+        .locator(byWorkshopOrCockpitTestId("workshop-name-input"))
+        .count()) > 0
     ) {
-      const modal = page.locator(byWorkshopOrCockpitTestId('workshop-modal'));
+      const modal = page.locator(byWorkshopOrCockpitTestId("workshop-modal"));
       await modal
-        .getByTestId("workshop-name-input")
+        .locator(byWorkshopOrCockpitTestId("workshop-name-input"))
         .fill("Deep Work Mode", { timeout: 20000 });
       if (
         !(await page.isClosed()) &&
-        (await modal.getByTestId("workshop-persona-select").count()) > 0
+        (await modal
+          .locator(byWorkshopOrCockpitTestId("workshop-persona-select"))
+          .count()) > 0
       ) {
         try {
           await modal
-            .getByTestId("workshop-persona-select")
+            .locator(byWorkshopOrCockpitTestId("workshop-persona-select"))
             .selectOption("william", { timeout: 10000 });
         } catch (e) {
           /* ignore */
@@ -327,21 +355,27 @@ test("Workshop Module — shows seeded active stack and can add a new profile st
       }
       if (
         !(await page.isClosed()) &&
-        (await modal.getByTestId("workshop-audio-select").count()) > 0
+        (await modal
+          .locator(byWorkshopOrCockpitTestId("workshop-audio-select"))
+          .count()) > 0
       ) {
         try {
           await modal
-            .getByTestId("workshop-audio-select")
+            .locator(byWorkshopOrCockpitTestId("workshop-audio-select"))
             .selectOption("audio-basic", { timeout: 10000 });
         } catch (e) {
           /* ignore */
         }
       }
       if (!(await page.isClosed())) {
-        await modal.getByTestId("workshop-save-apply").click({ timeout: 10000 });
+        await modal
+          .locator(byWorkshopOrCockpitTestId("workshop-save-apply"))
+          .click({ timeout: 10000 });
         // Wait a brief moment to allow state update to propagate
         await page.waitForTimeout(200);
-        await expect(page.locator(byWorkshopOrCockpitTestId('workshop-active-stack'))).toBeVisible({
+        await expect(
+          page.locator(byWorkshopOrCockpitTestId("workshop-active-stack")),
+        ).toBeVisible({
           timeout: 5000,
         });
       }
@@ -403,7 +437,9 @@ test("Workshop Module — shows seeded active stack and can add a new profile st
   }
 
   // Handle Persona Select (if it exists) - prefer a cockpit-specific test-id to avoid colliding with the 'Ask Grandma' persona
-  let personaSelect = page.locator(byWorkshopOrCockpitTestId('workshop-persona-select'));
+  let personaSelect = page.locator(
+    byWorkshopOrCockpitTestId("workshop-persona-select"),
+  );
   if ((await personaSelect.count()) === 0)
     personaSelect = page.getByLabel("AI persona");
   if (!(await page.isClosed()) && (await personaSelect.count()) > 0) {

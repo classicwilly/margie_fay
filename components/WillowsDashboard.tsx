@@ -1,8 +1,8 @@
-import React from "react";
+import type { FC } from "react";
 import { useAppState } from "@contexts/AppStateContext";
 import { componentMap } from "./componentMap.js";
 
-const WillowsDashboard = () => {
+const WillowsDashboard: FC = () => {
   const { appState, dispatch } = useAppState();
   const { willowDashboardModules, isModMode } = appState;
 
@@ -10,7 +10,7 @@ const WillowsDashboard = () => {
     dispatch({ type: "SET_VIEW", payload: "willow-dashboard-builder" });
   };
 
-  const getGridColsClass = (count) => {
+  const getGridColsClass = (count: number): string => {
     if (count <= 1) {
       return "grid-cols-1";
     }
@@ -74,7 +74,7 @@ const WillowsDashboard = () => {
       <div
         className={`grid gap-8 ${getGridColsClass(willowDashboardModules.length)}`}
       >
-        {willowDashboardModules.map((moduleId) => {
+        {willowDashboardModules.map((moduleId: string) => {
           const ModuleComponent = componentMap[moduleId];
           if (!ModuleComponent) {
             return null;

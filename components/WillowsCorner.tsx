@@ -1,4 +1,4 @@
-import React from "react";
+// Removed default `React` import (JSX runtime handles it)
 import ChecklistItem from "./ChecklistItem";
 import GemCollector from "./GemCollector";
 import ContentCard from "./ContentCard";

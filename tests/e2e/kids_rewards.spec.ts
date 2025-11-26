@@ -1,5 +1,6 @@
 import { test, expect } from "./playwright-fixtures";
 import { ensureAppView, retryClick } from "./helpers/retryHelpers";
+import { byWorkshopOrCockpitTestId } from "./helpers/locators";
 import applyAiStub from "./helpers/aiStub";
 import {
   installErrorCapture,
@@ -210,7 +211,9 @@ test.skip("Kids corner and reward tiers visible @smoke", async ({ page }) => {
       });
     if (!(await littleSproutsNav.count())) {
       // If not present, try the command center menu if available
-      let commandCenterNav = page.getByTestId("nav-workshop");
+      let commandCenterNav = page.locator(
+        byWorkshopOrCockpitTestId("nav-workshop"),
+      );
       if ((await commandCenterNav.count()) > 1)
         commandCenterNav = commandCenterNav.first();
       if (!(await commandCenterNav.count()))

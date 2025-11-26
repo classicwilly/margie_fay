@@ -123,7 +123,7 @@ const AIFinancialAnalysis = () => {
         {loading ? "Analyzing..." : "✨ Run Financial Analysis"}
       </button>
 
-      <div className="mt-4 flex-grow p-3 bg-gray-800 rounded-md min-h-[150px] border border-gray-700 overflow-y-auto">
+      <div className="mt-4 grow p-3 bg-gray-800 rounded-md min-h-[150px] border border-gray-700 overflow-y-auto">
         {loading && (
           <div className="flex items-center justify-center h-full">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent-blue"></div>

@@ -1,66 +1,43 @@
-import { sanitizePrompt } from "../utils/sanitizePrompt";
+import offlineQueue from "./offlineQueue";
 
 // --- LLM Model and API Configuration ---
 // Using a simple proxy endpoint or direct call structure for clarity
-const API_URL = "http://localhost:3000/api/gemini"; // Placeholder for production proxy/endpoint
-const MODEL_NAME = "gemini-2.5-flash-preview-09-2025";
 
 // --- SYSTEM INSTRUCTIONS (Matching Persona Mandates) ---
-const SYSTEM_INSTRUCTIONS = {
+export const SYSTEM_INSTRUCTIONS = {
   // YIN / Stability
   grandma:
-    "You are Margie Fay Katen (1925-2025), a former WWII riveter, homemaker, bowler, and matriarch from Oklahoma. Your tone is practical, loving, and firm. Advice must focus on structural/physical solutions, time management, or food. End with: 'Love, Grandma.'",
+    "You are Margie Fay Katen (1925-2025), a former WWII riveter, homemaker, bowler, and matriarch from Oklahoma. Your tone is practical, loving, and firm. You are an expert on plants, cooking, emotional support, housekeeping, makeup, art, music, first aid, fashion, and communication. Advice must focus on practical, nurturing, and structural solutions. End with: 'Love, Grandma.'",
   grandpa:
-    "You are Robert Katen, a stoic, highly detailed mechanic and systems tinkerer. Advice must focus on tools, maintenance, physics, or creating processes (SOPs). Be highly efficient and concise. End with: '—Grandpa.'",
+    "You are Robert Katen, a stoic, highly detailed mechanic and systems tinkerer. You are an expert on Buckminster Fuller, physics, math, quantum entanglement, cars, woodworking, coding, DIY, 3D printing, and communication. Advice must focus on tools, maintenance, physics, or creating processes (SOPs). Be highly efficient and concise. End with: '—Grandpa.'",
   // YANG / Kinetic Energy
   bob: "You are Bob Haddock. Your energy is High Energy, fast-paced, motivational, and aggressive about *starting* tasks. Uses high-stim language. Advice is short and pushes for immediate physical movement. End with: '—Bob. Go!'",
   marge:
     "You are Marge Watson, an empathetic organizer and planner. Your focus is on emotional regulation, breaking down complexity into visual/achievable steps, and nurturing resilience. Use soft, kind, and detailed language. End with: '—Marge, the Planner.'",
+  random:
+    "You are Random: pick one pre-approved micro-persona from the library. Preserve all safety rules and follow the typical nudge pattern: short summary, one clear option, and 1 supporting reason.",
+  calm_guide:
+    'You are Calm Guide: always give a single, safe, minimally risky recommendation with one sentence rationale and a quick "If you disagree, say "more"; otherwise "do it". Keep it concise.',
 };
 
 type PersonaKey = keyof typeof SYSTEM_INSTRUCTIONS;
-
-// --- UTILITY ---
-/**
- * Ensures the generated response text ends exactly with the required persona signature.
- */
-function ensurePersonaEnding(text: string, personaKey: PersonaKey): string {
-  const endings = {
-    grandma: "Love, Grandma.",
-    grandpa: "—Grandpa.",
-    bob: "—Bob. Go!",
-    marge: "—Marge, the Planner.",
-  };
-  const requiredEnding = endings[personaKey];
-
-  // Normalize and clean up existing ending to prevent duplication (e.g., if model added its own punctuation)
-  let cleanText = text.trim();
-  if (cleanText.trim().endsWith(requiredEnding)) {
-    return cleanText;
-  }
-
-  // If the text seems to end, remove final punctuation before appending (e.g., removes "." or "!")
-  cleanText = cleanText.replace(/[\.\!\?]$/, "");
-
-  return `${cleanText} ${requiredEnding}`;
-}
 
 const GEMINI_API_URL = "https://generativeai.googleapis.com/v1/models";
 const GEMINI_MODEL =
   process.env?.GEMINI_MODEL ?? "gemini-2.5-flash-preview-09-2025";
 
 function getApiKey(): string | undefined {
-  const envAny: any = import.meta;
-  return (
-    (envAny?.env && envAny.env.VITE_GEMINI_API_KEY) ||
-    (process.env as any).VITE_GEMINI_API_KEY
-  );
+  const importMetaEnv: any = (import.meta as unknown) || {};
+  const viteKey = importMetaEnv?.env?.VITE_GEMINI_API_KEY;
+  const nodeKey = process?.env?.VITE_GEMINI_API_KEY;
+  return viteKey || nodeKey;
 }
 
 interface GenerateOptions {
   prompt: string;
   systemInstruction?: string;
   maxTokens?: number;
+  allowPII?: boolean;
 }
 
 export async function generateContent({
@@ -68,6 +45,7 @@ export async function generateContent({
   systemInstruction = "",
   maxTokens = 512,
   personaKey = "grandma",
+  allowPII = false,
 }: GenerateOptions & { personaKey?: PersonaKey }): Promise<string> {
   // Prefer server-side proxy to keep API keys out of the client bundle
   const proxyEnabled =
@@ -86,11 +64,27 @@ export async function generateContent({
   const url = proxyEnabled
     ? "/api/gemini"
     : `${GEMINI_API_URL}/${GEMINI_MODEL}:generate`;
+  // If the personaKey is 'random', choose a random persona (excluding 'random' and 'calm_guide')
+  const availableRandom = [
+    "grandma",
+    "grandpa",
+    "bob",
+    "marge",
+  ] as PersonaKey[];
+  let resolvedPersonaKey: PersonaKey = personaKey;
+  if (personaKey === "random") {
+    // deterministic randomness based on time - acceptable for 'random' micro-persona
+    const idx = Math.floor(Date.now() % availableRandom.length);
+    resolvedPersonaKey = availableRandom[idx];
+  }
+
   const body = proxyEnabled
     ? ({
         prompt,
         systemInstruction,
+        personaKey: resolvedPersonaKey,
         maxTokens,
+        allowPII,
       } as any)
     : ({
         prompt: [
@@ -105,6 +99,21 @@ export async function generateContent({
   let attempt = 0;
   const maxAttempts = 3;
   let lastError: Error | null = null;
+
+  // If offline, persist to offline queue and return a queued message
+  if (typeof window !== "undefined" && !navigator.onLine) {
+    try {
+      offlineQueue.enqueueRequest("/api/gemini", {
+        prompt,
+        systemInstruction,
+        maxTokens,
+        personaKey,
+      });
+    } catch (e) {
+      console.warn("generateContent: failed to enqueue offline request", e);
+    }
+    return "You're offline. Your request has been saved and will run when you're back online.";
+  }
 
   while (attempt < maxAttempts) {
     try {
@@ -201,20 +210,25 @@ export async function generateContent({
 
   // If we reach here, all attempts failed
   console.warn("Gemini requests failed", lastError);
-  const personaFallbacks = {
-    grandma: "Grandma is having a little trouble connecting to the skyphones. Try again later. Love, Grandma.",
-    grandpa: "Grandpa is having a little trouble connecting to the skyphones. Try again later. —Grandpa.",
+  const personaFallbacks: Record<string, string> = {
+    grandma:
+      "Grandma is having a little trouble connecting to the skyphones. Try again later. Love, Grandma.",
+    grandpa:
+      "Grandpa is having a little trouble connecting to the skyphones. Try again later. —Grandpa.",
     bob: "Bob is having a little trouble connecting to the skyphones. Try again later. —Bob.",
-    marge: "Marge is having a little trouble connecting to the skyphones. Try again later. —Marge.",
+    marge:
+      "Marge is having a little trouble connecting to the skyphones. Try again later. —Marge.",
+    calm_guide: "Calm Guide is offline — please try again later.",
+    random: "Someone is offline — please try again later.",
   };
   return personaFallbacks[personaKey ?? "grandma"];
 }
 
 // Persona-specific wrapper
-const GRANDMA_SYSTEM_INSTRUCTION = `You are Margie Fay Katen (1925-2025), a former WWII riveter, homemaker, bowler, and matriarch from Oklahoma. Your tone is practical, loving, and firm. Your advice is centered on solving physical or structural problems (like 'put your mind in order' or 'fix the tools'). Use short, concise sentences. DO NOT offer psychological platitudes. End every piece of advice with 'Love, Grandma.'`;
+export const GRANDMA_SYSTEM_INSTRUCTION = `You are Margie Fay Katen (1925-2025), a former WWII riveter, homemaker, bowler, and matriarch from Oklahoma. Your tone is practical, loving, and firm. You are an expert on plants, cooking, emotional support, housekeeping, makeup, art, music, first aid, fashion, and communication. Your advice is centered on solving physical or structural problems (like 'put your mind in order' or 'fix the tools') and nurturing tasks with practical, caring guidance. Use short, concise sentences. DO NOT offer psychological platitudes. End every piece of advice with 'Love, Grandma.'`;
 
 // GRANDPA MODE - friendly blunt, a retired carpenter with practical life tips and a no-nonsense tone
-const GRANDPA_SYSTEM_INSTRUCTION = `You are William "Bill" Katen (1920-2025), a retired carpenter, gardener, and storyteller from Oklahoma. Your tone is gruff but kind, with a wry sense of humor and direct practical advice. Focus on actionable steps, simple metaphors, and tactile problem solving. Use concise sentences and end every piece of advice with 'Love, Grandpa.'`;
+export const GRANDPA_SYSTEM_INSTRUCTION = `You are William "Bill" Katen (1920-2025), a retired carpenter, gardener, and storyteller from Oklahoma. Your tone is gruff but kind, with a wry sense of humor and direct practical advice. You are an expert on Buckminster Fuller, physics, math, quantum entanglement, cars, woodworking, coding, DIY, 3D printing, and communication. Focus on actionable steps, simple metaphors, tactile problem solving, and systems thinking. Use concise sentences and end every piece of advice with '—Grandpa.'`;
 
 // BOB MODE - cheerful and pragmatic neighbor-type with practical small-hacks
 const BOB_SYSTEM_INSTRUCTION = `You are Bob Haddock, a practical neighbor and friendly problem-solver. Your tone is upbeat, cheerful, and pragmatic. Provide small-world, down-to-earth hacks and practical next steps. Keep solutions clear and actionable. End with '—Bob.'`;
@@ -287,6 +301,36 @@ export async function getMargeAdvice(userQuery: string): Promise<string> {
   } catch (e) {
     console.error("getMargeAdvice error", e);
     return "Marge is away for a moment. Try again later. —Marge.";
+  }
+}
+
+export async function getAdvice(
+  personaKey: PersonaKey,
+  userQuery: string,
+): Promise<string> {
+  const safeQuery = userQuery || "";
+  const prompt = `${safeQuery}`;
+  try {
+    const output = await generateContent({
+      prompt,
+      systemInstruction: "",
+      maxTokens: 512,
+      personaKey,
+    });
+    return output;
+  } catch (e) {
+    console.error("getAdvice error", e);
+    const personaFallbacks = {
+      grandma:
+        "Grandma is offline for a little while. Try again later. Love, Grandma.",
+      grandpa:
+        "Grandpa is offline for a little while. Try again later. —Grandpa.",
+      bob: "Bob is offline for a little while. Try again later. —Bob.",
+      marge: "Marge is offline for a little while. Try again later. —Marge.",
+      calm_guide:
+        "I can help pick one small step — if you'd like, give me permission to choose. Calm Guide.",
+    } as Record<string, string>;
+    return personaFallbacks[personaKey] ?? personaFallbacks["grandma"];
   }
 }
 

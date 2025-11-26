@@ -108,7 +108,7 @@ const AchievementTrackerModule = () => {
   return (
     <ContentCard title="🏆 Achievements">
       <div className="flex flex-col h-full">
-        <div className="flex-grow overflow-y-auto pr-2 max-h-96" tabIndex={0}>
+        <div className="grow overflow-y-auto pr-2 max-h-96" tabIndex={0}>
           <div className="mb-4">
             {nextTier ? (
               <>
@@ -123,7 +123,7 @@ const AchievementTrackerModule = () => {
                 >
                   <div
                     ref={progressRef}
-                    className="bg-gradient-to-r from-accent-blue to-accent-green h-3 rounded-full transition-all duration-500 progress-fill"
+                    className="bg-linear-to-r from-accent-blue to-accent-green h-3 rounded-full transition-all duration-500 progress-fill"
                   />
                   <span className="sr-only">
                     Progress: {Math.round(progressPercentage)}%

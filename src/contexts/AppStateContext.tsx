@@ -1,22 +1,13 @@
-import React, { createContext, useContext, useReducer, useEffect } from "react";
+import React, { createContext, useContext, useEffect } from "react";
 import ErrorBoundary from "../components/ErrorBoundary";
-import { auth, db } from "../../firebase.js";
+import { db } from "../../firebase.js";
 import { defaultUserState } from "../../defaultStates.js";
-import { generateId } from "@utils/generateId";
-import {
-  userReducer,
-  safeMerge,
-  toYMD,
-  addDays,
-  recalculateStreaks,
-  timePresets,
-} from "./userReducer";
+import { userReducer, safeMerge } from "./userReducer";
 import { getModuleDefaultStates, getModuleReducers } from "../module_registry";
 export { userReducer } from "./userReducer";
 import type { AppState, AppAction, AppContextType } from "./types.js";
 
 // Only declare non-hook constants at module scope
-const storageKey = "__WONKY_APPSTATE__";
 // db and defaultUserState should be imported or defined elsewhere in your codebase
 // For now, assume they are available
 // All React hooks must be inside AppStateProvider
@@ -38,13 +29,16 @@ export const AppStateProvider = ({
   children: React.ReactNode;
 }) => {
   // Move hooks inside the component
-  const [authUser, setAuthUser] = React.useState<any>(null);
+  // `setAuthUser` intentionally prefixed with underscore since it's currently unused in the
+  // provider — it may be used in the future for auth side-effects.
+  const [authUser, _setAuthUser] =
+    React.useState<AppContextType["authUser"]>(null);
   const [appState, setAppState] = React.useState<AppState>(
     () => ({ ...defaultUserState, view: "workshop" }) as AppState,
   );
   const seededAppliedRef = React.useRef(false);
   const allowDbUpdatesRef = React.useRef(true);
-  const lastDbSnapshotRef = React.useRef<any>(null);
+  const lastDbSnapshotRef = React.useRef<Partial<AppState> | null>(null);
   // In DEV mode we normally return a comfortable dev state to speed up local iterations.
   // However, for Playwright runs we want to honor the seeded localStorage state — tests should set
   // VITE_PLAYWRIGHT_SKIP_DEV_BYPASS=true (or use ?skip_dev_bypass=true) to bypass the dev-only shortcut.
@@ -136,7 +130,7 @@ export const AppStateProvider = ({
     typeof window !== "undefined" && rawStorage
       ? JSON.parse(rawStorage || "null")
       : null;
-  let seededState = null;
+  let seededState: AppState | null = null;
   if (rawSeed) {
     // Prefer safeMerge for nested merges/arrays
     seededState = safeMerge(defaultUserState, rawSeed);
@@ -162,7 +156,13 @@ export const AppStateProvider = ({
         ? (window as any).__WONKY_TEST_INITIALIZE__
         : undefined;
     if (earlyInit && typeof earlyInit === "object") {
-      seededState = safeMerge(seededState || defaultUserState, earlyInit);
+      // Respect explicit boolean values for initialSetupComplete so tests can
+      // set false to force onboarding; avoid coercing falsy values to true.
+      const seededMerge = { ...earlyInit } as any;
+      if (typeof earlyInit.initialSetupComplete === "boolean") {
+        seededMerge.initialSetupComplete = earlyInit.initialSetupComplete;
+      }
+      seededState = safeMerge(seededState || defaultUserState, seededMerge);
       if ((import.meta as any).env?.MODE === "development") {
         // eslint-disable-next-line no-console
         console.log(
@@ -203,8 +203,11 @@ export const AppStateProvider = ({
     // persona so admin-only menu items (like Game Master) are visible.
     // Back-compat: Accept 'command-center' as a legacy alias for 'workshop'
     const normalizedE2EView =
-      e2eForceView === "command-center" ? "workshop" :
-      e2eForceView === "workshop" ? "workshop" : e2eForceView;
+      e2eForceView === "command-center"
+        ? "workshop"
+        : e2eForceView === "workshop"
+          ? "workshop"
+          : e2eForceView;
     if (normalizedE2EView === "workshop") {
       seededState.dashboardType = "william";
     }
@@ -216,13 +219,16 @@ export const AppStateProvider = ({
   // FORCE: Prefer to set view to a dashboard-mapping for E2E/dev, but do not
   // override a test-provided view coming from __WONKY_TEST_INITIALIZE__ or __E2E_FORCE_VIEW__.
   // This keeps deterministic E2E flows intact when tests explicitly set the view.
-    if (seededState) {
-      // Normalize legacy cuisine of view names to new workshop naming
-      if (seededState.view === "workshop" || seededState.view === "command-center") {
-        seededState.view = "workshop" as any;
-      }
+  if (seededState) {
+    // Normalize legacy cuisine of view names to new workshop naming
+    if (
+      seededState.view === "workshop" ||
+      seededState.view === "command-center"
+    ) {
+      seededState.view = "workshop" as any;
     }
-    if (seededState && seededState.dashboardType && !seededState.view) {
+  }
+  if (seededState && seededState.dashboardType && !seededState.view) {
     const map: Record<string, string> = {
       william: "operations-control",
       willow: "willows-dashboard",
@@ -390,7 +396,10 @@ export const AppStateProvider = ({
               try {
                 (window as any).__WONKY_E2E_LOG_PUSH__(
                   "DB_SNAPSHOT_MERGE_START",
-                  { prevView: prev?.view, snapshotView: userState?.view },
+                  {
+                    prevView: prev?.view,
+                    snapshotView: userState?.view,
+                  },
                 );
               } catch (e) {
                 /* ignore */
@@ -403,7 +412,10 @@ export const AppStateProvider = ({
                 try {
                   (window as any).__WONKY_E2E_LOG_PUSH__(
                     "DB_SNAPSHOT_APPLY_PRESERVE_STICKY",
-                    { snapshotView: userState?.view, sticky },
+                    {
+                      snapshotView: userState?.view,
+                      sticky,
+                    },
                   );
                 } catch (e) {
                   /* ignore */
@@ -756,7 +768,11 @@ export const AppStateProvider = ({
       try {
         const e2eInit = (window as any).__WONKY_TEST_INITIALIZE__;
         if (e2eInit && typeof e2eInit === "object") {
-          const merged = safeMerge(testState, e2eInit);
+          const initMerge = { ...e2eInit } as any;
+          if (typeof e2eInit.initialSetupComplete === "boolean") {
+            initMerge.initialSetupComplete = e2eInit.initialSetupComplete;
+          }
+          const merged = safeMerge(testState, initMerge);
           // Do not call setTestState here (E2E branch avoids React setter usage)
           testContextValue.appState = merged;
           try {
@@ -794,12 +810,14 @@ export const AppStateProvider = ({
         /* ignore */
       }
     } catch (initErr) {
+      // `initErr` is typed as `unknown` by compiler settings; guard and stringify safely.
       console.error("E2E: Error during state initialization:", initErr);
       try {
-        window.localStorage.setItem(
-          "wonky-last-error",
-          String(initErr.stack || initErr),
-        );
+        const initErrStr =
+          initErr instanceof Error
+            ? initErr.stack || initErr.message
+            : String(initErr);
+        window.localStorage.setItem("wonky-last-error", String(initErrStr));
       } catch (err) {
         /* ignore */
       }
@@ -1098,7 +1116,8 @@ export const AppStateProvider = ({
       if (!appState.personaOverrides) {
         return personaKey;
       }
-      return appState.personaOverrides[personaKey] || personaKey;
+      const overrides = appState.personaOverrides as Record<string, string>;
+      return overrides[personaKey] || personaKey;
     } catch (e) {
       return personaKey;
     }

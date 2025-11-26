@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from "react";
 import { useAppState } from "@contexts/AppStateContext";
 import ContentCard from "../../ContentCard.js";

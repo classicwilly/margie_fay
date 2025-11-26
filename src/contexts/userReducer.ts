@@ -1,10 +1,14 @@
 import type { AppState, AppAction } from "./types.js";
 import { defaultUserState } from "../../defaultStates.js";
-import { generateId } from "@utils/generateId";
+// generateId is not used in this reducer currently; keep import removed to avoid unused variable errors
 
 // Small helpers used by the reducer
 const toYMD = (date: Date): string => date.toISOString().split("T")[0];
-const timePresets = { work: 25 * 60, shortBreak: 5 * 60, longBreak: 15 * 60 };
+export const timePresets = {
+  work: 25 * 60,
+  shortBreak: 5 * 60,
+  longBreak: 15 * 60,
+};
 const addDays = (date: Date | string, days: number): Date => {
   const result = new Date(date);
   result.setDate(result.getDate() + days);
@@ -93,28 +97,40 @@ function safeMerge<T extends Record<string, any>>(
 export function userReducer(state: AppState, action: AppAction): AppState {
   // Log is fine for now; this is a shared reducer that drives many behaviors.
   if (process.env.NODE_ENV === "development") {
-    console.log("REDUCER ACTION:", action.type, (action as any).payload);
+    if (Object.prototype.hasOwnProperty.call(action, "payload")) {
+      // Some actions do not include a payload (discriminated union variants)
+      // so only log it when present to avoid TypeScript errors.
+      console.log("REDUCER ACTION:", action.type, (action as any).payload);
+    } else {
+      console.log("REDUCER ACTION:", action.type);
+    }
   }
-  const newState = { ...state };
+  const newState = { ...state } as AppState;
   // Normalize older view strings during migration from 'cockpit/command-center' -> 'workshop'
   function normalizeView(viewVal: any) {
-    if (!viewVal) return viewVal;
-    if (viewVal === "workshop" || viewVal === "command-center") return "workshop";
-    if (viewVal === "cockpit-setup" || viewVal === "command-center-setup") return "workshop-setup";
+    if (!viewVal) {
+      return viewVal;
+    }
+    if (viewVal === "workshop" || viewVal === "command-center") {
+      return "workshop";
+    }
+    if (viewVal === "cockpit-setup" || viewVal === "command-center-setup") {
+      return "workshop-setup";
+    }
     return viewVal;
   }
   switch (action.type) {
     case "SET_NEURO_PREFS": {
-      const payload = action.payload as any;
+      const payload = action.payload as Partial<AppState["neuroPrefs"]>;
       newState.neuroPrefs = { ...newState.neuroPrefs, ...payload };
       break;
     }
     case "SET_SAVED_CONTEXT": {
-      newState.savedContext = action.payload as any;
+      newState.savedContext = action.payload;
       break;
     }
     case "SET_PERSONA_OVERRIDE": {
-      const { key, value } = action.payload as any;
+      const { key, value } = action.payload as { key: string; value: string };
       newState.personaOverrides = {
         ...newState.personaOverrides,
         [key]: value || undefined,
@@ -122,7 +138,10 @@ export function userReducer(state: AppState, action: AppAction): AppState {
       break;
     }
     case "SET_MODULE_STATE": {
-      const { id, enabled } = action.payload as any;
+      const { id, enabled } = action.payload as {
+        id: string;
+        enabled: boolean | null | undefined;
+      };
       if (!newState.moduleStates) {
         newState.moduleStates = {} as any;
       }
@@ -157,8 +176,10 @@ export function userReducer(state: AppState, action: AppAction): AppState {
       break;
     case "TOGGLE_CHECKED":
       newState.checkedItems = {
-        ...newState.checkedItems,
-        [action.payload]: !newState.checkedItems[action.payload],
+        ...(newState.checkedItems as Record<string, boolean>),
+        [action.payload]: !(newState.checkedItems as Record<string, boolean>)[
+          action.payload as string
+        ],
       };
       break;
     case "SET_MOOD":
@@ -171,14 +192,15 @@ export function userReducer(state: AppState, action: AppAction): AppState {
       newState.initialSetupComplete = action.payload;
       break;
     case "SET_ONBOARDING_STEP": {
-      newState.onboardingStep = action.payload as number;
+      newState.onboardingStep = action.payload;
       break;
     }
     case "POMODORO_SET_MODE": {
-      const newTime = timePresets[action.payload];
+      const payload = action.payload as "work" | "shortBreak" | "longBreak";
+      const newTime = timePresets[payload];
       newState.pomodoroState = {
         ...newState.pomodoroState,
-        mode: action.payload as any,
+        mode: payload,
         timeLeft: newTime,
         isActive: false,
       };
@@ -202,30 +224,33 @@ export function userReducer(state: AppState, action: AppAction): AppState {
       });
       // Archive knowledge vault entries
       if (Array.isArray(newState.knowledgeVaultEntries)) {
-        newState.knowledgeVaultEntries = newState.knowledgeVaultEntries.map(
-          (e: any) => ({ ...e, isArchived: true }),
-        );
+        newState.knowledgeVaultEntries = (
+          newState.knowledgeVaultEntries as any[]
+        ).map((e: any) => ({
+          ...e,
+          isArchived: true,
+        }));
       }
       // Clear the brain dump as a part of 'inbox zero' operation
       newState.brainDumpText = "";
       break;
     }
     case "ARCHIVE_OLD_ENTRIES": {
-      const days = (action as any).payload?.days ?? 30;
+      const days = action.payload?.days ?? 30;
       const cutoff = Date.now() - days * 24 * 60 * 60 * 1000;
       const archivedKnowledgeIds: string[] = [];
       const archivedTaskIds: string[] = [];
       if (Array.isArray(newState.knowledgeVaultEntries)) {
-        newState.knowledgeVaultEntries = newState.knowledgeVaultEntries.map(
-          (e: any) => {
-            const createdAt = e?.createdAt ? Date.parse(e.createdAt) : null;
-            if (createdAt && createdAt < cutoff) {
-              archivedKnowledgeIds.push(e.id);
-              return { ...e, isArchived: true };
-            }
-            return e;
-          },
-        );
+        newState.knowledgeVaultEntries = (
+          newState.knowledgeVaultEntries as any[]
+        ).map((e: any) => {
+          const createdAt = e?.createdAt ? Date.parse(e.createdAt) : null;
+          if (createdAt && createdAt < cutoff) {
+            archivedKnowledgeIds.push(e.id);
+            return { ...e, isArchived: true };
+          }
+          return e;
+        });
       }
       // Archive tasks that are completed and older than cutoff
       if (Array.isArray(newState.tasks)) {
@@ -248,9 +273,16 @@ export function userReducer(state: AppState, action: AppAction): AppState {
     case "RESTORE_ARCHIVED_TASKS": {
       try {
         const last = (newState as any).lastHousekeepingArchive;
-        if (!last) break;
-        if (Array.isArray(newState.knowledgeVaultEntries) && last.knowledge.length > 0) {
-          newState.knowledgeVaultEntries = newState.knowledgeVaultEntries.map((e: any) => {
+        if (!last) {
+          break;
+        }
+        if (
+          Array.isArray(newState.knowledgeVaultEntries) &&
+          last.knowledge.length > 0
+        ) {
+          newState.knowledgeVaultEntries = (
+            newState.knowledgeVaultEntries as any[]
+          ).map((e: any) => {
             if (last.knowledge.includes(e.id)) {
               return { ...e, isArchived: false };
             }
@@ -276,7 +308,7 @@ export function userReducer(state: AppState, action: AppAction): AppState {
     }
     case "IMPORT_STATE": {
       try {
-        const rawImported = { ...action.payload } as any;
+        const rawImported = { ...action.payload } as Partial<AppState>;
         rawImported.dismissedNudges = Array.isArray(rawImported.dismissedNudges)
           ? rawImported.dismissedNudges
           : [];
@@ -285,7 +317,7 @@ export function userReducer(state: AppState, action: AppAction): AppState {
       } catch (e) {
         return safeMerge(
           defaultUserState as any,
-          action.payload as any,
+          action.payload as Partial<AppState>,
         ) as AppState;
       }
     }

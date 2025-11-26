@@ -58,10 +58,10 @@ export interface GoogleDriveFile {
 
 class GoogleWorkspaceService {
   private auth: any = null;
-  private calendar: any = null;
-  private gmail: any = null;
-  private tasks: any = null;
-  private drive: any = null;
+  private calendar?: any;
+  private gmail?: any;
+  private tasks?: any;
+  private drive?: any;
 
   constructor() {
     this.initializeAuth();
@@ -87,16 +87,14 @@ class GoogleWorkspaceService {
   }
 
   setAccessToken(token: string) {
-    this.auth = new google.auth.GoogleAuth({
-      scopes: GOOGLE_SCOPES,
-    });
-
-    // Set the access token
-    this.auth.setCredentials({
-      access_token: token,
-    });
-
-    // Initialize API clients
+    // We set access token only in-memory for direct client use if required.
+    this.auth = new google.auth.GoogleAuth({ scopes: GOOGLE_SCOPES });
+    try {
+      // Not all clients will use this; the preferred pattern is server-side proxy.
+      this.auth.setCredentials({ access_token: token });
+    } catch (e) {
+      /* ignore */
+    }
     this.calendar = google.calendar({ version: "v3", auth: this.auth });
     this.gmail = google.gmail({ version: "v1", auth: this.auth });
     this.tasks = google.tasks({ version: "v1", auth: this.auth });
@@ -106,20 +104,38 @@ class GoogleWorkspaceService {
   async getCalendarEvents(
     maxResults: number = 10,
   ): Promise<GoogleCalendarEvent[]> {
-    if (!this.calendar) {
-      throw new Error("Not authenticated with Google Calendar");
-    }
-
     try {
-      const response = await this.calendar.events.list({
-        calendarId: "primary",
-        timeMin: new Date().toISOString(),
-        maxResults,
-        singleEvents: true,
-        orderBy: "startTime",
-      });
+      // If the client code has provided a cached authenticated calendar client, prefer it
+      if (this.calendar) {
+        const response = await this.calendar.events.list({
+          calendarId: "primary",
+          maxResults,
+          singleEvents: true,
+          orderBy: "startTime",
+        });
 
-      return response.data.items.map((event: any) => ({
+        return (
+          response.data.items?.map((event: any) => ({
+            id: event.id,
+            summary: event.summary || "No title",
+            description: event.description,
+            start: event.start,
+            end: event.end,
+            status: event.status,
+            location: event.location,
+          })) || []
+        );
+      }
+
+      // Fallback: prefer server-side proxied endpoint; include the maxResults query param
+      const r = await fetch(
+        `/api/google/events?maxResults=${encodeURIComponent(maxResults)}`,
+      );
+      if (!r.ok) {
+        throw new Error("Failed to fetch events");
+      }
+      const json = await r.json();
+      return (json.events || []).map((event: any) => ({
         id: event.id,
         summary: event.summary || "No title",
         description: event.description,
@@ -129,14 +145,25 @@ class GoogleWorkspaceService {
         location: event.location,
       }));
     } catch (error) {
-      console.error("Error fetching calendar events:", error);
+      console.error(
+        "Error fetching calendar events through proxy or client:",
+        error,
+      );
       throw error;
     }
   }
 
   async getTasks(): Promise<GoogleTask[]> {
-    if (!this.tasks) {
-      throw new Error("Not authenticated with Google Tasks");
+    try {
+      const r = await fetch("/api/google/tasks");
+      if (!r.ok) {
+        throw new Error("Failed to fetch tasks");
+      }
+      const json = await r.json();
+      return json.tasks || [];
+    } catch (err) {
+      console.error("Error fetching tasks:", err);
+      throw err;
     }
 
     try {
@@ -161,8 +188,16 @@ class GoogleWorkspaceService {
   }
 
   async getRecentEmails(maxResults: number = 10): Promise<GoogleEmail[]> {
-    if (!this.gmail) {
-      throw new Error("Not authenticated with Gmail");
+    try {
+      const r = await fetch(`/api/google/emails?max=${maxResults}`);
+      if (!r.ok) {
+        return [];
+      }
+      const json = await r.json();
+      return json.emails || [];
+    } catch (err) {
+      console.error("Error fetching emails:", err);
+      throw err;
     }
 
     try {
@@ -212,8 +247,16 @@ class GoogleWorkspaceService {
   async getRecentDriveFiles(
     maxResults: number = 10,
   ): Promise<GoogleDriveFile[]> {
-    if (!this.drive) {
-      throw new Error("Not authenticated with Google Drive");
+    try {
+      const r = await fetch(`/api/google/drive?max=${maxResults}`);
+      if (!r.ok) {
+        return [];
+      }
+      const json = await r.json();
+      return json.files || [];
+    } catch (err) {
+      console.error("Error fetching drive files:", err);
+      throw err;
     }
 
     try {
@@ -245,31 +288,20 @@ class GoogleWorkspaceService {
     notes?: string,
     due?: string,
   ): Promise<GoogleTask> {
-    if (!this.tasks) {
-      throw new Error("Not authenticated with Google Tasks");
-    }
-
     try {
-      const response = await this.tasks.tasks.insert({
-        tasklist: "@default",
-        requestBody: {
-          title,
-          notes,
-          due,
-        },
+      const r = await fetch("/api/google/tasks/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title, notes, due }),
       });
-
-      return {
-        id: response.data.id,
-        title: response.data.title,
-        notes: response.data.notes,
-        due: response.data.due,
-        completed: false,
-        status: response.data.status,
-      };
-    } catch (error) {
-      console.error("Error creating task:", error);
-      throw error;
+      if (!r.ok) {
+        throw new Error("Failed to create task");
+      }
+      const json = await r.json();
+      return json.task;
+    } catch (err) {
+      console.error("Error creating task through proxy:", err);
+      throw err;
     }
   }
 
@@ -280,38 +312,26 @@ class GoogleWorkspaceService {
     description?: string,
     location?: string,
   ): Promise<GoogleCalendarEvent> {
-    if (!this.calendar) {
-      throw new Error("Not authenticated with Google Calendar");
-    }
-
     try {
-      const response = await this.calendar.events.insert({
-        calendarId: "primary",
-        requestBody: {
+      const r = await fetch("/api/google/calendar/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
           summary,
+          startTime,
+          endTime,
           description,
           location,
-          start: {
-            dateTime: startTime,
-          },
-          end: {
-            dateTime: endTime,
-          },
-        },
+        }),
       });
-
-      return {
-        id: response.data.id,
-        summary: response.data.summary,
-        description: response.data.description,
-        start: response.data.start,
-        end: response.data.end,
-        status: response.data.status,
-        location: response.data.location,
-      };
-    } catch (error) {
-      console.error("Error creating calendar event:", error);
-      throw error;
+      if (!r.ok) {
+        throw new Error("Failed to create calendar event");
+      }
+      const json = await r.json();
+      return json.event;
+    } catch (err) {
+      console.error("Error creating calendar event via proxy:", err);
+      throw err;
     }
   }
 }

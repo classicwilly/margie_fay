@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useAppState } from "@contexts/AppStateContext";
 
 import { auth, db } from "../firebase.js";

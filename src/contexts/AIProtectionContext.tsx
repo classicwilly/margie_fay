@@ -1,10 +1,28 @@
-import React, { createContext, useState, useCallback } from "react";
+import { createContext, useState, useCallback } from "react";
+import type { FC, ReactNode } from "react";
 import { useAIConsent } from "../../hooks/useAIConsent";
 
 // Provide a centralized AI protection context so all components and hooks share the same consent/PII state.
-export const AIProtectionContext = createContext<any>(null);
+export interface AIProtectionContextType {
+  checkAndExecute: (
+    input: string,
+    fn: (s: string) => Promise<any>,
+  ) => Promise<any> | void;
+  isPiiModalOpen: boolean;
+  piiMatches: Array<{ type: string; value: string }>;
+  handlePiiConfirm: () => void;
+  handlePiiCancel: () => void;
+  isConsentModalOpen: boolean;
+  handleConfirm: () => void;
+  handleCancel: () => void;
+  dontShowAgain: boolean;
+  setDontShowAgain: (b: boolean) => void;
+}
 
-export const AIProtectionProvider: React.FC<{ children: React.ReactNode }> = ({
+export const AIProtectionContext =
+  createContext<AIProtectionContextType | null>(null);
+
+export const AIProtectionProvider: FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const {

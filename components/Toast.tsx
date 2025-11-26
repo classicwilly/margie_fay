@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, type FC } from "react";
+import { usePrefersReducedMotion } from "../src/hooks/usePrefersReducedMotion";
+import { useSimplifiedMode } from "../src/contexts/SimplifiedModeContext";
 
 // FIX: Explicitly typed component with React.FC and a props interface to handle the `key` prop correctly.
 interface ToastProps {
@@ -9,10 +11,18 @@ interface ToastProps {
   onAction?: (id: string) => void;
   onDismiss: (id: string) => void;
 }
-const Toast: React.FC<ToastProps> = ({ id, emoji, message, onDismiss }) => {
+const Toast: FC<ToastProps> = ({ id, emoji, message, onDismiss }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const reduced = usePrefersReducedMotion();
+  const { simplifiedMode } = useSimplifiedMode();
 
   useEffect(() => {
+    // If reduced motion or simplified mode, show without animation and dismiss after TTL
+    if (reduced || simplifiedMode) {
+      setIsVisible(true);
+      const ttl = setTimeout(() => onDismiss(id), 3000);
+      return () => clearTimeout(ttl);
+    }
     // Fade in
     const entryTimer = setTimeout(() => setIsVisible(true), 10);
 
@@ -31,8 +41,10 @@ const Toast: React.FC<ToastProps> = ({ id, emoji, message, onDismiss }) => {
 
   return (
     <div
-      className={`flex items-center gap-4 bg-card-dark border-2 border-accent-green shadow-lg rounded-lg p-4 transition-all duration-300 ease-in-out ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+      className={`flex items-center gap-4 bg-card-dark border-2 border-accent-green shadow-lg rounded-lg p-4 ${
+        reduced || simplifiedMode
+          ? "opacity-100 translate-y-0"
+          : `transition-all duration-300 ease-in-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`
       }`}
       role="alert"
       aria-live="assertive"

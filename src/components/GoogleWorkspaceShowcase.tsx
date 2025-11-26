@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import GoogleSignInButton from "./GoogleSignInButton";
+import GitHubSignInButton from "./GitHubSignInButton";
+import DiscordSignInButton from "./DiscordSignInButton";
+import GitHubActions from "./GitHubActions";
 
 export default function GoogleWorkspaceShowcase() {
   const [demoData, setDemoData] = useState<any>(null);
   const runDemo = async () => {
     try {
-      const resp = await fetch("/api/google/demo");
-      const json = await resp.json();
-      setDemoData(json);
+      const g = await fetch("/api/google/demo");
+      const gj = await g.json().catch(() => ({}));
+      const ghResp = await fetch("/api/github/demo").catch(() => null);
+      const ghj = ghResp ? await ghResp.json().catch(() => ({})) : null;
+      setDemoData({ google: gj, github: ghj });
     } catch (e) {
       setDemoData({ error: String(e) });
     }
@@ -15,8 +20,10 @@ export default function GoogleWorkspaceShowcase() {
 
   return (
     <div className="card-base p-4">
-      <div className="flex justify-end mb-2">
+      <div className="flex justify-end gap-3 mb-2">
         <GoogleSignInButton />
+        <GitHubSignInButton />
+        <DiscordSignInButton />
       </div>
       <h2 className="text-xl font-bold">Google Workspace Showcase</h2>
       <p className="text-sm text-text-muted">
@@ -46,7 +53,7 @@ export default function GoogleWorkspaceShowcase() {
           {demoData.error && (
             <div className="text-red-400">Error: {demoData.error}</div>
           )}
-          {demoData.profile && (
+          {demoData.google?.profile && (
             <div className="flex items-center gap-3 mt-2">
               <img
                 src={demoData.profile.picture}
@@ -54,16 +61,16 @@ export default function GoogleWorkspaceShowcase() {
                 className="h-8 w-8 rounded-full"
               />
               <div className="text-sm">
-                Signed in as <strong>{demoData.profile.name}</strong> (
-                {demoData.profile.email})
+                Signed in as <strong>{demoData.google.profile.name}</strong> (
+                {demoData.google.profile.email})
               </div>
             </div>
           )}
-          {Array.isArray(demoData.events) && (
+          {Array.isArray(demoData.google?.events) && (
             <div className="mt-3">
               <h4 className="font-semibold">Upcoming Events</h4>
               <ul className="list-disc list-inside">
-                {demoData.events.map((ev: any) => (
+                {demoData.google.events.map((ev: any) => (
                   <li key={ev.id || ev.summary}>
                     {ev.summary} —{" "}
                     {String(ev.start?.dateTime || ev.start?.date || "")}
@@ -72,6 +79,29 @@ export default function GoogleWorkspaceShowcase() {
               </ul>
             </div>
           )}
+          {Array.isArray(demoData.github?.repos) && (
+            <div className="mt-3">
+              <h4 className="font-semibold">GitHub Repos</h4>
+              <ul className="list-disc list-inside">
+                {demoData.github.repos.map((r: any) => (
+                  <li key={r.id || r.full_name}>
+                    <a
+                      href={r.html_url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-accent-blue"
+                    >
+                      {r.full_name}
+                    </a>
+                    {r.description ? ` — ${r.description}` : ""}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          <div className="mt-4">
+            <GitHubActions />
+          </div>
         </div>
       )}
     </div>

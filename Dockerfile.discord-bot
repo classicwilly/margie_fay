@@ -1,0 +1,27 @@
+# Dockerfile for the Discord bot worker
+# This image installs the runtime dependencies for the worker and starts it with node
+# Use an official Node image
+FROM node:22-bullseye-slim
+
+# Set working dir
+WORKDIR /app
+
+# Copy package manifests first and install prod deps
+COPY package.json package-lock.json ./
+
+# Install the main dependencies, and install the optional Discord/voice/TTS packages
+# We're installing discord-related dependencies at runtime for this worker image
+RUN npm ci --production \
+  && npm install --no-save discord.js @discordjs/voice google-tts-api tweetnacl node-fetch@2
+
+# Copy the rest of the project
+COPY . ./
+
+# Use production environment by default
+ENV NODE_ENV=production
+
+# Port is not necessary for a background worker, but define one if needed
+ENV PORT=8080
+
+# The worker entry point. Uses the same runtime environment as the main server but only starts the worker.
+CMD ["node", "./scripts/start-discord-bot.js"]

@@ -1,7 +1,13 @@
 import React, { createContext, useContext, useReducer, ReactNode } from "react";
 
 // --- TYPES ---
-type PersonaKey = "grandma" | "grandpa" | "bob" | "marge";
+type PersonaKey =
+  | "grandma"
+  | "grandpa"
+  | "bob"
+  | "marge"
+  | "random"
+  | "calm_guide";
 type FocusMode = "scout" | "laser" | "recovery" | "none";
 
 interface ProfileStack {
@@ -55,6 +61,8 @@ const PERSONA_MAP = {
   // YANG / Kinetic Energy (The Bob & Marge Protocol)
   bob: { key: "bob", display: "Bob Haddock", role: "Kinetic Coach" },
   marge: { key: "marge", display: "Marge Watson", role: "Planner" },
+  random: { key: "random", display: "Random Persona", role: "Surprise Me" },
+  calm_guide: { key: "calm_guide", display: "Calm Guide", role: "Fallback" },
 };
 
 // --- INITIAL STATE ---
@@ -86,11 +94,11 @@ const reducer = (
     case "SET_PERSONA":
       return { ...state, activePersona: action.payload };
     case "TOGGLE_AIRLOCK":
-        return { ...state, isAirlockOpen: action.payload };
-      case "TOGGLE_ESTOP":
-        // Maintain a single source-of-truth (isAirlockOpen), but offer the toggle
-        // action for tests or newer UI that prefer the E-Stop naming.
-        return { ...state, isAirlockOpen: action.payload };
+      return { ...state, isAirlockOpen: action.payload };
+    case "TOGGLE_ESTOP":
+      // Maintain a single source-of-truth (isAirlockOpen), but offer the toggle
+      // action for tests or newer UI that prefer the E-Stop naming.
+      return { ...state, isAirlockOpen: action.payload };
     case "TOGGLE_SOUR_MODE":
       // CRITICAL CSS FIX: Use browser API to enforce global theme change
       document.body.classList.toggle("sour-mode", !state.isSourMode);
@@ -150,7 +158,8 @@ export const OscilloscopeProvider = ({ children }: { children: ReactNode }) => {
         isAirlockActive: state.isAirlockOpen,
         // Alias for new naming and for easier migration in the codebase/tests
         isEStopActive: state.isAirlockOpen,
-        setEStopActive: (open: boolean) => dispatch({ type: "TOGGLE_ESTOP", payload: open }),
+        setEStopActive: (open: boolean) =>
+          dispatch({ type: "TOGGLE_ESTOP", payload: open }),
         setAirlockActive,
         // No longer expose setFocusState; consumers should use dispatch({ type:'SET_FOCUS_MODE', payload })
         isSourMode: state.isSourMode,

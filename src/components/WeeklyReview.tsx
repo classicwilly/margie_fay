@@ -135,7 +135,7 @@ const WeeklyReview: React.FC<WeeklyReviewProps> = ({ initialMode }) => {
         },
         timeoutMs: 20000,
         skipPromptSafety: true,
-      });
+      } as any);
       if (!result || (!result.text && !result.json)) {
         throw new Error("Received empty response from AI.");
       }
@@ -199,6 +199,7 @@ const WeeklyReview: React.FC<WeeklyReviewProps> = ({ initialMode }) => {
             <AITrendAnalysis />
             <Button
               data-testid="weekly-review-proceed-inbox"
+              data-workshop-testid="weekly-review-proceed-inbox"
               onClick={() => setStep(2)}
               className="w-full mt-6 p-3 font-bold"
               variant="primary"
@@ -251,6 +252,7 @@ const WeeklyReview: React.FC<WeeklyReviewProps> = ({ initialMode }) => {
               </Button>
               <Button
                 data-testid="weekly-review-proceed-progress"
+                data-workshop-testid="weekly-review-proceed-progress"
                 onClick={() => setStep(3)}
                 disabled={!inboxesCleared}
                 className="p-3 font-bold"
@@ -291,6 +293,7 @@ const WeeklyReview: React.FC<WeeklyReviewProps> = ({ initialMode }) => {
               </Button>
               <Button
                 data-testid="weekly-review-proceed-reflection"
+                data-workshop-testid="weekly-review-proceed-reflection"
                 onClick={() => setStep(4)}
                 className="p-3 font-bold"
                 variant="primary"
@@ -326,9 +329,10 @@ const WeeklyReview: React.FC<WeeklyReviewProps> = ({ initialMode }) => {
               </p>
               <Button
                 data-testid="weekly-review-assist"
+                data-workshop-testid="weekly-review-assist"
                 onClick={triggerAssist}
                 disabled={isAssisting}
-                className="px-4 py-2 font-bold flex-shrink-0"
+                className="px-4 py-2 font-bold shrink-0"
                 variant="primary"
               >
                 {isAssisting ? "Assisting..." : "✨ Assist with Reflection"}
@@ -370,6 +374,7 @@ const WeeklyReview: React.FC<WeeklyReviewProps> = ({ initialMode }) => {
               </Button>
               <Button
                 data-testid="weekly-review-save"
+                data-workshop-testid="weekly-review-save"
                 onClick={handleSaveReflection}
                 disabled={!wins || !friction || !focus}
                 className="p-3 font-bold"
@@ -387,6 +392,7 @@ const WeeklyReview: React.FC<WeeklyReviewProps> = ({ initialMode }) => {
               <span className="text-5xl mb-4">✅</span>
               <h3
                 data-testid="weekly-review-complete"
+                data-workshop-testid="weekly-review-complete"
                 className="text-2xl font-bold text-accent-green"
               >
                 System Maintenance Complete
@@ -424,6 +430,7 @@ const WeeklyReview: React.FC<WeeklyReviewProps> = ({ initialMode }) => {
         <div className="mt-3 flex items-center justify-center gap-3">
           <button
             data-testid="weekly-review-mode-wizard"
+            data-workshop-testid="weekly-review-mode-wizard"
             onClick={() =>
               dispatch({ type: "SET_WEEKLY_REVIEW_MODE", payload: "wizard" })
             }
@@ -433,6 +440,7 @@ const WeeklyReview: React.FC<WeeklyReviewProps> = ({ initialMode }) => {
           </button>
           <button
             data-testid="weekly-review-mode-checklist"
+            data-workshop-testid="weekly-review-mode-checklist"
             onClick={() =>
               dispatch({ type: "SET_WEEKLY_REVIEW_MODE", payload: "checklist" })
             }
@@ -464,7 +472,7 @@ const WeeklyReview: React.FC<WeeklyReviewProps> = ({ initialMode }) => {
               >
                 {section.items && (
                   <ul className="list-none">
-                    {section.items.map((item) => (
+                    {section.items.map((item: any) => (
                       <ChecklistItem
                         key={item.id}
                         id={item.id}
@@ -479,7 +487,7 @@ const WeeklyReview: React.FC<WeeklyReviewProps> = ({ initialMode }) => {
                   </ul>
                 )}
                 {section.subSections &&
-                  section.subSections.map((subSection) => (
+                  section.subSections.map((subSection: any) => (
                     <ContentCard
                       key={subSection.id}
                       title={subSection.title}
@@ -488,7 +496,7 @@ const WeeklyReview: React.FC<WeeklyReviewProps> = ({ initialMode }) => {
                       className="mb-4"
                     >
                       <ul className="list-none">
-                        {subSection.items?.map((item) => (
+                        {subSection.items?.map((item: any) => (
                           <ChecklistItem
                             key={item.id}
                             id={item.id}

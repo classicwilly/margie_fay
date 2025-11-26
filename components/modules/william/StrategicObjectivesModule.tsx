@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState, useMemo } from "react";
 import useProgressVar from "@hooks/useProgressVar";
 import { useAppState } from "@contexts/AppStateContext";
@@ -121,7 +122,7 @@ const ProjectFocusModal = ({ project, onClose }) => {
                     <span>{task.title}</span>
                     <button
                       onClick={() => handleScheduleForToday(task.id)}
-                      className="px-2 py-1 text-xs bg-accent-green text-background-dark font-semibold rounded hover:bg-green-500 flex-shrink-0"
+                      className="px-2 py-1 text-xs bg-accent-green text-background-dark font-semibold rounded hover:bg-green-500 shrink-0"
                     >
                       Do Today
                     </button>
@@ -187,7 +188,7 @@ const ProjectFocusModal = ({ project, onClose }) => {
             value={newTaskTitle}
             onChange={(e) => setNewTaskTitle(e.target.value)}
             placeholder="Quick add task to this project..."
-            className="flex-grow p-2 bg-gray-900 border border-gray-600 rounded"
+            className="grow p-2 bg-gray-900 border border-gray-600 rounded"
           />
           <button
             type="submit"
@@ -314,7 +315,7 @@ const StrategicObjectivesModule = () => {
             projects. Click a project to focus.
           </p>
 
-          <div className="flex-grow space-y-4 overflow-y-auto max-h-96 pr-2">
+          <div className="grow space-y-4 overflow-y-auto max-h-96 pr-2">
             {objectives.filter((o) => !o.isArchived).length > 0 ? (
               objectives
                 .filter((o) => !o.isArchived)

@@ -1,8 +1,8 @@
 import { useMemo } from "react";
-import { useAppState } from "@contexts/AppStateContext";
+// useAppState is not used in this hook; we accept appState and dispatch as params
 import { useTime } from "./useTime.js";
 
-export function useProactiveAI(appState, dispatch) {
+export function useProactiveAI(appState: any, dispatch: any) {
   const { statusEnergy, calendarEvents, checkedItems, dismissedNudges } =
     appState;
 
@@ -28,7 +28,8 @@ export function useProactiveAI(appState, dispatch) {
 
     // NUDGE: High Density / Low Capacity
     const todaysEvents = calendarEvents.filter(
-      (event) => new Date(event.date).toDateString() === now.toDateString(),
+      (event: any) =>
+        new Date(event.date).toDateString() === now.toDateString(),
     );
     if (statusEnergy === "Low" && todaysEvents.length > 2) {
       nudges.push({
