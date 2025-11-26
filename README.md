@@ -26,4 +26,15 @@ Open PowerShell as Administrator and run:
 npm run windows:fix-node
 ```
 
-This runs `scripts/windows-node-fix.ps1` which attempts to stop Node, remove the locked `node_modules` folder for the `lightningcss` binary, clean the npm cache and then run `npm ci`.# margie_fay
+This runs `scripts/windows-node-fix.ps1` which attempts to stop Node, remove the locked `node_modules` folder for the `lightningcss` binary, clean the npm cache and then run `npm ci`.
+
+## Developer tools
+
+There are a few helper scripts in the `scripts/` directory for repository maintenance and safe developer workflows. One example:
+
+```pwsh
+# Run interactive token check and cleanup
+npm run gh:check-clear
+```
+
+# margie_fay

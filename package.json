@@ -25,6 +25,7 @@
     "show-latest-trace": "pwsh -NoProfile -ExecutionPolicy Bypass -File ./scripts/show-latest-trace.ps1",
     "show-latest-trace:node": "node ./scripts/show-latest-trace.js",
     "verify-dashboard": "node ./scripts/verify-dashboard.js"
+    ,"gh:check-clear": "pwsh -NoProfile -ExecutionPolicy Bypass -File ./scripts/gh-check-and-clear.ps1"
   },
   "dependencies": {
     "@google/genai": "^1.30.0",
