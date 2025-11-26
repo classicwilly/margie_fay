@@ -18,9 +18,9 @@ export default defineConfig(({ mode }) => {
       },
       resolve: {
         alias: {
-          '@components': path.resolve(__dirname, 'components'),
+          '@components': path.resolve(__dirname, 'src/components'),
           '@contexts': path.resolve(__dirname, 'src/contexts'),
-          '@hooks': path.resolve(__dirname, 'hooks'),
+          '@hooks': path.resolve(__dirname, 'src/hooks'),
           '@services': path.resolve(__dirname, 'src/services'),
           '@types': path.resolve(__dirname, 'src/types.ts'),
           '@utils': path.resolve(__dirname, 'src/utils')

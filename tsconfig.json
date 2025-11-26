@@ -23,9 +23,9 @@
     /* Aliases */
     "baseUrl": ".",
     "paths": {
-      "@components/*": ["components/*"],
+      "@components/*": ["src/components/*"],
       "@contexts/*": ["src/contexts/*"],
-      "@hooks/*": ["hooks/*"],
+      "@hooks/*": ["src/hooks/*"],
       "@services/*": ["src/services/*"],
       "@types": ["src/types.ts"],
       "@utils/*": ["src/utils/*"]
