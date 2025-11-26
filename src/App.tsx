@@ -18,7 +18,6 @@ const KonamiModal: React.FC<{ onClose: () => void }> = ({ onClose }) => (
 import { AppStateProvider, useAppState } from '@contexts/AppStateContext';
 import { NeuroPrefsProvider } from '@contexts/NeurodivergentPreferencesContext';
 import { Header } from '../../Header';
-// import E2EDebugView from '../components/E2EDebugView'; // Uncomment if file exists
 import SystemResetModal from '../components/SystemResetModal';
 // Top-level error logging for app entry point
 let AppExport = null;
@@ -40,14 +39,10 @@ try {
 }
 
 export default AppExport;
-// import { AuthScreen } from '../components/AuthScreen'; // Uncomment if file exists
 import WonkyAISetupGuide from '../../WonkyAISetupGuide';
-// import LiveChatModal from '../components/LiveChatModal'; // Uncomment if file exists
-// import CommandPalette from '../components/CommandPalette'; // Uncomment if file exists
 import { useCommandPalette } from '../../hooks/useCommandPalette';
 import ContextSwitchCaptureModal from '../components/ContextSwitchCaptureModal';
 import ContextAirlock from '../components/ContextAirlock';
-// import { Portal } from '../components/Portal'; // Uncomment if file exists
 import { useAchievementEngine } from '../../hooks/useAchievementEngine';
 import ToastContainer from '../components/ToastContainer';
 import LoadingSpinner from '../components/LoadingSpinner';
