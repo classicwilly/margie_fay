@@ -35,7 +35,7 @@ const E2EDebugView = () => {
     if ((window as any).__WONKY_E2E_LOG_PUSH__) {
       (window as any).__WONKY_E2E_LOG_PUSH__('E2E_DEBUG_VIEW_RENDER', { view });
     }
-  } catch (e) { /* ignore */ }
+  } catch { /* ignore */ }
 
   // Render a small accessible element with a testid so Playwright can confirm
   // the current view without depending on the header. This reduces flakiness

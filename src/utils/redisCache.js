@@ -38,7 +38,7 @@ class RedisCache {
   }
   async del(key) {
     if (!this.redis) return;
-    try { await this.redis.del(key); } catch (e) { /* ignore */ }
+    try { await this.redis.del(key); } catch { /* ignore */ }
   }
   async clear() {
     if (!this.redis) return;

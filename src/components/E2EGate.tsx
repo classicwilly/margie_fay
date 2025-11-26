@@ -17,7 +17,7 @@ const E2EGate: React.FC = () => {
 
       const handle = () => setIsReady(!!(window as any).__WONKY_TEST_READY__ || (window as any).appState?.view === 'game-master-dashboard');
       // expose a global setter to allow tests to release the gate
-      try { (window as any).__WONKY_TEST_RELEASE_GATE__ = () => { (window as any).__WONKY_TEST_READY__ = true; handle(); }; } catch (e) { /* ignore */ }
+      try { (window as any).__WONKY_TEST_RELEASE_GATE__ = () => { (window as any).__WONKY_TEST_READY__ = true; handle(); }; } catch { /* ignore */ }
 
       // Listen to a global property change via polling - cheap and fine for E2E
       const interval = setInterval(() => handle(), 200);

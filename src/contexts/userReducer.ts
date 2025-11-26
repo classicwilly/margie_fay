@@ -95,7 +95,7 @@ export function userReducer(state: AppState, action: AppAction): AppState {
         if (saved && (saved as any).view) {
           newState.view = (saved as any).view as any;
         }
-      } catch (e) { /* ignore */ }
+      } catch { /* ignore */ }
       newState.savedContext = null;
       newState.isContextRestoreModalOpen = false;
       break;

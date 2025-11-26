@@ -180,7 +180,7 @@ const Header: React.FC<HeaderProps> = ({ openResetModal }) => {
             if (!e2eActive) return;
             try {
                 window.localStorage.setItem('wonky-e2e-visible-dropdown', JSON.stringify({ dashboardType, items: visibleDropdownItems.map(i => i.id) }));
-            } catch (e) { /* ignore */ }
+            } catch { /* ignore */ }
             // eslint-disable-next-line no-console
             console.log('E2E: header visible dropdown', { items: visibleDropdownItems.map(i => i.id), dashboardType, earlyInit: earlyE2EInit?.dashboardType, e2eForceGameMaster });
         }, [visibleDropdownItems, dashboardType, earlyE2EInit]);
@@ -195,9 +195,9 @@ const Header: React.FC<HeaderProps> = ({ openResetModal }) => {
                 const e2eKey = (window as any).__E2E_STORAGE_KEY__ || 'wonky-sprout-os-state';
                 const hasE2EStorage = !!window.localStorage.getItem(e2eKey);
                 if (early || (window as any).__PLAYWRIGHT_SKIP_DEV_BYPASS__ || !!(window as any).__E2E_FORCE_GAMEMASTER__ || hasE2EStorage) {
-                    try { window.localStorage.setItem('wonky-e2e-visible-dropdown', JSON.stringify({ dashboardType: seededDashboardType || dashboardType, items: visibleDropdownItems.map(i => i.id) })); } catch(e) { /* ignore */ }
+                    try { window.localStorage.setItem('wonky-e2e-visible-dropdown', JSON.stringify({ dashboardType: seededDashboardType || dashboardType, items: visibleDropdownItems.map(i => i.id) })); } catch { /* ignore */ }
                 }
-            } catch (e) { /* ignore */ }
+            } catch { /* ignore */ }
         }
 
   const navItems = navItemConfig[dashboardType as keyof typeof navItemConfig] || { desktop: [], mobile: [] };

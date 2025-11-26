@@ -75,10 +75,10 @@ export const AppStateProvider = ({ children }: { children: React.ReactNode }) =>
         if (typeof window !== 'undefined') {
                 // Avoid referencing isE2EMode before it's declared: compute it locally
                 const isE2EModeLocal = typeof window !== 'undefined' && (window.localStorage.getItem(storageKey) || (window as any).__PLAYWRIGHT_SKIP_DEV_BYPASS__ || !!(window as any).__WONKY_TEST_INITIALIZE__);
-                try { if ((import.meta as any).env?.MODE === 'development') console.log('E2E: provider boot flags', { skipDev, isE2EMode: isE2EModeLocal, rawStorageExists: !!rawStorage, e2eInit: (window as any).__WONKY_TEST_INITIALIZE__ }); } catch(e) { /* ignore */ }
+                try { if ((import.meta as any).env?.MODE === 'development') console.log('E2E: provider boot flags', { skipDev, isE2EMode: isE2EModeLocal, rawStorageExists: !!rawStorage, e2eInit: (window as any).__WONKY_TEST_INITIALIZE__ }); } catch { /* ignore */ }
             }
         if (typeof window !== 'undefined') {
-            try { if ((import.meta as any).env?.MODE === 'development') console.info('E2E: provider flags', { storageKey, skipDev, rawStorage: rawStorage ? rawStorage.substring(0, 40) : null, e2eInit: (window as any).__WONKY_TEST_INITIALIZE__ }); } catch (e) { /* ignore */ }
+            try { if ((import.meta as any).env?.MODE === 'development') console.info('E2E: provider flags', { storageKey, skipDev, rawStorage: rawStorage ? rawStorage.substring(0, 40) : null, e2eInit: (window as any).__WONKY_TEST_INITIALIZE__ }); } catch { /* ignore */ }
         }
         const rawSeed = typeof window !== 'undefined' && rawStorage ? JSON.parse(rawStorage || 'null') : null;
         let seededState = null;
@@ -145,16 +145,16 @@ export const AppStateProvider = ({ children }: { children: React.ReactNode }) =>
                     // Setup E2E global log helpers for diagnostics
                     try {
                         if (!(window as any).__WONKY_E2E_LOG__) (window as any).__WONKY_E2E_LOG__ = [];
-                        (window as any).__WONKY_E2E_LOG_PUSH__ = (msg: string, meta?: any) => { try { (window as any).__WONKY_E2E_LOG__.push({ ts: new Date().toISOString(), msg, meta }); } catch (e) { /* ignore */ } };
+                        (window as any).__WONKY_E2E_LOG_PUSH__ = (msg: string, meta?: any) => { try { (window as any).__WONKY_E2E_LOG__.push({ ts: new Date().toISOString(), msg, meta }); } catch { /* ignore */ } };
                         (window as any).__WONKY_E2E_LOG_GET__ = () => JSON.parse(JSON.stringify((window as any).__WONKY_E2E_LOG__ || []));
-                    } catch (e) { /* ignore */ }
+                    } catch { /* ignore */ }
                     const e2eSignal = typeof window !== 'undefined' && (
                         (window as any).__WONKY_TEST_INITIALIZE__ || (window as any).__PLAYWRIGHT_SKIP_DEV_BYPASS__ || (window as any).__E2E_FORCE_GAMEMASTER__
                     );
                     if (seededState.dashboardType === 'william' && e2eSignal) {
                         seededState.view = 'game-master-dashboard';
                     }
-                } catch (e) { /* ignore */ }
+                } catch { /* ignore */ }
             }
         // End seeded state logic block
 
@@ -174,10 +174,10 @@ export const AppStateProvider = ({ children }: { children: React.ReactNode }) =>
             if (seededState && rawSeed && !isExplicitE2ESeed) {
                 // Clear modal-related state so normal localStorage persistence
                 // doesn't cause overlays to appear unexpectedly on load.
-                try { seededState.savedContext = null; } catch (e) { /* ignore */ }
-                try { seededState.isContextRestoreModalOpen = false; } catch (e) { /* ignore */ }
+                try { seededState.savedContext = null; } catch { /* ignore */ }
+                try { seededState.isContextRestoreModalOpen = false; } catch { /* ignore */ }
             }
-        } catch (e) { /* ignore */ }
+        } catch { /* ignore */ }
     // }, []); // <-- This is not a useEffect, so no cleanup needed here
 
     // Subscribe to data changes for the logged-in user
@@ -186,7 +186,7 @@ export const AppStateProvider = ({ children }: { children: React.ReactNode }) =>
         // Helper to create subscription
         const startSubscription = () => {
             return db.onSnapshot(authUser.uid, (userState: any) => {
-                try { (window as any).__WONKY_E2E_LOG_PUSH__('DB_SNAPSHOT_RECEIVED', { keys: Object.keys(userState || {}), allowDbUpdates: allowDbUpdatesRef.current, isE2EMode: !!(window as any).__WONKY_TEST_INITIALIZE__ || !!(window as any).__PLAYWRIGHT_SKIP_DEV_BYPASS__ }); } catch (e) { /* ignore */ }
+                try { (window as any).__WONKY_E2E_LOG_PUSH__('DB_SNAPSHOT_RECEIVED', { keys: Object.keys(userState || {}), allowDbUpdates: allowDbUpdatesRef.current, isE2EMode: !!(window as any).__WONKY_TEST_INITIALIZE__ || !!(window as any).__PLAYWRIGHT_SKIP_DEV_BYPASS__ }); } catch { /* ignore */ }
                 try {
                     const e2eActive = typeof window !== 'undefined' && (
                         !!window.localStorage.getItem(storageKey) || !!(window as any).__PLAYWRIGHT_SKIP_DEV_BYPASS__ || !!(window as any).__WONKY_TEST_INITIALIZE__
@@ -197,10 +197,10 @@ export const AppStateProvider = ({ children }: { children: React.ReactNode }) =>
                         lastDbSnapshotRef.current = userState;
                         // eslint-disable-next-line no-console
                         console.log('E2E: blocking DB snapshot to preserve seeded view');
-                            try { (window as any).__WONKY_E2E_LOG_PUSH__('DB_SNAPSHOT_BLOCKED', { snapshotKeys: Object.keys(userState || {}) }); } catch(e) { /* ignore */ }
+                            try { (window as any).__WONKY_E2E_LOG_PUSH__('DB_SNAPSHOT_BLOCKED', { snapshotKeys: Object.keys(userState || {}) }); } catch { /* ignore */ }
                         return;
                     }
-                } catch (e) { /* ignore */ }
+                } catch { /* ignore */ }
                 // If not E2E-locked, apply the snapshot immediately. Merge the
                 // incoming snapshot with the current app state to avoid losing
                 // keys that tests rely on for deterministic assertions, and
@@ -208,27 +208,27 @@ export const AppStateProvider = ({ children }: { children: React.ReactNode }) =>
                     try {
                     const sticky = typeof window !== 'undefined' ? (window as any).__WONKY_TEST_STICKY_VIEW__ : undefined;
                     const stickyDashboard = typeof window !== 'undefined' ? (window as any).__WONKY_TEST_INITIALIZE__?.dashboardType || (window as any).__WONKY_TEST_STICKY_DASHBOARD__ : undefined;
-                        try { console.info('E2E: onSnapshot apply attempt', { snapshotView: userState?.view, sticky, stickyDashboard, allowDbUpdates: allowDbUpdatesRef.current }); } catch(e) { /* ignore */ }
-                    try { (window as any).__WONKY_E2E_LOG_PUSH__('DB_SNAPSHOT_APPLY', { snapshotView: userState?.view, sticky }); } catch (e) { /* ignore */ }
+                        try { console.info('E2E: onSnapshot apply attempt', { snapshotView: userState?.view, sticky, stickyDashboard, allowDbUpdates: allowDbUpdatesRef.current }); } catch { /* ignore */ }
+                    try { (window as any).__WONKY_E2E_LOG_PUSH__('DB_SNAPSHOT_APPLY', { snapshotView: userState?.view, sticky }); } catch { /* ignore */ }
                     // Use safeMerge to avoid clobbering arrays/objects unintentionally.
                     setAppState(prev => {
                         try {
                             const base = prev || defaultUserState;
                             const merged = safeMerge(base, userState);
-                            try { (window as any).__WONKY_E2E_LOG_PUSH__('DB_SNAPSHOT_MERGE_START', { prevView: prev?.view, snapshotView: userState?.view }); } catch(e) { /* ignore */ }
+                            try { (window as any).__WONKY_E2E_LOG_PUSH__('DB_SNAPSHOT_MERGE_START', { prevView: prev?.view, snapshotView: userState?.view }); } catch { /* ignore */ }
                             if (sticky) {
                                 merged.view = sticky;
                                 if (stickyDashboard) merged.dashboardType = stickyDashboard;
-                                try { (window as any).__WONKY_E2E_LOG_PUSH__('DB_SNAPSHOT_APPLY_PRESERVE_STICKY', { snapshotView: userState?.view, sticky }); } catch (e) { /* ignore */ }
+                                try { (window as any).__WONKY_E2E_LOG_PUSH__('DB_SNAPSHOT_APPLY_PRESERVE_STICKY', { snapshotView: userState?.view, sticky }); } catch { /* ignore */ }
                             }
-                            try { (window as any).__WONKY_E2E_LOG_PUSH__('DB_SNAPSHOT_MERGE_END', { mergedView: merged.view, mergedDashboard: merged.dashboardType }); } catch(e) { /* ignore */ }
+                            try { (window as any).__WONKY_E2E_LOG_PUSH__('DB_SNAPSHOT_MERGE_END', { mergedView: merged.view, mergedDashboard: merged.dashboardType }); } catch { /* ignore */ }
                             return merged as AppState;
                         } catch (e) {
-                            try { (window as any).__WONKY_E2E_LOG_PUSH__('DB_SNAPSHOT_MERGE_FAILED', { err: String(e) }); } catch(e) { /* ignore */ }
+                            try { (window as any).__WONKY_E2E_LOG_PUSH__('DB_SNAPSHOT_MERGE_FAILED', { err: String(e) }); } catch { /* ignore */ }
                             return userState as AppState;
                         }
                     });
-                } catch (e) { /* ignore */ }
+                } catch { /* ignore */ }
                     });
                 };
                 try {
@@ -249,7 +249,7 @@ export const AppStateProvider = ({ children }: { children: React.ReactNode }) =>
                     if (!mounted) return;
                     const ready = !!(window as any).__WONKY_TEST_READY__ || allowDbUpdatesRef.current;
                     if (ready) {
-                        try { (window as any).__WONKY_E2E_LOG_PUSH__('DB_SUBSCRIPTION_START', { ready: true }); } catch(e) { /* ignore */ }
+                        try { (window as any).__WONKY_E2E_LOG_PUSH__('DB_SUBSCRIPTION_START', { ready: true }); } catch { /* ignore */ }
                         unsub = startSubscription();
                         return;
                     }
@@ -261,7 +261,7 @@ export const AppStateProvider = ({ children }: { children: React.ReactNode }) =>
 
             const unsubscribe = startSubscription();
             return () => unsubscribe();
-        } catch (e) { /* ignore */ }
+        } catch { /* ignore */ }
     }, [authUser]);
 
   // Create a dispatch function that writes to the database
@@ -273,10 +273,10 @@ export const AppStateProvider = ({ children }: { children: React.ReactNode }) =>
             // eslint-disable-next-line no-console
             console.log('dispatchWrapper: before DB write, prev.view:', prev?.view, 'newState.view:', newState?.view);
             if (authUser && prev) {
-                try { (window as any).__WONKY_E2E_LOG_PUSH__('USER_DISPATCH', { action: action.type, payload: (action as any)?.payload || null, viewBefore: prev.view, viewAfter: newState.view }); } catch(e) { /* ignore */ }
+                try { (window as any).__WONKY_E2E_LOG_PUSH__('USER_DISPATCH', { action: action.type, payload: (action as any)?.payload || null, viewBefore: prev.view, viewAfter: newState.view }); } catch { /* ignore */ }
                 db.setDoc(authUser.uid, newState).catch(console.error);
             }
-            try { (window as any).appState = newState; } catch (e) { /* ignore */ }
+            try { (window as any).appState = newState; } catch { /* ignore */ }
             return newState;
         });
     };
@@ -312,7 +312,7 @@ export const AppStateProvider = ({ children }: { children: React.ReactNode }) =>
                             }, timeoutMs);
                             return () => clearTimeout(t);
                         }
-                    } catch (e) { /* ignore */ }
+                    } catch { /* ignore */ }
                 } else {
                     allowDbUpdatesRef.current = true;
                 }
@@ -332,16 +332,16 @@ export const AppStateProvider = ({ children }: { children: React.ReactNode }) =>
                     if (!seededAppliedRef.current) {
                         const alreadySame = appState?.view === seededState.view && appState?.dashboardType === seededState.dashboardType;
                         if (!alreadySame) {
-                            try { setAppState(seededState); } catch (e) { /* ignore */ }
-                            try { (window as any).appState = seededState; } catch(e) { /* ignore */ }
-                            try { (window as any).__WONKY_E2E_LOG_PUSH__('APPLIED_SEEDED_STATE_TO_PROVIDER', { view: seededState.view, dashboard: seededState.dashboardType }); } catch(e) { /* ignore */ }
+                            try { setAppState(seededState); } catch { /* ignore */ }
+                            try { (window as any).appState = seededState; } catch { /* ignore */ }
+                            try { (window as any).__WONKY_E2E_LOG_PUSH__('APPLIED_SEEDED_STATE_TO_PROVIDER', { view: seededState.view, dashboard: seededState.dashboardType }); } catch { /* ignore */ }
                             // eslint-disable-next-line no-console
                             console.info('E2E: applied seededState to provider early', { view: seededState.view, dashboard: seededState.dashboardType });
                         }
                         seededAppliedRef.current = true;
                     }
                 }
-            } catch (e) { /* ignore */ }
+            } catch { /* ignore */ }
         }, [isE2EMode, seededState]);
     if (isE2EMode) {
         // E2E branch: declare missing variables AS HOOKS AT TOP-LEVEL so hook order is stable
@@ -374,10 +374,10 @@ export const AppStateProvider = ({ children }: { children: React.ReactNode }) =>
                 try {
                     if (JSON.stringify(next) !== JSON.stringify(testState)) {
                         setTestState(next);
-                        try { (window as any).appState = next; } catch (e) { /* ignore */ }
+                        try { (window as any).appState = next; } catch { /* ignore */ }
                     }
-                } catch (e) { /* ignore */ }
-            } catch (e) { /* ignore */ }
+                } catch { /* ignore */ }
+            } catch { /* ignore */ }
         }, [isE2EMode]);
         try {
             // Wrap all E2E state initialization in try/catch
@@ -391,11 +391,11 @@ export const AppStateProvider = ({ children }: { children: React.ReactNode }) =>
                 // Allow tests to update provider state at runtime — use setTestState
                 // so React consumers re-render. This is safe because dispatches
                 // happen after initial mount in E2E flows.
-                try { setTestState(next); } catch (e) { /* ignore */ }
+                try { setTestState(next); } catch { /* ignore */ }
                 if (testContextValue) testContextValue.appState = next;
-                try { window.localStorage.setItem(storageKey, JSON.stringify(next)); } catch (e) { /* ignore */ }
-                try { (window as any).appState = next; } catch (e) { /* ignore */ }
-                try { (window as any).__WONKY_E2E_LOG_PUSH__('TEST_DISPATCH_UPDATE_APPSTATE', { view: next?.view }); } catch(e) { /* ignore */ }
+                try { window.localStorage.setItem(storageKey, JSON.stringify(next)); } catch { /* ignore */ }
+                try { (window as any).appState = next; } catch { /* ignore */ }
+                try { (window as any).__WONKY_E2E_LOG_PUSH__('TEST_DISPATCH_UPDATE_APPSTATE', { view: next?.view }); } catch { /* ignore */ }
             };
             // Always define testUser and ensure authUser is set for E2E
             testUser = { uid: 'playwright', email: 'e2e@wonky.local' };
@@ -417,17 +417,17 @@ export const AppStateProvider = ({ children }: { children: React.ReactNode }) =>
                         const merged = safeMerge(testState, e2eInit);
                         // Do not call setTestState here (E2E branch avoids React setter usage)
                         testContextValue.appState = merged;
-                        try { (window as any).appState = merged; } catch (err) { /* ignore */ }
-                        try { (window as any).__WONKY_E2E_LOG_PUSH__('APPLIED_TEST_INIT', { keys: Object.keys(merged) }); } catch(e) { /* ignore */ }
-                        try { window.localStorage.setItem('__WONKY_TEST_STICKY_VIEW__', merged?.view); } catch(e) { /* ignore */ }
-                        try { (window as any).__WONKY_TEST_STICKY_VIEW__ = merged?.view; } catch (e) { /* ignore */ }
+                        try { (window as any).appState = merged; } catch { /* ignore */ }
+                        try { (window as any).__WONKY_E2E_LOG_PUSH__('APPLIED_TEST_INIT', { keys: Object.keys(merged) }); } catch { /* ignore */ }
+                        try { window.localStorage.setItem('__WONKY_TEST_STICKY_VIEW__', merged?.view); } catch { /* ignore */ }
+                        try { (window as any).__WONKY_TEST_STICKY_VIEW__ = merged?.view; } catch { /* ignore */ }
                         // eslint-disable-next-line no-console
                         console.log('E2E: Applied __WONKY_TEST_INITIALIZE__ (runtime E2E) early', Object.keys(e2eInit));
                     }
-                } catch (err) { /* ignore */ }
+                } catch { /* ignore */ }
                 } catch (initErr) {
                 console.error('E2E: Error during state initialization:', initErr);
-                try { window.localStorage.setItem('wonky-last-error', String(initErr.stack || initErr)); } catch (err) { /* ignore */ }
+                try { window.localStorage.setItem('wonky-last-error', String(initErr.stack || initErr)); } catch { /* ignore */ }
                 return null;
             }
                 // Now check for a test override to force a particular view for E2E runs
@@ -442,9 +442,9 @@ export const AppStateProvider = ({ children }: { children: React.ReactNode }) =>
                             const forced = { ...testState, view: e2eForce };
                             // Defer state update to an effect to avoid render-time setState
                             testContextValue.appState = forced;
-                            try { (window as any).appState = forced; } catch (err) { /* ignore */ }
-                            try { (window as any).__WONKY_E2E_LOG_PUSH__('APPLIED_E2E_FORCE_VIEW', { view: forced.view }); } catch(e) { /* ignore */ }
-                                try { window.localStorage.setItem('__WONKY_TEST_STICKY_VIEW__', forced?.view); } catch(e) { /* ignore */ }
+                            try { (window as any).appState = forced; } catch { /* ignore */ }
+                            try { (window as any).__WONKY_E2E_LOG_PUSH__('APPLIED_E2E_FORCE_VIEW', { view: forced.view }); } catch { /* ignore */ }
+                                try { window.localStorage.setItem('__WONKY_TEST_STICKY_VIEW__', forced?.view); } catch { /* ignore */ }
                         }
                     }
                 } catch (err) {
@@ -463,38 +463,38 @@ export const AppStateProvider = ({ children }: { children: React.ReactNode }) =>
                             const forced = { ...(app || {}), view: 'game-master-dashboard', dashboardType: 'william' } as AppState;
                             // Defer state update to effect - assign to context value now
                             testContextValue.appState = forced;
-                            try { (window as any).appState = forced; } catch (err) { /* ignore */ }
-                            try { (window as any).__WONKY_E2E_LOG_PUSH__('APPLIED_E2E_GAMEMASTER_FORCE', { view: forced.view }); } catch(e) { /* ignore */ }
-                                try { (window as any).__WONKY_TEST_STICKY_VIEW__ = forced?.view; } catch (e) { /* ignore */ }
+                            try { (window as any).appState = forced; } catch { /* ignore */ }
+                            try { (window as any).__WONKY_E2E_LOG_PUSH__('APPLIED_E2E_GAMEMASTER_FORCE', { view: forced.view }); } catch { /* ignore */ }
+                                try { (window as any).__WONKY_TEST_STICKY_VIEW__ = forced?.view; } catch { /* ignore */ }
                             // eslint-disable-next-line no-console
                             console.log('E2E: forced Game Master view for seeded william persona');
                         }
                     }
-                } catch (err) { /* ignore */ }
+                } catch { /* ignore */ }
                 // Make the current test state available for immediate JS access
                 // in Playwright so page.evaluate(() => window.appState) sees the
                 // expected seeded state before any additional renders.
                 try {
                     if (typeof window !== 'undefined') {
                         (window as any).appState = testContextValue.appState;
-                        try { (window as any).__WONKY_E2E_LOG_PUSH__('SET_WINDOW_APPSTATE_E2E', { view: (window as any).appState?.view }); } catch(e) { /* ignore */ }
+                        try { (window as any).__WONKY_E2E_LOG_PUSH__('SET_WINDOW_APPSTATE_E2E', { view: (window as any).appState?.view }); } catch { /* ignore */ }
                         // eslint-disable-next-line no-console
                         console.log('E2E: set window.appState early', (window as any).appState?.view);
-                        try { (window as any).__WONKY_TEST_DISPATCH__ = testDispatch; } catch(e) { /* ignore */ }
+                        try { (window as any).__WONKY_TEST_DISPATCH__ = testDispatch; } catch { /* ignore */ }
                         try { (window as any).__WONKY_TEST_FORCE_VIEW__ = (view:string) => {
-                            try { (window as any).__E2E_FORCE_VIEW__ = view; } catch(e) { /* ignore */ }
+                            try { (window as any).__E2E_FORCE_VIEW__ = view; } catch { /* ignore */ }
                             try {
                                 const current = testContextValue?.appState || testState;
                                 const forced = { ...(current || {}), view } as AppState;
                                 testContextValue.appState = forced;
-                                try { setTestState(forced); } catch (e) { /* ignore */ }
-                                try { (window as any).appState = forced; } catch (e) { /* ignore */ }
-                                try { (window as any).__WONKY_E2E_LOG_PUSH__('APPLIED_WONKY_TEST_FORCE_VIEW', { view: forced?.view }); } catch(e) { /* ignore */ }
+                                try { setTestState(forced); } catch { /* ignore */ }
+                                try { (window as any).appState = forced; } catch { /* ignore */ }
+                                try { (window as any).__WONKY_E2E_LOG_PUSH__('APPLIED_WONKY_TEST_FORCE_VIEW', { view: forced?.view }); } catch { /* ignore */ }
                                 // Extra debug
                                 // eslint-disable-next-line no-console
                                 console.log('E2E: __WONKY_TEST_FORCE_VIEW__ applied', view);
-                            } catch(e) { /* ignore */ }
-                        } } catch(e) { /* ignore */ }
+                            } catch { /* ignore */ }
+                        } } catch { /* ignore */ }
                         // Provide an E2E hook to allow DB updates when tests are done
                         try { (window as any).__WONKY_TEST_ALLOW_DB_UPDATES__ = (allow:boolean = true) => {
                             try {
@@ -508,7 +508,7 @@ export const AppStateProvider = ({ children }: { children: React.ReactNode }) =>
                                     const sticky = typeof window !== 'undefined' ? (window as any).__WONKY_TEST_STICKY_VIEW__ : undefined;
                                     const stickyDashboard = typeof window !== 'undefined' ? (window as any).__WONKY_TEST_INITIALIZE__?.dashboardType || (window as any).__WONKY_TEST_STICKY_DASHBOARD__ : undefined;
                                     const snapshot = lastDbSnapshotRef.current;
-                                    try { (window as any).__WONKY_E2E_LOG_PUSH__('DB_SNAPSHOT_APPLY', { keys: Object.keys(snapshot || {}) }); } catch (e) { /* ignore */ }
+                                    try { (window as any).__WONKY_E2E_LOG_PUSH__('DB_SNAPSHOT_APPLY', { keys: Object.keys(snapshot || {}) }); } catch { /* ignore */ }
                                     try {
                                         setAppState(prev => {
                                             try {
@@ -517,34 +517,34 @@ export const AppStateProvider = ({ children }: { children: React.ReactNode }) =>
                                                 if (sticky) {
                                                     merged.view = sticky;
                                                     if (stickyDashboard) merged.dashboardType = stickyDashboard;
-                                                    try { (window as any).__WONKY_E2E_LOG_PUSH__('DB_SNAPSHOT_APPLY_PRESERVE_STICKY', { sticky, snapshotKeys: Object.keys(snapshot || {}) }); } catch (e) { /* ignore */ }
+                                                    try { (window as any).__WONKY_E2E_LOG_PUSH__('DB_SNAPSHOT_APPLY_PRESERVE_STICKY', { sticky, snapshotKeys: Object.keys(snapshot || {}) }); } catch { /* ignore */ }
                                                 }
                                                 return merged as AppState;
                                             } catch (e) {
                                                 return snapshot as AppState;
                                             }
                                         });
-                                    } catch (e) { /* ignore */ }
+                                    } catch { /* ignore */ }
                                     // Clear the last snapshot after applying
                                     lastDbSnapshotRef.current = null;
                                 }
                                 // eslint-disable-next-line no-console
                                 console.log('E2E: __WONKY_TEST_ALLOW_DB_UPDATES__ set to', allow);
-                                try { (window as any).__WONKY_E2E_LOG_PUSH__('DB_ALLOW_APPLIED', { allow }); } catch(e) { /* ignore */ }
-                                try { (window as any).__WONKY_E2E_LOG_PUSH__('ALLOW_DB_UPDATES_CALLED', { allow }); } catch (e) { /* ignore */ }
-                            } catch (e) { /* ignore */ }
-                        } } catch(e) { /* ignore */ }
+                                try { (window as any).__WONKY_E2E_LOG_PUSH__('DB_ALLOW_APPLIED', { allow }); } catch { /* ignore */ }
+                                try { (window as any).__WONKY_E2E_LOG_PUSH__('ALLOW_DB_UPDATES_CALLED', { allow }); } catch { /* ignore */ }
+                            } catch { /* ignore */ }
+                        } } catch { /* ignore */ }
                         // Also expose a read-only API for tests to query whether DB updates
                         // are permitted. This avoids race conditions from repeated set
-                        try { (window as any).__WONKY_TEST_CAN_UPDATE_DB__ = () => allowDbUpdatesRef.current; } catch(e) { /* ignore */ }
+                        try { (window as any).__WONKY_TEST_CAN_UPDATE_DB__ = () => allowDbUpdatesRef.current; } catch { /* ignore */ }
                     }
-                } catch (e) { /* ignore */ }
+                } catch { /* ignore */ }
                 // Extra debug: show the earlyInit and the seededState/view after merge
                 try {
                     const earlyInitLog = typeof window !== 'undefined' ? (window as any).__WONKY_TEST_INITIALIZE__ : undefined;
                     // eslint-disable-next-line no-console
                     console.log('E2E: post-init debug', { earlyInit: earlyInitLog, seeded: seededState?.dashboardType, seededView: seededState?.view });
-                } catch (e) { /* ignore */ }
+                } catch { /* ignore */ }
 
                 // Extra debug info to ensure the App that runs in E2E sees the
                 // expected seeded view/dashboardType. This helps us verify the
@@ -558,7 +558,7 @@ export const AppStateProvider = ({ children }: { children: React.ReactNode }) =>
                         testStateView: testState?.view,
                         testStateKeys: Object.keys(testState || {}),
                     });
-                } catch (e) { /* ignore */ }
+                } catch { /* ignore */ }
             return (
                 <AppStateContext.Provider value={testContextValue}>
                     <ErrorBoundary>
