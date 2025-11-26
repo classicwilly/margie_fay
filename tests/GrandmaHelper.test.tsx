@@ -200,7 +200,7 @@ describe("GrandmaHelper persona chooser", () => {
       expect(modalTitle).toBeInTheDocument();
       fireEvent.click(screen.getByTestId("ai-consent-acknowledge"));
       await waitFor(() => expect(generateContent).toHaveBeenCalled());
-    } catch (e) {
+    } catch {
       // Modal didn't appear - either consent was bypassed or skip flag was set.
       // In that case, the persona helper should have been called with the sanitized query.
       const { getGrandmaAdvice } = await import("@services/geminiService");

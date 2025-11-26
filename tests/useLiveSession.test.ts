@@ -75,7 +75,7 @@ describe("useLiveSession Playwright stub guard", () => {
         return {
           fftSize: 512,
           frequencyBinCount: 256,
-          getByteTimeDomainData: (x: any) => {},
+          getByteTimeDomainData: (_x: any) => {},
         };
       }
     } as any;

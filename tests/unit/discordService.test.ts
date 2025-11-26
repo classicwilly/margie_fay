@@ -12,7 +12,7 @@ describe("discordService", () => {
     vi.stubGlobal(
       "fetch",
       vi.fn(
-        async (url: string) =>
+        async (_url: string) =>
           ({ ok: true, json: async () => ({ profile }) }) as any,
       ),
     );

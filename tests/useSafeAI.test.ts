@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { renderHook } from "@testing-library/react";
 import { act } from "@testing-library/react";
 import React from "react";
@@ -33,7 +33,7 @@ describe("useSafeAI telemetry & failures", () => {
     const { result } = renderHook(() => useSafeAI(), { wrapper });
     const { generate } = result.current;
 
-    const res = await act(async () => await generate("test prompt"));
+    await act(async () => await generate("test prompt"));
     expect(spy).toHaveBeenCalledWith("ai_call_success", expect.any(Object));
   });
 
@@ -53,7 +53,6 @@ describe("useSafeAI telemetry & failures", () => {
     const wrapper = ({ children }: any) =>
       React.createElement(FeatureFlagsProvider, null, children);
     const { result } = renderHook(() => useSafeAI(), { wrapper });
-    const { generate } = result.current;
 
     await expect(
       result.current.generate("test", { responseMimeType: "application/json" }),
@@ -130,7 +129,6 @@ describe("useSafeAI telemetry & failures", () => {
       React.createElement(FeatureFlagsProvider, null, children);
     const { result } = renderHook(() => useSafeAI(), { wrapper });
     const { generate } = result.current;
-    const controller = new AbortController();
 
     const promise = generate("abort-test", { signal: controller.signal });
     controller.abort();
@@ -146,7 +144,6 @@ describe("useSafeAI telemetry & failures", () => {
       React.createElement(FeatureFlagsProvider, null, children);
     const { result } = renderHook(() => useSafeAI(), { wrapper });
     const { generate } = result.current;
-    const controller = new AbortController();
     const res = await generate("some prompt");
     expect(res.source).toBe("manual");
   });

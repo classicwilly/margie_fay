@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 import HousekeepingModule from "@components/modules/housekeeping/HousekeepingModule";
 import { AppStateProvider } from "@contexts/AppStateContext";

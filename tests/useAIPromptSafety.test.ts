@@ -15,7 +15,7 @@ describe("useAIPromptSafety", () => {
         React.createElement(AIProtectionProvider, null, children),
       );
     const { result } = renderHook(() => useAIPromptSafety(), { wrapper });
-    const { checkAndExecute, isPiiModalOpen, piiMatches } = result.current;
+    const { checkAndExecute } = result.current;
 
     // When PII is present, the function should not execute and the hook should present matches
     await act(async () => {
@@ -31,7 +31,7 @@ describe("useAIPromptSafety", () => {
       React.createElement(FeatureFlagsProvider, null, children);
     const { result } = renderHook(() => useAIPromptSafety(), { wrapper });
 
-    const mockFn = vi.fn(async (s: string) => "ok");
+    const mockFn = vi.fn(async () => "ok");
 
     // Simulate user having granted AI consent
     localStorage.setItem("wonky-sprout-ai-consent-dont-show-again", "true");

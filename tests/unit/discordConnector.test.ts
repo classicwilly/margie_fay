@@ -40,7 +40,7 @@ describe("discordConnector", () => {
       }),
     );
     const cache = {
-      get: async (k) => ({ token: "cached-token" }),
+      get: async (_k) => ({ token: "cached-token" }),
       set: async () => {},
     };
     // ensure env var is not set

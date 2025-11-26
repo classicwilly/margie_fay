@@ -1,9 +1,9 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "../src/modules/index";
-import { AppStateProvider, useAppState } from "../src/contexts/AppStateContext";
+import { AppStateProvider } from "../src/contexts/AppStateContext";
 import { UserProvider } from "@contexts/UserContext";
 import SettingsView from "../src/views/SettingsView";
-import { getModuleRoutes } from "../src/module_registry";
+// getModuleRoutes not used in this test
 
 describe("Module toggles UI", () => {
   it("disables a module when toggled off", async () => {

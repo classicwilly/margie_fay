@@ -19,7 +19,7 @@ describe("githubService", () => {
     ];
     vi.stubGlobal(
       "fetch",
-      vi.fn(async (url: string) => ({
+      vi.fn(async (_url: string) => ({
         ok: true,
         json: async () => ({ repos: repoList }),
       })),
@@ -44,7 +44,7 @@ describe("githubService", () => {
   it("creates a PR via server endpoint", async () => {
     vi.stubGlobal(
       "fetch",
-      vi.fn(async (url: string, opts?: any) => ({
+      vi.fn(async (_url: string, _opts?: any) => ({
         ok: true,
         json: async () => ({ pr: { number: 123, title: "My PR" } }),
       })),
