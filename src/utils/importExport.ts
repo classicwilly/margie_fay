@@ -1,6 +1,6 @@
 import { Sop } from '../types';
 
-export function exportSops(sops: Sop[]) {
+export function exportSops(sops: Sop[]): string {
   return JSON.stringify({ version: 1, exportedAt: new Date().toISOString(), sops }, null, 2);
 }
 
@@ -20,7 +20,7 @@ export function importSops(payload: string): { sops: Sop[] } {
 
 export default { exportSops, importSops };
 
-export function exportChecklists(checklists: any[]) {
+export function exportChecklists(checklists: any[]): string {
   return JSON.stringify({ version: 1, exportedAt: new Date().toISOString(), checklists }, null, 2);
 }
 

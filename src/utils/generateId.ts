@@ -1,4 +1,4 @@
-export function generateId(prefix?: string) {
+export function generateId(prefix?: string): string {
   // If deterministic IDs are requested in the environment, honor that first
   try {
     if (typeof process !== 'undefined' && process.env && process.env.TEST_DETERMINISTIC_IDS === 'true') {
