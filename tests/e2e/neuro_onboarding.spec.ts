@@ -15,7 +15,7 @@ test.describe("Neuro Onboarding", () => {
         // eslint-disable-next-line no-console
         console.log("E2E Logs on Failure:", JSON.stringify(logs, null, 2));
       } catch (e) {
-        /* ignore logging issues */
+          /* ignore logging issues */
       }
       try {
         const appState = await page.evaluate(
@@ -27,7 +27,7 @@ test.describe("Neuro Onboarding", () => {
           JSON.stringify(appState, null, 2),
         );
       } catch (e) {
-        /* ignore */
+          /* ignore */
       }
     }
   });
@@ -38,7 +38,7 @@ test.describe("Neuro Onboarding", () => {
         // eslint-disable-next-line no-console
         console.log("PAGE LOG:", msg.text());
       } catch (e) {
-        /* ignore */
+          /* ignore */
       }
     });
     // Ensure a fresh onboarding run by setting the E2E test init object AND

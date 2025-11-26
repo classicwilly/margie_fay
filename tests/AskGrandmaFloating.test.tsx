@@ -6,10 +6,10 @@ describe("AskGrandmaFloating button", () => {
   it("dispatches both legacy and generic events that populate the Ask AI input", () => {
     let legacyFired = false;
     let genericFired = false;
-    const legacyHandler = (e: any) => {
+    const legacyHandler = () => {
       legacyFired = true;
     };
-    const genericHandler = (e: any) => {
+    const genericHandler = () => {
       genericFired = true;
     };
     window.addEventListener("set-grandma-query", legacyHandler as any);

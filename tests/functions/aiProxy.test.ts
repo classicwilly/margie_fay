@@ -51,7 +51,9 @@ async function loadAiProxy(env: Record<string, string | undefined>) {
   // Clear cache
   try {
     delete require.cache[require.resolve(FUNCTIONS_PATH)];
-  } catch (e) {}
+  } catch {
+    // ignore
+  }
   const mod = await import(FUNCTIONS_PATH);
   return mod.aiProxy;
 }

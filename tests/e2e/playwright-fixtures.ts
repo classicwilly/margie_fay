@@ -20,26 +20,26 @@ export const test = base.extend<{ storageKey: string }>({
     await page.addInitScript((key) => {
       try {
         (window as any).__E2E_STORAGE_KEY__ = key;
-      } catch (e) {
-        /* ignore */
-      }
+        } catch {
+          /* ignore */
+        }
     }, storageKey);
     // Mark this run as an E2E test mode so components can accelerate timers.
     await page.addInitScript(() => {
       try {
         (window as any).__WONKY_E2E_TEST_MODE__ = true;
-      } catch (e) {
-        /* ignore */
-      }
+        } catch {
+          /* ignore */
+        }
     });
     // If the test runner requests AI stubbing via env var, expose it to the client
     if (process.env.PLAYWRIGHT_AI_STUB === "true") {
       await page.addInitScript(() => {
         try {
           (window as any).__PLAYWRIGHT_AI_STUB__ = true;
-        } catch (e) {
-          /* ignore */
-        }
+          } catch {
+            /* ignore */
+          }
       });
     }
     // Add global error and console logging for all pages in this context
@@ -50,9 +50,9 @@ export const test = base.extend<{ storageKey: string }>({
           "wonky-last-error",
           exception.stack || exception.message,
         );
-      } catch (e) {
-        /* ignore */
-      }
+        } catch {
+          /* ignore */
+        }
       // Save a screenshot and HTML snapshot for triage
       try {
         const dir = path.resolve(process.cwd(), "test-results");

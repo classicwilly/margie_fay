@@ -10,7 +10,7 @@ describe("useLiveSession Playwright stub guard", () => {
     // Ensure no pre-existing flag
     try {
       delete (global as any).__PLAYWRIGHT_AI_STUB__;
-    } catch (e) {
+    } catch {
       /* ignore */
     }
   });

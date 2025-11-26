@@ -13,7 +13,6 @@ describe("Modal focus trap and keyboard", () => {
     );
 
     const first = screen.getByText("First");
-    const second = screen.getByText("Second");
     first.focus();
 
     // For keyboard behavior we test that Escape closes the modal. Focus trap behavior

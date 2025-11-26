@@ -1,14 +1,8 @@
-import {
-  render,
-  screen,
-  fireEvent,
-  renderHook,
-  act,
-} from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import WeeklyReview from "../src/components/WeeklyReview";
 import { FeatureFlagsProvider } from "@contexts/FeatureFlagsContext";
 import { AppStateProvider } from "@contexts/AppStateContext";
-import { useAppState } from "@contexts/AppStateContext";
+// Removed unused `useAppState` import
 
 describe("WeeklyReview non-AI mode", () => {
   it("fills in local heuristics when ai is disabled", async () => {
