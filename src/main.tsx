@@ -26,11 +26,11 @@ try {
     const url = new URL(window.location.href);
     const forceView = url.searchParams.get('force_e2e_view');
     if (forceView) {
-      try { (window as any).__E2E_FORCE_VIEW__ = forceView; } catch (e) { /* ignore */ }
+      try { (window as any).__E2E_FORCE_VIEW__ = forceView; } catch { /* ignore */ }
       // Set a debug console message so Playwright logs show the early value
       // eslint-disable-next-line no-console
       console.info('PREHYDRATE: __E2E_FORCE_VIEW__', forceView);
-      try { (window as any).__WONKY_E2E_LOG_PUSH__('PREHYDRATE_FORCE_VIEW', { view: forceView }); } catch (e) { /* ignore */ }
+      try { (window as any).__WONKY_E2E_LOG_PUSH__('PREHYDRATE_FORCE_VIEW', { view: forceView }); } catch { /* ignore */ }
     }
 
     // Honor __WONKY_TEST_INITIALIZE__ early if present. Tests may set this
@@ -40,27 +40,27 @@ try {
     try {
       const earlyInit = (window as any).__WONKY_TEST_INITIALIZE__;
       if (earlyInit && typeof earlyInit === 'object') {
-      try { if (earlyInit.view) document.documentElement.setAttribute('data-e2e-view', earlyInit.view); } catch(e) { /* ignore */ }
+      try { if (earlyInit.view) document.documentElement.setAttribute('data-e2e-view', earlyInit.view); } catch { /* ignore */ }
         if (earlyInit.view) {
-          try { (window as any).__E2E_FORCE_VIEW__ = earlyInit.view; } catch (e) { /* ignore */ }
+          try { (window as any).__E2E_FORCE_VIEW__ = earlyInit.view; } catch { /* ignore */ }
           console.info('PREHYDRATE: __WONKY_TEST_INITIALIZE__ view applied', earlyInit.view);
-          try { (window as any).__WONKY_E2E_LOG_PUSH__('PREHYDRATE_TEST_INIT_VIEW', { view: earlyInit.view }); } catch (e) { /* ignore */ }
+          try { (window as any).__WONKY_E2E_LOG_PUSH__('PREHYDRATE_TEST_INIT_VIEW', { view: earlyInit.view }); } catch { /* ignore */ }
         }
         if (earlyInit.dashboardType === 'william') {
-          try { (window as any).__E2E_FORCE_GAMEMASTER__ = true; } catch (e) { /* ignore */ }
+          try { (window as any).__E2E_FORCE_GAMEMASTER__ = true; } catch { /* ignore */ }
           console.info('PREHYDRATE: __WONKY_TEST_INITIALIZE__ dashboardType=william — forcing GameMaster');
-          try { (window as any).__WONKY_E2E_LOG_PUSH__('PREHYDRATE_TEST_INIT_DASHBOARD', { dashboardType: earlyInit.dashboardType }); } catch (e) { /* ignore */ }
+          try { (window as any).__WONKY_E2E_LOG_PUSH__('PREHYDRATE_TEST_INIT_DASHBOARD', { dashboardType: earlyInit.dashboardType }); } catch { /* ignore */ }
         }
       }
-    } catch (e) { /* ignore */ }
+    } catch { /* ignore */ }
     // If E2E seeded state exists, block DB updates until tests allow them
     try {
       if ((window as any).__WONKY_TEST_INITIALIZE__) {
-        try { (window as any).__WONKY_TEST_BLOCK_DB__ = true; } catch(e) { /* ignore */ }
+        try { (window as any).__WONKY_TEST_BLOCK_DB__ = true; } catch { /* ignore */ }
         // Default fallback timeout - can be tuned by tests using __WONKY_TEST_DB_ALLOW_TIMEOUT__
-        try { (window as any).__WONKY_TEST_DB_ALLOW_TIMEOUT__ = (window as any).__WONKY_TEST_DB_ALLOW_TIMEOUT__ || 6000; } catch(e) { /* ignore */ }
+        try { (window as any).__WONKY_TEST_DB_ALLOW_TIMEOUT__ = (window as any).__WONKY_TEST_DB_ALLOW_TIMEOUT__ || 6000; } catch { /* ignore */ }
       }
-    } catch (e) { /* ignore */ }
+    } catch { /* ignore */ }
     // If a test seeded a full state via __WONKY_TEST_INITIALIZE__, persist it
     // to the configured storage key so AppStateProvider reads it synchronously
     // from localStorage. This ensures `skipDev` and the E2E provider branch
@@ -69,24 +69,24 @@ try {
       const earlyInit = (window as any).__WONKY_TEST_INITIALIZE__;
       const seedKey = (window as any).__E2E_STORAGE_KEY__ || 'wonky-sprout-os-state';
       if (earlyInit && typeof earlyInit === 'object') {
-        try { if (earlyInit.view) window.localStorage.setItem('__WONKY_TEST_STICKY_VIEW__', earlyInit.view); } catch(e) { /* ignore */ }
-        try { (window as any).__WONKY_TEST_STICKY_VIEW__ = earlyInit.view; } catch(e) { /* ignore */ }
-        try { (window as any).appState = { ...(window as any).appState || {}, view: earlyInit.view, dashboardType: earlyInit.dashboardType, initialSetupComplete: earlyInit.initialSetupComplete || true }; } catch (e) { /* ignore */ }
-        try { window.localStorage.setItem(seedKey, JSON.stringify(earlyInit)); } catch (e) { /* ignore */ }
+        try { if (earlyInit.view) window.localStorage.setItem('__WONKY_TEST_STICKY_VIEW__', earlyInit.view); } catch { /* ignore */ }
+        try { (window as any).__WONKY_TEST_STICKY_VIEW__ = earlyInit.view; } catch { /* ignore */ }
+        try { (window as any).appState = { ...(window as any).appState || {}, view: earlyInit.view, dashboardType: earlyInit.dashboardType, initialSetupComplete: earlyInit.initialSetupComplete || true }; } catch { /* ignore */ }
+        try { window.localStorage.setItem(seedKey, JSON.stringify(earlyInit)); } catch { /* ignore */ }
         console.info('PREHYDRATE: wrote __WONKY_TEST_INITIALIZE__ to localStorage', { seedKey });
-        try { (window as any).__WONKY_E2E_LOG_PUSH__('PREHYDRATE_WRITE_STICKY', { seedKey, view: earlyInit.view }); } catch (e) { /* ignore */ }
+        try { (window as any).__WONKY_E2E_LOG_PUSH__('PREHYDRATE_WRITE_STICKY', { seedKey, view: earlyInit.view }); } catch { /* ignore */ }
       }
-    } catch (e) { /* ignore */ }
+    } catch { /* ignore */ }
     // If tests seeded __WONKY_TEST_INITIALIZE__, ensure the provider skips
     // the dev-only bypass so the E2E provider is used and tests can control
     // the seeded state deterministically.
     try {
       const earlyInit = (window as any).__WONKY_TEST_INITIALIZE__;
       if (earlyInit && typeof earlyInit === 'object') {
-        try { (window as any).__PLAYWRIGHT_SKIP_DEV_BYPASS__ = true; } catch (e) { /* ignore */ }
+        try { (window as any).__PLAYWRIGHT_SKIP_DEV_BYPASS__ = true; } catch { /* ignore */ }
         console.info('PREHYDRATE: __WONKY_TEST_INITIALIZE__ present — enabling PLAYWRIGHT_SKIP_DEV_BYPASS');
       }
-    } catch (e) { /* ignore */ }
+    } catch { /* ignore */ }
 
     // If a seed is present in localStorage, make sure the AppStateProvider
     // will skip the dev-bypass; this mirrors the provider's `skipDev` check
@@ -95,11 +95,11 @@ try {
     try {
       const raw = window.localStorage.getItem(seedKey);
       if (raw) {
-        try { (window as any).__PLAYWRIGHT_SKIP_DEV_BYPASS__ = true; } catch (e) { /* ignore */ }
+        try { (window as any).__PLAYWRIGHT_SKIP_DEV_BYPASS__ = true; } catch { /* ignore */ }
         // eslint-disable-next-line no-console
         console.info('PREHYDRATE: seed found — skip dev bypass enabled', { seedKey });
       }
-    } catch (e) { /* ignore */ }
+    } catch { /* ignore */ }
     // Add a tiny runtime DOM overlay so Playwright and tests have a deterministic
     // early anchor to check current view/dashboard type even before React mounts.
     try {
@@ -122,7 +122,7 @@ try {
               el!.setAttribute('data-e2e-view', view);
               el!.setAttribute('data-e2e-dashboard', dashboard);
               el!.innerHTML = `<div><strong>E2E-VIEW:</strong> ${view}</div><div><strong>DASH:</strong> ${dashboard}</div>`;
-            } catch (e) { /* ignore */ }
+            } catch { /* ignore */ }
           };
           updateOverlay();
           // Keep overlay updated briefly during early boot
@@ -144,14 +144,14 @@ try {
 try {
   if (typeof window !== 'undefined' && !(window as any).__WONKY_TEST_FORCE_VIEW__) {
     (window as any).__WONKY_TEST_FORCE_VIEW__ = (view: string) => {
-      try { (window as any).__E2E_FORCE_VIEW__ = view; } catch (e) { /* ignore */ }
-      try { window.appState = { ...(window as any).appState || {}, view }; } catch (e) { /* ignore */ }
+      try { (window as any).__E2E_FORCE_VIEW__ = view; } catch { /* ignore */ }
+      try { window.appState = { ...(window as any).appState || {}, view }; } catch { /* ignore */ }
       // Provide a console indicator so Playwright logs show usage of the stub
       // eslint-disable-next-line no-console
       console.info('E2E STUB: __WONKY_TEST_FORCE_VIEW__ used to set', view);
     };
   }
-} catch (e) { /* ignore */ }
+} catch { /* ignore */ }
 
 registerGlobalErrorHandlers();
 

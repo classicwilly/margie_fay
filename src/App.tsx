@@ -13,7 +13,7 @@ try {
   // eslint-disable-next-line no-console
   console.error('APP_ENTRY_ERROR', e);
   if (typeof window !== 'undefined') {
-    try { window.localStorage.setItem('wonky-last-error', String(e.stack || e)); } catch (err) { /* ignore */ }
+    try { window.localStorage.setItem('wonky-last-error', String(e.stack || e)); } catch { /* ignore */ }
   }
   AppExport = () => (
     <div className="text-red-400 p-4">
@@ -142,17 +142,17 @@ const AppContent = () => {
       if (typeof window !== 'undefined' && window.localStorage.getItem('__WONKY_TEST_STICKY_VIEW__')) {
         e2eForce = undefined;
       }
-    } catch (e) { /* ignore */ }
+    } catch { /* ignore */ }
     const e2eInit = (typeof window !== 'undefined' && (window as any).__WONKY_TEST_INITIALIZE__) as any | undefined;
     // If E2E seeded init exists and sticky view isn't set to something else,
     // ensure the seeded value wins for this render and persist the sticky
     // view globally so other provider logic respects it.
     try {
       if (e2eInit && e2eInit.view) {
-        try { (window as any).__WONKY_TEST_STICKY_VIEW__ = e2eInit.view; } catch (e) { /* ignore */ }
-        try { window.localStorage.setItem('__WONKY_TEST_STICKY_VIEW__', e2eInit.view); } catch (e) { /* ignore */ }
+        try { (window as any).__WONKY_TEST_STICKY_VIEW__ = e2eInit.view; } catch { /* ignore */ }
+        try { window.localStorage.setItem('__WONKY_TEST_STICKY_VIEW__', e2eInit.view); } catch { /* ignore */ }
       }
-    } catch (e) { /* ignore */ }
+    } catch { /* ignore */ }
     // Prefer the explicit E2E force (query param), then the seeded test init, then appState
     // If tests have requested a sticky view (persisted by the provider), prefer
     // that for the initial render. This is a synchronous lookup to avoid
@@ -160,7 +160,7 @@ const AppContent = () => {
     let stickyView: string | undefined = undefined;
     try {
       if (typeof window !== 'undefined') stickyView = window.localStorage.getItem('__WONKY_TEST_STICKY_VIEW__') || undefined;
-    } catch (e) { /* ignore */ }
+    } catch { /* ignore */ }
 
     // Resolve the initial view based on E2E signals and seeded state with clear precedence:
     // 1) stickyView (persisted by provider)
@@ -212,7 +212,7 @@ const AppContent = () => {
           }
         }
       } catch (e) { /* ignore parse errors */ }
-    } catch (e) { /* ignore */ }
+    } catch { /* ignore */ }
     // If we're running E2E and the test hasn't signaled readiness to allow
     // DB snapshots, force the view from E2E signals so the UI remains
     // deterministic even if appState changes reactively while tests are
@@ -225,10 +225,10 @@ const AppContent = () => {
         const overrideView = stickyView || ((typeof window !== 'undefined' && (window as any).__E2E_FORCE_VIEW__) as string | undefined) || (e2eInit && e2eInit.view) || undefined;
         if (overrideView) {
           view = overrideView;
-          try { (window as any).__WONKY_E2E_LOG_PUSH__('E2E: render override during boot', { view }); } catch (e) { /* ignore */ }
+          try { (window as any).__WONKY_E2E_LOG_PUSH__('E2E: render override during boot', { view }); } catch { /* ignore */ }
         }
       }
-    } catch (e) { /* ignore */ }
+    } catch { /* ignore */ }
     // If an E2E seed exists and the appState doesn't match it, attempt to
     // patch the provider by dispatching the seeded view/dashboardType. This
     // is a defensive measure to recover from transient race conditions where
@@ -237,11 +237,11 @@ const AppContent = () => {
       try {
         const init = (typeof window !== 'undefined' && (window as any).__WONKY_TEST_INITIALIZE__) as any | undefined;
         if (init && init.view && appState?.view !== init.view) {
-          try { dispatch({ type: 'SET_DASHBOARD_TYPE', payload: init.dashboardType || 'william' }); } catch(e) { /* ignore */ }
-          try { dispatch({ type: 'SET_VIEW', payload: init.view }); } catch (e) { /* ignore */ }
-          try { (window as any).__WONKY_E2E_LOG_PUSH__('FORCED_VIEW_DISPATCH_FROM_APPCONTENT', { dispatched: init.view }); } catch (e) { /* ignore */ }
+          try { dispatch({ type: 'SET_DASHBOARD_TYPE', payload: init.dashboardType || 'william' }); } catch { /* ignore */ }
+          try { dispatch({ type: 'SET_VIEW', payload: init.view }); } catch { /* ignore */ }
+          try { (window as any).__WONKY_E2E_LOG_PUSH__('FORCED_VIEW_DISPATCH_FROM_APPCONTENT', { dispatched: init.view }); } catch { /* ignore */ }
         }
-      } catch (e) { /* ignore */ }
+      } catch { /* ignore */ }
     }, [appState?.view, dispatch]);
     
     const viewMap: Record<string, React.ReactNode> = {
