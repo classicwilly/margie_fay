@@ -51,14 +51,14 @@ try {
       window.__WONKY_TEST_READY__ = true;
       // Expose a helper so tests can allow DB updates during dispatch when needed
       // This prevents `SET_VIEW` from being blocked by sticky state checks.
-      try { window.__WONKY_TEST_CAN_UPDATE_DB__ = () => true; } catch(e) { /* ignore */ }
+      try { window.__WONKY_TEST_CAN_UPDATE_DB__ = () => true; } catch { /* ignore */ }
       // Also write a localStorage seed for common storage keys used by the app
       try {
         const seedState = JSON.stringify({ ...initObj, initialSetupComplete: true });
         window.localStorage.setItem('wonky-sprout-os-state', seedState);
         window.localStorage.setItem('__WONKY_APPSTATE__', seedState);
-      } catch (e) { /* ignore localStorage set failures */ }
-    } catch (e) { /* ignore */ }
+      } catch { /* ignore localStorage set failures */ }
+    } catch { /* ignore */ }
   }, init);
   // Force the view via query param so the app chooses the Cockpit view directly
   const forceUrl = new URL('/?force_e2e_view=view-cockpit-module', baseUrl).href;
@@ -67,11 +67,11 @@ try {
   // Ensure the seeded E2E state is explicitly written to localStorage and as a global again, then reload
   try {
     await page.evaluate(({ seed, seedKey }) => {
-      try { window.__WONKY_TEST_INITIALIZE__ = seed; } catch (e) { /* ignore */ }
-      try { window.__WONKY_TEST_BLOCK_DB__ = true; } catch (e) { /* ignore */ }
-      try { window.__PLAYWRIGHT_SKIP_DEV_BYPASS__ = true; } catch (e) { /* ignore */ }
-      try { window.__WONKY_E2E_TEST_MODE__ = true; } catch (e) { /* ignore */ }
-      try { localStorage.setItem(seedKey, JSON.stringify(seed)); } catch (e) { /* ignore */ }
+      try { window.__WONKY_TEST_INITIALIZE__ = seed; } catch { /* ignore */ }
+      try { window.__WONKY_TEST_BLOCK_DB__ = true; } catch { /* ignore */ }
+      try { window.__PLAYWRIGHT_SKIP_DEV_BYPASS__ = true; } catch { /* ignore */ }
+      try { window.__WONKY_E2E_TEST_MODE__ = true; } catch { /* ignore */ }
+      try { localStorage.setItem(seedKey, JSON.stringify(seed)); } catch { /* ignore */ }
     }, { seed: init, seedKey: 'wonky-sprout-os-state' });
     await page.reload({ waitUntil: 'networkidle', timeout: 30000 });
     console.log('Reloaded page to pick up seeded E2E state');
@@ -80,7 +80,7 @@ try {
     // If E2E test dispatch is present, ensure initialSetupComplete and view are set
       try {
         await page.evaluate(() => {
-          try { window.__WONKY_TEST_ALLOW_DB_UPDATES__ && window.__WONKY_TEST_ALLOW_DB_UPDATES__(false); } catch(e) { /* ignore */ }
+          try { window.__WONKY_TEST_ALLOW_DB_UPDATES__ && window.__WONKY_TEST_ALLOW_DB_UPDATES__(false); } catch { /* ignore */ }
           try {
             const d = window.__WONKY_TEST_DISPATCH__;
           if (typeof d === 'function') {
@@ -89,9 +89,9 @@ try {
             d({ type: 'SET_VIEW', payload: 'operations-control' });
             // Ensure the inner module view remains the cockpit module
             d({ type: 'SET_VIEW', payload: 'view-cockpit-module' });
-            try { window.__WONKY_E2E_LOG_PUSH__('DISPATCHED_INITIAL_SETUP_AND_VIEW', { done: true }); } catch(e) { /* ignore */ }
+            try { window.__WONKY_E2E_LOG_PUSH__('DISPATCHED_INITIAL_SETUP_AND_VIEW', { done: true }); } catch { /* ignore */ }
           }
-        } catch (e) { /* ignore */ }
+        } catch { /* ignore */ }
       });
     } catch (e) { console.warn('Could not call __WONKY_TEST_DISPATCH__', e?.message || e); }
     // Debug: list data-testid attributes on page to help diagnose why the Cockpit module may not be visible
@@ -105,12 +105,12 @@ try {
     const debug = await page.evaluate(() => ({ appState: window.appState || null, e2eInit: window.__WONKY_TEST_INITIALIZE__ || null, e2eReady: window.__WONKY_TEST_READY__ || false, e2eLogs: (window.__WONKY_E2E_LOG_GET__ ? window.__WONKY_E2E_LOG_GET__() : null) }));
     console.log('Debug: appState seeded:', debug);
     // Also dump any E2E logs pushed by the app to help diagnosing blocked snapshots
-    try { const logs = await page.evaluate(() => (window.__WONKY_E2E_LOG_GET__ ? window.__WONKY_E2E_LOG_GET__() : null)); console.log('PAGE_E2E_LOGS:', logs); } catch(e) { /* ignore */ }
+    try { const logs = await page.evaluate(() => (window.__WONKY_E2E_LOG_GET__ ? window.__WONKY_E2E_LOG_GET__() : null)); console.log('PAGE_E2E_LOGS:', logs); } catch { /* ignore */ }
     try {
       const headlines = await page.evaluate(() => Array.from(document.querySelectorAll('#main-content h1, #main-content h2')).map(h => (h.textContent || '').trim()));
       console.log('Main content headings:', headlines);
-    } catch (e) { /* ignore */ }
-  } catch (e) { console.warn('Could not evaluate debug vars on page'); }
+    } catch { /* ignore */ }
+  } catch { console.warn('Could not evaluate debug vars on page'); }
 
   const cockpitSelector = '[data-testid="cockpit-active-stack"]';
   const builderSelector = '[data-testid="cockpit-open-builder"]';
@@ -135,11 +135,11 @@ try {
         console.warn('Could not click nav-command-center, continuing: ', e.message);
       }
     }
-  } catch (e) { /* ignore */ }
+  } catch { /* ignore */ }
   // As a stronger attempt, dispatch SET_DASHBOARD_TYPE and SET_VIEW again while allowing DB updates, to ensure top-level route changes
     try {
       await page.evaluate(() => {
-        try { window.__WONKY_TEST_CAN_UPDATE_DB__ = () => true; } catch (e) { /* ignore */ }
+        try { window.__WONKY_TEST_CAN_UPDATE_DB__ = () => true; } catch { /* ignore */ }
         const d = window.__WONKY_TEST_DISPATCH__;
         if (typeof d === 'function') {
           // Ensure dashboard and view are set
@@ -149,14 +149,14 @@ try {
           try {
             const seedStack = { id: 'p1', name: 'Seeded Test Stack', persona: 'Test', audio: 'None', visual: 'None', oral: 'None', notes: 'Seeded by verify script' };
             // Temporarily block DB snapshot application to prevent overrides while seeding
-            try { window.__WONKY_TEST_CAN_UPDATE_DB__ = () => false; } catch (e) { /* ignore */ }
+            try { window.__WONKY_TEST_CAN_UPDATE_DB__ = () => false; } catch { /* ignore */ }
             d({ type: 'ADD_PROFILE_STACK', payload: seedStack });
             d({ type: 'APPLY_PROFILE_STACK', payload: 'p1' });
             // Allow DB updates afterwards if necessary
-            try { window.__WONKY_TEST_CAN_UPDATE_DB__ = () => true; } catch (e) { /* ignore */ }
-            try { window.__WONKY_E2E_LOG_PUSH__('DISPATCHED_PROFILE_STACKS_AND_APPLY', { stackId: 'p1' }); } catch(e) { /* ignore */ }
-          } catch (e) { /* ignore */ }
-          try { window.__WONKY_E2E_LOG_PUSH__('DISPATCHED_FORCE_WILLIAM_VIEW_AND_STACK', { done: true }); } catch(e) { /* ignore */ }
+            try { window.__WONKY_TEST_CAN_UPDATE_DB__ = () => true; } catch { /* ignore */ }
+            try { window.__WONKY_E2E_LOG_PUSH__('DISPATCHED_PROFILE_STACKS_AND_APPLY', { stackId: 'p1' }); } catch { /* ignore */ }
+          } catch { /* ignore */ }
+          try { window.__WONKY_E2E_LOG_PUSH__('DISPATCHED_FORCE_WILLIAM_VIEW_AND_STACK', { done: true }); } catch { /* ignore */ }
         }
       });
     // Allow time for react render to settle, and additional time for lazy-loaded chunks
@@ -195,7 +195,7 @@ try {
         await browser.close();
         process.exit(0);
       }
-    } catch (e) { /* ignore */ }
+    } catch { /* ignore */ }
     // Fallback: maybe WilliamsDashboard is present but Cockpit isn't loaded. Assert Operations Control header exists
     try {
       const opsHeader = await page.waitForSelector('h1:has-text("Operations Control")', { timeout: 5000 }).catch(() => null);
@@ -204,7 +204,7 @@ try {
         await browser.close();
         process.exit(0);
       }
-    } catch (e) { /* ignore */ }
+    } catch { /* ignore */ }
     // Debug info: capture HTML and screenshot
     try {
       const dumpDir = path.resolve('./test-results/verify-dumps');

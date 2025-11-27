@@ -17,7 +17,7 @@ const CockpitModule = () => {
 
   // Debug mount logs for E2E trace visibility
   React.useEffect(() => {
-    try { console.log('CockpitModule mounted, activeId:', activeId, 'stacks:', stacks.map(s => s.id)); } catch(e) {}
+    try { console.log('CockpitModule mounted, activeId:', activeId, 'stacks:', stacks.map(s => s.id)); } catch {}
   }, [activeId, stacks]);
 
   return (

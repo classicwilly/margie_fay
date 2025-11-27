@@ -51,9 +51,9 @@ export function useAudioPlayback() {
         sourcesRef.current.forEach(source => {
             try {
                 source.stop();
-            } catch (e) {
-                // Ignore errors from stopping already-stopped sources
-            }
+            } catch {
+                    // Ignore errors from stopping already-stopped sources
+                }
         });
         sourcesRef.current.clear();
         nextStartTimeRef.current = 0;

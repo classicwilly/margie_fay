@@ -17,7 +17,7 @@ try {
   // devs may not want to install prom-client by default
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   promClient = require('prom-client');
-} catch (e) {}
+} catch {}
 
 // Serve static files from the 'dist' directory
 app.use(express.static(path.join(__dirname, 'dist')));

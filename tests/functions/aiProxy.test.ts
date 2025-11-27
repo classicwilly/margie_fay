@@ -44,7 +44,7 @@ async function loadAiProxy(env: Record<string, string | undefined>) {
     else process.env[k] = env[k] as string;
   }
   // Clear cache
-  try { delete require.cache[require.resolve(FUNCTIONS_PATH)]; } catch (e) {}
+  try { delete require.cache[require.resolve(FUNCTIONS_PATH)]; } catch {}
   const mod = await import(FUNCTIONS_PATH);
   return mod.aiProxy;
 }
