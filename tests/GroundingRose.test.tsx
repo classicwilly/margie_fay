@@ -79,7 +79,8 @@ describe('GroundingRose', () => {
 
     fireEvent.click(button);
 
-    expect(consoleWarnSpy).toHaveBeenCalledWith('Haptics: vibration failed:', expect.any(Error));
+    const hasHapticsWarn = consoleWarnSpy.mock.calls.some(c => typeof c[1] === 'string' && c[1].includes('Haptics: vibration failed:'));
+    expect(hasHapticsWarn).toBe(true);
 
     consoleWarnSpy.mockRestore();
   });
@@ -93,17 +94,18 @@ describe('GroundingRose', () => {
     });
     delete (global.navigator as any).vibrate;
 
-    // Spy on console.log
-    const consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+    // Spy on console.debug (logger forwards debug calls here)
+    const consoleDebugSpy = vi.spyOn(console, 'debug').mockImplementation(() => {});
 
     render(<GroundingRose />);
     const button = screen.getByRole('button', { name: /grounding rose/i });
 
     fireEvent.click(button);
 
-    expect(consoleLogSpy).toHaveBeenCalledWith('Haptics: vibration not supported, falling back silently');
+    const hasHapticsNotSupported = consoleDebugSpy.mock.calls.some(c => typeof c[1] === 'string' && c[1].includes('Haptics: vibration not supported'));
+    expect(hasHapticsNotSupported).toBe(true);
 
-    consoleLogSpy.mockRestore();
+    consoleDebugSpy.mockRestore();
 
     // Restore navigator
     Object.defineProperty(global, 'navigator', {
