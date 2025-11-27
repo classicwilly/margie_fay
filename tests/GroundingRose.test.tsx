@@ -14,6 +14,8 @@ describe('GroundingRose', () => {
     mockVibrate.mockClear();
     // Reset any global flags
     delete (window as any).__E2E_HAPTICS_STUB__;
+    // Enable debug logging for test suite to ensure logger forwards to console during assertions
+    (window as any).__WONKY_DEBUG__ = true;
   });
 
   it('renders the grounding rose button', () => {

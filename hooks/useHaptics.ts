@@ -1,4 +1,6 @@
 import { useCallback } from 'react';
+import win from '../utils/win';
+import { logDebug, logWarn } from '../src/utils/logger';
 
 /**
  * Hook for haptic feedback using navigator.vibrate API
@@ -7,15 +9,15 @@ import { useCallback } from 'react';
 export const useHaptics = () => {
   const vibrate = useCallback((pattern: number | number[] = 200) => {
     // E2E stub check - allows tests to control vibration behavior
-    if (typeof window !== 'undefined' && (window as any).__E2E_HAPTICS_STUB__) {
+    if (win?.__E2E_HAPTICS_STUB__) {
       // In E2E tests, vibration is stubbed — log for test verification.
       // Also attempt to call navigator.vibrate if it's present and stubbed
-      console.log('Haptics: vibrate called with pattern:', pattern);
+      logDebug('Haptics: vibrate called with pattern:', pattern);
       try {
         if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
           return navigator.vibrate(pattern);
         }
-      } catch (err) { /* ignore */ }
+      } catch { logWarn('Haptics: vibration failed:', /* error? */); /* ignore */ }
       return true;
     }
 
@@ -23,14 +25,12 @@ export const useHaptics = () => {
     if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
       try {
         return navigator.vibrate(pattern);
-      } catch (error) {
-        console.warn('Haptics: vibration failed:', error);
-        return false;
-      }
+      } catch (e) { logWarn('Haptics: vibration failed:', e); return false; }
     }
 
     // Fallback: vibration not supported
-    console.log('Haptics: vibration not supported, falling back silently');
+  // Fallback for unsupported vibrate
+  logDebug('Haptics: vibration not supported, falling back silently');
     return false;
   }, []);
 
