@@ -217,7 +217,7 @@ foreach ($grp in $groupedByScope) {
     foreach ($it in $items) {
         $name = $it.Name
         $success = Remove-EnvVariable -name $name -scope $scope
-        if ($success) { $removedOps.Add("$name:$scope") }
+        if ($success) { $removedOps.Add("$($name):$($scope)") }
     }
 }
 
