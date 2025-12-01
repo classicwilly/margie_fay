@@ -19,6 +19,7 @@ module.exports = [
     rules: {
       'no-console': ['warn'],
       '@typescript-eslint/no-explicit-any': 'error',
+      'react/prop-types': 'off',
       'no-restricted-imports': ['error', {
         patterns: ['contexts/*','components/*']
       }]
@@ -26,6 +27,14 @@ module.exports = [
     settings: {
       react: { version: 'detect' },
       'import/resolver': { typescript: {} }
+    }
+  }
+  ,{
+    // Testing and e2e fixture files can relax unused var rules and console
+    files: ['tests/**/*.{ts,tsx}', 'tests/**/*.spec.{ts,tsx}', 'tests/**/*.test.{ts,tsx}', 'tests/e2e/**/*.{ts,tsx}'],
+    rules: {
+      '@typescript-eslint/no-unused-vars': 'off',
+      'no-console': 'off'
     }
   }
 ];

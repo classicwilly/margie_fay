@@ -4,6 +4,7 @@
 import React from 'react';
 import { useAppState } from '@contexts/AppStateContext';
 import ContentCard from '../ContentCard.js';
+import GoogleEmoji from '@components/GoogleEmoji';
 import { Button } from '../Button';
 import { REWARD_TIERS } from '../../constants.js';
 
@@ -25,7 +26,7 @@ const RewardStoreModule = () => {
     };
 
     return (
-        <ContentCard title="🎁 Dopamine Mining">
+        <ContentCard title={<><GoogleEmoji symbol={'🎁'} size={20} className="mr-2" />Dopamine Mining</>}>
             <p className="text-sm text-text-light text-opacity-80 mb-4">
                 Use your dopamine tokens to redeem sensory rewards!
             </p>
@@ -49,7 +50,7 @@ const RewardStoreModule = () => {
                         return (
                             <div key={tier.threshold} data-testid={`reward-tier-${tier.threshold}`} className={`p-3 rounded-lg flex justify-between items-center transition-all duration-300 ${isAcknowledged ? 'bg-accent-green/20 border border-accent-green/50' : !isUnlocked ? 'opacity-50' : 'bg-card-dark'}`}>
                             <div className="flex items-center">
-                                <span className="text-3xl mr-4">{tier.emoji}</span>
+                                <div className="text-3xl mr-4"><GoogleEmoji symbol={tier.emoji} size={28} /></div>
                                 <div>
                                     <h4 className="font-bold text-accent-teal">{tier.title}</h4>
                                     <p className="text-xs text-gray-400">Requires {tier.threshold} gems</p>

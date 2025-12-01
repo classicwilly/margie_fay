@@ -566,7 +566,7 @@ export const ALL_CHECKLIST_DATA: ChecklistSectionData[] = [
   },
   {
     id: 'fsm-sunday',
-    title: 'Sunday Schedule (Grandma\'s House Day)',
+    title: 'Sunday Schedule (Grandpa\'s House Day)',
     sourceDocument: 'Family Structure Mode Protocol',
     description: 'CRITICAL NOTE: Sunday has the highest decision-making load. Prep is mandatory to prevent overwhelm.',
     subSections: [

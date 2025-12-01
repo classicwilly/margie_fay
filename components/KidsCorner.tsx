@@ -1,5 +1,6 @@
 import React from 'react';
 import { ViewType, } from '../types';
+import GoogleEmoji from '@components/GoogleEmoji';
 import { useAppState } from '@contexts/AppStateContext';
 
 const ProtocolCard: React.FC<{ title: string, description: string, viewId: ViewType, emoji: string }> = ({ title, description, viewId, emoji }) => {
@@ -12,7 +13,7 @@ const ProtocolCard: React.FC<{ title: string, description: string, viewId: ViewT
             data-testid={`kid-protocol-${viewId}`}
             className="bg-card-dark rounded-lg shadow-md p-6 border border-gray-700 flex flex-col h-full text-left hover:border-accent-teal transition-colors duration-200 transform hover:scale-105"
         >
-            <h3 className="text-3xl font-bold text-accent-green mb-3"><span className="mr-3">{emoji}</span>{title}</h3>
+            <h3 className="text-3xl font-bold text-accent-green mb-3"><GoogleEmoji symbol={emoji} size={28} className="mr-3" />{title}</h3>
             <p className="mb-4 text-text-light text-opacity-80 flex-grow">{description}</p>
             <span
                 className="w-full mt-auto p-3 bg-accent-blue bg-opacity-80 text-background-dark rounded-md text-center font-bold"
@@ -27,7 +28,7 @@ const KidsCorner: React.FC = () => {
     return (
         <div className="max-w-4xl mx-auto">
             <header className="text-center mb-10" data-testid="kids-corner-header">
-                        <h1 className="text-4xl md:text-5xl font-extrabold text-accent-teal mb-4" data-testid="kids-corner-heading">🌱 Little Sprouts HQ</h1>
+                        <h1 className="text-4xl md:text-5xl font-extrabold text-accent-teal mb-4" data-testid="kids-corner-heading"><GoogleEmoji symbol={'🌱'} size={28} className="mr-2 inline-block" /> Little Sprouts HQ</h1>
                 <p className="text-lg text-text-light text-opacity-80">
                     Your space for checklists, dopamine mining, and sensory rewards. Let's have a great week!
                 </p>

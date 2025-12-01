@@ -15,10 +15,10 @@ export const E2EGate: React.FC = () => {
       setIsReady(initialReady);
 
       const handle = () => setIsReady(!!(window as any).__WONKY_TEST_READY__ || (window as any).appState?.view === 'game-master-dashboard');
-      try { (window as any).__WONKY_TEST_RELEASE_GATE__ = () => { (window as any).__WONKY_TEST_READY__ = true; handle(); }; } catch (e) { /* ignore */ }
+      try { (window as any).__WONKY_TEST_RELEASE_GATE__ = () => { (window as any).__WONKY_TEST_READY__ = true; handle(); }; } catch { /* ignore */ }
       const interval = setInterval(() => handle(), 200);
       return () => clearInterval(interval);
-    } catch (e) {
+    } catch {
       setIsE2E(false);
       setIsReady(true);
     }

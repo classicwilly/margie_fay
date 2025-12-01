@@ -6,15 +6,15 @@ test('Apothecary — Navigation and content verification @smoke', async ({ page,
   test.setTimeout(120_000);
   // 1) Seed the app to the Cockpit view
   await page.addInitScript((init) => {
-    try { (window as any).__WONKY_TEST_INITIALIZE__ = init; } catch (e) { /* ignore */ }
+    try { (window as any).__WONKY_TEST_INITIALIZE__ = init; } catch { /* ignore */ }
   }, { dashboardType: 'william', view: 'command-center', initialSetupComplete: true });
   await page.addInitScript((key) => {
-    try { (window as any).__E2E_STORAGE_KEY__ = key; } catch (e) { /* ignore */ }
+    try { (window as any).__E2E_STORAGE_KEY__ = key; } catch { /* ignore */ }
     try {
       const seeded = { initialSetupComplete: true, view: 'command-center', dashboardType: 'william' };
       const k = (key as string) || (window as any).__E2E_STORAGE_KEY__ || 'wonky-sprout-os-state';
       window.localStorage.setItem(k, JSON.stringify(seeded));
-      try { (window as any).__E2E_FORCE_VIEW__ = 'command-center'; } catch (e) { /* ignore */ }
+      try { (window as any).__E2E_FORCE_VIEW__ = 'command-center'; } catch { /* ignore */ }
     } catch (e) { /* ignore */ }
   }, storageKey);
   await page.goto('/?force_e2e_view=command-center');

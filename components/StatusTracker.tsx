@@ -1,4 +1,5 @@
 import React from 'react';
+import GoogleEmoji from '@components/GoogleEmoji';
 import { useAppState } from '@contexts/AppStateContext';
 import { Mood, Energy } from '../types';
 import ContentCard from './ContentCard';
@@ -15,7 +16,7 @@ const StatusButton: React.FC<{
         <button
             onClick={onClick}
             className={`${baseClass} ${isActive ? activeClass : inactiveClass}`}
-            aria-pressed={isActive}
+            aria-pressed={isActive ? 'true' : 'false'}
             aria-label={`Set status: ${label}`}
             type="button"
         >
@@ -31,10 +32,10 @@ const StatusTracker: React.FC = () => {
     const setEnergy = (energy: Energy) => dispatch({ type: 'SET_ENERGY', payload: energy });
 
     return (
-        <ContentCard title="👤 Personal Status">
+        <ContentCard title={<><GoogleEmoji symbol={'👤'} size={18} className="mr-2" />Personal Status</>}>
             <div className="space-y-4">
                 <div>
-                    <h3 className="text-md font-semibold text-accent-teal mb-2">🔋 Voltage</h3>
+                    <h3 className="text-md font-semibold text-accent-teal mb-2"><GoogleEmoji symbol={'🔋'} size={18} className="mr-2 inline-block" />Voltage</h3>
                     <div className="grid grid-cols-3 gap-2">
                         <StatusButton label="Focused" isActive={appState.statusMood === 'Focused'} onClick={() => setMood('Focused')} activeClass="bg-accent-green text-background-dark" />
                         <StatusButton label="Calm" isActive={appState.statusMood === 'Calm'} onClick={() => setMood('Calm')} activeClass="bg-accent-blue text-background-dark" />
@@ -42,7 +43,7 @@ const StatusTracker: React.FC = () => {
                     </div>
                 </div>
                       <div>
-                          <h3 className="text-md font-semibold text-accent-teal mb-2">📡 Frequency</h3>
+                          <h3 className="text-md font-semibold text-accent-teal mb-2"><GoogleEmoji symbol={'📡'} size={18} className="mr-2 inline-block" />Frequency</h3>
                     <div className="grid grid-cols-3 gap-2">
                         <StatusButton label="High" isActive={appState.statusEnergy === 'High'} onClick={() => setEnergy('High')} activeClass="bg-accent-green text-background-dark" />
                         <StatusButton label="Medium" isActive={appState.statusEnergy === 'Medium'} onClick={() => setEnergy('Medium')} activeClass="bg-yellow-500 text-background-dark" />

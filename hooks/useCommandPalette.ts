@@ -9,7 +9,8 @@ export function useCommandPalette() {
     const { appState, dispatch } = useAppState();
     const [isOpen, setIsOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
-    const [results, setResults] = useState([]);
+    type CommandPaletteResult = { id: string; type: string; title: string; description?: string; action: () => void };
+    const [results, setResults] = useState<CommandPaletteResult[]>([]);
     const [selectedIndex, setSelectedIndex] = useState(0);
 
     const openPalette = () => setIsOpen(true);
@@ -189,7 +190,7 @@ export function useCommandPalette() {
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [handleKeyDown]);
 
-    const onSelect = (result: any) => {
+    const onSelect = (result: CommandPaletteResult) => {
         result.action();
         closePalette();
     };
@@ -202,6 +203,7 @@ export function useCommandPalette() {
             results,
             selectedIndex,
             onClose: closePalette,
+            onOpen: openPalette,
             onSelect,
         }
     };

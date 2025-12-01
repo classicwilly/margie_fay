@@ -55,7 +55,8 @@ if (promClient) {
     });
   } catch (e) {
     // non-fatal - prom-client not available
-    console.warn('aiStub telemetry not enabled', e?.message || e);
+    const { logWarn } = await import('./server/logger.js');
+    logWarn('aiStub telemetry not enabled', e?.message || e);
   }
   // initialize default metrics for the Node process
   promClient.collectDefaultMetrics();
@@ -70,6 +71,6 @@ if (promClient) {
   });
 }
 
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
+  app.listen(port, () => {
+  import('./server/logger.js').then(({ logInfo }) => logInfo(`Server listening on port ${port}`)).catch(() => {});
 });

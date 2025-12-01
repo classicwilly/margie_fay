@@ -10,7 +10,7 @@ test('Dashboard modules are visible', async ({ page }) => {
     '👶 Kids Status',
     '🚀 Workspace Launchpad',
     '🎯 Critical Tasks',
-    '🧠 Observer',
+    '🧠 Mood',
     '🏆 Achievements'
   ];
   for (const text of headers) {

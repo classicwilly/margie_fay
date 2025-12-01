@@ -1,10 +1,11 @@
 
 import React, { useMemo, useState, useEffect } from 'react';
 import { useAppState } from '@contexts/AppStateContext';
-import ContentCard from './ContentCard.js';
 import { ALL_CHECKLIST_DATA } from '../checklist-data.js';
-import ChecklistItem from './ChecklistItem.js';
+// ContentCard and ChecklistItem are intentionally excluded in this print-only view
+// If re-introduced, re-add imports here.
 import { SecureMarkdown } from '../utils/secureMarkdownRenderer.js';
+import { logError } from '../utils/logger';
 
 const toYMD = (date) => date.toISOString().split('T')[0];
 const addDays = (date, days) => {
@@ -30,7 +31,7 @@ const DailyReport = () => {
                 if (parsed.date === todayStr) {
                     setBriefing(parsed.content);
                 }
-            } catch (e) { console.error("Failed to parse briefing cache", e); }
+            } catch (e) { logError("Failed to parse briefing cache", e); }
         }
     }, []);
 
@@ -71,10 +72,10 @@ const DailyReport = () => {
             <header className="text-center mb-10 no-print">
                 <h1 className="text-4xl md:text-5xl font-extrabold text-accent-teal mb-4">Print Daily Report</h1>
                 <p className="text-lg text-text-light text-opacity-80 max-w-3xl mx-auto">
-                    Generate a physical "mission sheet" for the day. This is a powerful tool to combat the "out of sight, out of mind" challenge of digital-only systems.
+                    Generate a physical &quot;mission sheet&quot; for the day. This is a powerful tool to combat the &quot;out of sight, out of mind&quot; challenge of digital-only systems.
                 </p>
                 <button onClick={() => window.print()} className="mt-6 px-6 py-3 bg-accent-blue text-background-dark font-bold rounded hover:bg-blue-400">
-                    Print Today's Mission
+                    Print Today&apos;s Mission
                 </button>
             </header>
             
@@ -92,7 +93,7 @@ const DailyReport = () => {
                 </section>
 
                 <section aria-labelledby="agenda-title">
-                    <h2 id="agenda-title" className="text-2xl font-bold text-accent-green mb-3">Today's Chronological Agenda</h2>
+                    <h2 id="agenda-title" className="text-2xl font-bold text-accent-green mb-3">Today&apos;s Chronological Agenda</h2>
                     <div className="space-y-3">
                         {fullAgenda.length > 0 ? fullAgenda.map(item => {
                             if (item.itemType === 'event') {
@@ -114,7 +115,7 @@ const DailyReport = () => {
                                      </div>
                                 </div>
                             );
-                        }) : <p className="text-gray-400">No items on today's agenda.</p>}
+                        }) : <p className="text-gray-400">No items on today&apos;s agenda.</p>}
                     </div>
                 </section>
 

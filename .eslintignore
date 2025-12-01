@@ -1,0 +1,4 @@
+# Ignore legacy directories at repo root
+/components
+/contexts
+/legacy-*

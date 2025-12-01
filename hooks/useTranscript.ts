@@ -1,6 +1,6 @@
 
 
-import React, { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { generateId } from '@utils/generateId';
 
 export function useTranscript() {

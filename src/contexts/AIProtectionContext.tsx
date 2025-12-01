@@ -1,8 +1,21 @@
 import React, { createContext, useState, useCallback } from 'react';
+type PiiMatch = { type: string; value: string };
+type AIProtectionContextType = {
+  checkAndExecute: (input: string, fn: (safeInput: string) => Promise<unknown>) => Promise<unknown> | void;
+  isPiiModalOpen: boolean;
+  piiMatches: PiiMatch[];
+  handlePiiConfirm: () => void;
+  handlePiiCancel: () => void;
+  isConsentModalOpen: boolean;
+  handleConfirm: () => void;
+  handleCancel: () => void;
+  dontShowAgain: boolean | undefined;
+  setDontShowAgain: (val: boolean) => void;
+};
 import { useAIConsent } from '../../hooks/useAIConsent';
 
 // Provide a centralized AI protection context so all components and hooks share the same consent/PII state.
-export const AIProtectionContext = createContext<any>(null);
+export const AIProtectionContext = createContext<AIProtectionContextType | null>(null);
 
 export const AIProtectionProvider: React.FC<{children: React.ReactNode}> = ({ children }) => {
   const { checkConsentAndExecute, isConsentModalOpen, dontShowAgain, setDontShowAgain, handleConfirm, handleCancel } = useAIConsent();
@@ -21,7 +34,7 @@ export const AIProtectionProvider: React.FC<{children: React.ReactNode}> = ({ ch
     pendingActionRef.current = undefined;
   }, []);
 
-  const checkAndExecute = useCallback(async (input: string, fn: (safeInput: string) => Promise<any>) => {
+  const checkAndExecute = useCallback(async (input: string, fn: (safeInput: string) => Promise<unknown>) => {
     if (typeof input !== 'string' || input.trim().length === 0) {
       throw new Error('No input provided for AI prompt.');
     }

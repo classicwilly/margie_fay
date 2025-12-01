@@ -52,7 +52,7 @@ const WeeklyReview: React.FC<WeeklyReviewProps> = ({ initialMode }) => {
     const aiEnabled = useAIEnabled();
 
     const inboxCounts = useMemo(() => ({
-        tasks: tasks.filter((t: any) => t.status === 'todo' && !t.dueDate).length,
+        tasks: tasks.filter(t => t.status === 'todo' && !t.dueDate).length,
         brainDump: brainDumpText.trim() ? 1 : 0, // 1 if not empty, 0 if empty
     }), [tasks, brainDumpText]);
 
@@ -81,8 +81,8 @@ const WeeklyReview: React.FC<WeeklyReviewProps> = ({ initialMode }) => {
         try {
             if (!aiEnabled) {
                 // Provide a local non-AI fallback: simple heuristics
-                const recentWins = tasks.filter((t:any) => t.status === 'done').slice(-3).map((t:any) => `- ${t.title}`).join('\n');
-                const recentFriction = tasks.filter((t:any) => t.status === 'failed').slice(-3).map((t:any) => `- ${t.title}`).join('\n');
+                const recentWins = tasks.filter(t => t.status === 'done').slice(-3).map(t => `- ${t.title}`).join('\n');
+                const recentFriction = tasks.filter(t => t.status === 'failed').slice(-3).map(t => `- ${t.title}`).join('\n');
                 const localFocus = objectives[0]?.title || 'Pick one small next-step goal.';
                 setWins(recentWins || '- No wins detected');
                 setFriction(recentFriction || '- No friction noted');
@@ -101,7 +101,7 @@ const WeeklyReview: React.FC<WeeklyReviewProps> = ({ initialMode }) => {
                         properties: {
                             wins: { type: Type.STRING, description: "Bulleted list of successes." },
                             friction: { type: Type.STRING, description: "Bulleted list of challenges." },
-                            focus: { type: Type.STRING, description: "A single sentence for next week's focus." },
+                            focus: { type: Type.STRING, description: "A single sentence for next week&apos;s focus." },
                         },
                         required: ['wins', 'friction', 'focus']
                     },
@@ -118,8 +118,9 @@ const WeeklyReview: React.FC<WeeklyReviewProps> = ({ initialMode }) => {
             setFriction(draft.friction || '');
             setFocus(draft.focus || '');
 
-        } catch (e: any) {
-            setAssistError(`Failed to get assistance: ${e.message}`);
+        } catch (e: unknown) {
+            const errMsg = e instanceof Error ? e.message : String(e);
+            setAssistError(`Failed to get assistance: ${errMsg}`);
         } finally {
             setIsAssisting(false);
         }
@@ -130,7 +131,7 @@ const WeeklyReview: React.FC<WeeklyReviewProps> = ({ initialMode }) => {
     };
 
     const handleSaveReflection = () => {
-        const reflectionContent = `## Weekly Review Reflection\n\n### ✅ Wins\n${wins}\n\n### ⚠️ Friction Points\n${friction}\n\n### 🎯 Next Week's Focus\n${focus}`;
+        const reflectionContent = `## Weekly Review Reflection\n\n### ✅ Wins\n${wins}\n\n### ⚠️ Friction Points\n${friction}\n\n### 🎯 Next Week&apos;s Focus\n${focus}`;
         const date = new Date().toLocaleString();
 
         dispatch({
@@ -159,7 +160,7 @@ const WeeklyReview: React.FC<WeeklyReviewProps> = ({ initialMode }) => {
             case 1:
                 return (
                     <ContentCard title="Step 1: AI Trend Analysis">
-                        <p className="text-gray-300 mb-4">Review the AI's analysis of your last 7 days to identify high-level patterns and correlations before diving into details.</p>
+                        <p className="text-gray-300 mb-4">Review the AI&apos;s analysis of your last 7 days to identify high-level patterns and correlations before diving into details.</p>
                         <AITrendAnalysis />
                         <Button data-testid="weekly-review-proceed-inbox" onClick={() => setStep(2)} className="w-full mt-6 p-3 font-bold" variant="primary">Proceed to Inbox Clearing</Button>
                     </ContentCard>
@@ -198,7 +199,7 @@ const WeeklyReview: React.FC<WeeklyReviewProps> = ({ initialMode }) => {
                             <HabitHeatmap />
                              <div>
                                 <h3 className="text-xl font-bold text-accent-blue mb-2">Strategic Objectives</h3>
-                                {objectives.map((obj: any) => (
+                                {objectives.map((obj) => (
                                     <div key={obj.id} className="mb-2 p-2 bg-gray-800 rounded">
                                         <p className="font-semibold">{obj.title}</p>
                                     </div>

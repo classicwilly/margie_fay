@@ -1,5 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
+import GoogleEmoji from '@components/GoogleEmoji';
 
 // FIX: Explicitly typed component with React.FC and a props interface to handle the `key` prop correctly.
 interface ToastProps {
@@ -36,7 +37,7 @@ const Toast: React.FC<ToastProps> = ({ id, emoji, message, onDismiss }) => {
             role="alert"
             aria-live="assertive"
         >
-            <span className="text-3xl">{emoji}</span>
+            <GoogleEmoji symbol={emoji} size={36} alt="toast emoji" className="mr-2" />
             <p className="font-semibold text-accent-green">{message}</p>
         </div>
     );

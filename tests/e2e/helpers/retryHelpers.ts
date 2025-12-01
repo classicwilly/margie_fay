@@ -34,7 +34,7 @@ export async function ensureAppView(page: Page, view: string, tries = 3, interva
         const txt = await page.getByTestId('e2e-runtime-view').innerText();
         if (txt && txt.includes(view)) return;
       }
-    } catch (e) { /* ignore */ }
+    } catch { /* ignore */ }
     if ((await page.evaluate((v) => (window as any).appState?.view === v, view))) return;
     // Try clicking the nav-child-dashboard to force a view change if present
     const nav = page.locator('[data-testid="nav-child-dashboard"]');
@@ -48,8 +48,12 @@ export async function ensureAppView(page: Page, view: string, tries = 3, interva
     const systemBtn = page.locator('[data-testid="nav-system"]');
     if ((await systemBtn.count()) > 0) {
       await systemBtn.first().click();
-      await page.getByRole('menu').waitFor({ state: 'visible', timeout: 2000 });
-      const childMenu = page.getByRole('menuitem', { name: /Child Dashboard|Little Sprouts|Child/i });
+      // Scope the menu lookup to the System menu instance to avoid strict-mode
+      // violations when more than one menu is present on the page.
+      // The menu may be rendered as a sibling in the header; scope it to the header
+      const systemMenu = page.locator('header').getByRole('menu').first();
+      await systemMenu.waitFor({ state: 'visible', timeout: 2000 });
+      const childMenu = systemMenu.getByRole('menuitem', { name: /Child Dashboard|Little Sprouts|Child/i }).first();
       if ((await childMenu.count()) > 0) {
         await childMenu.click();
         await page.waitForLoadState('networkidle');

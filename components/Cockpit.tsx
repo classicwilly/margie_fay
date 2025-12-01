@@ -41,7 +41,7 @@ const Cockpit: React.FC = () => {
                 <div className="bg-primary-dark-300 px-4 py-2 rounded-full shadow-neon-sm border border-primary-dark-200 flex items-center space-x-2">
                     <span className="text-sm text-text-muted font-mono">FREE FLIGHT</span>
                     <span className="text-lg text-accent-500 font-bold">Deep Focus</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-zap text-accent-500"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-zap text-accent-500"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
                 </div>
             </div>
         </div>

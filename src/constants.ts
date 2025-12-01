@@ -405,8 +405,8 @@ const staticWilliamModules: ModuleConfig[] = [
   },
   {
     id: 'wonky-ai-module',
-    name: 'The Observer',
-    description: 'Text-based conversation with The Observer for problem-solving.',
+    name: 'The Mood',
+    description: 'Text-based conversation with The Mood for problem-solving.',
     defaultEnabled: true,
     isRemovable: true,
     category: 'utilities',
@@ -423,8 +423,8 @@ const staticWilliamModules: ModuleConfig[] = [
   },
   {
     id: 'live-chat-module',
-    name: 'Observer Live Chat',
-    description: 'Real-time voice conversation with The Observer for hands-free problem-solving.',
+    name: 'Mood Live Chat',
+    description: 'Real-time voice conversation with The Mood for hands-free problem-solving.',
     defaultEnabled: false,
     isRemovable: true,
     category: 'utilities',

@@ -6,9 +6,12 @@ import { SecureMarkdown } from '../../../utils/secureMarkdownRenderer';
 import { useAIPromptSafety } from '../../../hooks/useAIPromptSafety';
 import AIConsentModal from '../../AIConsentModal';
 import PIIWarningModal from '../../PIIWarningModal';
+import { logError } from '../../../utils/logger';
 
 const AICommunicationCoachModule = () => {
-    const [mode, setMode] = useState('translate');
+    const { generate } = useSafeAI();
+
+    const [mode, ] = useState('translate');
     
     const [originalText, setOriginalText] = useState('');
     const [translatedText, setTranslatedText] = useState('');
@@ -19,12 +22,11 @@ const AICommunicationCoachModule = () => {
     const [analysisResult, setAnalysisResult] = useState('');
     const [analysisLoading, setAnalysisLoading] = useState(false);
     const [analysisError, setAnalysisError] = useState('');
-    const [draftedReply, setDraftedReply] = useState('');
 
     const { 
         checkAndExecute, 
         isPiiModalOpen, piiMatches, handlePiiConfirm, handlePiiCancel,
-        isConsentModalOpen, handleConfirm, handleCancel, dontShowAgain, setDontShowAgain 
+        isConsentModalOpen, handleConfirm, handleCancel 
     } = useAIPromptSafety();
     
     useEffect(() => {
@@ -57,13 +59,12 @@ const AICommunicationCoachModule = () => {
 
         try {
             await checkAndExecute(originalText, async (safePrompt) => {
-                const { generate } = useSafeAI();
                 const result = await generate(safePrompt, { model: 'gemini-2.5-flash', config: { systemInstruction }, skipPromptSafety: true });
                 setTranslatedText(result?.text || '');
             });
         } catch (e) {
             setError(`Error: ${e.message || 'Failed to communicate with the AI model.'}`);
-            console.error(e);
+            logError('AICommunicationCoachModule.handleTranslate', e);
         }
         setLoading(false);
     };
@@ -91,14 +92,13 @@ const AICommunicationCoachModule = () => {
 
         try {
             await checkAndExecute(incomingText, async (safePrompt) => {
-                const { generate } = useSafeAI();
                 const result = await generate(safePrompt, { model: 'gemini-2.5-flash', config: { systemInstruction }, skipPromptSafety: true });
                 setAnalysisResult(result?.text || '');
             });
 
         } catch (e) {
             setAnalysisError(`Error: ${e.message || 'Failed to communicate with the AI model.'}`);
-            console.error(e);
+            logError('AICommunicationCoachModule.handleAnalyze', e);
         }
         setAnalysisLoading(false);
     };

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook } from '@testing-library/react';
-import React from 'react';
+import React /* @__PURE__ */ from 'react';
 import { act } from '@testing-library/react';
 // Import `useLiveSession` dynamically after mocking `@google/genai` to ensure
 // the module uses the mocked GoogleGenAI constructor.
@@ -9,7 +9,7 @@ describe('useLiveSession Playwright stub guard', () => {
   beforeEach(() => {
     vi.resetModules();
     // Ensure no pre-existing flag
-    try { delete (global as any).__PLAYWRIGHT_AI_STUB__; } catch (e) { /* ignore */ }
+    try { delete (global as any).__PLAYWRIGHT_AI_STUB__; } catch { /* ignore */ }
   });
 
   it('returns a fake session and avoids vendor network calls when __PLAYWRIGHT_AI_STUB__ is set', async () => {

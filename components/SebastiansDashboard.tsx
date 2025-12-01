@@ -16,6 +16,8 @@ const SebastiansDashboard = () => {
     if (count <= 1) return 'grid-cols-1';
     return 'grid-cols-1 md:grid-cols-2'; 
   };
+  const SebastianGemCollector = componentMap['sebastian-gem-collector-module'];
+  const RewardStoreModule = componentMap['reward-store-module'];
 
   return (
     <div className="max-w-5xl mx-auto">
@@ -40,11 +42,11 @@ const SebastiansDashboard = () => {
           <h2 className="text-3xl font-bold text-accent-teal mb-4" data-testid="kids-corner-heading">Kids Corner</h2>
           <div>
             <h2 className="text-2xl font-bold text-accent-teal mb-2">Dopamine Cache</h2>
-            <componentMap['sebastian-gem-collector-module'] />
+            {SebastianGemCollector ? <SebastianGemCollector /> : null}
           </div>
           <div>
             <h2 className="text-2xl font-bold text-accent-teal mb-2">Dopamine Mining</h2>
-            <componentMap['reward-store-module'] />
+            {RewardStoreModule ? <RewardStoreModule /> : null}
           </div>
         </div>
 

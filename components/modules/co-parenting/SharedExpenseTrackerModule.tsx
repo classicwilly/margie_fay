@@ -84,9 +84,8 @@ const SharedExpenseTrackerModule: React.FC = () => {
                             <div className="w-1/2">
                                 <label htmlFor="shared-expense-paidby" className="sr-only">Paid By</label>
                                 <select id="shared-expense-paidby" value={paidBy} onChange={e => setPaidBy(e.target.value as 'me' | 'co-parent')} className="w-full p-2 bg-gray-900 border border-gray-600 rounded">
-                            <select value={paidBy} onChange={e => setPaidBy(e.target.value as 'me' | 'co-parent')} className="w-1/2 p-2 bg-gray-900 border border-gray-600 rounded">
-                                <option value="me">I Paid</option>
-                                <option value="co-parent">Co-Parent Paid</option>
+                                    <option value="me">I Paid</option>
+                                    <option value="co-parent">Co-Parent Paid</option>
                                 </select>
                             </div>
                          </div>

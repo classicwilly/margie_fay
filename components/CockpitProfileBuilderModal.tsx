@@ -15,6 +15,7 @@ const CockpitProfileBuilderModal: React.FC<Props> = ({ onClose, existing }) => {
   const [visual, setVisual] = useState(existing?.visual || 'sunglasses');
 
   const handleSave = () => {
+    console.log('CockpitProfileBuilderModal: handleSave called', { name, persona, audio, oral, visual });
     const payload = {
       id: existing?.id || `ps-${Date.now()}`,
       name,
@@ -28,6 +29,7 @@ const CockpitProfileBuilderModal: React.FC<Props> = ({ onClose, existing }) => {
     else dispatch({ type: 'ADD_PROFILE_STACK', payload } as any);
     // Apply automatically
     dispatch({ type: 'APPLY_PROFILE_STACK', payload: payload.id });
+    console.log('CockpitProfileBuilderModal: dispatched ADD/APPLY profile stack', { id: payload.id });
     onClose();
   };
 

@@ -2,7 +2,7 @@ import React from 'react';
 
 const WilliamsDashboard = () => (
   <div>
-    <h1 data-testid="kids-corner-heading" className="text-3xl font-bold mb-4">William's Corner</h1>
+    <h1 data-testid="kids-corner-heading" className="text-3xl font-bold mb-4">William&apos;s Corner</h1>
     <section data-testid="kids-reward-store" className="mb-6">
       <h2 className="text-xl font-semibold mb-2">Reward Store</h2>
       {/* Rewards UI goes here */}

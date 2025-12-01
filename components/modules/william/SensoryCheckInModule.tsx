@@ -4,6 +4,7 @@
 import React, { useState } from 'react';
 import { useAppState } from '@contexts/AppStateContext';
 import ContentCard from '../../ContentCard.js';
+import GoogleEmoji from '@components/GoogleEmoji';
 import SensoryOverloadModal from '../../SensoryOverloadModal.js';
 
 const SenseButton = ({ label, isActive, onClick }) => {
@@ -38,7 +39,7 @@ const SensoryRow = ({ sense, label, emoji, onOverload }) => {
 
     return (
         <div className="flex items-center gap-4">
-            <h4 className="font-semibold text-accent-teal w-16 flex-shrink-0">{emoji} {label}</h4>
+            <h4 className="font-semibold text-accent-teal w-16 flex-shrink-0"><GoogleEmoji symbol={emoji} size={20} className="mr-2 inline-block" />{label}</h4>
             <div className="grid grid-cols-3 gap-2 w-full">
                 <SenseButton label="Under" isActive={currentValue === 'Under'} onClick={() => setSenseValue('Under')} />
                 <SenseButton label="OK" isActive={currentValue === 'OK'} onClick={() => setSenseValue('OK')} />
@@ -55,7 +56,7 @@ const SensoryCheckInModule = () => {
     return (
         <>
             <SensoryOverloadModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-            <ContentCard title="🌡️ Sensory Check-in">
+            <ContentCard title={<><GoogleEmoji symbol={'🌡️'} size={20} className="mr-2" />Sensory Check-in</>}>
                  <p className="text-sm text-text-light text-opacity-80 mb-4">
                     Quickly log your current sensory state. Tap a selection again to clear it.
                 </p>

@@ -123,7 +123,7 @@ describe('useSafeAI telemetry & failures', () => {
     const { generate } = result.current;
     const res = await generate('a prompt', { responseMimeType: 'application/json', responseSchema: { properties: { wins: {}, friction: {} } } });
     expect(res.source).toBe('manual');
-    expect(res.json.hasOwnProperty('wins')).toBe(true);
+    expect('wins' in res.json).toBe(true);
     expect(res.json.wins).toContain('NO_AI');
   });
 });

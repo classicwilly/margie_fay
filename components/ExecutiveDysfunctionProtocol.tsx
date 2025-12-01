@@ -37,7 +37,7 @@ const ExecutiveDysfunctionProtocol: React.FC = () => {
       <div className="space-y-6">
         {protocolData.map(renderSection)}
         <footer className="text-center mt-12 pt-8 border-t border-gray-700">
-          <p className="text-xl font-bold text-accent-blue">The freeze is not a moral failure. It's a systems failure. This protocol is the emergency fix. Now execute it.</p>
+          <p className="text-xl font-bold text-accent-blue">The freeze is not a moral failure. It&apos;s a systems failure. This protocol is the emergency fix. Now execute it.</p>
         </footer>
       </div>
     </div>

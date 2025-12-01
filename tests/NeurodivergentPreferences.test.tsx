@@ -4,17 +4,18 @@ import { describe, it, expect, vi } from 'vitest';
 import { AppStateProvider } from '@contexts/AppStateContext';
 import { NeuroPrefsProvider, useNeuroPrefs } from '@contexts/NeurodivergentPreferencesContext';
 import * as AppStateContext from '@contexts/AppStateContext';
+import type { AppContextType } from '../../src/contexts/types';
 
 describe('NeurodivergentPreferences', () => {
   it('Changing assist tone updates preference', () => {
     const dispatch = vi.fn();
     const appState = {
       neuroPrefs: { assistTone: 'concise' }
-    } as any;
-    const useAppStateSpy = vi.spyOn(AppStateContext as any, 'useAppState').mockReturnValue({ appState, dispatch } as any);
+    } as AppContextType['appState'];
+    const useAppStateSpy = vi.spyOn(AppStateContext, 'useAppState').mockReturnValue({ appState, dispatch } as AppContextType);
 
     const TestComponent = () => {
-      const { appState, dispatch } = (AppStateContext as any).useAppState();
+      const { appState, dispatch } = AppStateContext.useAppState();
       return (
         <div>
           <label htmlFor="assistTone">Assist Tone</label>

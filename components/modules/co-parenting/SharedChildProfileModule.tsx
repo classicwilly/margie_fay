@@ -4,6 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAppState } from '@contexts/AppStateContext';
 import ContentCard from '../../ContentCard.js';
+import GoogleEmoji from '@components/GoogleEmoji';
 // FIX: Import ChildProfile type.
 import type { ChildProfile } from '../../../types.js';
 
@@ -66,7 +67,7 @@ const ChildProfileCard = ({ name, emoji, profile }: { name: string, emoji: strin
 
     return (
         <div className="p-4 bg-card-dark rounded-lg border border-gray-700 space-y-3">
-            <h3 className="text-xl font-bold text-accent-green">{emoji} {name}</h3>
+            <h3 className="text-xl font-bold text-accent-green"><GoogleEmoji symbol={emoji} size={28} className="mr-2" /> {name}</h3>
             <ProfileField label="Allergies & Medical Notes" value={profile.allergies} onChange={(val) => handleUpdate('allergies', val)} />
             <ProfileField label="Current Medications" value={profile.medications} onChange={(val) => handleUpdate('medications', val)} />
             <ProfileField label="Emergency Contacts" value={profile.emergencyContacts} onChange={(val) => handleUpdate('emergencyContacts', val)} />
@@ -81,7 +82,7 @@ const SharedChildProfileModule = () => {
     const { childProfiles } = appState;
 
     return (
-        <ContentCard title="👧‍👦 Shared Child Profiles" titleClassName="text-accent-blue text-xl">
+        <ContentCard title={<><GoogleEmoji symbol={'👧‍👦'} size={20} className="mr-2" />Shared Child Profiles</>} titleClassName="text-accent-blue text-xl">
              <p className="text-md text-text-light text-opacity-80 mb-4">
                 A single source of truth for critical information. Click any field to edit. Changes are saved automatically.
             </p>

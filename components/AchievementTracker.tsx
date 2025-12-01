@@ -2,13 +2,16 @@ import React from 'react';
 import useProgressVar from '@hooks/useProgressVar';
 import { useAppState } from '@contexts/AppStateContext';
 import ContentCard from './ContentCard';
+import GoogleEmoji from '@components/GoogleEmoji';
 import { ALL_ACHIEVEMENTS, ADULT_REWARD_TIERS, RewardTier } from '../constants';
 
 const Achievement: React.FC<{ emoji: string; label: string; collected: boolean }> = ({ emoji, label, collected }) => {
 
     return (
         <div className={`flex flex-col items-center p-2 rounded-lg transition-all duration-300 ${collected ? 'bg-accent-green bg-opacity-20' : 'bg-gray-800'}`}>
-            <div className={`text-4xl transition-all duration-500 ${collected ? 'grayscale-0' : 'grayscale'}`}>{emoji}</div>
+            <div className={`transition-all duration-500 ${collected ? 'grayscale-0' : 'grayscale'}`}>
+                <GoogleEmoji symbol={emoji} size={36} />
+            </div>
             <div className={`text-xs text-center mt-1 ${collected ? 'text-accent-green font-semibold' : 'text-text-light text-opacity-70'}`}>{label}</div>
         </div>
     );
@@ -21,7 +24,7 @@ const RewardTierCard: React.FC<{ tier: RewardTier, isUnlocked: boolean }> = ({ t
     return (
         <div className={`bg-gray-800 rounded-lg p-3 border transition-all duration-300 ${isUnlocked ? unlockedClasses : lockedClasses}`}>
             <div className="flex items-center space-x-3">
-                <div className="text-3xl">{tier.emoji}</div>
+                <div className="text-3xl"><GoogleEmoji symbol={tier.emoji} size={28} /></div>
                 <div>
                     <h4 className={`text-md font-bold ${isUnlocked ? 'text-accent-green' : 'text-text-light'}`}>{tier.title}</h4>
                     <p className={`text-xs mt-1 ${isUnlocked ? 'text-accent-green' : 'text-gray-300'}`}>
@@ -48,7 +51,7 @@ const AchievementTracker: React.FC = () => {
     useProgressVar(progressRef, progressPercentage);
 
     return (
-        <ContentCard title="🏆 Achievement System">
+        <ContentCard title={<><GoogleEmoji symbol={'🏆'} size={20} className="mr-2" />Achievement System</>}>
              <div className="flex flex-col h-full">
                 <div className="flex-grow overflow-y-auto pr-2">
                     <div className="mb-4">
@@ -67,9 +70,9 @@ const AchievementTracker: React.FC = () => {
                                 </div>
                             </>
                         ) : (
-                            <h3 className="text-md font-bold text-accent-green text-center">
-                               🎉 All Tiers Unlocked! System operating at peak efficiency. 🎉
-                            </h3>
+                                     <h3 className="text-md font-bold text-accent-green text-center">
+                                         <GoogleEmoji symbol={'🎉'} size={20} className="mr-2" /> All Tiers Unlocked! System operating at peak efficiency. <GoogleEmoji symbol={'🎉'} size={20} className="ml-2" />
+                                     </h3>
                         )}
                     </div>
 

@@ -13,7 +13,7 @@ export function useLiveChatFunctions(
     updaters
 ) {
     
-    const { userSops, habitTracker, williamDashboardModules, brainDumpText, knowledgeVaultEntries, expenses, activeSops, tasks } = appState;
+    const { userSops, habitTracker, williamDashboardModules, brainDumpText, knowledgeVaultEntries, expenses, activeSops, tasks: _tasks } = appState;
 
     const dispatchUserAction = (action) => dispatch(action);
 
@@ -72,9 +72,9 @@ export function useLiveChatFunctions(
             );
             updaters.updateTranscriptEntry(cardId, resultCard);
 
-        } catch (e) {
+        } catch {
             updaters.updateTranscriptEntry(cardId, React.createElement("div", { className: "text-red-400 font-bold" }, "Error during synthesis."));
-            console.error(e);
+//            console.error(e);
         }
     }, [dispatchUserAction, updaters]);
     
@@ -131,8 +131,8 @@ export function useLiveChatFunctions(
                         const processed = processResponse.json || (processResponse.text ? JSON.parse(processResponse.text) : null);
                         dispatchUserAction({ type: 'ADD_KNOWLEDGE_ENTRY', payload: processed });
                         updaters.updateTranscriptEntry(cardId, React.createElement(React.Fragment, null, React.createElement("b", null, "Thought Captured:"), " '", processed.title, "' saved to vault."));
-                    } catch (e) {
-                        console.error("Failed to process thought:", e);
+                    } catch {
+//                        console.error("Failed to process thought:", e);
                         updaters.updateTranscriptEntry(cardId, React.createElement("div", { className: "text-red-400 font-bold" }, "Error processing thought."));
                     }
                 })();
@@ -143,8 +143,8 @@ export function useLiveChatFunctions(
                 const topicLower = topic.toLowerCase();
                 const foundEntries = knowledgeVaultEntries.filter(e => e.title.toLowerCase().includes(topicLower) || e.content.toLowerCase().includes(topicLower) || e.tags.some(t => t.toLowerCase().includes(topicLower)));
                 if (foundEntries.length > 0) {
-                    let cardId;
-                    const handleCancel = () => updaters.updateTranscriptEntry(cardId, React.createElement("em", null, "SOP synthesis cancelled."));
+                    const id = updaters.addTranscriptEntry({ type: 'system', content: React.createElement("div", null, "Loading...") });
+                    const handleCancel = () => updaters.updateTranscriptEntry(id, React.createElement("em", null, "SOP synthesis cancelled."));
                     const cardContent = React.createElement("div", null,
                         React.createElement("h4", { className: "font-bold text-accent-green mb-2" }, `Found ${foundEntries.length} entries for "${topic}":`),
                         React.createElement("ul", { className: "list-disc list-inside text-xs mb-3 max-h-24 overflow-y-auto" }, foundEntries.map(e => React.createElement("li", { key: e.id }, e.title))),
@@ -154,7 +154,7 @@ export function useLiveChatFunctions(
                             React.createElement("button", { onClick: () => handleSynthesizeSop(topic, foundEntries, cardId), className: "px-3 py-1 bg-accent-green text-background-dark font-bold rounded" }, "Generate SOP")
                         )
                     );
-                    cardId = updaters.addTranscriptEntry({ type: 'system', content: cardContent });
+                    updaters.updateTranscriptEntry(id, cardContent);
                     return { result: `Found ${foundEntries.length} relevant entries. Presenting for confirmation.` };
                 } else {
                     updaters.addTranscriptEntry({ type: 'system', content: `No knowledge entries found on the topic "${topic}".` });
@@ -206,7 +206,7 @@ export function useLiveChatFunctions(
                             React.createElement("h5", { className: "text-xs font-bold mt-2 text-accent-blue" }, "Related Notes:"),
                             React.createElement("ul", { className: "list-disc list-inside text-xs" }, foundNotes.length > 0 ? foundNotes.map(n => React.createElement("li", { key: n.id }, n.title)) : React.createElement("li", null, "None found."))
                         ));
-                    } catch (e) {
+                    } catch {
                         // If related search fails, just show the main entry
                         updaters.updateTranscriptEntry(cardId, React.createElement("div", null, React.createElement("h4", { className: "font-bold text-accent-green" }, entry.title), React.createElement("p", { className: "text-xs" }, entry.content)));
                     }

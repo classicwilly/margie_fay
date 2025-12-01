@@ -1,43 +1,27 @@
-import React, { useMemo, useEffect, useState } from 'react';
-import { REWARD_TIERS } from '../constants.js';
+import { useMemo, useEffect, useState } from 'react';
+import { logError } from '../src/utils/logger';
 import useSafeAI from './useSafeAI';
 import { useTime } from './useTime.js';
-import { renderSecureMarkdown } from '../utils/secureMarkdownRenderer.js';
 
 // Helper function to get YYYY-MM-DD string
 const toYMD = (date) => date.toISOString().split('T')[0];
-const addDays = (date, days) => {
-    const result = new Date(date);
-    result.setDate(result.getDate() + days);
-    return result;
-};
 
 const AI_INSIGHT_CACHE_KEY = 'wonky-sprout-daily-ai-insight';
 
 
 export function useProactiveAI(appState, dispatch) {
     const {
-        expenses,
-        financialBudgets,
-        collectedGems,
-        acknowledgedRewards,
-        redeemedRewards,
-        acknowledgedRedemptions,
-        parentalAlerts, // New state
-        recurringTasks,
-        habitTracker,
         sensoryState,
         calendarEvents,
         statusEnergy,
         statusMood,
         brainDumpText,
-        tasks, // Using new tasks state
-        checkedItems, // Added for essentials check
-        savedContext,
+        tasks,
+        checkedItems,
         dismissedNudges,
     } = appState;
     
-    const [dailyAIInsight, setDailyAIInsight] = useState(null);
+    const [, setDailyAIInsight] = useState(null);
     const { hour, date: now } = useTime();
     const { generate } = useSafeAI();
 
@@ -52,9 +36,8 @@ export function useProactiveAI(appState, dispatch) {
                         setDailyAIInsight(parsed.content);
                         return; // Valid cache for today exists
                     }
-                } catch (e) { console.error("Failed to parse AI insight cache:", e); }
+                } catch (e) { logError("Failed to parse AI insight cache:", e); }
             }
-
             const criticalTasks = tasks
                 .filter((t) => t.status === 'todo' && t.dueDate === todayStr && t.priority === 'High')
                 .map((t) => t.title);
@@ -73,11 +56,9 @@ export function useProactiveAI(appState, dispatch) {
                 - Critical Tasks: ${criticalTasks.join(', ') || 'Not set'}
                 - Brain Dump: """${brainDumpText || "Empty"}"""
                 - Status: Mood=${statusMood || 'N/A'}, Energy=${statusEnergy || 'N/A'}
-                - Sensory: Sound=${sensoryState.sound || 'N/A'}, Sight=${sensoryState.sight || 'N/A'}, Touch=${sensoryState.touch || 'N/A'}
                 - Today's Calendar: ${todaysEvents.join(', ') || 'None'}
             `;
-            const systemInstruction = "You are a systems diagnostician AI. Analyze user data and provide a structured report with Warnings, Insights, and Recommendations in markdown. Be direct and factual.";
-
+                const systemInstruction = "You are a systems diagnostician AI. Analyze user data and provide a structured report with Warnings, Insights, and Recommendations in markdown. Be direct and factual.";
             try {
                 try {
                     // Use safe AI wrapper to ensure PII checks, timeouts and telemetry
@@ -86,11 +67,11 @@ export function useProactiveAI(appState, dispatch) {
                     setDailyAIInsight(content);
                     localStorage.setItem(AI_INSIGHT_CACHE_KEY, JSON.stringify({ date: todayStr, content }));
                 } catch (error) {
-                    console.error('Daily AI analysis failed:', error);
+                    logError('Daily AI analysis failed:', error);
                     setDailyAIInsight("AI analysis could not be completed at this time.");
                 }
             } catch (error) {
-                console.error("Daily AI analysis failed:", error);
+                logError("Daily AI analysis failed:", error);
                 setDailyAIInsight("AI analysis could not be completed at this time.");
             }
         };

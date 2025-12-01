@@ -1,8 +1,9 @@
 import React from 'react';
+import type { Sop } from '../types';
 import { useAppState } from '@contexts/AppStateContext';
 import { Button } from '@components/Button';
 
-const SopCard = ({ sop, isTemplate = false }: { sop: any, isTemplate?: boolean }) => {
+const SopCard = ({ sop, isTemplate = false }: { sop: Sop, isTemplate?: boolean }) => {
   const { appState, dispatch } = useAppState();
   const isUserSop = sop.category.includes('USER');
 

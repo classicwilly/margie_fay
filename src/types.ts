@@ -88,6 +88,8 @@ export interface Project {
   id: string;
   title: string;
   objectiveId?: string;
+  startDate?: string;
+  endDate?: string;
   createdAt: string;
   isArchived: boolean;
 }
@@ -103,11 +105,16 @@ export interface Task {
   id: string;
   title: string;
   status: 'todo' | 'done';
-  dueDate?: string; // YYYY-MM-DD
+  dueDate?: string | null; // YYYY-MM-DD
   priority?: 'Low' | 'Medium' | 'High';
   createdAt: string;
   completedAt: string | null;
   projectId?: string;
+  // Optional fields used by recurring tasks and other task types
+  startDate?: string;
+  lastCompletedDate?: string | null;
+  frequencyDays?: number;
+  itemType?: 'task' | 'recurring' | 'event';
 }
 
 export interface SensoryState {
@@ -138,7 +145,7 @@ export interface SharedExpense {
   description: string;
   amount: number;
   date: string;
-  status: 'pending' | 'reimbursed';
+  status: 'pending' | 'settled' | 'reimbursed';
   payer: DashboardType;
 }
 
@@ -146,7 +153,7 @@ export interface Quest {
   id: string;
   title: string;
   description: string;
-  steps: { id: string; description: string; isComplete: boolean }[];
+  steps: { id: string; label: string; completed: boolean }[];
   reward: string;
   assignedTo: 'willow' | 'sebastian';
   isActive: boolean;
@@ -170,6 +177,40 @@ export interface ChatMessage {
   content: string;
 }
 
+// Checklist data supporting runtime constants used across the app.
+export interface ChecklistItem {
+  id: string;
+  label?: string;
+  gemAwardId?: string;
+  gemRecipient?: 'willow' | 'sebastian';
+  large?: boolean;
+  achievementAwardId?: string;
+  time?: string;
+  startHour?: number;
+  endHour?: number;
+  description?: string;
+  key?: string;
+  value?: string;
+}
+
+export interface ChecklistSubSection {
+  id: string;
+  title: string;
+  sourceDocument?: string;
+  description?: string;
+  items?: ChecklistItem[];
+  subSections?: ChecklistSubSection[];
+}
+
+export interface ChecklistSectionData {
+  id: string;
+  title: string;
+  sourceDocument: string;
+  description?: string;
+  items?: ChecklistItem[];
+  subSections?: ChecklistSubSection[];
+}
+
 export interface NeuroPrefs {
   simplifiedUi: boolean;
   reduceAnimations: boolean;
@@ -185,6 +226,14 @@ export interface ToastNotification {
   message: string;
   emoji?: string;
   type?: 'success' | 'error' | 'info';
+}
+
+export interface FulfillmentLogEntry {
+  id: string;
+  persona: 'willow' | 'sebastian';
+  rewardTitle?: string;
+  fulfilledAt: string;
+  notes?: string;
 }
 
 export interface AppState {
@@ -217,6 +266,7 @@ export interface AppState {
   familyLogEntries: FamilyLogEntry[]; // This was missing in the previous context
   generatedSopDraft: string | null;
   quickReferenceEntries: QuickReferenceEntry[];
+  knowledgeVaultEntries: QuickReferenceEntry[];
   habitTracker: HabitTracker;
   expenses: Expense[];
   recurringTasks: Task[];
@@ -229,15 +279,17 @@ export interface AppState {
     taskId: string | null; 
     workSessionsCompleted: number 
   };
-  acknowledgedRewards: { willow: string[]; sebastian: string[] };
-  redeemedRewards: { willow: string[]; sebastian: string[] };
-  acknowledgedRedemptions: { willow: string[]; sebastian: string[] };
+  acknowledgedRewards: { willow: number[]; sebastian: number[] };
+  redeemedRewards: { willow: number[]; sebastian: number[] };
+  acknowledgedRedemptions: { willow: number[]; sebastian: number[] };
   parentalAlerts: ParentalAlert[];
   editingSopId: string | null;
   quests: Quest[];
-  fulfillmentLog: any[];
+  fulfillmentLog: FulfillmentLogEntry[];
   objectives: Objective[];
   projects: Project[];
+  profileStacks: ProfileStack[];
+  activeProfileStackId?: string | null;
   recentlyCompletedProjectIds: string[];
   isFocusModeActive: boolean;
   focusModeTaskId: string | null;
@@ -246,13 +298,14 @@ export interface AppState {
   triageTaskId: string | null;
   childProfiles: { willow: ChildProfile; sebastian: ChildProfile };
   sharedExpenses: SharedExpense[];
-  savedContext: { prompt: string; response: string; taskId?: string } | null;
+  savedContext: { prompt: string; response: string; taskId?: string; timestamp?: string } | null;
   isContextCaptureModalOpen: boolean;
   isContextRestoreModalOpen: boolean;
   toastNotifications: ToastNotification[];
   chatMessages: ChatMessage[];
   dismissedNudges: string[];
   neuroPrefs: NeuroPrefs;
+  weeklyReviewMode?: 'wizard' | 'checklist';
 }
 
 export type Action =
@@ -264,6 +317,8 @@ export type Action =
   | { type: 'SET_ENERGY'; payload: Energy | null }
   | { type: 'SET_WILLOW_LOCATION'; payload: KidLocation | null }
   | { type: 'SET_SEBASTIAN_LOCATION'; payload: KidLocation | null }
+  | { type: 'SET_KID_LOCATION'; payload: { kid: 'willow' | 'sebastian'; location: KidLocation | null } }
+  | { type: 'SET_WEEKLY_REVIEW_MODE'; payload: 'wizard' | 'checklist' }
   | { type: 'ADD_GEM'; payload: { id: string; recipient: 'willow' | 'sebastian' } }
   | { type: 'REMOVE_GEM'; payload: { id: string; recipient: 'willow' | 'sebastian' } }
   | { type: 'ADD_ACHIEVEMENT'; payload: string }
@@ -285,7 +340,7 @@ export type Action =
   | { type: 'ADD_FAMILY_LOG_ENTRY'; payload: Omit<FamilyLogEntry, 'id' | 'timestamp'> }
   | { type: 'REMOVE_FAMILY_LOG_ENTRY'; payload: string }
   | { type: 'SET_GENERATED_SOP_DRAFT'; payload: string | null }
-  | { type: 'ADD_QUICK_REFERENCE_ENTRY'; payload: Omit<QuickReferenceEntry, 'id'> }
+  | { type: 'ADD_QUICK_REFERENCE_ENTRY'; payload: Partial<QuickReferenceEntry> & { key?: string; value?: string } }
   | { type: 'REMOVE_QUICK_REFERENCE_ENTRY'; payload: string }
   | { type: 'ADD_HABIT'; payload: string }
   | { type: 'REMOVE_HABIT'; payload: string }
@@ -299,7 +354,7 @@ export type Action =
   | { type: 'UPDATE_RECURRING_TASK'; payload: Task }
   | { type: 'REMOVE_RECURRING_TASK'; payload: string }
   | { type: 'COMPLETE_RECURRING_TASK'; payload: string }
-  | { type: 'ADD_TASK'; payload: Omit<Task, 'id' | 'createdAt' | 'completedAt' | 'status'> }
+  | { type: 'ADD_TASK'; payload: Partial<Task> & Omit<Task, 'createdAt' | 'completedAt' | 'status'> }
   | { type: 'UPDATE_TASK'; payload: Task }
   | { type: 'DELETE_TASK'; payload: string }
   | { type: 'SET_FINANCIAL_BUDGET'; payload: { category: ExpenseCategory; amount: number } }

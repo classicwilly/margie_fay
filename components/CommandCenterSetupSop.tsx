@@ -55,7 +55,7 @@ const CommandCenterSetupSop: React.FC = () => {
         ))}
         
         <footer className="text-center mt-12 pt-8 border-t border-gray-700">
-          <p className="text-xl font-bold text-accent-blue">The Command Center is not about having the best gear. It's about eliminating every friction point between your brain and your output.</p>
+          <p className="text-xl font-bold text-accent-blue">The Command Center is not about having the best gear. It&apos;s about eliminating every friction point between your brain and your output.</p>
         </footer>
       </div>
     </div>

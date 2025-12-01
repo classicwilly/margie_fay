@@ -1,19 +1,22 @@
 
 
 import { useState, useRef, useCallback } from 'react';
+import { logError } from '../utils/logger';
 import { decode, decodeAudioData } from '../utils/audioUtils.js';
 
 export function useAudioPlayback() {
     const [isSpeaking, setIsSpeaking] = useState(false);
-    const outputAudioContextRef = useRef(null);
+    const outputAudioContextRef = useRef<AudioContext | null>(null);
     // FIX: Typed the ref to ensure members are AudioBufferSourceNode.
     const sourcesRef = useRef<Set<AudioBufferSourceNode>>(new Set());
     const nextStartTimeRef = useRef(0);
 
-    const playAudioChunk = useCallback(async (base64Audio) => {
+    const playAudioChunk = useCallback(async (base64Audio: string) => {
         if (!outputAudioContextRef.current) {
-            // FIX: Cast window to any to access vendor-prefixed property.
-            outputAudioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 24000 });
+            const audioWindow = window as unknown as { webkitAudioContext?: typeof AudioContext, AudioContext?: typeof AudioContext };
+            const AudioCtor = audioWindow.AudioContext ?? audioWindow.webkitAudioContext;
+            if (!AudioCtor) throw new Error('No AudioContext available');
+            outputAudioContextRef.current = new AudioCtor({ sampleRate: 24000 });
         }
         const audioCtx = outputAudioContextRef.current;
         if (audioCtx.state === 'suspended') {
@@ -42,7 +45,7 @@ export function useAudioPlayback() {
             nextStartTimeRef.current += audioBuffer.duration;
             sourcesRef.current.add(source);
         } catch (e) {
-            console.error("Error playing audio chunk:", e);
+            logError('Error playing audio chunk', e);
             setIsSpeaking(false); // Reset speaking state on error
         }
     }, []);

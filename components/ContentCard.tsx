@@ -1,7 +1,7 @@
 import React, { useId } from 'react';
 
 interface ContentCardProps {
-  title?: string;
+  title?: React.ReactNode;
   children: React.ReactNode;
   showHeader?: boolean;
   className?: string;
@@ -13,8 +13,8 @@ const sanitizeId = (s: string) => s.replace(/[^a-z0-9]/gi, '-').replace(/-+/g, '
 const ContentCard: React.FC<ContentCardProps> = ({ title = '', children, showHeader = true, className = '', titleClassName = '' }) => {
   const reactId = useId();
   const reactIdSafe = reactId.replace(/[^a-z0-9-]/gi, '');
-  const hasTitle = !!(title && title.trim().length > 0);
-  const titleId = hasTitle ? `${sanitizeId(title)}-${reactIdSafe}` : undefined;
+  const hasTitle = !!(title && (typeof title === 'string' ? title.trim().length > 0 : true));
+  const titleId = hasTitle && typeof title === 'string' ? `${sanitizeId(title as string)}-${reactIdSafe}` : (hasTitle ? `title-${reactIdSafe}` : undefined);
   
   return (
     <section aria-labelledby={showHeader ? titleId : undefined} className={className}>

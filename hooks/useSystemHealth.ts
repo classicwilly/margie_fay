@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
 import { useAppState } from '@contexts/AppStateContext';
+import type { Task } from '../src/types';
+import type { AppState } from '../src/contexts/types';
 
 const toYMD = (date: Date) => date.toISOString().split('T')[0];
 
@@ -19,7 +21,7 @@ export function useSystemHealth() {
 
         let score = 100;
         const diagnostics: { message: string, type: 'positive' | 'negative' }[] = [];
-        const { checkedItems, tasks, statusMood, statusEnergy, habitTracker } = appState;
+        const { checkedItems, tasks, statusMood, statusEnergy, habitTracker } = appState as AppState;
 
         // 1. Foundational Protocols (Essentials are critical)
         const morningMedsDone = checkedItems['essentials-meds-am'];
@@ -57,8 +59,8 @@ export function useSystemHealth() {
 
         // 3. Task Velocity
         const todayStr = toYMD(new Date());
-        const todaysTasks = tasks.filter((t: any) => t.dueDate === todayStr);
-        const completedToday = todaysTasks.filter((t: any) => t.status === 'done').length;
+        const todaysTasks = (tasks as Task[]).filter((t: Task) => t.dueDate === todayStr);
+        const completedToday = todaysTasks.filter((t: Task) => t.status === 'done').length;
         if (todaysTasks.length > 0) {
             const completionRatio = completedToday / todaysTasks.length;
             if (completionRatio > 0.5) {

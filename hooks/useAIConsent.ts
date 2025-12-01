@@ -10,9 +10,9 @@ export function useAIConsent() {
         return typeof window !== 'undefined' && localStorage.getItem(AI_CONSENT_KEY) === 'true';
     });
     
-    const [onConfirmCallback, setOnConfirmCallback] = useState(null);
+    const [onConfirmCallback, setOnConfirmCallback] = useState<(() => void) | null>(null);
 
-    const checkConsentAndExecute = useCallback((action) => {
+    const checkConsentAndExecute = useCallback((action: () => void) => {
         const hasConsented = typeof window !== 'undefined' && localStorage.getItem(AI_CONSENT_KEY) === 'true';
         if (hasConsented) {
             action();

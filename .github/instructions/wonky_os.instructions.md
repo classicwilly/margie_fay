@@ -20,7 +20,7 @@ Do not use corporate productivity terms. Use our specific "Physics" nomenclature
 - **Rewards/Gamification** -> "Dopamine Mining"
 - **SOPs/Routines** -> "Flight Protocols"
 - **Mood/Energy** -> "Voltage / Frequency"
-- **AI Assistant** -> "The Observer"
+- **AI Assistant** -> "The Mood"
 
 ## Coding Rules
 1.  **State First:** When adding features, always check `AppStateContext.tsx` and `userReducer` first. Ensure actions are typed and handled before building UI.

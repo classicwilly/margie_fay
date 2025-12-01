@@ -83,7 +83,7 @@ Your primary function is to be a tool that provides structure, not a coach that 
     };
 
     return (
-        <ContentCard title="🧠 Observer">
+        <ContentCard title="🧠 Mood">
             {isConsentModalOpen && <AIConsentModal onConfirm={handleConfirm} onCancel={handleCancel} dontShowAgain={dontShowAgain} setDontShowAgain={setDontShowAgain} />}
             {isPiiModalOpen && <PIIWarningModal isOpen={isPiiModalOpen} onCancel={handlePiiCancel} onConfirm={handlePiiConfirm} matches={piiMatches} />}
             <div className="flex flex-col h-full">
@@ -111,8 +111,8 @@ Your primary function is to be a tool that provides structure, not a coach that 
                             <SecureMarkdown content={response} />
                         </div>
                     ) : (
-                        <p className="text-text-light text-opacity-80 text-center flex items-center justify-center h-full">
-                            Define a problem. The Observer will provide structure.
+                            <p className="text-text-light text-opacity-80 text-center flex items-center justify-center h-full">
+                            Define a problem. The Mood will provide structure.
                         </p>
                     )}
                 </div>

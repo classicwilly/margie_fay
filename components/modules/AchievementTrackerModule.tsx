@@ -3,6 +3,7 @@ import React, { useRef } from 'react';
 import useProgressVar from '@hooks/useProgressVar';
 import { useAppState } from '@contexts/AppStateContext';
 import ContentCard from '../ContentCard';
+import GoogleEmoji from '@components/GoogleEmoji';
 // FIX: Changed imports for types from constants.js to types.ts
 import { ALL_ACHIEVEMENTS, ADULT_REWARD_TIERS } from '../../constants';
 
@@ -17,7 +18,7 @@ const AchievementCard: React.FC<AchievementCardProps> = ({ achievement, collecte
     return (
         <div className={`p-3 rounded-lg border transition-all duration-300 ${isUnlocked ? 'bg-accent-green/10 border-accent-green/30' : 'bg-gray-800 border-gray-700 opacity-60'}`}>
             <div className="flex items-center space-x-3">
-                <div className={`text-4xl ${!isUnlocked ? 'filter grayscale' : ''}`}>{achievement.emoji}</div>
+                <div className={`text-4xl ${!isUnlocked ? 'filter grayscale' : ''}`}><GoogleEmoji symbol={achievement.emoji} size={36} /></div>
                 <div>
                     <h4 className={`text-md font-bold ${isUnlocked ? 'text-accent-green' : 'text-gray-300'}`}>{achievement.label}</h4>
                     <p className={`text-xs mt-1 ${isUnlocked ? 'text-green-400' : 'text-gray-300'}`}>
@@ -42,7 +43,7 @@ const RewardTierCard: React.FC<RewardTierCardProps> = ({ tier, isUnlocked }) => 
     return (
         <div className={`bg-gray-800 rounded-lg p-3 border transition-all duration-300 ${isUnlocked ? unlockedClasses : lockedClasses}`}>
             <div className="flex items-center space-x-3">
-                <div className="text-3xl">{tier.emoji}</div>
+                <div className="text-3xl"><GoogleEmoji symbol={tier.emoji} size={28} /></div>
                 <div>
                     <h4 className={`text-md font-bold ${isUnlocked ? 'text-accent-green' : 'text-text-light'}`}>{tier.title}</h4>
                     <p className={`text-xs mt-1 ${isUnlocked ? 'text-accent-green' : 'text-gray-300'}`}>
@@ -66,7 +67,7 @@ const AchievementTrackerModule = () => {
     useProgressVar(progressRef, progressPercentage);
 
     return (
-        <ContentCard title="🏆 Achievements">
+        <ContentCard title={<><GoogleEmoji symbol={'🏆'} size={20} className="mr-2" />Achievements</>}>
              <div className="flex flex-col h-full">
                 <div className="flex-grow overflow-y-auto pr-2 max-h-96" tabIndex={0}>
                     <div className="mb-4">
@@ -81,9 +82,9 @@ const AchievementTrackerModule = () => {
                                 </div>
                             </>
                         ) : (
-                            <h3 className="text-md font-bold text-accent-green text-center">
-                               🎉 All Tiers Unlocked! System operating at peak efficiency. 🎉
-                            </h3>
+                                     <h3 className="text-md font-bold text-accent-green text-center">
+                                         <GoogleEmoji symbol={'🎉'} size={20} className="mr-2" /> All Tiers Unlocked! System operating at peak efficiency. <GoogleEmoji symbol={'🎉'} size={20} className="ml-2" />
+                                     </h3>
                         )}
                     </div>
 

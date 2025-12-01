@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { useAppState } from '@contexts/AppStateContext';
 import { useTime } from './useTime.js';
 
 export function useProactiveAI(appState, dispatch) {

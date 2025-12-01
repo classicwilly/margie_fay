@@ -48,8 +48,8 @@ Example usage in a test (seed state and set forced view):
 
 ```ts
 await page.addInitScript((key) => {
-  try { window.localStorage.removeItem(key as string); } catch (e) { /* ignore */ }
-  try { (window as any).__E2E_FORCE_VIEW__ = 'willows-dashboard'; } catch (e) { /* ignore */ }
+  try { window.localStorage.removeItem(key as string); } catch { /* ignore */ }
+  try { (window as any).__E2E_FORCE_VIEW__ = 'willows-dashboard'; } catch { /* ignore */ }
 }, storageKey);
 
 // Then seed a full state so Willow shows reward-store and gem-collector modules

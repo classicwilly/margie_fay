@@ -4,7 +4,7 @@ import { retryClick } from './helpers/retryHelpers';
 test('app works without AI - manual flow @smoke', async ({ page, storageKey }) => {
   // Ensure AI is disabled via localStorage before app boot
   await page.addInitScript(() => localStorage.setItem('wonky_flags', JSON.stringify({ aiEnabled: false })));
-  await page.addInitScript((key) => { try { window.localStorage.removeItem(key as string); } catch (e) { /* ignore */ } }, storageKey);
+  await page.addInitScript((key) => { try { window.localStorage.removeItem(key as string); } catch { /* ignore */ } }, storageKey);
   await page.goto('/?forceView=command-center', { timeout: 120_000, waitUntil: 'load' });
     // Allow more time for network idle during local dev/hmr
     await page.waitForLoadState('networkidle', { timeout: 120_000 });
@@ -13,10 +13,11 @@ test('app works without AI - manual flow @smoke', async ({ page, storageKey }) =
   await expect(page).toHaveTitle(/Wonky/);
 
   // Navigate to the weekly review
-    await page.addInitScript((key) => { try { window.localStorage.removeItem(key as string); } catch (e) { /* ignore */ } }, storageKey);
+    await page.addInitScript((key) => { try { window.localStorage.removeItem(key as string); } catch { /* ignore */ } }, storageKey);
     // Ensure the entire DOM is settled after navigation and for the main title to be visible
     await page.waitForLoadState('networkidle');
-    await expect(page.getByRole('heading', { name: 'The Cockpit' })).toBeVisible({ timeout: 10000 });
+    // The Cockpit is present in the nav as a button; use button for stability
+    await expect(page.getByRole('button', { name: 'The Cockpit' })).toBeVisible({ timeout: 10000 });
 
     // Prefer stable data-testid if available
     let commandCenterNav = page.getByTestId('nav-command-center');
@@ -36,7 +37,7 @@ test('app works without AI - manual flow @smoke', async ({ page, storageKey }) =
       await page.waitForTimeout(100);
       await retryClick(page.getByRole('menuitem', { name: /The Cockpit|Command Center/i }), { tries: 3 });
     }
-    await expect(page.getByTestId('command-center-title')).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('[data-testid="ask-ai-input"], input[placeholder^="Describe the chaos"], input[aria-label="Ask The Mood input"], input[placeholder^="What\'s on your mind"], #mood-input').first()).toBeVisible({ timeout: 10000 });
       await page.click('body');
       await page.keyboard.press('Control+K');
     await page.waitForTimeout(250); // small buffer for open animation

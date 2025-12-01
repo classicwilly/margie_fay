@@ -4,6 +4,7 @@
 import React from 'react';
 import { useAppState } from '@contexts/AppStateContext';
 import ContentCard from '../ContentCard.js';
+import GoogleEmoji from '@components/GoogleEmoji';
 import { ALL_GEMS } from '../../constants.js';
 
 const GemAdminModule = ({ persona }) => {
@@ -19,7 +20,7 @@ const GemAdminModule = ({ persona }) => {
     };
 
     return (
-        <ContentCard title={`⚙️ Gem Administration for ${persona.charAt(0).toUpperCase() + persona.slice(1)}`} titleClassName="text-accent-warning text-xl">
+        <ContentCard title={<><GoogleEmoji symbol={'⚙️'} size={20} className="mr-2" />Gem Administration for {persona.charAt(0).toUpperCase() + persona.slice(1)}</>} titleClassName="text-accent-warning text-xl">
             <p className="text-sm text-text-light text-opacity-80 mb-4">
                 Manually award or revoke gems. This is an administrative tool and is only visible in Mod Mode.
             </p>
@@ -28,7 +29,7 @@ const GemAdminModule = ({ persona }) => {
                     const isCollected = collectedGems.includes(gem.id);
                     return (
                         <div key={gem.id} className={`p-2 rounded-lg border flex flex-col items-center ${isCollected ? 'bg-accent-green/10 border-accent-green/30' : 'bg-gray-800 border-gray-700'}`}>
-                            <span className="text-3xl">{gem.emoji}</span>
+                            <div className="text-3xl"><GoogleEmoji symbol={gem.emoji} size={28} /></div>
                             <span className="text-xs text-center mt-1">{gem.label}</span>
                             <div className="flex gap-2 mt-2">
                                 <button 

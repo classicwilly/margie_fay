@@ -39,7 +39,7 @@ export function useAIPromptSafety() {
     pendingActionRef.current = undefined;
   };
 
-  const checkAndExecute = useCallback(async (input: string, fn: (safeInput: string) => Promise<any>) => {
+  const checkAndExecute = useCallback(async (input: string, fn: (safeInput: string) => Promise<unknown>) => {
     // use the top-level hook value - hooks cannot be called inside callbacks
     // If AI is disabled we simply bypass all prompt safety modals and execute the action.
     if (!aiEnabled) {

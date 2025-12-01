@@ -3,10 +3,12 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import SopVault from '../../components/SopVault';
 import * as AppStateContext from '../../src/contexts/AppStateContext';
+import type { AppContextType, AppState } from '../../src/contexts/types';
+import { createTestAppContext } from '../test-utils/appStateTestUtils';
 
 describe('SopVault Component', () => {
   it('Importing neuro templates calls dispatch with ADD_SOP', async () => {
-    const providerProps = {
+    const providerProps: { value: Partial<AppContextType> } = {
       value: {
         appState: {
           userSops: [],
@@ -20,9 +22,11 @@ describe('SopVault Component', () => {
         },
         dispatch: vi.fn()
       }
-    };
+    } as { value: AppContextType };
 
-    const useAppStateSpy = vi.spyOn(AppStateContext as any, 'useAppState').mockReturnValue(providerProps.value as any);
+    const ctx = createTestAppContext({ appState: providerProps.value.appState as AppState });
+    ctx.dispatch = providerProps.value.dispatch as AppContextType['dispatch'];
+    const useAppStateSpy = vi.spyOn(AppStateContext, 'useAppState').mockReturnValue(ctx as AppContextType);
     render(<SopVault />);
 
     // STEP 1: Open the Import Menu

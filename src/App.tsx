@@ -1,79 +1,70 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
+import { logDebug, logInfo } from './utils/logger';
+import win from '../utils/win';
 import { AppStateProvider, useAppState } from '@contexts/AppStateContext';
 import { NeuroPrefsProvider } from '@contexts/NeurodivergentPreferencesContext';
 import { Header } from '@components/Header';
 import E2EDebugView from '@components/E2EDebugView';
 import SystemResetModal from '@components/SystemResetModal';
+import ContextSwitchRestoreModal from '@components/ContextSwitchRestoreModal';
 // Top-level error logging for app entry point
-let AppExport = null;
-try {
-  AppExport = AppWithFeatures;
-} catch (e) {
-  // Log error to console and localStorage for E2E diagnosis
-  // eslint-disable-next-line no-console
-  console.error('APP_ENTRY_ERROR', e);
-  if (typeof window !== 'undefined') {
-    try { window.localStorage.setItem('wonky-last-error', String(e.stack || e)); } catch (err) { /* ignore */ }
-  }
-  AppExport = () => (
-    <div className="text-red-400 p-4">
-      <h1>App failed to initialize</h1>
-      <pre className="whitespace-pre-wrap break-all">{String(e.stack || e)}</pre>
-    </div>
-  );
-}
-
-export default AppExport;
-import { AuthScreen } from '@components/AuthScreen';
+// NOTE: We previously wrapped the export in a try/catch to detect module
+// initialization failures. That block referenced `AppWithFeatures` before it
+// was declared which caused parse/lint issues. We instead use a try/catch
+// around the default export at the bottom of the file.
+const AuthScreen = React.lazy(() => import('@components/AuthScreen')) as unknown as React.FC;
 import WonkyAISetupGuide from '@components/WonkyAISetupGuide';
 import LiveChatModal from '@components/LiveChatModal';
 import CommandPalette from '@components/CommandPalette';
 import { useCommandPalette } from '@hooks/useCommandPalette';
 import ContextSwitchCaptureModal from '@components/ContextSwitchCaptureModal';
-import { Portal } from '@components/Portal';
+// Portal left intentionally unused in this file (import retained for potential future use in other builds)
 import { useAchievementEngine } from '@hooks/useAchievementEngine';
 import ToastContainer from '@components/ToastContainer';
 import LoadingSpinner from '@components/LoadingSpinner';
-import ErrorBoundary from '@components/ErrorBoundary';
+// ErrorBoundary is not used here; kept in repo for future integration
 import ScrollToTopButton from '@components/ScrollToTopButton';
 
 
 // Import all view components
-import WilliamsDashboard from '@components/WilliamsDashboard';
-import WillowsDashboard from '@components/WillowsDashboard';
-import SebastiansDashboard from '@components/SebastiansDashboard';
+const WilliamsDashboard = React.lazy(() => import('@components/WilliamsDashboard'));
+const WillowsDashboard = React.lazy(() => import('@components/WillowsDashboard'));
+const SebastiansDashboard = React.lazy(() => import('@components/SebastiansDashboard'));
+const WonkyToolkit = React.lazy(() => import('@components/WonkyToolkit'));
 import CoParentingDashboard from '@components/CoParentingDashboard';
-import SopVault from '@components/SopVault';
-import { WeeklyReview } from '@components/WeeklyReview';
-import ArchiveLog from '@components/ArchiveLog';
-import StrategicRoadmap from '@components/StrategicRoadmap';
-import DailyDebrief from '@components/DailyDebrief';
-import Manifesto from '@components/Manifesto';
-import UserSopView from '@components/UserSopView';
-import SopForm from '@components/SopForm';
-import AllChecklists from '@components/AllChecklists';
+const SopVault = React.lazy(() => import('@components/SopVault'));
+const WeeklyReview = React.lazy(() => import('@components/WeeklyReview')) as unknown as React.FC;
+const ArchiveLog = React.lazy(() => import('@components/ArchiveLog')) as unknown as React.FC;
+const StrategicRoadmap = React.lazy(() => import('@components/StrategicRoadmap')) as unknown as React.FC;
+const DailyDebrief = React.lazy(() => import('@components/DailyDebrief')) as unknown as React.FC;
+const Manifesto = React.lazy(() => import('@components/Manifesto')) as unknown as React.FC;
+const UserSopView = React.lazy(() => import('@components/UserSopView')) as unknown as React.FC;
+const SopForm = React.lazy(() => import('@components/SopForm')) as unknown as React.FC;
+const AllChecklists = React.lazy(() => import('@components/AllChecklists')) as unknown as React.FC;
 import NeurodivergentOnboarding from '@components/NeurodivergentOnboarding';
 import CoParentingDashboardBuilder from '@components/CoParentingDashboardBuilder';
 import WilliamDashboardBuilder from '@components/WilliamDashboardBuilder';
 import WillowsDashboardBuilder from '@components/WillowsDashboardBuilder';
 import SebastiansDashboardBuilder from '@components/SebastiansDashboardBuilder';
-import SystemInsights from '@components/SystemInsights';
-import GameMasterDashboard from '@components/GameMasterDashboard';
 import GardenView from '@components/GardenView';
-import { CommandCenter } from '@components/CommandCenter';
 import DailyReport from '@components/DailyReport';
 import { componentMap } from '@components/componentMap';
 import ModuleViewWrapper from '@components/ModuleViewWrapper';
 import { ALL_WILLIAM_MODULES_CONFIG } from './constants.js';
+import type { Sop } from './types';
 import { SOP_DATA } from './constants.js';
 import ProtocolView from '@components/ProtocolView';
 import TechnicalManual from '@components/TechnicalManual';
 import DesignLanguageProtocol from '@components/DesignLanguageProtocol';
 import OperatingManual from '@components/OperatingManual';
 import DeploymentProtocol from '@components/DeploymentProtocol';
-import WonkyToolkit from '@components/WonkyToolkit';
+const SystemInsights = React.lazy(() => import('@components/SystemInsights'));
+const GameMasterDashboard = React.lazy(() => import('@components/GameMasterDashboard'));
+const CommandCenter = React.lazy(() => import('@components/CommandCenter')) as unknown as React.FC;
+// WonkyToolkit is now lazy-loaded below
 import BioHacksView from '@components/views/BioHacksView';
 import { useApplyNeuroPrefs } from '@hooks/useApplyNeuroPrefs';
+import { FeatureFlagsProvider } from '@contexts/FeatureFlagsContext';
 
 
 const AppContent = () => {
@@ -89,11 +80,12 @@ const AppContent = () => {
   const [isLiveChatOpen, setLiveChatOpen] = useState(false);
 
   // Expose appState for E2E and manual debugging
-  if (typeof window !== 'undefined' && appState) {
-    window.appState = appState;
-    // Log current view and dashboardType on every render
-    // eslint-disable-next-line no-console
-    console.log('WONKY_DEBUG_VIEW', {
+  if (appState && typeof window !== 'undefined') {
+    try {
+      if (win) win.appState = appState as Record<string, unknown>;
+      } catch { /* ignore */ }
+    // Use logDebug wrapper instead of console.log directly
+    logDebug('WONKY_DEBUG_VIEW', {
       view: appState.view,
       dashboardType: appState.dashboardType,
       initialSetupComplete: appState.initialSetupComplete,
@@ -112,11 +104,10 @@ const AppContent = () => {
   // seeded localStorage is present so Playwright logs capture the effective
   // runtime state. This helps debug flakiness where the app lands on the
   // wrong dashboard view during tests.
-  const e2eStorageKey = typeof window !== 'undefined' ? ((window as any).__E2E_STORAGE_KEY__ as string) : undefined;
+  const e2eStorageKey = typeof window !== 'undefined' ? (win?.__E2E_STORAGE_KEY__ as string | undefined) : undefined;
   const debugStorageKey = e2eStorageKey || 'wonky-sprout-os-state';
   if (typeof window !== 'undefined' && window.localStorage.getItem(debugStorageKey)) {
-    // eslint-disable-next-line no-console
-    console.log('E2E: AppContent current view', { view: appState.view, dashboardType: appState.dashboardType });
+    logInfo('E2E: AppContent current view', { view: appState.view, dashboardType: appState.dashboardType });
   }
 
   // If initial setup is not complete, show the guide.
@@ -135,24 +126,25 @@ const AppContent = () => {
     // ensures `page.addInitScript` seeds are honored even if __E2E_FORCE_VIEW__
     // is absent or gets overwritten later by runtime code. This helps avoid a
     // race where the AppContent uses a default view despite a seeded test.
-    let e2eForce = (typeof window !== 'undefined' && (window as any).__E2E_FORCE_VIEW__) as string | undefined;
+    let e2eForce = win?.__E2E_FORCE_VIEW__ as string | undefined;
     // If an E2E sticky view exists prefer it over any later E2E force signals
     // so tests don't flip views due to later, unrelated script changes.
     try {
       if (typeof window !== 'undefined' && window.localStorage.getItem('__WONKY_TEST_STICKY_VIEW__')) {
         e2eForce = undefined;
       }
-    } catch (e) { /* ignore */ }
-    const e2eInit = (typeof window !== 'undefined' && (window as any).__WONKY_TEST_INITIALIZE__) as any | undefined;
+    } catch { /* ignore */ }
+    type E2EInit = { view?: string; dashboardType?: string; initialSetupComplete?: boolean };
+    const e2eInit = win?.__WONKY_TEST_INITIALIZE__ as E2EInit | undefined;
     // If E2E seeded init exists and sticky view isn't set to something else,
     // ensure the seeded value wins for this render and persist the sticky
     // view globally so other provider logic respects it.
     try {
       if (e2eInit && e2eInit.view) {
-        try { (window as any).__WONKY_TEST_STICKY_VIEW__ = e2eInit.view; } catch (e) { /* ignore */ }
-        try { window.localStorage.setItem('__WONKY_TEST_STICKY_VIEW__', e2eInit.view); } catch (e) { /* ignore */ }
+        try { if (win) win.__WONKY_TEST_STICKY_VIEW__ = e2eInit.view; } catch { /* ignore */ }
+        try { window.localStorage.setItem('__WONKY_TEST_STICKY_VIEW__', e2eInit.view); } catch { /* ignore */ }
       }
-    } catch (e) { /* ignore */ }
+    } catch { /* ignore */ }
     // Prefer the explicit E2E force (query param), then the seeded test init, then appState
     // If tests have requested a sticky view (persisted by the provider), prefer
     // that for the initial render. This is a synchronous lookup to avoid
@@ -160,7 +152,7 @@ const AppContent = () => {
     let stickyView: string | undefined = undefined;
     try {
       if (typeof window !== 'undefined') stickyView = window.localStorage.getItem('__WONKY_TEST_STICKY_VIEW__') || undefined;
-    } catch (e) { /* ignore */ }
+    } catch { /* ignore */ }
 
     // Resolve the initial view based on E2E signals and seeded state with clear precedence:
     // 1) stickyView (persisted by provider)
@@ -169,12 +161,12 @@ const AppContent = () => {
     // 4) fallback to appState.view
     let view: string | undefined;
     try {
-      const e2eForceLocal = (typeof window !== 'undefined' && (window as any).__E2E_FORCE_VIEW__) as string | undefined;
+      const e2eForceLocal = (typeof window !== 'undefined' && win?.__E2E_FORCE_VIEW__) as string | undefined;
       if (stickyView) view = stickyView;
       else if (e2eForceLocal) view = e2eForceLocal;
       else if (e2eInit && e2eInit.view) view = e2eInit.view;
       else view = appState?.view as string | undefined;
-    } catch (e) {
+    } catch {
       view = appState?.view as string | undefined;
     }
     // E2E safety: if tests indicate a seeded william/admin persona or explicitly
@@ -182,17 +174,16 @@ const AppContent = () => {
     // purposes of deterministic E2E flows. This prevents a later reactive
     // update from flipping to Command Center during early renders.
     try {
-      const e2eForceGM = (typeof window !== 'undefined' && (window as any).__E2E_FORCE_GAMEMASTER__) as boolean | undefined;
-      const seededDT = (typeof window !== 'undefined' && (window as any).__WONKY_TEST_INITIALIZE__?.dashboardType) as string | undefined;
+      const e2eForceGM = win?.__E2E_FORCE_GAMEMASTER__ as boolean | undefined;
+      const seededDT = win?.__WONKY_TEST_INITIALIZE__?.dashboardType as string | undefined;
       // If an E2E seed indicates the admin persona (william) prefer the
       // Game Master dashboard. Respect an explicit __E2E_FORCE_VIEW__ when it
       // is set to another view; otherwise favor the seeded admin view so tests
       // don't flip to Command Center unexpectedly.
-      const e2eForce = (typeof window !== 'undefined' && (window as any).__E2E_FORCE_VIEW__) as string | undefined;
-      if (e2eForceGM || seededDT === 'william') {
+      const e2eForce = (typeof window !== 'undefined' && win?.__E2E_FORCE_VIEW__) as string | undefined;
+          if (e2eForceGM || seededDT === 'william') {
         if (!e2eForce || e2eForce === 'game-master-dashboard') {
-          // eslint-disable-next-line no-console
-          console.log('E2E: overriding view to game-master-dashboard for william seed');
+          logInfo('E2E: overriding view to game-master-dashboard for william seed');
           view = 'game-master-dashboard';
         }
       }
@@ -201,47 +192,46 @@ const AppContent = () => {
       // storage key has a `dashboardType` of `william`, prefer the Game Master
       // dashboard for deterministic tests.
       try {
-        const e2eKey = (window as any).__E2E_STORAGE_KEY__ || 'wonky-sprout-os-state';
+        const e2eKey = win?.__E2E_STORAGE_KEY__ || 'wonky-sprout-os-state';
         const raw = window.localStorage.getItem(e2eKey);
         if (raw && !view) {
           const parsed = JSON.parse(raw);
-          if (parsed?.dashboardType === 'william') {
-            // eslint-disable-next-line no-console
-            console.log('E2E: Choosing game-master-dashboard based on storage seed');
+            if (parsed?.dashboardType === 'william') {
+            logInfo('E2E: Choosing game-master-dashboard based on storage seed');
             view = 'game-master-dashboard';
           }
         }
-      } catch (e) { /* ignore parse errors */ }
-    } catch (e) { /* ignore */ }
+      } catch { /* ignore parse errors */ }
+    } catch { /* ignore */ }
     // If we're running E2E and the test hasn't signaled readiness to allow
     // DB snapshots, force the view from E2E signals so the UI remains
     // deterministic even if appState changes reactively while tests are
     // preparing the environment.
     try {
-      const e2eKey = (window as any).__E2E_STORAGE_KEY__ || 'wonky-sprout-os-state';
-      const isE2EModeLocal = typeof window !== 'undefined' && (!!window.localStorage.getItem(e2eKey) || !!(window as any).__PLAYWRIGHT_SKIP_DEV_BYPASS__ || !!(window as any).__WONKY_TEST_INITIALIZE__);
-      const testReady = typeof window !== 'undefined' && !!(window as any).__WONKY_TEST_READY__;
+      const e2eKey = win?.__E2E_STORAGE_KEY__ || 'wonky-sprout-os-state';
+      const isE2EModeLocal = !!(window.localStorage.getItem(e2eKey) || win?.__PLAYWRIGHT_SKIP_DEV_BYPASS__ || win?.__WONKY_TEST_INITIALIZE__);
+      const testReady = !!win?.__WONKY_TEST_READY__;
       if (isE2EModeLocal && !testReady) {
-        const overrideView = stickyView || ((typeof window !== 'undefined' && (window as any).__E2E_FORCE_VIEW__) as string | undefined) || (e2eInit && e2eInit.view) || undefined;
+        const overrideView = stickyView || ((typeof window !== 'undefined' && win?.__E2E_FORCE_VIEW__) as string | undefined) || (e2eInit && e2eInit.view) || undefined;
         if (overrideView) {
           view = overrideView;
-          try { (window as any).__WONKY_E2E_LOG_PUSH__('E2E: render override during boot', { view }); } catch (e) { /* ignore */ }
+          try { win?.__WONKY_E2E_LOG_PUSH__('E2E: render override during boot', { view }); } catch { /* ignore */ }
         }
       }
-    } catch (e) { /* ignore */ }
+    } catch { /* ignore */ }
     // If an E2E seed exists and the appState doesn't match it, attempt to
     // patch the provider by dispatching the seeded view/dashboardType. This
     // is a defensive measure to recover from transient race conditions where
     // components render a default view before the E2E provider initializes.
     React.useEffect(() => {
       try {
-        const init = (typeof window !== 'undefined' && (window as any).__WONKY_TEST_INITIALIZE__) as any | undefined;
+        const init = win?.__WONKY_TEST_INITIALIZE__ as E2EInit | undefined;
         if (init && init.view && appState?.view !== init.view) {
-          try { dispatch({ type: 'SET_DASHBOARD_TYPE', payload: init.dashboardType || 'william' }); } catch(e) { /* ignore */ }
-          try { dispatch({ type: 'SET_VIEW', payload: init.view }); } catch (e) { /* ignore */ }
-          try { (window as any).__WONKY_E2E_LOG_PUSH__('FORCED_VIEW_DISPATCH_FROM_APPCONTENT', { dispatched: init.view }); } catch (e) { /* ignore */ }
+          try { dispatch({ type: 'SET_DASHBOARD_TYPE', payload: init.dashboardType || 'william' }); } catch { /* ignore */ }
+          try { dispatch({ type: 'SET_VIEW', payload: init.view }); } catch { /* ignore */ }
+          try { win?.__WONKY_E2E_LOG_PUSH__('FORCED_VIEW_DISPATCH_FROM_APPCONTENT', { dispatched: init.view }); } catch { /* ignore */ }
         }
-      } catch (e) { /* ignore */ }
+      } catch { /* ignore */ }
     }, [appState?.view, dispatch]);
     
     const viewMap: Record<string, React.ReactNode> = {
@@ -277,14 +267,14 @@ const AppContent = () => {
     };
 
     // Dynamically add all SOP/Protocol views
-    SOP_DATA.forEach((sop: any) => {
-        const ProtocolComponent = (props: any) => <ProtocolView sourceDocument={sop.title} title={sop.title} subtitle={sop.description} {...props} />;
+    SOP_DATA.forEach((sop: Sop) => {
+      const ProtocolComponent = (props: Record<string, unknown>) => <ProtocolView sourceDocument={sop.title} title={sop.title} subtitle={sop.description} {...(props as Record<string, unknown>)} />;
         viewMap[sop.viewId] = <ProtocolComponent />;
     });
 
     // Add module views dynamically
-    ALL_WILLIAM_MODULES_CONFIG.forEach((module: any) => {
-        const ModuleComponent = componentMap[module.id as keyof typeof componentMap];
+    ALL_WILLIAM_MODULES_CONFIG.forEach((module: { id: string; name: string }) => {
+      const ModuleComponent = componentMap[module.id as keyof typeof componentMap];
         if (ModuleComponent) {
             viewMap[`view-${module.id}`] = (
                 <ModuleViewWrapper title={module.name}>
@@ -299,10 +289,10 @@ const AppContent = () => {
     // resolved view to the console on each render where a debug seed is
     // present.
     try {
-      if (typeof window !== 'undefined' && ((window as any).__WONKY_TEST_INITIALIZE__ || (window as any).__E2E_FORCE_VIEW__ || (window as any).__E2E_FORCE_GAMEMASTER__)) {
-        console.log('E2E: render decision', { e2eForce, e2eInit: (window as any).__WONKY_TEST_INITIALIZE__?.view, e2eForceGM: (window as any).__E2E_FORCE_GAMEMASTER__, view, appStateView: appState?.view });
+      if (win?.__WONKY_TEST_INITIALIZE__ || win?.__E2E_FORCE_VIEW__ || win?.__E2E_FORCE_GAMEMASTER__) {
+        logInfo('E2E: render decision', { e2eForce, e2eInit: win?.__WONKY_TEST_INITIALIZE__?.view, e2eForceGM: win?.__E2E_FORCE_GAMEMASTER__, view, appStateView: appState?.view });
       }
-    } catch (e) { /* ignore debug */ }
+    } catch { /* ignore debug */ }
 
     const component = viewMap[view];
     if (component) return component;
@@ -311,9 +301,10 @@ const AppContent = () => {
     return <GardenView />;
   };
 
-  console.log('AppContent render, isContextRestoreModalOpen:', appState.isContextRestoreModalOpen);
+  logDebug('AppContent render, isContextRestoreModalOpen:', appState.isContextRestoreModalOpen);
 
   return (
+    <Suspense fallback={<LoadingSpinner message="Loading view..." />}>
     <div className="min-h-screen bg-sanctuary-bg text-sanctuary-text-main flex flex-col">
       <Header openResetModal={() => setResetModalOpen(true)} />
       <E2EDebugView />
@@ -340,7 +331,8 @@ const AppContent = () => {
               </svg>
           </button>
       )}
-    </div>
+      </div>
+    </Suspense>
   );
 };
 
@@ -381,6 +373,7 @@ const App = () => (
 const AppWithFeatures = () => (
   <FeatureFlagsProvider>
     <App />
+    <Root />
   </FeatureFlagsProvider>
 );
 

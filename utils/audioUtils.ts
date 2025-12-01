@@ -1,7 +1,5 @@
-
-
 // --- Audio Utility Functions ---
-export function encode(bytes) {
+export function encode(bytes: Uint8Array): string {
     let binary = '';
     const len = bytes.byteLength;
     for (let i = 0; i < len; i++) {
@@ -10,7 +8,7 @@ export function encode(bytes) {
     return btoa(binary);
 }
 
-export function decode(base64) {
+export function decode(base64: string): Uint8Array {
     const binaryString = atob(base64);
     const len = binaryString.length;
     const bytes = new Uint8Array(len);
@@ -21,11 +19,11 @@ export function decode(base64) {
 }
 
 export async function decodeAudioData(
-    data,
-    ctx,
-    sampleRate,
-    numChannels,
-) {
+    data: Uint8Array,
+    ctx: AudioContext,
+    sampleRate: number,
+    numChannels: number,
+): AudioBuffer {
     const dataInt16 = new Int16Array(data.buffer);
     const frameCount = dataInt16.length / numChannels;
     const buffer = ctx.createBuffer(numChannels, frameCount, sampleRate);
@@ -39,7 +37,7 @@ export async function decodeAudioData(
     return buffer;
 }
 
-export function createBlob(data) {
+export function createBlob(data: Uint8Array): { data: string; mimeType: string } {
     const l = data.length;
     const int16 = new Int16Array(l);
     for (let i = 0; i < l; i++) {

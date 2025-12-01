@@ -7,7 +7,7 @@ export const useApplyNeuroPrefs = () => {
   useEffect(() => {
     const root = document.documentElement || document.body;
 
-    const classes = {
+    const classes: Record<string, boolean> = {
       'reduced-motion': prefs.reduceAnimations,
       'simplified-ui': prefs.simplifiedUi,
       'larger-text': prefs.largerText,
@@ -15,7 +15,7 @@ export const useApplyNeuroPrefs = () => {
     };
 
     Object.keys(classes).forEach((className) => {
-      const should = (classes as any)[className];
+      const should = classes[className];
       if (should) root.classList.add(className);
       else root.classList.remove(className);
     });

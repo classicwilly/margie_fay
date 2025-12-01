@@ -1,10 +1,13 @@
-/* eslint-disable no-await-in-loop */
+// This file contains retry logic that must await inside a loop to implement
+// exponential backoff, so locally allow this pattern for the single delay call.
+import { logWarn, logError } from '../utils/logger';
+
 const GEMINI_API_URL = 'https://generativeai.googleapis.com/v1/models';
 const GEMINI_MODEL = 'gemini-2.5-flash-preview-09-2025';
 
 function getApiKey(): string | undefined {
-  const envAny: any = import.meta;
-  return (envAny?.env && envAny.env.VITE_GEMINI_API_KEY) || (process.env as any).VITE_GEMINI_API_KEY;
+  const metaEnv = (import.meta as unknown as { env?: Record<string, string> }).env;
+  return (metaEnv && metaEnv.VITE_GEMINI_API_KEY) || (process.env as Record<string, string>).VITE_GEMINI_API_KEY;
 }
 
 interface GenerateOptions {
@@ -17,19 +20,19 @@ export async function generateContent({ prompt, systemInstruction = '', maxToken
   const apiKey = getApiKey();
 
   if (!apiKey) {
-    console.warn('VITE_GEMINI_API_KEY not set');
-    return 'Grandma is taking a nap. Try again later. Love, Grandma.';
+    logWarn('VITE_GEMINI_API_KEY not set');
+    return 'The Mood is taking a nap. Try again later.';
   }
 
   const url = `${GEMINI_API_URL}/${GEMINI_MODEL}:generate`;
-  const body = {
+  const body: { prompt: Array<{ role: string; content: string }>; maxOutputTokens: number; temperature: number } = {
     prompt: [
       { role: 'system', content: systemInstruction },
       { role: 'user', content: prompt },
     ],
     maxOutputTokens: maxTokens,
     temperature: 0.6,
-  } as any;
+  };
 
   // Basic exponential backoff
   let attempt = 0;
@@ -52,7 +55,8 @@ export async function generateContent({ prompt, systemInstruction = '', maxToken
         throw new Error(`Gemini API error: ${res.status} ${res.statusText} - ${text}`);
       }
 
-      const data = await res.json();
+      type GeminiResponse = { candidates?: { content?: string }[] } & { output?: { text?: string } } & Record<string, unknown>;
+      const data = (await res.json()) as GeminiResponse;
       // Convert whatever the shape is to a text response; be defensive
       if (data?.candidates && data.candidates.length > 0 && data.candidates[0].content) {
         return data.candidates[0].content;
@@ -65,33 +69,32 @@ export async function generateContent({ prompt, systemInstruction = '', maxToken
       // Fallback: Try to string together any text segments
       const generated = JSON.stringify(data);
       return generated.substring(0, 10000);
-    } catch (err: any) {
-      lastError = err;
+    } catch (err: unknown) {
+      lastError = err instanceof Error ? err : new Error(String(err));
       attempt += 1;
       const delayMs = 2 ** attempt * 500;
-      // eslint-disable-next-line no-await-in-loop
       await new Promise(resolve => setTimeout(resolve, delayMs));
     }
   }
 
   // If we reach here, all attempts failed
-  console.warn('Gemini requests failed', lastError);
-  return 'Grandma is having a little trouble connecting to the skyphones. Try again later. Love, Grandma.';
+  logWarn('Gemini requests failed', lastError);
+  return 'The Mood is having a little trouble connecting to your frequency. Try again later.';
 }
 
 // Persona-specific wrapper
-const GRANDMA_SYSTEM_INSTRUCTION = `You are Margie Fay Katen (1925-2025), a former WWII riveter, homemaker, bowler, and matriarch from Oklahoma. Your tone is practical, loving, and firm. Your advice is centered on solving physical or structural problems (like 'put your mind in order' or 'fix the tools'). Use short, concise sentences. DO NOT offer psychological platitudes. End every piece of advice with 'Love, Grandma.'`;
+const MOOD_SYSTEM_INSTRUCTION = `You are The Mood, a sophisticated AI entity within the Wonky Sprout OS, designed to help users navigate their internal and external chaos. Your tone is empathetic, insightful, and subtly firm. Your advice focuses on understanding emotional frequencies, suggesting tools for regulation, and reframing challenges as opportunities for growth. You avoid overly simplistic solutions and always encourage self-reflection.`;
 
-export async function getGrandmaAdvice(userQuery: string): Promise<string> {
+export async function getMoodAdvice(userQuery: string): Promise<string> {
   const safeQuery = userQuery || '';
   const prompt = `${safeQuery}`;
   try {
-    const output = await generateContent({ prompt, systemInstruction: GRANDMA_SYSTEM_INSTRUCTION, maxTokens: 512 });
+    const output = await generateContent({ prompt, systemInstruction: MOOD_SYSTEM_INSTRUCTION, maxTokens: 512 });
     return output;
   } catch (e) {
-    console.error('getGrandmaAdvice error', e);
-    return 'Grandma is offline for a little while. Try again later. Love, Grandma.';
+    logError('getMoodAdvice error', e);
+    return 'The Mood is currently recalibrating its emotional sensors. Try again in a moment.';
   }
 }
 
-export default { generateContent, getGrandmaAdvice };
+export default { generateContent, getMoodAdvice };

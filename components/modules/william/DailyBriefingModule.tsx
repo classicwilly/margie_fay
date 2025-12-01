@@ -11,12 +11,12 @@ import { ALL_CHECKLIST_DATA } from '../../../checklist-data.js';
 
 const toYMD = (date) => date.toISOString().split('T')[0];
 
-const ProgressBar = ({ label, percentage, completed, total }) => {
+const ProgressBar: React.FC<{label: string; percentage: number; completed: number; total: number}> = ({ label, percentage, completed, total }) => {
     const trackRef = React.useRef<HTMLDivElement | null>(null);
     useProgressVar(trackRef, percentage);
 
     return (
-    <div>
+        <div>
         <div className="flex justify-between items-center text-sm mb-1">
             <span className="font-semibold">{label}</span>
             <span className="text-gray-400">{completed} / {total}</span>
@@ -25,12 +25,11 @@ const ProgressBar = ({ label, percentage, completed, total }) => {
             <div ref={trackRef} className="bg-accent-green h-2.5 rounded-full transition-all duration-500 progress-fill"></div>
             <span className="sr-only">{label} progress: {Math.round(percentage)}%</span>
         </div>
-        );
-    }
-    </div>
-);
+        </div>
+    );
+};
 
-const DailyBriefingModule = () => {
+export const DailyBriefingModule: React.FC = () => {
     const { appState } = useAppState();
     const { checkedItems, habitTracker } = appState;
 
@@ -92,4 +91,4 @@ const DailyBriefingModule = () => {
     );
 };
 
-export const DailyBriefingModule = DailyBriefingModule;
+export default DailyBriefingModule;

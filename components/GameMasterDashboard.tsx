@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import GemAdminModule from './modules/GemAdminModule.js';
 import { useAppState } from '@contexts/AppStateContext';
 import ContentCard from './ContentCard.js';
+import GoogleEmoji from '@components/GoogleEmoji';
 import { ALL_GEMS, REWARD_TIERS } from '../constants.js';
 
 const QuestManagement = () => {
@@ -161,7 +162,7 @@ const RedemptionHub = () => {
                             const redemptionId = `${persona}-${threshold}`;
                             return (
                                 <div key={redemptionId} className="p-3 bg-gray-800 rounded-md border border-yellow-700">
-                                    <p className="font-bold">{tier.emoji} {tier.title} for {persona.charAt(0).toUpperCase() + persona.slice(1)}</p>
+                                    <p className="font-bold"><GoogleEmoji symbol={tier.emoji} size={20} className="mr-2" /> {tier.title} for {persona.charAt(0).toUpperCase() + persona.slice(1)}</p>
                                     <textarea
                                         value={notes[redemptionId] || ''}
                                         onChange={e => setNotes(prev => ({ ...prev, [redemptionId]: e.target.value }))}

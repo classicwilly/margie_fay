@@ -8,7 +8,7 @@ export const GroundingRose = () => {
     const [isRippling, setIsRippling] = useState(false);
 
     const handleClick = () => {
-        try { vibrate(300); } catch (e) { /* ignore */ }
+        try { vibrate(300); } catch { /* ignore */ }
         setIsRippling(true);
         setTimeout(() => setIsRippling(false), 600);
     };
@@ -28,8 +28,7 @@ export const GroundingRose = () => {
             {isRippling && (
                 <div
                     data-testid="grounding-rose-ripple"
-                    className="absolute inset-0 bg-accent-pink rounded-full opacity-70 animate-ping"
-                    style={{ animationDuration: '600ms' }}
+                    className="absolute inset-0 bg-accent-pink rounded-full opacity-70 animate-ping ripple-duration-600"
                 />
             )}
         </motion.button>

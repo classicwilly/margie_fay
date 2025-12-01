@@ -20,8 +20,8 @@ const ContextSwitchRestoreModal: React.FC = () => {
     const [currentTask, setCurrentTask] = useState('');
     // Diagnostic mount flag used by E2E tests
     useEffect(() => {
-        try { (window as any).__WONKY_CONTEXT_RESTORE_MODAL_MOUNTED__ = true; } catch (e) { /* ignore */ }
-        return () => { try { delete (window as any).__WONKY_CONTEXT_RESTORE_MODAL_MOUNTED__; } catch (e) { /* ignore */ } };
+        try { (window as any).__WONKY_CONTEXT_RESTORE_MODAL_MOUNTED__ = true; } catch { /* ignore */ }
+        return () => { try { delete (window as any).__WONKY_CONTEXT_RESTORE_MODAL_MOUNTED__; } catch { /* ignore */ } };
     }, []);
 
     // Debug init log removed — keep the mounted flag for E2E detection.
@@ -85,10 +85,10 @@ const ContextSwitchRestoreModal: React.FC = () => {
     // Handler functions
     const handleRestore = () => {
         // Close the modal and dispatch any restoration logic here
-        try { dispatch({ type: 'SET_CONTEXT_RESTORE_MODAL_OPEN', payload: false }); } catch (e) { /* ignore in tests */ }
+        try { dispatch({ type: 'SET_CONTEXT_RESTORE_MODAL_OPEN', payload: false }); } catch { /* ignore in tests */ }
     };
     const handleDismiss = () => {
-        try { dispatch({ type: 'SET_CONTEXT_RESTORE_MODAL_OPEN', payload: false }); } catch (e) { /* ignore */ }
+        try { dispatch({ type: 'SET_CONTEXT_RESTORE_MODAL_OPEN', payload: false }); } catch { /* ignore */ }
     };
 
     // --- RESTORED JSX ---

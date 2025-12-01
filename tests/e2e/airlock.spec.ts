@@ -6,14 +6,14 @@ test('Airlock — Test Airlock Protocol opens modal and starts decompression tim
   // 1) Force the app to the Cockpit (command-center) view
   // Seed a deterministic state so the dashboard loads in the right view.
   await page.addInitScript((init) => {
-    try { (window as any).__WONKY_TEST_INITIALIZE__ = init; } catch (e) { /* ignore */ }
+    try { (window as any).__WONKY_TEST_INITIALIZE__ = init; } catch { /* ignore */ }
   }, { dashboardType: 'william', view: 'command-center', initialSetupComplete: true });
   await page.addInitScript((key) => {
-    try { (window as any).__E2E_STORAGE_KEY__ = key; } catch (e) { /* ignore */ }
+    try { (window as any).__E2E_STORAGE_KEY__ = key; } catch { /* ignore */ }
   }, storageKey);
   await page.goto('/?forceView=command-center');
   await page.waitForLoadState('networkidle');
-  try { await ensureAppView(page, 'command-center'); } catch (e) { /* ignore — fallbacks below will make it visible */ }
+  try { await ensureAppView(page, 'command-center'); } catch { /* ignore — fallbacks below will make it visible */ }
 
   // 2) Find the Test Airlock Protocol button — prefer role-based lookup for stability
   const testAirlockBtn = page.getByTestId('test-airlock-btn').first();
@@ -38,13 +38,13 @@ test('Airlock — Test Airlock Protocol opens modal and starts decompression tim
   // Wait for runtime app state flag the modal uses; fallback to dispatching actions
   try {
     await page.waitForFunction(() => !!(window as any).appState && (window as any).appState.isContextRestoreModalOpen === true, null, { timeout: 15000 });
-  } catch (e) {
+  } catch {
     // Fallback: if the dispatch hook is exposed for E2E, use it to open the modal
     const dispatchAvailable = await page.evaluate(() => typeof (window as any).__WONKY_TEST_DISPATCH__ === 'function');
     if (dispatchAvailable) {
       await page.evaluate(() => {
-        try { (window as any).__WONKY_TEST_DISPATCH__({ type: 'SET_SAVED_CONTEXT', payload: { view: 'command-center', dashboardType: 'william' } }); } catch (e) { /* ignore */ }
-        try { (window as any).__WONKY_TEST_DISPATCH__({ type: 'SET_CONTEXT_RESTORE_MODAL_OPEN', payload: true }); } catch (e) { /* ignore */ }
+        try { (window as any).__WONKY_TEST_DISPATCH__({ type: 'SET_SAVED_CONTEXT', payload: { view: 'command-center', dashboardType: 'william' } }); } catch { /* ignore */ }
+        try { (window as any).__WONKY_TEST_DISPATCH__({ type: 'SET_CONTEXT_RESTORE_MODAL_OPEN', payload: true }); } catch { /* ignore */ }
       });
       // allow UI to update
       await page.waitForTimeout(300);
@@ -55,7 +55,7 @@ test('Airlock — Test Airlock Protocol opens modal and starts decompression tim
   // Wait for a diagnostic signal from the modal code that it has mounted (helps avoid portal timing races)
   try {
     await page.waitForFunction(() => !!(window as any).__WONKY_CONTEXT_RESTORE_MODAL_MOUNTED__, null, { timeout: 15000 });
-  } catch (e) { console.warn('Modal mount signal not observed'); }
+  } catch { console.warn('Modal mount signal not observed'); }
   try {
     const mounted = await page.evaluate(() => !!(window as any).__WONKY_CONTEXT_RESTORE_MODAL_MOUNTED__);
     console.log('AIRLOCK_MODAL_MOUNTED', mounted);

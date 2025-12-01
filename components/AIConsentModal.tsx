@@ -19,7 +19,7 @@ const AIConsentModal: React.FC<AIConsentModalProps> = ({ onConfirm, onCancel, do
                 </header>
                 
                 <div className="space-y-4 text-text-light text-opacity-90">
-                    <p>This feature uses generative AI to process your input. To provide a response, your prompt data will be sent to Google's servers.</p>
+                    <p>This feature uses generative AI to process your input. To provide a response, your prompt data will be sent to Google&apos;s servers.</p>
                     <p><strong>Data Privacy Notice:</strong> Please review your input and remove any sensitive or personal information before proceeding. Do not include anything you would not want a human reviewer to see.</p>
                 </div>
                 
@@ -31,7 +31,7 @@ const AIConsentModal: React.FC<AIConsentModalProps> = ({ onConfirm, onCancel, do
                             onChange={(e) => setDontShowAgain(e.target.checked)}
                             className="h-4 w-4 rounded bg-gray-700 text-accent-blue focus:ring-accent-blue"
                         />
-                        <span className="ml-2">Don't show this again</span>
+                        <span className="ml-2">Don&apos;t show this again</span>
                     </label>
                 </div>
 

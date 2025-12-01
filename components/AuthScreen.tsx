@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import { useAppState } from '@contexts/AppStateContext';
 
-import { auth, db } from '../firebase.js';
+// Lazy import firebase when authentication actions are triggered
 import { defaultUserState } from '../defaultStates.js';
 
 
@@ -84,7 +84,8 @@ const AuthScreen = () => {
         setLoading(true);
         setAuthError(null);
         try {
-            await auth.signInWithEmailAndPassword(loginEmail, loginPass);
+            const mod = await import('@services/firebaseLazy');
+            await mod.signInWithEmailAndPassword(loginEmail, loginPass);
             // onAuthStateChanged in context will handle the rest
         } catch (e) {
             setAuthError(getAuthDiagnostic(e.message));
@@ -97,7 +98,8 @@ const AuthScreen = () => {
         setLoading(true);
         setAuthError(null);
         try {
-            const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+            const mod = await import('@services/firebaseLazy');
+            const userCredential = await mod.createUserWithEmailAndPassword(email, password);
             const newUser = userCredential.user;
             
             // Create the initial user state in the database
@@ -107,7 +109,8 @@ const AuthScreen = () => {
                 view: 'garden-view', // All new users start at the Garden View
             };
             
-            await db.setDoc(newUser.uid, initialState);
+            const mod = await import('@services/firebaseLazy');
+            await mod.setUserDoc(newUser.uid, initialState);
             // Login will be handled by onAuthStateChanged
             
         } catch (e) {
@@ -188,7 +191,7 @@ const AuthScreen = () => {
                         onClick={() => { setIsCreating(!isCreating); setAuthError(null); }}
                         className="text-sm text-accent-green font-semibold hover:underline"
                     >
-                        {isCreating ? 'Already have a Sprout? Login' : "Don't have a Sprout? Create one"}
+                        {isCreating ? 'Already have a Sprout? Login' : "Don&apos;t have a Sprout? Create one"}
                     </button>
                 </div>
             </section>

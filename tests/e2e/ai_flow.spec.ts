@@ -1,10 +1,11 @@
 import { test, expect } from './playwright-fixtures';
 import { retryClick } from './helpers/retryHelpers';
+import { safeClick } from './helpers/pageRecovery';
 
 import axe from 'axe-core';
 import applyAiStub from './helpers/aiStub';
 
-test('basic AI flow from UI placeholder to telemetry @smoke', async ({ page, storageKey }) => {
+test('basic AI flow from UI placeholder to telemetry @smoke', async ({ page, storageKey, validateSeededState, browser }) => {
   // Capture console logs, page errors, and lifecycle events to help diagnose runtime failures
   page.on('console', msg => console.log('PAGE LOG:', msg.type(), msg.text()));
   page.on('pageerror', err => console.log('PAGE ERROR:', err.message));
@@ -15,10 +16,10 @@ test('basic AI flow from UI placeholder to telemetry @smoke', async ({ page, sto
   // Use a longer timeout for local dev; occasionally Vite/HMR can be slow.
   // Ensure any stored app state does not override the default (e.g., command-center)
   await page.addInitScript((key) => {
-    try { window.localStorage.removeItem(key as string); } catch (e) { /* ignore */ }
-    try { window.localStorage.setItem(key as string, JSON.stringify({ initialSetupComplete: true })); } catch (e) { /* ignore */ }
-    try { (window as any).__PLAYWRIGHT_SKIP_DEV_BYPASS__ = true; } catch (e) { /* ignore */ }
-    try { localStorage.setItem('wonky-sprout-ai-consent-dont-show-again', 'true'); } catch (e) { /* ignore */ }
+    try { window.localStorage.removeItem(key as string); } catch { /* ignore */ }
+    try { window.localStorage.setItem(key as string, JSON.stringify({ initialSetupComplete: true })); } catch { /* ignore */ }
+    try { (window as any).__PLAYWRIGHT_SKIP_DEV_BYPASS__ = true; } catch { /* ignore */ }
+    try { localStorage.setItem('wonky-sprout-ai-consent-dont-show-again', 'true'); } catch { /* ignore */ }
   }, storageKey);
   // Opt into the Playwright server stub so the app uses the deterministic proxy
   await page.addInitScript(() => { (window as any).__PLAYWRIGHT_AI_STUB__ = true; });
@@ -28,13 +29,10 @@ test('basic AI flow from UI placeholder to telemetry @smoke', async ({ page, sto
   await applyAiStub(page, { force: true });
   // Now navigate to the command center
   await page.goto('/?forceView=command-center');
-  // If Playwright is enabling server-side AI stub set by the workflow, add an explicit query param
-  // so `index.html` sets the client-side `__PLAYWRIGHT_AI_STUB__` earliest.
-  const url = process.env.PLAYWRIGHT_AI_STUB === 'true' ? '/?use_ai_proxy=true' : '/';
+  await validateSeededState();
   // Ensure the entire DOM is settled after navigation and for the main title to be visible
   await page.waitForLoadState('networkidle');
-  await expect(page.getByRole('heading', { name: 'The Cockpit' })).toBeVisible({ timeout: 10000 });
-  await page.goto(url, { timeout: 120_000, waitUntil: 'load' });
+  await expect(page.getByRole('button', { name: 'The Cockpit' })).toBeVisible({ timeout: 10000 });
   // log the flag so we can assert the page is using the Playwright AI stub
   await page.evaluate(() => console.log('PLAYWRIGHT_AI_STUB flag:', (window as any).__PLAYWRIGHT_AI_STUB__));
   // (applyAiStub moved above) network route already registered
@@ -71,21 +69,21 @@ test('basic AI flow from UI placeholder to telemetry @smoke', async ({ page, sto
     await page.waitForTimeout(100);
     await retryClick(page.getByRole('menuitem', { name: 'The Cockpit' }), { tries: 3 });
   }
-  // Wait for the Command Center view to be active
-  await expect(page.getByTestId('command-center-title')).toBeVisible({ timeout: 10000 });
+  // Wait for the Command Center view to be active by checking for AI input or nav presence
+  await expect(page.locator('[data-testid="ask-ai-input"], input[placeholder^="Describe the chaos"], input[aria-label="Ask The Mood input"], input[placeholder^="What\'s on your mind"], #mood-input').first()).toBeVisible({ timeout: 10000 });
 
   // Example: find input placeholder (matching codebase input text)
   // Wait for the AI input and ask button to become visible
-  await page.waitForSelector('input[placeholder="Describe the chaos..."]', { timeout: 10000 });
+  await page.waitForSelector('input[placeholder="Describe the chaos..."], input[placeholder="What\'s on your mind, human?"]', { timeout: 10000 });
   // Use locator for robustness and wait until the element is visible
-  const aiInputLocator = page.locator('[data-testid="ask-ai-input"]');
+  const aiInputLocator = page.locator('[data-testid="ask-ai-input"], input[aria-label="Ask The Mood input"], #mood-input').first();
   try {
     await aiInputLocator.waitFor({ state: 'visible', timeout: 10000 });
     // Use a non-PII prompt to avoid the PII modal during E2E runs
     await aiInputLocator.fill('Diagnose my workflow blocking issue');
-  } catch (err) {
+  } catch {
     // Fallback to placeholder based selection if data-testid isn't available
-    const fallbackInput = page.getByPlaceholder('Describe the chaos...');
+    const fallbackInput = page.getByPlaceholder('Describe the chaos...') || page.getByPlaceholder("What's on your mind, human?");
     await fallbackInput.waitFor({ state: 'visible', timeout: 10000 });
     await fallbackInput.fill('Contact me at test@example.com');
   }
@@ -93,12 +91,16 @@ test('basic AI flow from UI placeholder to telemetry @smoke', async ({ page, sto
   // match either the labeled 'Ask AI' button or older 'Generate' label used in some builds
   // Prefer data-testid when available — this is robust across localized/emoji variants
   // Prefer `data-testid` when available; otherwise try a text-based role check.
-  let askBtn = page.getByTestId ? page.getByTestId('ask-ai-btn') : page.getByRole('button', { name: /Ask AI|Generate|✨ Ask AI/i });
-  if (askBtn && (await askBtn.count()) === 0) {
-    askBtn = page.getByRole('button', { name: /Ask AI|Generate|✨ Ask AI/i });
+  // Prefer data-testid when available, otherwise try to find any 'Ask' UI (legacy or The Mood)
+  // Try to find a button that is visually tied to the AI input (sibling or parent) first
+  let askBtn = aiInputLocator.locator('..').locator('button[aria-label="Ask The Mood"], button:has-text("ASK")').first();
+  if (!(await askBtn.count())) {
+    // Fallbacks: prefer data-testid or broader role searches
+    askBtn = page.getByTestId ? page.getByTestId('ask-ai-btn') : page.getByRole('button', { name: /Ask AI|Generate|✨ Ask AI|Ask The Mood|ASK|Ask The Mood/i });
   }
   await askBtn.waitFor({ state: 'visible', timeout: 30000 });
-  await askBtn.click();
+  // Use safeClick to be resilient to mid-test page closure
+  await safeClick(browser, page, askBtn);
   // Wait for the backend AI call to complete for determinism
   try {
     await page.waitForResponse((resp) => resp.url().includes('/aiProxy') && resp.status() === 200, { timeout: 20000 });
@@ -138,8 +140,8 @@ test('basic AI flow from UI placeholder to telemetry @smoke', async ({ page, sto
   // Prefer the AI response container testid, fall back to a text match if not present
   try {
     await expect(page.getByTestId('ai-response')).toBeVisible({ timeout: 10000 });
-  } catch (err) {
-    await expect(page.locator('text=/ok from ai|AI result|Manual mode active|ok from ai|System Error:/i')).toBeVisible({ timeout: 10000 });
+  } catch {
+    await expect(page.locator('text=/ok from ai|AI result|Manual mode active|ok from ai|System Error:|The Mood is (taking a nap|having a little trouble|currently recalibrating|having trouble)/i')).toBeVisible({ timeout: 10000 });
   }
 
     // If PLAYWRIGHT_AI_STUB is set in CI, the test will rely on the stubbed network response

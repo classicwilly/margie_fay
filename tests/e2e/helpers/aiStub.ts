@@ -45,7 +45,7 @@ export async function applyAiStub(page: Page, opts: { text?: string; status?: nu
   // skip the DEV-mode state shortcut so seeded localStorage is honored.
   if (opts.force || process.env.PLAYWRIGHT_SKIP_DEV_BYPASS === 'true') {
     await page.addInitScript(() => {
-      try { (window as any).__PLAYWRIGHT_SKIP_DEV_BYPASS__ = true; } catch (e) { /* ignore */ }
+      try { (window as any).__PLAYWRIGHT_SKIP_DEV_BYPASS__ = true; } catch { /* ignore */ }
     });
   }
 

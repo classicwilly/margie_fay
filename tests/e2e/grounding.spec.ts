@@ -7,7 +7,7 @@ test.describe('GroundingRose E2E', () => {
       (window as any).hapticCalls = [];
       (window as any).consoleLogs = [];
       // Flag that enables E2E haptic stub logging used by useHaptics
-      try { (window as any).__E2E_HAPTICS_STUB__ = true; } catch (e) { /* ignore */ }
+      try { (window as any).__E2E_HAPTICS_STUB__ = true; } catch { /* ignore */ }
       Object.defineProperty(window.navigator, 'vibrate', {
         configurable: true,
         writable: true,
@@ -85,9 +85,9 @@ test.describe('GroundingRose E2E', () => {
   test('should work without vibration support', async ({ page }) => {
     // Replace the vibrate API with undefined, but keep the hapticCalls array
     await page.addInitScript(() => {
-      try { Object.defineProperty(window.navigator, 'vibrate', { value: undefined, writable: true }); } catch(e) { /* ignore */ }
-      try { (window as any).__E2E_HAPTICS_STUB__ = false; } catch(e) { /* ignore */ }
-      try { (window as any).hapticCalls = (window as any).hapticCalls || []; } catch(e) { /* ignore */ }
+      try { Object.defineProperty(window.navigator, 'vibrate', { value: undefined, writable: true }); } catch { /* ignore */ }
+      try { (window as any).__E2E_HAPTICS_STUB__ = false; } catch { /* ignore */ }
+      try { (window as any).hapticCalls = (window as any).hapticCalls || []; } catch { /* ignore */ }
     });
     await page.reload();
     

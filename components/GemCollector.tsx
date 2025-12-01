@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import useProgressVar from '@hooks/useProgressVar';
 import ContentCard from './ContentCard';
 import { ALL_GEMS, REWARD_TIERS } from '../constants';
+import GoogleEmoji from '@components/GoogleEmoji';
 
 const Gem: React.FC<{ emoji: string; label: string; collected: boolean }> = ({ emoji, label, collected }) => {
     const progressRef = useRef<HTMLDivElement | null>(null);
@@ -9,7 +10,9 @@ const Gem: React.FC<{ emoji: string; label: string; collected: boolean }> = ({ e
 
     return (
         <div className={`flex flex-col items-center p-2 rounded-lg transition-all duration-300 ${collected ? 'bg-accent-green bg-opacity-20' : 'bg-gray-800'}`}>
-            <div className={`text-4xl transition-all duration-500 ${collected ? 'grayscale-0' : 'grayscale'}`}>{emoji}</div>
+            <div className={`transition-all duration-500 ${collected ? 'grayscale-0' : 'grayscale'}`}>
+                <GoogleEmoji symbol={emoji} size={36} />
+            </div>
             <div className={`text-xs text-center mt-1 ${collected ? 'text-accent-green font-semibold' : 'text-text-light text-opacity-50'}`}>{label}</div>
         </div>
     );
@@ -29,7 +32,7 @@ const GemCollector: React.FC<GemCollectorProps> = ({ name, collectedGems }) => {
     const progressPercentage = nextTier ? (collectedCount / nextTier.threshold) * 100 : 100;
 
     return (
-        <ContentCard title={`💎 ${name}'s Dopamine Cache (${collectedCount}/${totalCount})`}>
+        <ContentCard title={<><GoogleEmoji symbol={'💎'} size={20} className="mr-2" />{name}'s Dopamine Cache ({collectedCount}/{totalCount})</>}>
             <div className="mb-6">
                 {nextTier ? (
                     <>

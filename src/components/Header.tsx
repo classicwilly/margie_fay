@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { logDebug, logInfo } from '../utils/logger';
+import win from '../../utils/win';
 import { useAppState } from '@contexts/AppStateContext';
 import { ViewType } from '../../types';
 
@@ -63,7 +65,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ openResetModal, onItemClick
                     System Reset
                 </button>
                 <button
-                  onClick={() => onItemClick('neuro-onboarding' as any)}
+                  onClick={() => onItemClick('neuro-onboarding' as ViewType)}
                   className="block w-full text-left px-4 py-2 text-sm text-accent-blue hover:bg-gray-700"
                   role="menuitem"
                 >
@@ -78,11 +80,11 @@ const Header: React.FC<HeaderProps> = ({ openResetModal }) => {
   const { appState, dispatch } = useAppState();
   const isModMode = appState?.isModMode ?? false;
   const dashboardType = appState?.dashboardType ?? 'william';
-  const seededDashboardType = (typeof window !== 'undefined' && (window as any).__WONKY_TEST_INITIALIZE__?.dashboardType) || undefined;
+  const seededDashboardType = win?.__WONKY_TEST_INITIALIZE__?.dashboardType || undefined;
   const modSwitchRef = useRef<HTMLButtonElement | null>(null);
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [isDropdownOpen, _setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const mobileDropdownRef = useRef<HTMLDivElement>(null);
+  const _mobileDropdownRef = useRef<HTMLDivElement>(null);
 
   const handleToggleModMode = () => {
     dispatch({ type: 'TOGGLE_MOD_MODE' });
@@ -127,21 +129,20 @@ const Header: React.FC<HeaderProps> = ({ openResetModal }) => {
       { id: 'system-reset', label: 'System Management', type: 'action', action: openResetModal, className: 'text-sanctuary-focus', allowedDashboardTypes: ['william', 'willow', 'sebastian', 'co-parenting'] },
   ];
   
-    const e2eForceView = typeof window !== 'undefined' ? (window as any).__E2E_FORCE_VIEW__ : undefined;
-    const e2eForceGameMaster = typeof window !== 'undefined' ? (window as any).__E2E_FORCE_GAMEMASTER__ : undefined;
-    const e2eStickyView = typeof window !== 'undefined' ? (window as any).__WONKY_TEST_STICKY_VIEW__ : undefined;
-    const e2eDatasetView = typeof document !== 'undefined' ? (document.documentElement as any)?.dataset?.e2eView : undefined;
-    const earlyE2EInit = typeof window !== 'undefined' ? (window as any).__WONKY_TEST_INITIALIZE__ : undefined;
+    const e2eForceView = win?.__E2E_FORCE_VIEW__;
+    const e2eForceGameMaster = win?.__E2E_FORCE_GAMEMASTER__;
+    const e2eStickyView = win?.__WONKY_TEST_STICKY_VIEW__;
+    const e2eDatasetView = typeof document !== 'undefined' ? (document.documentElement as HTMLElement)?.dataset?.e2eView : undefined;
+    const earlyE2EInit = win?.__WONKY_TEST_INITIALIZE__;
             const isE2ECommandCenter = typeof window !== 'undefined' && (
             e2eForceView === 'command-center' || e2eForceView === 'cockpit' ||
-            (window as any).appState?.view === 'command-center' || (window as any).appState?.view === 'cockpit' ||
+            win?.appState?.view === 'command-center' || win?.appState?.view === 'cockpit' ||
               (document?.querySelector('h1')?.textContent || '').includes('The Cockpit')
         );
     // Extra debug: when E2E forces are active, log early flags to help us
     // understand why the Game Master link may not appear in tests.
-    if (typeof window !== 'undefined' && ((window as any).__WONKY_TEST_INITIALIZE__ || (window as any).__E2E_FORCE_VIEW__ || (window as any).__E2E_FORCE_GAMEMASTER__)) {
-        // eslint-disable-next-line no-console
-        console.log('E2E HEADER DEBUG', { earlyE2EInit: (window as any).__WONKY_TEST_INITIALIZE__, seededDashboardType, e2eForceView, e2eForceGameMaster, appStateDashboard: dashboardType });
+    if (win?.__WONKY_TEST_INITIALIZE__ || win?.__E2E_FORCE_VIEW__ || win?.__E2E_FORCE_GAMEMASTER__) {
+      logDebug('E2E HEADER DEBUG', { earlyE2EInit: win?.__WONKY_TEST_INITIALIZE__, seededDashboardType, e2eForceView, e2eForceGameMaster, appStateDashboard: dashboardType });
     }
     const visibleDropdownItems = allDropdownItems.filter(item => {
       const allowedByDashboard = item.allowedDashboardTypes.includes(dashboardType);
@@ -156,15 +157,14 @@ const Header: React.FC<HeaderProps> = ({ openResetModal }) => {
   // Master Hub shows up in the System menu even if the seeded state isn't
   // read early enough. We'll clone the item out of `allDropdownItems` to
   // avoid mutating the source.
-    if (typeof window !== 'undefined' && (((window as any).__E2E_FORCE_VIEW__ === 'command-center' || (window as any).__E2E_FORCE_VIEW__ === 'cockpit') || e2eForceGameMaster || (earlyE2EInit && earlyE2EInit.dashboardType === 'william') || e2eStickyView === 'game-master-dashboard')) {
+    if (win?.__E2E_FORCE_VIEW__ === 'command-center' || win?.__E2E_FORCE_VIEW__ === 'cockpit' || e2eForceGameMaster || (earlyE2EInit && earlyE2EInit.dashboardType === 'william') || e2eStickyView === 'game-master-dashboard') {
       const gmItem = allDropdownItems.find(i => i.id === 'game-master');
       if (gmItem && !visibleDropdownItems.some(i => i.id === 'game-master')) {
           visibleDropdownItems.push({ ...gmItem });
       }
   }
-    if (typeof window !== 'undefined' && (window as any).__E2E_FORCE_VIEW__) {
-            // eslint-disable-next-line no-console
-            console.log('E2E: visibleDropdownItems', { e2eForceView, e2eForceGameMaster, dashboardType, items: visibleDropdownItems.map(i => i.id) });
+        if (win?.__E2E_FORCE_VIEW__) {
+          logInfo('E2E: visibleDropdownItems', { e2eForceView, e2eForceGameMaster, dashboardType, items: visibleDropdownItems.map(i => i.id) });
     }
         // For E2E diagnostics: expose the visible dropdown set to localStorage early
         // and update it whenever the set of visible items changes. This helps
@@ -173,13 +173,12 @@ const Header: React.FC<HeaderProps> = ({ openResetModal }) => {
         useEffect(() => {
             if (typeof window === 'undefined') return;
             const hadEarlyInit = !!earlyE2EInit;
-            const e2eActive = hadEarlyInit || !!(window as any).__E2E_FORCE_VIEW__ || !!(window as any).__PLAYWRIGHT_SKIP_DEV_BYPASS__;
+            const e2eActive = hadEarlyInit || !!win?.__E2E_FORCE_VIEW__ || !!win?.__PLAYWRIGHT_SKIP_DEV_BYPASS__;
             if (!e2eActive) return;
             try {
-                window.localStorage.setItem('wonky-e2e-visible-dropdown', JSON.stringify({ dashboardType, items: visibleDropdownItems.map(i => i.id) }));
-            } catch (e) { /* ignore */ }
-            // eslint-disable-next-line no-console
-            console.log('E2E: header visible dropdown', { items: visibleDropdownItems.map(i => i.id), dashboardType, earlyInit: earlyE2EInit?.dashboardType, e2eForceGameMaster });
+              window.localStorage.setItem('wonky-e2e-visible-dropdown', JSON.stringify({ dashboardType, items: visibleDropdownItems.map(i => i.id) }));
+            } catch { /* ignore */ }
+            logInfo('E2E: header visible dropdown', { items: visibleDropdownItems.map(i => i.id), dashboardType, earlyInit: earlyE2EInit?.dashboardType, e2eForceGameMaster });
         }, [visibleDropdownItems, dashboardType, earlyE2EInit]);
 
         // As an additional safety net, write the debug key synchronously on
@@ -188,13 +187,13 @@ const Header: React.FC<HeaderProps> = ({ openResetModal }) => {
         // of effects; ensure we also check for the configured E2E storage key.
         if (typeof window !== 'undefined') {
             try {
-                const early = (window as any).__WONKY_TEST_INITIALIZE__ || undefined;
-                const e2eKey = (window as any).__E2E_STORAGE_KEY__ || 'wonky-sprout-os-state';
+                const early = win?.__WONKY_TEST_INITIALIZE__ || undefined;
+                const e2eKey = win?.__E2E_STORAGE_KEY__ || 'wonky-sprout-os-state';
                 const hasE2EStorage = !!window.localStorage.getItem(e2eKey);
-                if (early || (window as any).__PLAYWRIGHT_SKIP_DEV_BYPASS__ || !!(window as any).__E2E_FORCE_GAMEMASTER__ || hasE2EStorage) {
-                    try { window.localStorage.setItem('wonky-e2e-visible-dropdown', JSON.stringify({ dashboardType: seededDashboardType || dashboardType, items: visibleDropdownItems.map(i => i.id) })); } catch(e) { /* ignore */ }
+                if (early || win?.__PLAYWRIGHT_SKIP_DEV_BYPASS__ || !!win?.__E2E_FORCE_GAMEMASTER__ || hasE2EStorage) {
+                    try { window.localStorage.setItem('wonky-e2e-visible-dropdown', JSON.stringify({ dashboardType: seededDashboardType || dashboardType, items: visibleDropdownItems.map(i => i.id) })); } catch { /* ignore */ }
                 }
-            } catch (e) { /* ignore */ }
+            } catch { /* ignore */ }
         }
 
   const navItems = navItemConfig[dashboardType as keyof typeof navItemConfig] || { desktop: [], mobile: [] };

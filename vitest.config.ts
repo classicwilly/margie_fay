@@ -19,6 +19,8 @@ export default defineConfig({
       { find: '@utils', replacement: path.resolve(__dirname, 'src/utils') },
       { find: /^@components\/(.*)$/, replacement: path.resolve(__dirname, 'components') + '/$1' },
       { find: '@components', replacement: path.resolve(__dirname, 'components') },
+      { find: '@services', replacement: path.resolve(__dirname, 'src/services') },
+      { find: /^@services\/(.*)$/, replacement: path.resolve(__dirname, 'src/services') + '/$1' },
       { find: '@components-src', replacement: path.resolve(__dirname, 'src/components') },
       { find: '@components-root', replacement: path.resolve(__dirname, 'components') },
       { find: 'components', replacement: path.resolve(__dirname, 'components') },

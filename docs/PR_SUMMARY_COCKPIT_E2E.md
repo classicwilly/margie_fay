@@ -18,6 +18,7 @@ This patch addresses persistent Playwright E2E test instability for the `cockpit
 
 - Runner & Docs changes:
   - Added `scripts/run-e2e-preview.ps1` and `npm run e2e:preview` to run Playwright against a built `dist` preview server to avoid HMR devserver reconnection flakiness.
+  - Updated `playwright.config.ts` to use the preview server (built `dist`) in CI or when `PLAYWRIGHT_USE_PREVIEW=true` — this ensures CI runs are isolated from HMR/dev server reconnections. The config also limits `workers: 1` and disables multi-browser projects in CI by default to reduce resource pressure.
   - Created `docs/E2E.md` describing how to run Playwright locally with preview server and troubleshooting hints.
   - Added `docs/PR_SUMMARY_COCKPIT_E2E.md` (this file).
 

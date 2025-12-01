@@ -16,6 +16,8 @@ const WillowsDashboard = () => {
     if (count <= 1) return 'grid-cols-1';
     return 'grid-cols-1 md:grid-cols-2'; 
   };
+  const WillowGemCollector = componentMap['willow-gem-collector-module'];
+  const RewardStoreModule = componentMap['reward-store-module'];
 
   return (
     <div className="max-w-5xl mx-auto">
@@ -40,11 +42,11 @@ const WillowsDashboard = () => {
           <h2 className="text-3xl font-bold text-accent-teal mb-4" data-testid="kids-corner-heading">Kids Corner</h2>
           <div>
             <h2 className="text-2xl font-bold text-accent-teal mb-2" data-testid="kids-gem-collection">Dopamine Cache</h2>
-            <componentMap['willow-gem-collector-module'] />
+            {WillowGemCollector ? <WillowGemCollector /> : null}
           </div>
           <div>
             <h2 className="text-2xl font-bold text-accent-teal mb-2" data-testid="kids-reward-store">Dopamine Mining</h2>
-            <componentMap['reward-store-module'] />
+            {RewardStoreModule ? <RewardStoreModule /> : null}
           </div>
         </div>
 

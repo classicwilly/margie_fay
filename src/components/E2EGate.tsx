@@ -1,4 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import win from '../../utils/win';
+type E2EWin = Window & {
+  __WONKY_TEST_INITIALIZE__?: { view?: string };
+  __WONKY_TEST_STICKY_VIEW__?: string;
+  __WONKY_TEST_READY__?: boolean;
+  __WONKY_TEST_RELEASE_GATE__?: () => void;
+  appState?: { view?: string } | undefined;
+};
 
 // E2E gating overlay to block user interactions until the test explicitly
 // signals it is ready. This prevents header or route changes from other
@@ -10,19 +18,20 @@ const E2EGate: React.FC = () => {
   useEffect(() => {
     try {
       // Consider tests present if we have an explicit init or sticky view
-      const seeded = !!(window as any).__WONKY_TEST_INITIALIZE__ || !!(window as any).__WONKY_TEST_STICKY_VIEW__;
+      const seeded = !!win?.__WONKY_TEST_INITIALIZE__ || !!win?.__WONKY_TEST_STICKY_VIEW__;
       setIsE2E(seeded);
-      const initialReady = !!(window as any).__WONKY_TEST_READY__ || (window as any).appState?.view === 'game-master-dashboard';
+      const initialReady = !!win?.__WONKY_TEST_READY__ || win?.appState?.view === 'game-master-dashboard';
       setIsReady(initialReady);
 
-      const handle = () => setIsReady(!!(window as any).__WONKY_TEST_READY__ || (window as any).appState?.view === 'game-master-dashboard');
+      const typedWin = win as unknown as E2EWin;
+      const handle = () => setIsReady(!!typedWin?.__WONKY_TEST_READY__ || typedWin?.appState?.view === 'game-master-dashboard');
       // expose a global setter to allow tests to release the gate
-      try { (window as any).__WONKY_TEST_RELEASE_GATE__ = () => { (window as any).__WONKY_TEST_READY__ = true; handle(); }; } catch (e) { /* ignore */ }
+      try { typedWin.__WONKY_TEST_RELEASE_GATE__ = () => { typedWin.__WONKY_TEST_READY__ = true; handle(); }; } catch { /* ignore */ }
 
       // Listen to a global property change via polling - cheap and fine for E2E
       const interval = setInterval(() => handle(), 200);
       return () => clearInterval(interval);
-    } catch (e) {
+    } catch {
       setIsE2E(false);
       setIsReady(true);
     }

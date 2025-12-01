@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import GoogleEmoji from '@components/GoogleEmoji';
 import { useAppState } from '@contexts/AppStateContext';
 import { ViewType } from '../types';
 
@@ -20,7 +21,7 @@ const NavItem: React.FC<{ label: string; view: ViewType; icon?: string; dataTest
               {...(dataTestId ? { 'data-testid': dataTestId } : {})}
             aria-current={isActive ? 'page' : undefined}
         >
-            {icon && <span className="text-lg">{icon}</span>}
+            {icon && <span className="text-lg"><GoogleEmoji symbol={icon} size={18} /></span>}
             <span className="truncate">{label}</span>
         </button>
     );
@@ -115,7 +116,7 @@ const Header: React.FC<HeaderProps> = ({ openResetModal }) => {
     <header className={`py-3 px-4 md:px-6 bg-sanctuary-card shadow-md sticky top-0 z-20 border-b border-sanctuary-border transition-shadow no-print ${isModMode ? 'shadow-lg shadow-sanctuary-focus/20' : ''}`}>
       <div className="container mx-auto flex items-center justify-between gap-4">
         <button onClick={() => dispatch({ type: 'SET_VIEW', payload: 'command-center' })} className="text-xl md:text-2xl font-bold text-accent-teal flex-shrink-0">
-          🌱 Wonky Sprout OS
+          <GoogleEmoji symbol={'🌱'} size={24} className="inline-block mr-2" />Wonky Sprout OS
         </button>
 
         <nav className="hidden md:flex items-center gap-2 flex-wrap">

@@ -4,13 +4,14 @@ import App from './App';
 import ErrorBoundary from '@components/ErrorBoundary';
 import { AIProtectionProvider } from '@contexts/AIProtectionContext';
 import telemetryBackend from './utils/telemetryBackend';
+import { logWarn } from './utils/logger';
 
 if (typeof document !== 'undefined') {
   const rootElement = document.getElementById('root');
   if (!rootElement) {
     // If the root element cannot be found in the current environment, do not mount.
     // This avoids runtime errors in SSR or non-browser environments.
-    console.warn('No root element found; skipping client render.');
+    logWarn('No root element found; skipping client render.');
   } else {
     const root = ReactDOM.createRoot(rootElement);
     root.render(

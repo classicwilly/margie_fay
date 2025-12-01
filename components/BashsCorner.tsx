@@ -13,7 +13,7 @@ const BashsCorner: React.FC = () => {
   return (
     <div>
       <header className="text-center mb-10">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-accent-teal mb-4">🦖 Bash's Corner</h1>
+        <h1 className="text-4xl md:text-5xl font-extrabold text-accent-teal mb-4">🦖 Bash&apos;s Corner</h1>
         <p className="text-lg text-text-light text-opacity-90 mt-2 font-semibold">Purpose: Make your weeks predictable, fun, and safe. You know what happens next.</p>
       </header>
       

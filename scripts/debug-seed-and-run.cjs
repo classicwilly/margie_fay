@@ -10,7 +10,7 @@ const { chromium } = require('playwright');
       window.__E2E_FORCE_VIEW__ = 'command-center';
       window.__WONKY_TEST_INITIALIZE__ = { dashboardType: 'william', view: 'command-center', initialSetupComplete: true };
       window.__PLAYWRIGHT_SKIP_DEV_BYPASS__ = true;
-    } catch (e) { /* ignore */ }
+    } catch { /* ignore */ }
   });
   await page.goto('http://localhost:4173', { waitUntil: 'load' });
   await page.waitForLoadState('networkidle');

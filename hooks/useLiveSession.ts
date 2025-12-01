@@ -1,23 +1,31 @@
 
 
 import { useState, useRef, useCallback } from 'react';
+import { logError } from '../src/utils/logger';
 import { GoogleGenAI } from '@google/genai';
 import { createBlob } from '../utils/audioUtils.js';
+import win from '../utils/win';
 
 
 
-export function useLiveSession({ onMessage, config }) {
+type LiveSession = {
+    sendRealtimeInput: (payload: { media: Blob }) => void;
+    sendToolResponse: (payload: unknown) => void;
+    close: () => void;
+};
+
+export function useLiveSession({ onMessage, config }: { onMessage: (msg: unknown) => void; config: { model?: string; config?: unknown } }) {
     const [status, setStatus] = useState('idle');
     const [error, setError] = useState('');
     const [userVolume, setUserVolume] = useState(0);
 
-    const sessionPromiseRef = useRef(null);
-    const inputAudioContextRef = useRef(null);
-    const scriptProcessorRef = useRef(null);
-    const mediaStreamSourceRef = useRef(null);
-    const analyserNodeRef = useRef(null);
-    const volumeAnimationRef = useRef(null);
-    const mediaStreamRef = useRef(null);
+    const sessionPromiseRef = useRef<Promise<LiveSession | null> | null>(null);
+    const inputAudioContextRef = useRef<AudioContext | null>(null);
+    const scriptProcessorRef = useRef<ScriptProcessorNode | null>(null);
+    const mediaStreamSourceRef = useRef<MediaStreamAudioSourceNode | null>(null);
+    const analyserNodeRef = useRef<AnalyserNode | null>(null);
+    const volumeAnimationRef = useRef<number | null>(null);
+    const mediaStreamRef = useRef<MediaStream | null>(null);
 
     const stopSession = useCallback((fromCallback = false) => {
         if (!fromCallback && sessionPromiseRef.current) {
@@ -53,21 +61,22 @@ export function useLiveSession({ onMessage, config }) {
             // AI proxy stub, avoid opening a real vendor websocket or requesting the
             // microphone (headless environments can't access media). Return a fake
             // resolved session so the UI behaves as if a connection was established.
-            if (typeof window !== 'undefined' && (window as any).__PLAYWRIGHT_AI_STUB__ === true) {
-                const fakeSession = {
-                    sendRealtimeInput: (_: any) => {},
-                    sendToolResponse: (_: any) => {},
+            if (win?.__PLAYWRIGHT_AI_STUB__ === true) {
+                const fakeSession: LiveSession = {
+                    sendRealtimeInput: (_payload: { media: Blob }) => {},
+                    sendToolResponse: (_payload: unknown) => {},
                     close: () => {},
                 };
                 // Mimic an open connection so UI transitions to listening
                 setStatus('listening');
-                sessionPromiseRef.current = Promise.resolve(fakeSession as any);
+                sessionPromiseRef.current = Promise.resolve(fakeSession);
                 return;
             }
 
-            if (!inputAudioContextRef.current && typeof window !== 'undefined') {
-                // FIX: Cast window to any to access vendor-prefixed property.
-                inputAudioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 16000 });
+            if (!inputAudioContextRef.current) {
+                // Prefer the standardized AudioContext but fall back to vendor-prefixed webkitAudioContext when present on the win helper
+                const Ctx = (globalThis as unknown as { AudioContext?: typeof AudioContext }).AudioContext || win?.webkitAudioContext;
+                if (Ctx) inputAudioContextRef.current = new Ctx({ sampleRate: 16000 } as AudioContextOptions);
             }
             if (inputAudioContextRef.current.state === 'suspended') {
                 await inputAudioContextRef.current.resume();
@@ -116,9 +125,10 @@ export function useLiveSession({ onMessage, config }) {
                 scriptProcessorRef.current.connect(audioCtx.destination); // Connect to output to avoid glitches in some browsers
             };
 
-            const onError = (e) => {
-                console.error('Session error:', e);
-                setError(`Session error: ${e.message || 'An unknown error occurred'}`);
+            const onError = (e: unknown) => {
+                logError('Session error:', e);
+                const msg = e instanceof Error ? e.message : String(e);
+                setError(`Session error: ${msg}`);
                 stopSession(true);
             };
 
@@ -138,8 +148,9 @@ export function useLiveSession({ onMessage, config }) {
             });
 
         } catch (e) {
-            console.error('Failed to start session:', e);
-            setError(`Failed to start: ${e.message}`);
+            logError('Failed to start session:', e);
+            const msg = e instanceof Error ? e.message : String(e);
+            setError(`Failed to start: ${msg}`);
             setStatus('error');
             stopSession();
         }

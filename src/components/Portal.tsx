@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState, ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 

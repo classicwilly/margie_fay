@@ -1,4 +1,5 @@
 import React from 'react';
+import { logError } from '../src/utils/logger';
 
 type State = { hasError: boolean };
 
@@ -15,20 +16,20 @@ export class ErrorBoundary extends React.Component<{ children: React.ReactNode }
         // We can't access the error value here, but set a flag to help tests
         (window as any).__WONKY_LAST_ERROR__ = (window as any).__WONKY_LAST_ERROR__ || { message: 'Unknown React render error' };
       }
-    } catch (e) { /* ignore */ }
+    } catch { /* ignore */ }
     return { hasError: true };
   }
 
   componentDidCatch(error: Error, info: React.ErrorInfo) {
     // Conservative logging; this is intentionally direct and actionable.
-    console.error('[ErrorBoundary] Uncaught error:', error, info);
+    try { logError('[ErrorBoundary] Uncaught error:', error, info); } catch { /* ignore */ }
     try {
       if (typeof window !== 'undefined') {
         // Expose last error to Playwright/E2E so tests can inspect error details
         (window as any).__WONKY_LAST_ERROR__ = { message: error?.message, stack: error?.stack, info };
-        try { window.localStorage.setItem('wonky-last-error', JSON.stringify({ message: error?.message, stack: error?.stack, info })); } catch (e) { /* ignore */ }
+        try { window.localStorage.setItem('wonky-last-error', JSON.stringify({ message: error?.message, stack: error?.stack, info })); } catch { /* ignore */ }
       }
-    } catch (e) { /* ignore */ }
+    } catch { /* ignore */ }
     // TODO: forward to telemetry or log store
   }
 

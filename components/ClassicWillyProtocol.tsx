@@ -13,9 +13,9 @@ const ClassicWillyProtocol: React.FC = () => {
   return (
     <div>
       <header className="text-center mb-10">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-accent-teal mb-4">"classicwilly" Execution Protocol (CW-SOP)</h1>
+        <h1 className="text-4xl md:text-5xl font-extrabold text-accent-teal mb-4">&quot;classicwilly&quot; Execution Protocol (CW-SOP)</h1>
         <p className="text-lg text-text-light text-opacity-80">
-          <strong>Purpose:</strong> To define the operational mode for "classicwilly" when a non-conforming condition has been identified and 11/10-perfection "structure" is required.
+          <strong>Purpose:</strong> To define the operational mode for &quot;classicwilly&quot; when a non-conforming condition has been identified and 11/10-perfection &quot;structure&quot; is required.
         </p>
       </header>
 

@@ -17,6 +17,8 @@
     "no-console": ["warn"],
     "@typescript-eslint/no-explicit-any": "error"
     ,
+    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }],
+    "react/react-in-jsx-scope": "off",
     "no-restricted-imports": ["error", {
       "patterns": [
         "contexts/*",
@@ -25,12 +27,28 @@
       "paths": []
     }]
   },
-  "settings": { "react": { "version": "detect" } }
-  ,
-  "plugins": ["import"],
   "settings": {
+    "react": {
+      "version": "detect"
+    },
     "import/resolver": {
       "typescript": {}
     }
-  }
+  },
+  "plugins": ["import"],
+    "overrides": [
+    {
+      "files": ["tests/**", "tests/e2e/**", "**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx"],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "off",
+        "react/react-in-jsx-scope": "off",
+        "@typescript-eslint/no-unused-vars": "off"
+      ,
+        "no-console": "off",
+        "no-empty": "off",
+        "no-empty-pattern": "off",
+        "no-prototype-builtins": "off"
+      }
+    }
+  ]
 }

@@ -90,7 +90,7 @@ Your primary function is to be a tool that provides structure, not a coach that 
     };
 
     return (
-        <ContentCard title="👁️ The Observer">
+        <ContentCard title="👁️ The Mood">
             <div className="flex flex-col h-full">
                 <div className="flex-grow overflow-y-auto p-4 bg-gray-800 rounded-md min-h-[200px] max-h-[400px] border border-gray-700 mb-4">
                     {loading ? (
@@ -106,7 +106,7 @@ Your primary function is to be a tool that provides structure, not a coach that 
                         </div>
                     ) : (
                         <p className="text-text-light text-opacity-80 text-center flex items-center justify-center h-full">
-                            Define a problem. The Observer will provide structure.
+                            Define a problem. The Mood will provide structure.
                         </p>
                     )}
                 </div>

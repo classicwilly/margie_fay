@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import useSafeAI from '../hooks/useSafeAI';
 import useAIPromptSafety from '../hooks/useAIPromptSafety';
+import { logError } from '../utils/logger';
+import AIConsentModal from './AIConsentModal';
+import PIIWarningModal from './PIIWarningModal';
 import ContentCard from './ContentCard';
 
 const AICommunicationCoach: React.FC = () => {
@@ -20,8 +23,8 @@ const AICommunicationCoach: React.FC = () => {
     6.  **Keep it Concise:** Do not add excessive fluff. The goal is clarity and reduced conflict, not a corporate email.
 
     **Example Translation:**
-    -   **Original:** "Bash's soccer cleats don't fit. You need to buy him new ones before Friday's game."
-    -   **Translated:** "Hey, I noticed Bash's soccer cleats seem too small for him. With the game on Friday, could we coordinate on getting him a new pair? Let me know what works best for you."`;
+    -   **Original:** "Bash&apos;s soccer cleats don&apos;t fit. You need to buy him new ones before Friday&apos;s game."
+    -   **Translated:** "Hey, I noticed Bash&apos;s soccer cleats seem too small for him. With the game on Friday, could we coordinate on getting him a new pair? Let me know what works best for you."`;
 
     const { checkAndExecute, isPiiModalOpen, piiMatches, handlePiiConfirm, handlePiiCancel, isConsentModalOpen, handleConfirm, handleCancel, dontShowAgain, setDontShowAgain } = useAIPromptSafety();
     const { generate } = useSafeAI();
@@ -40,9 +43,10 @@ const AICommunicationCoach: React.FC = () => {
                 const result = await generate(safePrompt, { model: 'gemini-2.5-flash', config: { systemInstruction }, skipPromptSafety: true });
                 setTranslatedText(result?.text || (result?.json ? JSON.stringify(result.json, null, 2) : ''));
             });
-        } catch (e: any) {
-            setError(`Error: ${e.message || 'Failed to communicate with the AI model.'}`);
-            console.error(e);
+        } catch (err: unknown) {
+            const message = err instanceof Error ? err.message : String(err);
+            setError(`Error: ${message || 'Failed to communicate with the AI model.'}`);
+            logError('AICommunicationCoach generate error', err);
         }
         setLoading(false);
     };
@@ -71,7 +75,7 @@ const AICommunicationCoach: React.FC = () => {
                         onChange={(e) => setOriginalText(e.target.value)}
                         rows={6}
                         className="w-full p-3 bg-gray-800 border border-gray-700 rounded-md text-text-light placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-blue"
-                        placeholder="e.g., Willow's dentist appointment is Tuesday at 3pm. You have to take her."
+                        placeholder="e.g., Willow&apos;s dentist appointment is Tuesday at 3pm. You have to take her."
                         disabled={loading}
                     />
                 </div>
@@ -109,6 +113,12 @@ const AICommunicationCoach: React.FC = () => {
                     )}
                 </button>
             </div>
+                {isConsentModalOpen && (
+                    <AIConsentModal onConfirm={handleConfirm} onCancel={handleCancel} dontShowAgain={dontShowAgain} setDontShowAgain={setDontShowAgain} />
+                )}
+                {isPiiModalOpen && (
+                    <PIIWarningModal isOpen={isPiiModalOpen} onCancel={handlePiiCancel} onConfirm={handlePiiConfirm} matches={piiMatches} />
+                )}
         </ContentCard>
     );
 };

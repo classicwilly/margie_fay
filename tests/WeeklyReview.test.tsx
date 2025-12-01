@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent, renderHook, act } from '@testing-library/react';
 import WeeklyReview from '../src/components/WeeklyReview';
+import safeJsonParse from '@utils/safeJsonParse';
 import { FeatureFlagsProvider } from '@contexts/FeatureFlagsContext';
 import { AppStateProvider } from '@contexts/AppStateContext';
 import { useAppState } from '@contexts/AppStateContext';
@@ -17,7 +18,7 @@ describe('WeeklyReview non-AI mode', () => {
     const { defaultUserState } = await import('../defaultStates');
     localStorage.setItem('wonky-sprout-os-state', JSON.stringify({ ...defaultUserState, weeklyReviewMode: 'wizard' }));
     // Ensure the app is in wizard mode so the test can progress through the steps
-    const state = JSON.parse(localStorage.getItem('wonky-sprout-os-state') || '{}');
+    const state = safeJsonParse<Record<string, any>>(localStorage.getItem('wonky-sprout-os-state'), {} as Record<string, any>) || {};
     state.weeklyReviewMode = 'wizard';
 
     // Use the AppStateProvider wrapper to get direct access to dispatch from the test

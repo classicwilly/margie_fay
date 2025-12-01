@@ -2,6 +2,7 @@ import React from 'react';
 import { useAppState } from '@contexts/AppStateContext';
 import { KidLocation } from '../types';
 import ContentCard from './ContentCard';
+import GoogleEmoji from '@components/GoogleEmoji';
 import TextInputItem from './TextInputItem';
 
 const StatusButton: React.FC<{
@@ -37,7 +38,7 @@ const KidStatus: React.FC<{
 
     return (
         <div>
-            <h3 className="text-lg font-semibold text-accent-teal mb-2">{emoji} {name}</h3>
+            <h3 className="text-lg font-semibold text-accent-teal mb-2"><GoogleEmoji symbol={emoji} size={24} className="inline-block mr-2" />{name}</h3>
             <div className="grid grid-cols-3 gap-2 mb-3">
                 <StatusButton label="At Mom's" isActive={location === "At Mom's"} onClick={() => setLocation("At Mom's")} />
                 <StatusButton label="With Me" isActive={location === "With Me"} onClick={() => setLocation("With Me")} />
@@ -50,7 +51,7 @@ const KidStatus: React.FC<{
 
 const KidsTracker: React.FC = () => {
     return (
-        <ContentCard title="👨‍👧‍👦 Kids Status">
+        <ContentCard title={<><GoogleEmoji symbol={'👨‍👧‍👦'} size={20} className="mr-2" />Kids Status</>}>
             <div className="space-y-4">
                 <KidStatus name="Willow" idPrefix="kids-willow" emoji="🌸" />
                 <div className="border-t border-gray-700"></div>

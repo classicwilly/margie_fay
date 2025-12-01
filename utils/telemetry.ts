@@ -1,11 +1,14 @@
 import telemetryBackend from './telemetryBackend';
+import type { TelemetryPayload as TelemetryPayloadType } from '../src/types/telemetry';
+import { logWarn } from './logger';
 
-export function logTelemetry(event: string, payload: Record<string, any> = {}) {
+export type TelemetryPayload = TelemetryPayloadType;
+export function logTelemetry(event: string, payload: TelemetryPayload = {}) {
   // Bridge into telemetryBackend which can be extended for Sentry/Datadog.
   try {
     telemetryBackend.trackEvent(event, payload);
-  } catch (e) {
-    // Non-fatal
+  } catch (err) {
+    logWarn('telemetry error', err);
   }
 }
 

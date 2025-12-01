@@ -19,8 +19,8 @@ test.skip('Kids corner and reward tiers visible @smoke', async ({ page }) => {
   // Ensure no cross-test state from other workers; clear seed then set the forced view
   await page.addInitScript((seedKey) => {
     const key = (seedKey as string) || (window as any).__E2E_STORAGE_KEY__ || 'wonky-sprout-os-state';
-    try { window.localStorage.removeItem(key); } catch (e) { /* ignore */ }
-    try { (window as any).__E2E_FORCE_VIEW__ = 'willows-dashboard'; } catch (e) { /* ignore */ }
+      try { window.localStorage.removeItem(key); } catch { /* ignore */ }
+    try { (window as any).__E2E_FORCE_VIEW__ = 'willows-dashboard'; } catch { /* ignore */ }
   });
  
   // Seed a complete app state to show Willow dashboard with all required keys
@@ -61,10 +61,10 @@ test.skip('Kids corner and reward tiers visible @smoke', async ({ page }) => {
       };
       const key = (seedKey as string) || (window as any).__E2E_STORAGE_KEY__ || 'wonky-sprout-os-state';
       window.localStorage.setItem(key, JSON.stringify(state));
-      try { (window as any).__PLAYWRIGHT_SKIP_DEV_BYPASS__ = true; } catch (e) { /* ignore */ }
+        try { (window as any).__PLAYWRIGHT_SKIP_DEV_BYPASS__ = true; } catch { /* ignore */ }
       // Disable AI by default for this smoke test; we don't validate AI here.
-      try { window.localStorage.setItem('wonky_flags', JSON.stringify({ aiEnabled: false })); } catch (e) { /* ignore */ }
-    } catch (e) { /* ignore */ }
+        try { window.localStorage.setItem('wonky_flags', JSON.stringify({ aiEnabled: false })); } catch { /* ignore */ }
+    } catch { /* ignore */ }
   });
   // Navigate to the app with an enforced forced-view query so it is set at the earliest stage
   await page.goto('/?force_e2e_view=willows-dashboard', { waitUntil: 'load' });
@@ -198,7 +198,7 @@ test.skip('Kids corner and reward tiers visible @smoke', async ({ page }) => {
     await expect(page.getByTestId('kids-gem-collection')).toBeVisible({ timeout: 15000 });
     dashboardLoaded = true;
   } catch (e) {
-    let nav = page.getByRole('button', { name: /Child Dashboard|Child|Willow's Sprout|Willow's/i });
+    const nav = page.getByRole('button', { name: /Child Dashboard|Child|Willow's Sprout|Willow's/i });
     const navCount = await nav.count();
     if (navCount > 0) {
       await retryClick(nav, { tries: 3 });
@@ -229,14 +229,16 @@ test.skip('Kids corner and reward tiers visible @smoke', async ({ page }) => {
     await page.evaluate(() => {
       try {
         const key = (window as any).__E2E_STORAGE_KEY__ || 'wonky-sprout-os-state';
-        const state = JSON.parse(window.localStorage.getItem(key) || '{}');
+        const raw = window.localStorage.getItem(key);
+        let state;
+        try { state = raw ? JSON.parse(raw) : {}; } catch { state = {}; }
         state.dashboardType = 'willow';
         state.view = 'willows-dashboard';
         state.initialSetupComplete = true;
         state.willowDashboardModules = ['reward-store-module', 'willow-gem-collector-module'];
         window.localStorage.setItem(key, JSON.stringify(state));
-        try { (window as any).__PLAYWRIGHT_SKIP_DEV_BYPASS__ = true; } catch(e) { /* ignore */ }
-      } catch (e) { /* ignore */ }
+          try { (window as any).__PLAYWRIGHT_SKIP_DEV_BYPASS__ = true; } catch { /* ignore */ }
+      } catch { /* ignore */ }
     });
     await page.reload({ waitUntil: 'load' });
     await page.waitForLoadState('networkidle');

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useAppState } from '@contexts/AppStateContext';
+import type { Sop } from '../types';
 import { generateId } from '@utils/generateId';
 import { SOP_DATA } from '../constants.js';
 import { Button } from '@components/Button';
@@ -40,7 +41,7 @@ const SopForm = () => {
   );
 
   useEffect(() => {
-    let sopToLoad: any = null;
+    let sopToLoad: Partial<Sop> | null = null;
 
     if (isEditMode) {
       sopToLoad = allSops.find(s => s.id === editingSopId) || null;
