@@ -2,13 +2,13 @@ import Link from 'next/link';
 
 export default function PhilosophicalPracticalEdgePage() {
   return (
-    <div className="min-h-screen bg-linear-to-br from-amber-50 via-green-50 to-amber-50 py-12">
+    <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Link href="/vertex/philosophical" className="text-amber-600 hover:text-amber-800 mb-6 inline-block">
+        <Link href="/vertex/philosophical" className="text-amber-400 hover:text-amber-300 mb-6 inline-block">
           ← Back to Philosophical Vertex
         </Link>
         
-        <div className="bg-white rounded-lg shadow-lg p-8">
+        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg shadow-lg p-8">
           <div className="flex items-center gap-4 mb-6">
             <div className="flex items-center gap-2">
               <span className="text-3xl">🔆</span>
@@ -16,16 +16,16 @@ export default function PhilosophicalPracticalEdgePage() {
               <span className="text-3xl">🛠️</span>
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">
+              <h1 className="text-3xl font-bold text-white">
                 Philosophical-Practical Bridge
               </h1>
-              <p className="text-gray-600">
+              <p className="text-slate-300">
                 Embodied wisdom: Making philosophy real through practice
               </p>
             </div>
           </div>
 
-          <div className="prose prose-green max-w-none">
+          <div className="prose prose-invert prose-green max-w-none">
             <h2>Living Your Philosophy: When Values Become Daily Practice</h2>
             <p>
               This is different from practical-philosophical (which asks "How do practices embody values?"). This edge asks: <strong>You have a philosophy—now what? How do you translate belief into behavior? How do you make your values REAL?</strong>
@@ -356,9 +356,9 @@ export default function PhilosophicalPracticalEdgePage() {
               <li>What new value is emerging that I haven't yet named or claimed?</li>
             </ul>
 
-            <div className="mt-8 p-6 bg-linear-to-r from-amber-50 to-green-50 rounded-lg">
-              <p className="text-sm font-medium text-gray-800" style={{marginBottom: '0.5rem'}}>🌱 <strong>Philosophy in Your Feet</strong></p>
-              <p className="text-sm text-gray-700" style={{margin: 0}}>
+            <div className="mt-8 p-6 bg-green-600/20 rounded-lg">
+              <p className="text-sm font-medium text-white" style={{marginBottom: '0.5rem'}}>🌿 <strong>The Integration Point</strong></p>
+              <p className="text-sm text-slate-300" style={{margin: 0}}>
                 The gap between belief and behavior is where most people live. It's the gap between who you want to be and who you actually are. This edge is about closing that gap—not through willpower or self-criticism, but through patient, persistent practice. Your values aren't something you HAVE. They're something you DO. Day after day. Imperfectly. With repair when you fail. That's what makes them real. That's what makes YOU real. So stop talking about your values. Start walking them. One small step. Then another. That's how philosophy becomes flesh.
               </p>
             </div>

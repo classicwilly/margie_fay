@@ -2,26 +2,26 @@ import Link from 'next/link';
 
 export default function HumanFlourishingPage() {
   return (
-    <div className="min-h-screen bg-linear-to-br from-amber-50 to-amber-100 py-12">
+    <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Link href="/vertex/philosophical" className="text-amber-600 hover:text-amber-800 mb-6 inline-block">
+        <Link href="/vertex/philosophical" className="text-amber-400 hover:text-amber-300 mb-6 inline-block">
           ← Back to Philosophical Vertex
         </Link>
         
-        <div className="bg-white rounded-lg shadow-lg p-8">
+        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg shadow-lg p-8">
           <div className="mb-6">
-            <span className="inline-block px-3 py-1 bg-amber-100 text-amber-800 text-sm font-medium rounded-full mb-3">
-              Purpose
+            <span className="inline-block px-3 py-1 bg-amber-600/20 text-amber-400 text-sm font-medium rounded-full mb-3">
+              Vision
             </span>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">
+            <h1 className="text-4xl font-bold text-white mb-2">
               Human Flourishing
             </h1>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-slate-300">
               What it means to thrive as individuals and systems
             </p>
           </div>
 
-          <div className="prose prose-amber max-w-none">
+          <div className="prose prose-invert prose-amber max-w-none">
             <h2>What Does It Mean to Flourish?</h2>
             <p>
               The Phenix Framework is not just about fixing what's broken. It's about helping people and systems 
@@ -383,9 +383,9 @@ export default function HumanFlourishingPage() {
               is to live into these values yourself.
             </p>
 
-            <div className="mt-8 p-6 bg-amber-50 rounded-lg border-l-4 border-amber-500">
-              <h3 className="text-lg font-bold text-amber-900 mb-2">🌱 The Direction, Not the Destination</h3>
-              <p className="text-amber-800 mb-0">
+            <div className="mt-8 p-6 bg-amber-600/20 rounded-lg border-l-4 border-amber-500">
+              <h3 className="text-lg font-bold text-white mb-2">🌱 The Direction, Not the Destination</h3>
+              <p className="text-slate-300 mb-0">
                 Flourishing is not a finish line you cross. It's a direction you move toward. Some days you're closer, 
                 some days further. Some seasons are about surviving, others about thriving. What matters is the overall 
                 trajectory over time. Are families moving toward more aliveness, more connection, more meaning, more 

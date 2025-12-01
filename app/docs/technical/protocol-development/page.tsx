@@ -2,26 +2,26 @@ import Link from 'next/link';
 
 export default function ProtocolDevelopmentPage() {
   return (
-    <div className="min-h-screen bg-linear-to-br from-blue-50 to-blue-100 py-12">
+    <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Link href="/vertex/technical" className="text-blue-600 hover:text-blue-800 mb-6 inline-block">
+        <Link href="/vertex/technical" className="text-blue-400 hover:text-blue-300 mb-6 inline-block">
           ← Back to Technical Vertex
         </Link>
         
-        <div className="bg-white rounded-lg shadow-lg p-8">
+        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg shadow-lg p-8">
           <div className="mb-6">
-            <span className="inline-block px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full mb-3">
+            <span className="inline-block px-3 py-1 bg-blue-600/20 text-blue-400 text-sm font-medium rounded-full mb-3">
               Implementation
             </span>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">
+            <h1 className="text-4xl font-bold text-white mb-2">
               Protocol Development Guide
             </h1>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-slate-300">
               How to create effective deployment protocols
             </p>
           </div>
 
-          <div className="prose prose-blue max-w-none">
+          <div className="prose prose-invert prose-blue max-w-none">
             <h2>What Is a Deployment Protocol?</h2>
             <p>
               A deployment protocol is a customized roadmap for implementing change in a family 
@@ -198,9 +198,9 @@ export default function ProtocolDevelopmentPage() {
               distribution, and integration into your existing documentation systems.
             </p>
 
-            <div className="mt-8 p-6 bg-blue-50 rounded-lg border-l-4 border-blue-500">
-              <h3 className="text-lg font-bold text-blue-900 mb-2">⚡ Pro Tip</h3>
-              <p className="text-blue-800 mb-0">
+            <div className="mt-8 p-6 bg-blue-600/20 rounded-lg border-l-4 border-blue-500">
+              <h3 className="text-lg font-bold text-white mb-2">⚡ Pro Tip</h3>
+              <p className="text-slate-300 mb-0">
                 The best protocols are co-created with the family, not imposed on them. Use the 
                 generated protocol as a starting point for discussion, not a rigid prescription. 
                 The family's buy-in is more important than having a "perfect" plan.

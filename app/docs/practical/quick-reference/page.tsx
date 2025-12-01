@@ -2,26 +2,26 @@ import Link from 'next/link';
 
 export default function QuickReferencePage() {
   return (
-    <div className="min-h-screen bg-linear-to-br from-green-50 to-green-100 py-12">
+    <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Link href="/vertex/practical" className="text-green-600 hover:text-green-800 mb-6 inline-block">
+        <Link href="/vertex/practical" className="text-green-400 hover:text-green-300 mb-6 inline-block">
           ← Back to Practical Vertex
         </Link>
         
-        <div className="bg-white rounded-lg shadow-lg p-8">
+        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg shadow-lg p-8">
           <div className="mb-6">
-            <span className="inline-block px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full mb-3">
+            <span className="inline-block px-3 py-1 bg-green-600/20 text-green-400 text-sm font-medium rounded-full mb-3">
               Reference
             </span>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">
+            <h1 className="text-4xl font-bold text-white mb-2">
               Quick Reference Guide
             </h1>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-slate-300">
               Checklists and at-a-glance resources
             </p>
           </div>
 
-          <div className="prose prose-green max-w-none">
+          <div className="prose prose-invert prose-green max-w-none">
             <h2>Quick Reference Guide</h2>
             <p>
               When you're in the thick of family work, you don't have time to read entire documents. 
@@ -418,9 +418,9 @@ export default function QuickReferencePage() {
               <li><strong>Poison Control:</strong> 1-800-222-1222</li>
             </ul>
 
-            <div className="mt-8 p-6 bg-green-50 rounded-lg border-l-4 border-green-500">
-              <h3 className="text-lg font-bold text-green-900 mb-2">📋 Using This Guide</h3>
-              <p className="text-green-800 mb-0">
+            <div className="mt-8 p-6 bg-green-600/20 rounded-lg border-l-4 border-green-500">
+              <h3 className="text-lg font-bold text-white mb-2">📋 Using This Guide</h3>
+              <p className="text-slate-300 mb-0">
                 Print this out. Keep it handy. Reference it during intake, between sessions, when you're stuck. 
                 Family systems work is complex—there's no shame in needing a quick reference. Better to check 
                 the guide than make a misstep. Over time, these patterns will become second nature, but until 

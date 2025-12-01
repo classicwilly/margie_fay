@@ -1,27 +1,27 @@
 import Link from 'next/link';
 
-export default function EmotionalProcessingPage() {
+export default function ProcessingPage() {
   return (
-    <div className="min-h-screen bg-linear-to-br from-purple-50 to-purple-100 py-12">
+    <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Link href="/vertex/emotional" className="text-purple-600 hover:text-purple-800 mb-6 inline-block">
+        <Link href="/vertex/emotional" className="text-purple-400 hover:text-purple-300 mb-6 inline-block">
           ← Back to Emotional Vertex
         </Link>
         
-        <div className="bg-white rounded-lg shadow-lg p-8">
+        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg shadow-lg p-8">
           <div className="mb-6">
-            <span className="inline-block px-3 py-1 bg-purple-100 text-purple-800 text-sm font-medium rounded-full mb-3">
+            <span className="inline-block px-3 py-1 bg-purple-600/20 text-purple-400 text-sm font-medium rounded-full mb-3">
               Foundations
             </span>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">
+            <h1 className="text-4xl font-bold text-white mb-2">
               Emotional Processing Guide
             </h1>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-slate-300">
               Supporting healthy emotional expression
             </p>
           </div>
 
-          <div className="prose prose-purple max-w-none">
+          <div className="prose prose-invert prose-purple max-w-none">
             <h2>Why Emotional Processing Matters</h2>
             <p>
               Emotions are information. They tell us what we need, what's working, what's not, 
@@ -198,9 +198,9 @@ export default function EmotionalProcessingPage() {
               <li>Substance use to manage emotions</li>
             </ul>
 
-            <div className="mt-8 p-6 bg-purple-50 rounded-lg border-l-4 border-purple-500">
-              <h3 className="text-lg font-bold text-purple-900 mb-2">💜 Remember</h3>
-              <p className="text-purple-800 mb-0">
+            <div className="mt-8 p-6 bg-purple-600/20 rounded-lg border-l-4 border-purple-500">
+              <h3 className="text-lg font-bold text-white mb-2">💜 Remember</h3>
+              <p className="text-slate-300 mb-0">
                 You don't have to be perfect at emotional processing. No one is. The goal is progress: 
                 noticing your feelings more often, expressing them more healthily, letting them inform 
                 rather than control you. Every time you pause and check in with your emotions, you're 

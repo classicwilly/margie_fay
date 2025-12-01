@@ -2,13 +2,13 @@ import Link from 'next/link';
 
 export default function PhilosophicalTechEdgePage() {
   return (
-    <div className="min-h-screen bg-linear-to-br from-amber-50 via-blue-50 to-amber-50 py-12">
+    <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Link href="/vertex/philosophical" className="text-amber-600 hover:text-amber-800 mb-6 inline-block">
+        <Link href="/vertex/philosophical" className="text-amber-400 hover:text-amber-300 mb-6 inline-block">
           ← Back to Philosophical Vertex
         </Link>
         
-        <div className="bg-white rounded-lg shadow-lg p-8">
+        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg shadow-lg p-8">
           <div className="flex items-center gap-4 mb-6">
             <div className="flex items-center gap-2">
               <span className="text-3xl">🔆</span>
@@ -16,16 +16,16 @@ export default function PhilosophicalTechEdgePage() {
               <span className="text-3xl">⚙️</span>
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">
+              <h1 className="text-3xl font-bold text-white">
                 Philosophical-Tech Bridge
               </h1>
-              <p className="text-gray-600">
+              <p className="text-slate-300">
                 Principled systems: Embedding values in technical design
               </p>
             </div>
           </div>
 
-          <div className="prose prose-blue max-w-none">
+          <div className="prose prose-invert prose-blue max-w-none">
             <h2>Values Made Visible: Building Systems That Reflect Principles</h2>
             <p>
               This is the same as tech-philosophical but from the other direction. Instead of asking "What values are embedded in this system?", you start with "I have these values—how do I build systems that embody them?"
@@ -275,9 +275,9 @@ export default function PhilosophicalTechEdgePage() {
               This means: Even if you KNOW what's best, you don't impose it without consent. You persuade, you educate, but ultimately people get to choose—even if they choose poorly.
             </p>
 
-            <div className="mt-8 p-6 bg-linear-to-r from-amber-50 to-blue-50 rounded-lg">
-              <p className="text-sm font-medium text-gray-800" style={{marginBottom: '0.5rem'}}>🔆 <strong>Systems With Soul</strong></p>
-              <p className="text-sm text-gray-700" style={{margin: 0}}>
+            <div className="mt-8 p-6 bg-blue-600/20 rounded-lg">
+              <p className="text-sm font-medium text-white" style={{marginBottom: '0.5rem'}}>🔆 <strong>The Integration Point</strong></p>
+              <p className="text-sm text-slate-300" style={{margin: 0}}>
                 The most powerful systems are invisible—they hold structure so people can be fully human within them. When you design from values, you're not just creating protocols. You're building containers for human flourishing. The protocol isn't the point. The people are the point. The values are the point. The system just makes those values real.
               </p>
             </div>

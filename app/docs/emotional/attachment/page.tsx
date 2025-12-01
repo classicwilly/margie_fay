@@ -2,26 +2,26 @@ import Link from 'next/link';
 
 export default function AttachmentPage() {
   return (
-    <div className="min-h-screen bg-linear-to-br from-purple-50 to-purple-100 py-12">
+    <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Link href="/vertex/emotional" className="text-purple-600 hover:text-purple-800 mb-6 inline-block">
+        <Link href="/vertex/emotional" className="text-purple-400 hover:text-purple-300 mb-6 inline-block">
           ← Back to Emotional Vertex
         </Link>
         
-        <div className="bg-white rounded-lg shadow-lg p-8">
+        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg shadow-lg p-8">
           <div className="mb-6">
-            <span className="inline-block px-3 py-1 bg-purple-100 text-purple-800 text-sm font-medium rounded-full mb-3">
+            <span className="inline-block px-3 py-1 bg-purple-600/20 text-purple-400 text-sm font-medium rounded-full mb-3">
               Theory
             </span>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">
+            <h1 className="text-4xl font-bold text-white mb-2">
               Attachment & Bonding
             </h1>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-slate-300">
               Building and maintaining secure connections
             </p>
           </div>
 
-          <div className="prose prose-purple max-w-none">
+          <div className="prose prose-invert prose-purple max-w-none">
             <h2>What is Attachment?</h2>
             <p>
               Attachment is the deep emotional bond between a child and caregiver, formed in the first 
@@ -262,9 +262,9 @@ export default function AttachmentPage() {
               <li><strong>For couples:</strong> Hold Me Tight workshops (based on EFT)</li>
             </ul>
 
-            <div className="mt-8 p-6 bg-purple-50 rounded-lg border-l-4 border-purple-500">
-              <h3 className="text-lg font-bold text-purple-900 mb-2">💜 Attachment Hope</h3>
-              <p className="text-purple-800 mb-0">
+            <div className="mt-8 p-6 bg-purple-600/20 rounded-lg border-l-4 border-purple-500">
+              <h3 className="text-lg font-bold text-white mb-2">🎯 Attachment Wisdom</h3>
+              <p className="text-slate-300 mb-0">
                 Your attachment style is not your destiny. While early experiences shape us, they don't 
                 trap us. Every secure relationship you build—with a therapist, friend, partner, or your 
                 own children—rewires your attachment system. It's never too late to earn secure attachment. 

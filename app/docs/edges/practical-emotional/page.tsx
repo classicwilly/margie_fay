@@ -2,13 +2,13 @@ import Link from 'next/link';
 
 export default function PracticalEmotionalEdgePage() {
   return (
-    <div className="min-h-screen bg-linear-to-br from-green-50 via-purple-50 to-green-50 py-12">
+    <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Link href="/vertex/practical" className="text-green-600 hover:text-green-800 mb-6 inline-block">
+        <Link href="/vertex/practical" className="text-green-400 hover:text-green-300 mb-6 inline-block">
           ← Back to Practical Vertex
         </Link>
         
-        <div className="bg-white rounded-lg shadow-lg p-8">
+        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg shadow-lg p-8">
           <div className="flex items-center gap-4 mb-6">
             <div className="flex items-center gap-2">
               <span className="text-3xl">🛠️</span>
@@ -16,16 +16,16 @@ export default function PracticalEmotionalEdgePage() {
               <span className="text-3xl">💜</span>
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">
+              <h1 className="text-3xl font-bold text-white">
                 Practical-Emotional Bridge
               </h1>
-              <p className="text-gray-600">
+              <p className="text-slate-300">
                 Emotionally-aware action: Practical tools with heart
               </p>
             </div>
           </div>
 
-          <div className="prose prose-purple max-w-none">
+          <div className="prose prose-invert prose-purple max-w-none">
             <h2>Actions With Heart: When What You Do Honors How People Feel</h2>
             <p>
               It's easy to build efficient systems that feel cold. It's easy to be emotionally attuned but totally impractical. This edge is the sweet spot: practical tools and daily actions that are emotionally intelligent—that WORK but also honor people's hearts.
@@ -255,9 +255,9 @@ export default function PracticalEmotionalEdgePage() {
               <li>Does it honor emotions or bypass them?</li>
             </ul>
 
-            <div className="mt-8 p-6 bg-linear-to-r from-green-50 to-purple-50 rounded-lg">
-              <p className="text-sm font-medium text-gray-800" style={{marginBottom: '0.5rem'}}>💚 <strong>The Heart of Practical-Emotional Work</strong></p>
-              <p className="text-sm text-gray-700" style={{margin: 0}}>
+            <div className="mt-8 p-6 bg-green-600/20 rounded-lg">
+              <p className="text-sm font-medium text-white" style={{marginBottom: '0.5rem'}}>💚 <strong>The Heart of Practical-Emotional Work</strong></p>
+              <p className="text-sm text-slate-300" style={{margin: 0}}>
                 The best family practices don't just get things done—they build connection while getting things done. The morning routine isn't just about leaving on time. The bedtime routine isn't just about sleep. The family meeting isn't just about logistics. Every practical action is an opportunity to say: I see you. I care about you. Your feelings matter. That's what makes practices sustainable. That's what makes them work.
               </p>
             </div>

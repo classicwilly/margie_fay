@@ -2,13 +2,13 @@ import Link from 'next/link';
 
 export default function PracticalTechEdgePage() {
   return (
-    <div className="min-h-screen bg-linear-to-br from-green-50 via-blue-50 to-green-50 py-12">
+    <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Link href="/vertex/practical" className="text-green-600 hover:text-green-800 mb-6 inline-block">
+        <Link href="/vertex/practical" className="text-green-400 hover:text-green-300 mb-6 inline-block">
           ← Back to Practical Vertex
         </Link>
         
-        <div className="bg-white rounded-lg shadow-lg p-8">
+        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg shadow-lg p-8">
           <div className="flex items-center gap-4 mb-6">
             <div className="flex items-center gap-2">
               <span className="text-3xl">🛠️</span>
@@ -16,16 +16,16 @@ export default function PracticalTechEdgePage() {
               <span className="text-3xl">⚙️</span>
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">
+              <h1 className="text-3xl font-bold text-white">
                 Practical-Tech Bridge
               </h1>
-              <p className="text-gray-600">
+              <p className="text-slate-300">
                 Systematizing action: Building repeatable practical processes
               </p>
             </div>
           </div>
 
-          <div className="prose prose-blue max-w-none">
+          <div className="prose prose-invert prose-blue max-w-none">
             <h2>From Ad-Hoc to Systematic: Building Repeatable Excellence</h2>
             <p>
               You've done the work. You've helped families. You have practical wisdom—things you know work. But it's all in your head, adapted on the fly, different every time. This edge is about taking that wisdom and systematizing it: creating protocols, documenting processes, building frameworks that others can use.
@@ -270,9 +270,9 @@ export default function PracticalTechEdgePage() {
               <li><strong>Efficiency:</strong> Don't reinvent the wheel—use proven processes and spend energy on customization</li>
             </ul>
 
-            <div className="mt-8 p-6 bg-linear-to-r from-green-50 to-blue-50 rounded-lg">
-              <p className="text-sm font-medium text-gray-800" style={{marginBottom: '0.5rem'}}>🛠️ <strong>The Power of Good Systems</strong></p>
-              <p className="text-sm text-gray-700" style={{margin: 0}}>
+            <div className="mt-8 p-6 bg-blue-600/20 rounded-lg">
+              <p className="text-sm font-medium text-white" style={{marginBottom: '0.5rem'}}>🔧 <strong>The Both/And Truth</strong></p>
+              <p className="text-sm text-slate-300" style={{margin: 0}}>
                 A good system is invisible. It holds structure so you can be present. It handles the predictable so you have energy for the unexpected. It documents wisdom so it doesn't die with you. Build systems that serve humans, not systems that humans serve. Systematize the repeatable. Stay human in the moment.
               </p>
             </div>

@@ -2,13 +2,13 @@ import Link from 'next/link';
 
 export default function TechPracticalEdgePage() {
   return (
-    <div className="min-h-screen bg-linear-to-br from-blue-50 via-green-50 to-blue-50 py-12">
+    <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Link href="/vertex/technical" className="text-blue-600 hover:text-blue-800 mb-6 inline-block">
+        <Link href="/vertex/technical" className="text-blue-400 hover:text-blue-300 mb-6 inline-block">
           ← Back to Technical Vertex
         </Link>
         
-        <div className="bg-white rounded-lg shadow-lg p-8">
+        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg shadow-lg p-8">
           <div className="flex items-center gap-4 mb-6">
             <div className="flex items-center gap-2">
               <span className="text-3xl">⚙️</span>
@@ -16,16 +16,16 @@ export default function TechPracticalEdgePage() {
               <span className="text-3xl">🛠️</span>
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">
+              <h1 className="text-3xl font-bold text-white">
                 Tech-Practical Bridge
               </h1>
-              <p className="text-gray-600">
+              <p className="text-slate-300">
                 Implementation: Converting theory into action
               </p>
             </div>
           </div>
 
-          <div className="prose prose-green max-w-none">
+          <div className="prose prose-invert prose-green max-w-none">
             <h2>Where Theory Meets Practice</h2>
             <p>
               The technical vertex gives you the blueprint. The practical vertex gives you the tools. This edge is where they meet—where you take systems theory, genograms, protocol designs, and metrics frameworks and turn them into things people can actually <em>do</em> on a Tuesday morning when everyone's running late and someone forgot their homework.
@@ -260,9 +260,9 @@ export default function TechPracticalEdgePage() {
               <li><strong>Listen to practice:</strong> When tools don't work, get curious about what that teaches you about your theory</li>
             </ul>
 
-            <div className="mt-8 p-6 bg-linear-to-r from-blue-50 to-green-50 rounded-lg">
-              <p className="text-sm font-medium text-gray-800" style={{marginBottom: '0.5rem'}}>💡 <strong>The Both/And of This Edge</strong></p>
-              <p className="text-sm text-gray-700" style={{margin: 0}}>
+            <div className="mt-8 p-6 bg-green-600/20 rounded-lg">
+              <p className="text-sm font-medium text-white" style={{marginBottom: '0.5rem'}}>💡 <strong>The Both/And of This Edge</strong></p>
+              <p className="text-sm text-slate-300" style={{margin: 0}}>
                 Theory without practice is intellectual masturbation. Practice without theory is flying blind. You need both. The tech-practical edge is where you learn to hold both at once—to see the beautiful pattern <em>and</em> to know exactly what to do about it tomorrow morning.
               </p>
             </div>

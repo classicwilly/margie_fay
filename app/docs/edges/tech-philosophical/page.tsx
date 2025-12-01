@@ -2,13 +2,13 @@ import Link from 'next/link';
 
 export default function TechPhilosophicalEdgePage() {
   return (
-    <div className="min-h-screen bg-linear-to-br from-blue-50 via-amber-50 to-blue-50 py-12">
+    <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Link href="/vertex/technical" className="text-blue-600 hover:text-blue-800 mb-6 inline-block">
+        <Link href="/vertex/technical" className="text-blue-400 hover:text-blue-300 mb-6 inline-block">
           ← Back to Technical Vertex
         </Link>
         
-        <div className="bg-white rounded-lg shadow-lg p-8">
+        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg shadow-lg p-8">
           <div className="flex items-center gap-4 mb-6">
             <div className="flex items-center gap-2">
               <span className="text-3xl">⚙️</span>
@@ -16,16 +16,16 @@ export default function TechPhilosophicalEdgePage() {
               <span className="text-3xl">🔆</span>
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">
+              <h1 className="text-3xl font-bold text-white">
                 Tech-Philosophical Bridge
               </h1>
-              <p className="text-gray-600">
+              <p className="text-slate-300">
                 Ethics of systems: Why we build what we build
               </p>
             </div>
           </div>
 
-          <div className="prose prose-amber max-w-none">
+          <div className="prose prose-invert prose-amber max-w-none">
             <h2>The Ethical Architecture of Systems</h2>
             <p>
               Every protocol you design, every metric you choose, every intervention you make—these are not neutral technical decisions. They are <em>moral</em> choices. They embody values. They privilege certain outcomes over others. They shape what becomes possible.
@@ -220,9 +220,9 @@ export default function TechPhilosophicalEdgePage() {
               The technical makes sure you actually help people. The philosophical makes sure you help them in ways that honor their humanity.
             </p>
 
-            <div className="mt-8 p-6 bg-linear-to-r from-blue-50 to-amber-50 rounded-lg">
-              <p className="text-sm font-medium text-gray-800" style={{marginBottom: '0.5rem'}}>🔆 <strong>The Question That Grounds This Work</strong></p>
-              <p className="text-sm text-gray-700" style={{margin: 0}}>
+            <div className="mt-8 p-6 bg-amber-600/20 rounded-lg">
+              <p className="text-sm font-medium text-white" style={{marginBottom: '0.5rem'}}>🔆 <strong>The Question That Grounds This Work</strong></p>
+              <p className="text-sm text-slate-300" style={{margin: 0}}>
                 Before you design any system, ask: If this works perfectly—if everyone follows the protocol, if all metrics improve—will these people be more fully human? Will they flourish? If the answer is no, go back to the drawing board. Technical excellence in service of the wrong ends is still wrong.
               </p>
             </div>

@@ -2,26 +2,26 @@ import Link from 'next/link';
 
 export default function ToolkitPage() {
   return (
-    <div className="min-h-screen bg-linear-to-br from-green-50 to-green-100 py-12">
+    <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Link href="/vertex/practical" className="text-green-600 hover:text-green-800 mb-6 inline-block">
+        <Link href="/vertex/practical" className="text-green-400 hover:text-green-300 mb-6 inline-block">
           ← Back to Practical Vertex
         </Link>
         
-        <div className="bg-white rounded-lg shadow-lg p-8">
+        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg shadow-lg p-8">
           <div className="mb-6">
-            <span className="inline-block px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full mb-3">
+            <span className="inline-block px-3 py-1 bg-green-600/20 text-green-400 text-sm font-medium rounded-full mb-3">
               Tools
             </span>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">
+            <h1 className="text-4xl font-bold text-white mb-2">
               Practitioner Toolkit
             </h1>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-slate-300">
               Essential tools and resources for implementation
             </p>
           </div>
 
-          <div className="prose prose-green max-w-none">
+          <div className="prose prose-invert max-w-none">
             <h2>Your Essential Toolkit</h2>
             <p>
               This toolkit provides ready-to-use resources for implementing the Phenix Framework 
@@ -241,15 +241,15 @@ export default function ToolkitPage() {
               <tbody>
                 <tr>
                   <td>Stress level (1-10)</td>
-                  <td colspan="7">(Daily ratings)</td>
+                  <td colSpan={7}>(Daily ratings)</td>
                 </tr>
                 <tr>
                   <td>Family dinner?</td>
-                  <td colspan="7">(Y/N)</td>
+                  <td colSpan={7}>(Y/N)</td>
                 </tr>
                 <tr>
                   <td>Major conflicts?</td>
-                  <td colspan="7">(Count)</td>
+                  <td colSpan={7}>(Count)</td>
                 </tr>
               </tbody>
             </table>
@@ -318,9 +318,9 @@ export default function ToolkitPage() {
             </ul>
             <p>Holding up a card communicates needs without having to find words when dysregulated.</p>
 
-            <div className="mt-8 p-6 bg-green-50 rounded-lg border-l-4 border-green-500">
-              <h3 className="text-lg font-bold text-green-900 mb-2">🛠️ Tool Philosophy</h3>
-              <p className="text-green-800 mb-0">
+            <div className="mt-8 p-6 bg-green-600/20 rounded-lg border-l-4 border-green-500">
+              <h3 className="text-lg font-bold text-green-400 mb-2">🛠️ Tool Philosophy</h3>
+              <p className="text-slate-300 mb-0">
                 Tools are only useful if you actually use them. Start with 1-2 tools that address 
                 your biggest pain point. Master those, then add more. A simple tool used consistently 
                 beats a sophisticated tool that sits in a drawer. Customize everything to fit your 

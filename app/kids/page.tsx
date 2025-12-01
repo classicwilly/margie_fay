@@ -1,6 +1,6 @@
 export default function KidsPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
+    <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Header */}
         <div className="text-center mb-16">
@@ -10,7 +10,7 @@ export default function KidsPage() {
           </div>
           <h1 className="text-5xl sm:text-6xl font-bold text-white mb-6">
             Your
-            <span className="block bg-gradient-to-r from-blue-400 via-purple-400 to-amber-400 bg-clip-text text-transparent">
+            <span className="block bg-linear-to-r from-blue-400 via-purple-400 to-amber-400 bg-clip-text text-transparent">
               Support Team
             </span>
           </h1>

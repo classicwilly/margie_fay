@@ -2,13 +2,13 @@ import Link from 'next/link';
 
 export default function EmotionalPhilosophicalEdgePage() {
   return (
-    <div className="min-h-screen bg-linear-to-br from-purple-50 via-amber-50 to-purple-50 py-12">
+    <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Link href="/vertex/emotional" className="text-purple-600 hover:text-purple-800 mb-6 inline-block">
+        <Link href="/vertex/emotional" className="text-purple-400 hover:text-purple-300 mb-6 inline-block">
           ← Back to Emotional Vertex
         </Link>
         
-        <div className="bg-white rounded-lg shadow-lg p-8">
+        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg shadow-lg p-8">
           <div className="flex items-center gap-4 mb-6">
             <div className="flex items-center gap-2">
               <span className="text-3xl">💜</span>
@@ -16,16 +16,16 @@ export default function EmotionalPhilosophicalEdgePage() {
               <span className="text-3xl">🔆</span>
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">
+              <h1 className="text-3xl font-bold text-white">
                 Emotional-Philosophical Bridge
               </h1>
-              <p className="text-gray-600">
+              <p className="text-slate-300">
                 Meaning in feeling: The deeper purpose of emotional experience
               </p>
             </div>
           </div>
 
-          <div className="prose prose-amber max-w-none">
+          <div className="prose prose-invert prose-amber max-w-none">
             <h2>What Emotions Teach Us About Being Human</h2>
             <p>
               Emotions aren't just biological responses or psychological states. They're portals to meaning. They tell us what matters, what we value, how we're connected to others. This edge explores the philosophical significance of emotional life—not just how to manage feelings, but what feelings reveal about the human condition.
@@ -242,9 +242,9 @@ export default function EmotionalPhilosophicalEdgePage() {
               Your unexamined emotional patterns will show up in your work. Do the work.
             </p>
 
-            <div className="mt-8 p-6 bg-linear-to-r from-purple-50 to-amber-50 rounded-lg">
-              <p className="text-sm font-medium text-gray-800" style={{marginBottom: '0.5rem'}}>💜 <strong>Emotions as Sacred</strong></p>
-              <p className="text-sm text-gray-700" style={{margin: 0}}>
+            <div className="mt-8 p-6 bg-purple-600/20 rounded-lg">
+              <p className="text-sm font-medium text-white" style={{marginBottom: '0.5rem'}}>💜 <strong>Emotions as Sacred</strong></p>
+              <p className="text-sm text-slate-300" style={{margin: 0}}>
                 To feel is to be human. To feel deeply is to be fully alive. Your emotions—messy, inconvenient, overwhelming as they are—connect you to what's sacred: love, loss, longing, belonging. When you honor your emotional life, you're honoring your humanity. When you help others do the same, you're doing holy work. Don't rush it. Don't fix it. Just witness it, hold it, help them make meaning from it.
               </p>
             </div>

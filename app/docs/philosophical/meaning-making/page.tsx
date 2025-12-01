@@ -2,26 +2,26 @@ import Link from 'next/link';
 
 export default function MeaningMakingPage() {
   return (
-    <div className="min-h-screen bg-linear-to-br from-amber-50 to-amber-100 py-12">
+    <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Link href="/vertex/philosophical" className="text-amber-600 hover:text-amber-800 mb-6 inline-block">
+        <Link href="/vertex/philosophical" className="text-amber-400 hover:text-amber-300 mb-6 inline-block">
           ← Back to Philosophical Vertex
         </Link>
         
-        <div className="bg-white rounded-lg shadow-lg p-8">
+        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg shadow-lg p-8">
           <div className="mb-6">
-            <span className="inline-block px-3 py-1 bg-amber-100 text-amber-800 text-sm font-medium rounded-full mb-3">
+            <span className="inline-block px-3 py-1 bg-amber-600/20 text-amber-400 text-sm font-medium rounded-full mb-3">
               Purpose
             </span>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">
-              Meaning-Making
+            <h1 className="text-4xl font-bold text-white mb-2">
+              Meaning Making & Purpose
             </h1>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-slate-300">
               Creating narrative and purpose in family life
             </p>
           </div>
 
-          <div className="prose prose-amber max-w-none">
+          <div className="prose prose-invert prose-amber max-w-none">
             <h2>The Stories We Tell</h2>
             <p>
               Human beings are meaning-making creatures. We can't not make meaning. We take the raw data of our 
@@ -407,9 +407,9 @@ export default function MeaningMakingPage() {
               intentionally you can use them—and the more you can hold them lightly when they don't serve families' needs.
             </p>
 
-            <div className="mt-8 p-6 bg-amber-50 rounded-lg border-l-4 border-amber-500">
-              <h3 className="text-lg font-bold text-amber-900 mb-2">📖 The Power of Story</h3>
-              <p className="text-amber-800 mb-0">
+            <div className="mt-8 p-6 bg-amber-600/20 rounded-lg border-l-4 border-amber-500">
+              <h3 className="text-lg font-bold text-white mb-2">📖 The Power of Story</h3>
+              <p className="text-slate-300 mb-0">
                 We are the stories we tell ourselves. Change the story, change the life. This isn't magical thinking—it's 
                 recognizing that narratives shape perception, and perception shapes reality. When you help a family 
                 shift from "we're falling apart" to "we're navigating a hard transition," you've changed something real. 

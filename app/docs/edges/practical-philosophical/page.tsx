@@ -2,13 +2,13 @@ import Link from 'next/link';
 
 export default function PracticalPhilosophicalEdgePage() {
   return (
-    <div className="min-h-screen bg-linear-to-br from-green-50 via-amber-50 to-green-50 py-12">
+    <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Link href="/vertex/practical" className="text-green-600 hover:text-green-800 mb-6 inline-block">
+        <Link href="/vertex/practical" className="text-green-400 hover:text-green-300 mb-6 inline-block">
           ← Back to Practical Vertex
         </Link>
         
-        <div className="bg-white rounded-lg shadow-lg p-8">
+        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg shadow-lg p-8">
           <div className="flex items-center gap-4 mb-6">
             <div className="flex items-center gap-2">
               <span className="text-3xl">🛠️</span>
@@ -16,16 +16,16 @@ export default function PracticalPhilosophicalEdgePage() {
               <span className="text-3xl">🔆</span>
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">
+              <h1 className="text-3xl font-bold text-white">
                 Practical-Philosophical Bridge
               </h1>
-              <p className="text-gray-600">
+              <p className="text-slate-300">
                 Values in action: Living your principles daily
               </p>
             </div>
           </div>
 
-          <div className="prose prose-amber max-w-none">
+          <div className="prose prose-invert prose-amber max-w-none">
             <h2>Living Your Values: When Daily Actions Reflect Deepest Beliefs</h2>
             <p>
               You have values—things you believe in, principles that matter. But do your daily actions reflect them? This edge is where philosophy becomes incarnate: where you don't just believe in connection, you create daily practices OF connection. Where you don't just value respect, you build routines THROUGH respect.
@@ -285,9 +285,9 @@ export default function PracticalPhilosophicalEdgePage() {
               <li><strong>Will I look back on this and feel good?</strong> (If not, you're betraying future-you)</li>
             </ul>
 
-            <div className="mt-8 p-6 bg-linear-to-r from-green-50 to-amber-50 rounded-lg">
-              <p className="text-sm font-medium text-gray-800" style={{marginBottom: '0.5rem'}}>🔆 <strong>You Are What You Practice</strong></p>
-              <p className="text-sm text-gray-700" style={{margin: 0}}>
+            <div className="mt-8 p-6 bg-amber-600/20 rounded-lg">
+              <p className="text-sm font-medium text-white" style={{marginBottom: '0.5rem'}}>✨ <strong>The Integration Point</strong></p>
+              <p className="text-sm text-slate-300" style={{margin: 0}}>
                 You don't become a person of integrity by deciding to value integrity. You become a person of integrity by PRACTICING integrity daily—keeping small promises, admitting small mistakes, making small choices that align. Your life is not your intentions or your beliefs. Your life is your actions, repeated. Choose practices that make you who you want to be.
               </p>
             </div>

@@ -2,13 +2,13 @@ import Link from 'next/link';
 
 export default function PhilosophicalEmotionalEdgePage() {
   return (
-    <div className="min-h-screen bg-linear-to-br from-amber-50 via-purple-50 to-amber-50 py-12">
+    <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Link href="/vertex/philosophical" className="text-amber-600 hover:text-amber-800 mb-6 inline-block">
+        <Link href="/vertex/philosophical" className="text-amber-400 hover:text-amber-300 mb-6 inline-block">
           ← Back to Philosophical Vertex
         </Link>
         
-        <div className="bg-white rounded-lg shadow-lg p-8">
+        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg shadow-lg p-8">
           <div className="flex items-center gap-4 mb-6">
             <div className="flex items-center gap-2">
               <span className="text-3xl">🔆</span>
@@ -16,16 +16,16 @@ export default function PhilosophicalEmotionalEdgePage() {
               <span className="text-3xl">💜</span>
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">
+              <h1 className="text-3xl font-bold text-white">
                 Philosophical-Emotional Bridge
               </h1>
-              <p className="text-gray-600">
+              <p className="text-slate-300">
                 Felt meaning: When values touch the heart
               </p>
             </div>
           </div>
 
-          <div className="prose prose-purple max-w-none">
+          <div className="prose prose-invert prose-purple max-w-none">
             <h2>When Values Touch the Heart: Philosophy Felt, Not Just Thought</h2>
             <p>
               This is different from emotional-philosophical (which explores the meaning IN emotions). This edge asks: How do abstract values and beliefs BECOME feelings? How do you move from "I believe X" (intellectual) to "I feel X deeply" (embodied)?
@@ -261,9 +261,9 @@ export default function PhilosophicalEmotionalEdgePage() {
               Now "non-pathologizing" isn't just a principle. It's something you've watched heal someone in real-time. That feeling—relief, vindication, wholeness—IS the value.
             </p>
 
-            <div className="mt-8 p-6 bg-linear-to-r from-amber-50 to-purple-50 rounded-lg">
-              <p className="text-sm font-medium text-gray-800" style={{marginBottom: '0.5rem'}}>💖 <strong>Head and Heart Together</strong></p>
-              <p className="text-sm text-gray-700" style={{margin: 0}}>
+            <div className="mt-8 p-6 bg-purple-600/20 rounded-lg">
+              <p className="text-sm font-medium text-white" style={{marginBottom: '0.5rem'}}>💜 <strong>The Integration Point</strong></p>
+              <p className="text-sm text-slate-300" style={{margin: 0}}>
                 Your philosophy without emotion is brittle. Your emotion without philosophy is chaotic. When they're integrated—when you can say "I believe this AND I feel it deeply"—you become unshakeable. You'll be tested. Families will test you. Systems will test you. Your own fatigue and doubt will test you. But when your values are felt, not just thought, they'll hold you steady. That's when you stop being someone who espouses principles and become someone who embodies them.
               </p>
             </div>

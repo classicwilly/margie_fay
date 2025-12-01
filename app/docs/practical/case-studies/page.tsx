@@ -2,26 +2,26 @@ import Link from 'next/link';
 
 export default function CaseStudiesPage() {
   return (
-    <div className="min-h-screen bg-linear-to-br from-green-50 to-green-100 py-12">
+    <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Link href="/vertex/practical" className="text-green-600 hover:text-green-800 mb-6 inline-block">
+        <Link href="/vertex/practical" className="text-green-400 hover:text-green-300 mb-6 inline-block">
           ← Back to Practical Vertex
         </Link>
         
-        <div className="bg-white rounded-lg shadow-lg p-8">
+        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg shadow-lg p-8">
           <div className="mb-6">
-            <span className="inline-block px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full mb-3">
+            <span className="inline-block px-3 py-1 bg-green-600/20 text-green-400 text-sm font-medium rounded-full mb-3">
               Examples
             </span>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">
+            <h1 className="text-4xl font-bold text-white mb-2">
               Case Studies & Examples
             </h1>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-slate-300">
               Real-world applications and success stories
             </p>
           </div>
 
-          <div className="prose prose-green max-w-none">
+          <div className="prose prose-invert prose-green max-w-none">
             <h2>Case Studies: The Framework in Action</h2>
             <p>
               These are real families (names and details changed for privacy) who used the Phenix Framework 
@@ -300,9 +300,9 @@ export default function CaseStudiesPage() {
               <li>Crisis can be catalyst for necessary transformation</li>
             </ul>
 
-            <div className="mt-8 p-6 bg-green-50 rounded-lg border-l-4 border-green-500">
-              <h3 className="text-lg font-bold text-green-900 mb-2">📚 What These Cases Teach Us</h3>
-              <p className="text-green-800 mb-0">
+            <div className="mt-8 p-6 bg-green-600/20 rounded-lg border-l-4 border-green-500">
+              <h3 className="text-lg font-bold text-white mb-2">📚 What These Cases Teach Us</h3>
+              <p className="text-slate-300 mb-0">
                 Every system is unique, but patterns repeat. Kids become symptom bearers. Parents over/under-function. 
                 The Phenix Framework works because it addresses underlying patterns, not just surface symptoms. Change 
                 is possible, but it's rarely quick or easy. It requires commitment, patience, and willingness to stay 

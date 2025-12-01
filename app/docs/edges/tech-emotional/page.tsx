@@ -2,13 +2,13 @@ import Link from 'next/link';
 
 export default function TechEmotionalEdgePage() {
   return (
-    <div className="min-h-screen bg-linear-to-br from-blue-50 via-purple-50 to-blue-50 py-12">
+    <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Link href="/vertex/technical" className="text-blue-600 hover:text-blue-800 mb-6 inline-block">
+        <Link href="/vertex/technical" className="text-blue-400 hover:text-blue-300 mb-6 inline-block">
           ← Back to Technical Vertex
         </Link>
         
-        <div className="bg-white rounded-lg shadow-lg p-8">
+        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg shadow-lg p-8">
           <div className="flex items-center gap-4 mb-6">
             <div className="flex items-center gap-2">
               <span className="text-3xl">⚙️</span>
@@ -16,16 +16,16 @@ export default function TechEmotionalEdgePage() {
               <span className="text-3xl">💜</span>
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">
+              <h1 className="text-3xl font-bold text-white">
                 Tech-Emotional Bridge
               </h1>
-              <p className="text-gray-600">
+              <p className="text-slate-300">
                 Humanizing systems: Making technical processes emotionally intelligent
               </p>
             </div>
           </div>
 
-          <div className="prose prose-blue max-w-none">
+          <div className="prose prose-invert prose-blue max-w-none">
             <h2>Where Logic Meets Feeling</h2>
             <p>
               The Technical-Emotional edge is where systematic thinking meets human experience. It's the recognition 
@@ -263,9 +263,9 @@ export default function TechEmotionalEdgePage() {
               <li>What adjustments would honor both technical effectiveness and emotional wellbeing?</li>
             </ul>
 
-            <div className="mt-8 p-6 bg-linear-to-r from-blue-50 to-purple-50 rounded-lg border-l-4 border-blue-500">
-              <h3 className="text-lg font-bold text-gray-900 mb-2">🔗 The Bridge Truth</h3>
-              <p className="text-gray-800 mb-0">
+            <div className="mt-8 p-6 bg-blue-600/20 rounded-lg border-l-4 border-blue-500">
+              <h3 className="text-lg font-bold text-white mb-2">🔗 The Bridge Truth</h3>
+              <p className="text-slate-300 mb-0">
                 The best family systems work happens at this edge. Pure technical intervention feels cold and mechanistic. 
                 Pure emotional processing lacks direction and structure. But when you combine rigorous systems thinking 
                 with deep emotional attunement—when you design protocols that honor feelings and tend to emotions within 

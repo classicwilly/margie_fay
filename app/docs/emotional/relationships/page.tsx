@@ -1,27 +1,27 @@
 import Link from 'next/link';
 
-export default function RelationshipMappingPage() {
+export default function RelationshipsPage() {
   return (
-    <div className="min-h-screen bg-linear-to-br from-purple-50 to-purple-100 py-12">
+    <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Link href="/vertex/emotional" className="text-purple-600 hover:text-purple-800 mb-6 inline-block">
+        <Link href="/vertex/emotional" className="text-purple-400 hover:text-purple-300 mb-6 inline-block">
           ← Back to Emotional Vertex
         </Link>
         
-        <div className="bg-white rounded-lg shadow-lg p-8">
+        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg shadow-lg p-8">
           <div className="mb-6">
-            <span className="inline-block px-3 py-1 bg-purple-100 text-purple-800 text-sm font-medium rounded-full mb-3">
+            <span className="inline-block px-3 py-1 bg-purple-600/20 text-purple-400 text-sm font-medium rounded-full mb-3">
               Assessment
             </span>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">
+            <h1 className="text-4xl font-bold text-white mb-2">
               Relationship Mapping
             </h1>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-slate-300">
               Understanding interpersonal dynamics
             </p>
           </div>
 
-          <div className="prose prose-purple max-w-none">
+          <div className="prose prose-invert prose-purple max-w-none">
             <h2>Understanding Relationship Dynamics</h2>
             <p>
               Relationships are the connective tissue of family systems. Understanding who connects 
@@ -256,9 +256,9 @@ export default function RelationshipMappingPage() {
               <li>If you could change one thing about this relationship, what would it be?</li>
             </ul>
 
-            <div className="mt-8 p-6 bg-purple-50 rounded-lg border-l-4 border-purple-500">
-              <h3 className="text-lg font-bold text-purple-900 mb-2">🗺️ Mapping Wisdom</h3>
-              <p className="text-purple-800 mb-0">
+            <div className="mt-8 p-6 bg-purple-600/20 rounded-lg border-l-4 border-purple-500">
+              <h3 className="text-lg font-bold text-white mb-2">🗺️ Mapping Wisdom</h3>
+              <p className="text-slate-300 mb-0">
                 A relationship map is not the territory—it's just one representation of reality. 
                 Different family members may draw very different maps of the same system. That's 
                 valuable information too. The goal isn't to create the "correct" map, but to gain 

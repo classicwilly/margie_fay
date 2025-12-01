@@ -2,13 +2,13 @@ import Link from 'next/link';
 
 export default function EmotionalPracticalEdgePage() {
   return (
-    <div className="min-h-screen bg-linear-to-br from-purple-50 via-green-50 to-purple-50 py-12">
+    <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Link href="/vertex/emotional" className="text-purple-600 hover:text-purple-800 mb-6 inline-block">
+        <Link href="/vertex/emotional" className="text-purple-400 hover:text-purple-300 mb-6 inline-block">
           ← Back to Emotional Vertex
         </Link>
         
-        <div className="bg-white rounded-lg shadow-lg p-8">
+        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg shadow-lg p-8">
           <div className="flex items-center gap-4 mb-6">
             <div className="flex items-center gap-2">
               <span className="text-3xl">💜</span>
@@ -16,16 +16,16 @@ export default function EmotionalPracticalEdgePage() {
               <span className="text-3xl">🛠️</span>
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">
+              <h1 className="text-3xl font-bold text-white">
                 Emotional-Practical Bridge
               </h1>
-              <p className="text-gray-600">
+              <p className="text-slate-300">
                 Action from feeling: Translating emotions into daily practices
               </p>
             </div>
           </div>
 
-          <div className="prose prose-green max-w-none">
+          <div className="prose prose-invert prose-green max-w-none">
             <h2>From Feeling to Doing</h2>
             <p>
               You understand your emotions. You've processed them. You've talked about them. Now what? This edge is about translating emotional awareness into concrete action—building daily practices that honor feelings without being held hostage by them.
@@ -268,9 +268,9 @@ export default function EmotionalPracticalEdgePage() {
               Track just enough to know if you're moving in the right direction. Don't let measuring become one more thing to stress about.
             </p>
 
-            <div className="mt-8 p-6 bg-linear-to-r from-purple-50 to-green-50 rounded-lg">
-              <p className="text-sm font-medium text-gray-800" style={{marginBottom: '0.5rem'}}>💜 <strong>The Heart of This Edge</strong></p>
-              <p className="text-sm text-gray-700" style={{margin: 0}}>
+            <div className="mt-8 p-6 bg-green-600/20 rounded-lg">
+              <p className="text-sm font-medium text-white" style={{marginBottom: '0.5rem'}}>🌱 <strong>The Integration Point</strong></p>
+              <p className="text-sm text-slate-300" style={{margin: 0}}>
                 You don't choose your feelings. You DO choose what you do with them. Emotional health isn't about feeling good all the time—it's about having practices that help you move THROUGH difficult feelings rather than getting stuck in them. Build the structures. Trust the process. Show up daily. The feelings will shift.
               </p>
             </div>
