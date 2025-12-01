@@ -1,0 +1,271 @@
+'use client';
+
+import { useParams, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { ArrowLeft, Calendar as CalendarIcon, Heart, Users, Sparkles } from 'lucide-react';
+import Link from 'next/link';
+
+// Import module implementations
+import { CalendarModule } from '@/modules/calendar/CalendarModule';
+import { StatusModule } from '@/modules/status/StatusModule';
+import { ParentingModule } from '@/modules/parenting/ParentingModule';
+import { KidsModule } from '@/modules/kids/KidsModule';
+
+// Import hub services
+import { hub } from '@/lib/hub/hub';
+import { moduleManager } from '@/lib/hub/moduleManager';
+import type { Module } from '@/lib/types/module';
+
+// Import view components
+import CalendarView from '@/app/components/modules/CalendarView';
+import StatusView from '@/app/components/modules/StatusView';
+import ParentingView from '@/app/components/modules/ParentingView';
+import KidsView from '@/app/components/modules/KidsView';
+
+export default function ModulePage() {
+  const params = useParams();
+  const router = useRouter();
+  const moduleId = params.moduleId as string;
+  
+  const [module, setModule] = useState<Module | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    loadModule();
+  }, [moduleId]);
+
+  async function loadModule() {
+    try {
+      setLoading(true);
+      setError(null);
+
+      // Initialize hub with default user
+      await hub.initialize('default-user');
+
+      // Load module based on ID
+      let moduleInstance: Module | null = null;
+      
+      switch (moduleId) {
+        case 'calendar':
+          moduleInstance = new CalendarModule();
+          break;
+        case 'status':
+          moduleInstance = new StatusModule();
+          break;
+        case 'parenting':
+          moduleInstance = new ParentingModule();
+          break;
+        case 'kids':
+          moduleInstance = new KidsModule();
+          break;
+        default:
+          setError(`Module "${moduleId}" not found`);
+          return;
+      }
+
+      // Initialize module
+      await moduleInstance.initialize();
+
+      setModule(moduleInstance);
+    } catch (err) {
+      console.error('Failed to load module:', err);
+      setError(err instanceof Error ? err.message : 'Failed to load module');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-purple-500 mx-auto mb-4"></div>
+          <p className="text-slate-300">Loading module...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !module) {
+    return (
+      <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center">
+        <div className="text-center max-w-md">
+          <div className="text-6xl mb-4">⚠️</div>
+          <h1 className="text-2xl font-bold text-white mb-4">Module Not Found</h1>
+          <p className="text-slate-300 mb-6">{error || 'This module does not exist.'}</p>
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-linear-to-r from-purple-600 to-blue-600 text-white rounded-lg hover:from-purple-500 hover:to-blue-500 transition-all"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to Home
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  // Get module icon
+  const getModuleIcon = () => {
+    switch (moduleId) {
+      case 'calendar':
+        return <CalendarIcon className="w-8 h-8" />;
+      case 'status':
+        return <Heart className="w-8 h-8" />;
+      case 'parenting':
+        return <Users className="w-8 h-8" />;
+      case 'kids':
+        return <Sparkles className="w-8 h-8" />;
+      default:
+        return <div className="w-8 h-8" />;
+    }
+  };
+
+  // Get module color scheme
+  const getColorScheme = () => {
+    switch (moduleId) {
+      case 'calendar':
+        return 'from-blue-600 to-cyan-600';
+      case 'status':
+        return 'from-red-600 to-orange-600';
+      case 'parenting':
+        return 'from-green-600 to-emerald-600';
+      case 'kids':
+        return 'from-purple-600 to-pink-600';
+      default:
+        return 'from-slate-600 to-slate-700';
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Header */}
+        <div className="mb-8">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors mb-6"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to Entry Points
+          </Link>
+
+          <div className={`inline-flex items-center gap-4 px-6 py-4 rounded-2xl bg-linear-to-r ${getColorScheme()} text-white`}>
+            {getModuleIcon()}
+            <div>
+              <h1 className="text-3xl font-bold">{module.metadata.name}</h1>
+              <p className="text-white/80">{module.metadata.description}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Module Tetrahedron */}
+        <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-8 mb-8">
+          <h2 className="text-2xl font-bold text-white mb-6">Module Structure</h2>
+          
+          {/* Four Vertices */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {module.vertices.map((vertex, index) => (
+              <div
+                key={index}
+                className="bg-white/5 border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-all"
+              >
+                <div className="flex items-start gap-4">
+                  <div className={`w-12 h-12 rounded-full bg-linear-to-r ${getColorScheme()} flex items-center justify-center text-white font-bold text-lg shrink-0`}>
+                    {index + 1}
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-white mb-2">{vertex.name}</h3>
+                    <p className="text-slate-300 text-sm mb-4">{vertex.description}</p>
+                    
+                    {/* Vertex Stats */}
+                    <div className="flex flex-wrap gap-2">
+                      <span className="px-3 py-1 bg-white/10 rounded-full text-xs text-slate-300">
+                        Category: {vertex.category}
+                      </span>
+                      {vertex.data && Object.keys(vertex.data).length > 0 && (
+                        <span className="px-3 py-1 bg-white/10 rounded-full text-xs text-slate-300">
+                          {Object.keys(vertex.data).length} data points
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Edges Info */}
+          <div className="mt-8 pt-8 border-t border-white/10">
+            <h3 className="text-lg font-bold text-white mb-4">Connections</h3>
+            <p className="text-slate-300 text-sm">
+              This module has <span className="text-purple-400 font-bold">{module.edges.length} edges</span> connecting its vertices,
+              forming a complete tetrahedron structure.
+            </p>
+          </div>
+        </div>
+
+        {/* Module Content */}
+        <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-8">
+          {moduleId === 'calendar' && module instanceof CalendarModule && (
+            <CalendarView module={module} />
+          )}
+          {moduleId === 'status' && module instanceof StatusModule && (
+            <StatusView module={module} />
+          )}
+          {moduleId === 'parenting' && module instanceof ParentingModule && (
+            <ParentingView module={module} />
+          )}
+          {moduleId === 'kids' && module instanceof KidsModule && (
+            <KidsView module={module} />
+          )}
+        </div>
+
+        {/* Module Actions */}
+        <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-8 mt-8">
+          <h2 className="text-2xl font-bold text-white mb-6">Quick Actions</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <Link
+              href="/hub"
+              className="px-6 py-4 bg-linear-to-r from-blue-600 to-cyan-600 text-white rounded-xl hover:from-blue-500 hover:to-cyan-500 transition-all font-medium text-center"
+            >
+              Go to Hub
+            </Link>
+            
+            <button
+              onClick={() => console.log('Configure module')}
+              className="px-6 py-4 bg-white/10 border border-white/20 text-white rounded-xl hover:bg-white/20 transition-all font-medium"
+            >
+              Configure
+            </button>
+            
+            <button
+              onClick={() => router.push('/hub')}
+              className="px-6 py-4 bg-white/10 border border-white/20 text-white rounded-xl hover:bg-white/20 transition-all font-medium"
+            >
+              View Hub
+            </button>
+          </div>
+        </div>
+
+        {/* Module-Specific UI would go here */}
+        <div className="mt-8 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-8">
+          <h2 className="text-2xl font-bold text-white mb-4">Module Interface</h2>
+          <p className="text-slate-300 mb-6">
+            Module-specific UI components will be rendered here. Each module can define its own interface
+            for interacting with its vertices and managing its data.
+          </p>
+          
+          {/* Placeholder for module-specific components */}
+          <div className="bg-slate-800/50 rounded-xl p-8 text-center border-2 border-dashed border-slate-700">
+            <p className="text-slate-400 text-sm">
+              📦 Module UI components coming soon...
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
