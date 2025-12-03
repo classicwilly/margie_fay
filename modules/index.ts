@@ -6,6 +6,8 @@ export { CalendarModule } from './calendar/CalendarModule';
 export { StatusModule } from './status/StatusModule';
 export { ParentingModule } from './parenting/ParentingModule';
 export { KidsModule } from './kids/KidsModule';
+export { CreatorModule } from './creator/CreatorModule';
+export { MemorialModule } from './memorial/MemorialModule';
 
 export type { CalendarEvent } from './calendar/CalendarModule';
 export type { 

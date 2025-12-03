@@ -1,8 +1,95 @@
 @import "tailwindcss";
 
+/* 
+  Design System: Mathematical Constants & Ratios
+  Based on fundamental geometric and physical principles
+*/
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Golden Ratio φ = (1 + √5) / 2 ≈ 1.618 */
+  --phi: 1.618;
+  --phi-inverse: 0.618; /* 1/φ */
+  
+  /* Perfect Fifth (musical harmony): 3:2 ratio */
+  --fifth: 1.5;
+  
+  /* Major Third (musical harmony): 5:4 ratio */
+  --third: 1.25;
+  
+  /* √2 (Pythagorean diagonal) */
+  --root-2: 1.414;
+  
+  /* √3 (equilateral triangle height ratio) */
+  --root-3: 1.732;
+  
+  /* Base unit: 8px (powers of 2 for binary harmony) */
+  --unit: 8px;
+  
+  /* Modular scale based on φ */
+  --space-xs: calc(var(--unit) * 1); /* 8px */
+  --space-sm: calc(var(--unit) * var(--phi)); /* ≈13px */
+  --space-md: calc(var(--unit) * var(--phi) * var(--phi)); /* ≈21px */
+  --space-lg: calc(var(--unit) * var(--phi) * var(--phi) * var(--phi)); /* ≈34px */
+  --space-xl: calc(var(--unit) * var(--phi) * var(--phi) * var(--phi) * var(--phi)); /* ≈55px */
+  
+  /* Typography scale (perfect fourth: 4:3 ratio = 1.333) */
+  --font-base: 16px;
+  --font-scale: 1.333;
+  --font-xs: calc(var(--font-base) / var(--font-scale) / var(--font-scale)); /* ≈9px */
+  --font-sm: calc(var(--font-base) / var(--font-scale)); /* ≈12px */
+  --font-md: var(--font-base); /* 16px */
+  --font-lg: calc(var(--font-base) * var(--font-scale)); /* ≈21px */
+  --font-xl: calc(var(--font-base) * var(--font-scale) * var(--font-scale)); /* ≈28px */
+  --font-2xl: calc(var(--font-base) * var(--font-scale) * var(--font-scale) * var(--font-scale)); /* ≈37px */
+  --font-3xl: calc(var(--font-base) * var(--font-scale) * var(--font-scale) * var(--font-scale) * var(--font-scale)); /* ≈50px */
+  
+  /* Color system: RGB wavelengths and complementary color theory */
+  --hue-primary: 262; /* Purple: between blue (440nm) and red (700nm) */
+  --hue-secondary: 212; /* Blue: ~475nm wavelength */
+  --hue-accent: 142; /* Green: ~520nm wavelength */
+  --hue-warm: 32; /* Orange: complementary to blue */
+  
+  /* Lightness scale (exponential decay for perceived brightness) */
+  --l-darkest: 5%;
+  --l-darker: 10%;
+  --l-dark: 20%;
+  --l-mid: 50%;
+  --l-light: 80%;
+  --l-lighter: 90%;
+  --l-lightest: 95%;
+  
+  /* Saturation (chroma intensity) */
+  --s-muted: 20%;
+  --s-medium: 50%;
+  --s-vivid: 80%;
+  
+  /* Core palette */
+  --background: hsl(0, 0%, var(--l-darkest));
+  --foreground: hsl(0, 0%, var(--l-lightest));
+  --primary: hsl(var(--hue-primary), var(--s-vivid), var(--l-mid));
+  --secondary: hsl(var(--hue-secondary), var(--s-vivid), var(--l-mid));
+  --accent: hsl(var(--hue-accent), var(--s-medium), var(--l-mid));
+  
+  /* Opacity scale (inverse square law for visual weight) */
+  --opacity-subtle: 0.1;
+  --opacity-light: 0.25;
+  --opacity-medium: 0.5;
+  --opacity-strong: 0.75;
+  --opacity-full: 1;
+  
+  /* Border radius (circular arc geometry) */
+  --radius-sm: calc(var(--unit) * 0.5); /* 4px */
+  --radius-md: var(--unit); /* 8px */
+  --radius-lg: calc(var(--unit) * var(--phi)); /* ≈13px */
+  --radius-full: 9999px;
+  
+  /* Transition timing (exponential easing for natural motion) */
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+  --easing-standard: cubic-bezier(0.4, 0.0, 0.2, 1); /* Material Design standard */
+  --easing-decelerate: cubic-bezier(0.0, 0.0, 0.2, 1); /* Ease out */
+  --easing-accelerate: cubic-bezier(0.4, 0.0, 1, 1); /* Ease in */
 }
 
 @theme inline {
@@ -12,15 +99,91 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Reset: Zero-cost abstractions */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  font-size: var(--font-md);
+  line-height: var(--phi); /* Golden ratio for optimal readability */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+/* Typography: Modular scale hierarchy */
+h1 { font-size: var(--font-3xl); line-height: 1.2; }
+h2 { font-size: var(--font-2xl); line-height: 1.3; }
+h3 { font-size: var(--font-xl); line-height: 1.4; }
+h4 { font-size: var(--font-lg); line-height: var(--phi); }
+h5 { font-size: var(--font-md); line-height: var(--phi); }
+h6 { font-size: var(--font-sm); line-height: var(--phi); }
+
+/* Spacing: Vertical rhythm based on φ */
+p, ul, ol { margin-bottom: var(--space-md); }
+h1, h2, h3, h4, h5, h6 { margin-bottom: var(--space-sm); margin-top: var(--space-lg); }
+h1:first-child, h2:first-child, h3:first-child, h4:first-child, h5:first-child, h6:first-child { margin-top: 0; }
+
+/* Links: State transitions with physics-based timing */
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--easing-standard);
+}
+
+a:hover {
+  color: hsl(var(--hue-primary), var(--s-vivid), calc(var(--l-mid) * 1.2));
+}
+
+/* Selection: Visual feedback with color theory */
+::selection {
+  background: hsla(var(--hue-primary), var(--s-vivid), var(--l-mid), var(--opacity-medium));
+  color: var(--foreground);
+}
+
+/* Scrollbar: Minimal friction indicator */
+::-webkit-scrollbar {
+  width: var(--unit);
+  height: var(--unit);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsla(var(--hue-primary), var(--s-muted), var(--l-mid), var(--opacity-light));
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsla(var(--hue-primary), var(--s-medium), var(--l-mid), var(--opacity-medium));
+}
+
+/* Focus: Accessibility with mathematical precision */
+*:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: calc(var(--unit) * 0.25);
+  border-radius: var(--radius-sm);
+}
+
+/* Animation: 60fps transform optimization */
+@media (prefers-reduced-motion: no-preference) {
+  * {
+    scroll-behavior: smooth;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+

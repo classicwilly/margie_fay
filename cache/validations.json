@@ -1,0 +1,1165 @@
+{
+  "version": "3.4",
+  "log": [
+    {
+      "@openzeppelin/contracts/access/AccessControl.sol:AccessControl": {
+        "src": "@openzeppelin\\contracts\\access\\AccessControl.sol:49",
+        "inherit": [
+          "@openzeppelin/contracts/utils/introspection/ERC165.sol:ERC165",
+          "@openzeppelin/contracts/utils/introspection/IERC165.sol:IERC165",
+          "@openzeppelin/contracts/access/IAccessControl.sol:IAccessControl",
+          "@openzeppelin/contracts/utils/Context.sol:Context"
+        ],
+        "libraries": [],
+        "methods": [
+          "supportsInterface(bytes4)",
+          "hasRole(bytes32,address)",
+          "getRoleAdmin(bytes32)",
+          "grantRole(bytes32,address)",
+          "revokeRole(bytes32,address)",
+          "renounceRole(bytes32,address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "_roles",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_mapping(t_bytes32,t_struct(RoleData)22_storage)",
+              "contract": "AccessControl",
+              "src": "@openzeppelin\\contracts\\access\\AccessControl.sol:55"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_bytes32": {
+              "label": "bytes32",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_bool)": {
+              "label": "mapping(address => bool)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_bytes32,t_struct(RoleData)22_storage)": {
+              "label": "mapping(bytes32 => struct AccessControl.RoleData)",
+              "numberOfBytes": "32"
+            },
+            "t_struct(RoleData)22_storage": {
+              "label": "struct AccessControl.RoleData",
+              "members": [
+                {
+                  "label": "hasRole",
+                  "type": "t_mapping(t_address,t_bool)",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "adminRole",
+                  "type": "t_bytes32",
+                  "offset": 0,
+                  "slot": "1"
+                }
+              ],
+              "numberOfBytes": "64"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.20"
+      },
+      "@openzeppelin/contracts/access/IAccessControl.sol:IAccessControl": {
+        "src": "@openzeppelin\\contracts\\access\\IAccessControl.sol:9",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "hasRole(bytes32,address)",
+          "getRoleAdmin(bytes32)",
+          "grantRole(bytes32,address)",
+          "revokeRole(bytes32,address)",
+          "renounceRole(bytes32,address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.20"
+      },
+      "@openzeppelin/contracts/utils/Context.sol:Context": {
+        "src": "@openzeppelin\\contracts\\utils\\Context.sol:16",
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.20"
+      },
+      "@openzeppelin/contracts/utils/Pausable.sol:Pausable": {
+        "src": "@openzeppelin\\contracts\\utils\\Pausable.sol:17",
+        "inherit": [
+          "@openzeppelin/contracts/utils/Context.sol:Context"
+        ],
+        "libraries": [],
+        "methods": [
+          "paused()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "_paused",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_bool",
+              "contract": "Pausable",
+              "src": "@openzeppelin\\contracts\\utils\\Pausable.sol:18"
+            }
+          ],
+          "types": {
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.20"
+      },
+      "@openzeppelin/contracts/utils/ReentrancyGuard.sol:ReentrancyGuard": {
+        "src": "@openzeppelin\\contracts\\utils\\ReentrancyGuard.sol:25",
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "ReentrancyGuard",
+            "src": "@openzeppelin\\contracts\\utils\\ReentrancyGuard.sol:47"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "_status",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_uint256",
+              "contract": "ReentrancyGuard",
+              "src": "@openzeppelin\\contracts\\utils\\ReentrancyGuard.sol:40"
+            }
+          ],
+          "types": {
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.20"
+      },
+      "@openzeppelin/contracts/utils/introspection/ERC165.sol:ERC165": {
+        "src": "@openzeppelin\\contracts\\utils\\introspection\\ERC165.sol:20",
+        "inherit": [
+          "@openzeppelin/contracts/utils/introspection/IERC165.sol:IERC165"
+        ],
+        "libraries": [],
+        "methods": [
+          "supportsInterface(bytes4)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.20"
+      },
+      "@openzeppelin/contracts/utils/introspection/IERC165.sol:IERC165": {
+        "src": "@openzeppelin\\contracts\\utils\\introspection\\IERC165.sol:15",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "supportsInterface(bytes4)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.20"
+      },
+      "contracts/GovernanceDAO.sol:GovernanceDAO": {
+        "src": "contracts\\GovernanceDAO.sol:29",
+        "version": {
+          "withMetadata": "55401d9a9672bc5671f910ff6b21d5754d7a4f281007b6912ebf81d5c539d205",
+          "withoutMetadata": "55401d9a9672bc5671f910ff6b21d5754d7a4f281007b6912ebf81d5c539d205",
+          "linkedWithoutMetadata": "55401d9a9672bc5671f910ff6b21d5754d7a4f281007b6912ebf81d5c539d205"
+        },
+        "inherit": [
+          "@openzeppelin/contracts/utils/Pausable.sol:Pausable",
+          "@openzeppelin/contracts/utils/ReentrancyGuard.sol:ReentrancyGuard",
+          "@openzeppelin/contracts/access/AccessControl.sol:AccessControl",
+          "@openzeppelin/contracts/utils/introspection/ERC165.sol:ERC165",
+          "@openzeppelin/contracts/utils/introspection/IERC165.sol:IERC165",
+          "@openzeppelin/contracts/access/IAccessControl.sol:IAccessControl",
+          "@openzeppelin/contracts/utils/Context.sol:Context"
+        ],
+        "libraries": [],
+        "methods": [
+          "()",
+          "createProposal(uint8,string,string,bytes)",
+          "castVote(uint256,uint8)",
+          "castTetrahedronVote(uint256,address[4],uint8)",
+          "finalizeProposal(uint256)",
+          "executeProposal(uint256)",
+          "vetoProposal(uint256,string)",
+          "adjustReputation(address,int256,string)",
+          "depositToTreasury()",
+          "addGuardianNode(address)",
+          "removeGuardianNode(address)",
+          "pause()",
+          "unpause()",
+          "getProposal(uint256)",
+          "getVoterProfile(address)",
+          "getUserProposals(address)",
+          "hasVoted(uint256,address)",
+          "()"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "GovernanceDAO",
+            "src": "contracts\\GovernanceDAO.sol:167"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "_roles",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_mapping(t_bytes32,t_struct(RoleData)22_storage)",
+              "contract": "AccessControl",
+              "src": "@openzeppelin\\contracts\\access\\AccessControl.sol:55"
+            },
+            {
+              "label": "_status",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_uint256",
+              "contract": "ReentrancyGuard",
+              "src": "@openzeppelin\\contracts\\utils\\ReentrancyGuard.sol:40"
+            },
+            {
+              "label": "_paused",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_bool",
+              "contract": "Pausable",
+              "src": "@openzeppelin\\contracts\\utils\\Pausable.sol:18"
+            },
+            {
+              "label": "proposalCount",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_uint256",
+              "contract": "GovernanceDAO",
+              "src": "contracts\\GovernanceDAO.sol:113"
+            },
+            {
+              "label": "treasuryBalance",
+              "offset": 0,
+              "slot": "4",
+              "type": "t_uint256",
+              "contract": "GovernanceDAO",
+              "src": "contracts\\GovernanceDAO.sol:114"
+            },
+            {
+              "label": "totalVotingPower",
+              "offset": 0,
+              "slot": "5",
+              "type": "t_uint256",
+              "contract": "GovernanceDAO",
+              "src": "contracts\\GovernanceDAO.sol:115"
+            },
+            {
+              "label": "proposals",
+              "offset": 0,
+              "slot": "6",
+              "type": "t_mapping(t_uint256,t_struct(Proposal)722_storage)",
+              "contract": "GovernanceDAO",
+              "src": "contracts\\GovernanceDAO.sol:117"
+            },
+            {
+              "label": "voters",
+              "offset": 0,
+              "slot": "7",
+              "type": "t_mapping(t_address,t_struct(VoterProfile)735_storage)",
+              "contract": "GovernanceDAO",
+              "src": "contracts\\GovernanceDAO.sol:118"
+            },
+            {
+              "label": "tetrahedronVotes",
+              "offset": 0,
+              "slot": "8",
+              "type": "t_mapping(t_uint256,t_mapping(t_bytes32,t_struct(TetrahedronVote)749_storage))",
+              "contract": "GovernanceDAO",
+              "src": "contracts\\GovernanceDAO.sol:119"
+            },
+            {
+              "label": "userProposals",
+              "offset": 0,
+              "slot": "9",
+              "type": "t_mapping(t_address,t_array(t_uint256)dyn_storage)",
+              "contract": "GovernanceDAO",
+              "src": "contracts\\GovernanceDAO.sol:120"
+            },
+            {
+              "label": "votingPower",
+              "offset": 0,
+              "slot": "10",
+              "type": "t_mapping(t_address,t_uint256)",
+              "contract": "GovernanceDAO",
+              "src": "contracts\\GovernanceDAO.sol:121"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_array(t_uint256)dyn_storage": {
+              "label": "uint256[]",
+              "numberOfBytes": "32"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_bytes32": {
+              "label": "bytes32",
+              "numberOfBytes": "32"
+            },
+            "t_bytes_storage": {
+              "label": "bytes",
+              "numberOfBytes": "32"
+            },
+            "t_enum(ProposalStatus)676": {
+              "label": "enum GovernanceDAO.ProposalStatus",
+              "members": [
+                "PENDING",
+                "ACTIVE",
+                "SUCCEEDED",
+                "DEFEATED",
+                "EXECUTED",
+                "VETOED",
+                "EXPIRED"
+              ],
+              "numberOfBytes": "1"
+            },
+            "t_enum(ProposalType)668": {
+              "label": "enum GovernanceDAO.ProposalType",
+              "members": [
+                "PARAMETER_CHANGE",
+                "TREASURY_ALLOCATION",
+                "PROTOCOL_UPGRADE",
+                "GUARDIAN_MANAGEMENT",
+                "EMERGENCY_ACTION"
+              ],
+              "numberOfBytes": "1"
+            },
+            "t_enum(VoteType)680": {
+              "label": "enum GovernanceDAO.VoteType",
+              "members": [
+                "AGAINST",
+                "FOR",
+                "ABSTAIN"
+              ],
+              "numberOfBytes": "1"
+            },
+            "t_mapping(t_address,t_array(t_uint256)dyn_storage)": {
+              "label": "mapping(address => uint256[])",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_bool)": {
+              "label": "mapping(address => bool)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_enum(VoteType)680)": {
+              "label": "mapping(address => enum GovernanceDAO.VoteType)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_struct(VoterProfile)735_storage)": {
+              "label": "mapping(address => struct GovernanceDAO.VoterProfile)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_uint256)": {
+              "label": "mapping(address => uint256)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_bytes32,t_struct(RoleData)22_storage)": {
+              "label": "mapping(bytes32 => struct AccessControl.RoleData)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_bytes32,t_struct(TetrahedronVote)749_storage)": {
+              "label": "mapping(bytes32 => struct GovernanceDAO.TetrahedronVote)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_uint256,t_mapping(t_bytes32,t_struct(TetrahedronVote)749_storage))": {
+              "label": "mapping(uint256 => mapping(bytes32 => struct GovernanceDAO.TetrahedronVote))",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_uint256,t_struct(Proposal)722_storage)": {
+              "label": "mapping(uint256 => struct GovernanceDAO.Proposal)",
+              "numberOfBytes": "32"
+            },
+            "t_string_storage": {
+              "label": "string",
+              "numberOfBytes": "32"
+            },
+            "t_struct(Proposal)722_storage": {
+              "label": "struct GovernanceDAO.Proposal",
+              "members": [
+                {
+                  "label": "id",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "proposer",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "proposalType",
+                  "type": "t_enum(ProposalType)668",
+                  "offset": 20,
+                  "slot": "1"
+                },
+                {
+                  "label": "title",
+                  "type": "t_string_storage",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "description",
+                  "type": "t_string_storage",
+                  "offset": 0,
+                  "slot": "3"
+                },
+                {
+                  "label": "calldata_",
+                  "type": "t_bytes_storage",
+                  "offset": 0,
+                  "slot": "4"
+                },
+                {
+                  "label": "createdAt",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "5"
+                },
+                {
+                  "label": "votingEnds",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "6"
+                },
+                {
+                  "label": "executionTime",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "7"
+                },
+                {
+                  "label": "forVotes",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "8"
+                },
+                {
+                  "label": "againstVotes",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "9"
+                },
+                {
+                  "label": "abstainVotes",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "10"
+                },
+                {
+                  "label": "totalVotingPower",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "11"
+                },
+                {
+                  "label": "status",
+                  "type": "t_enum(ProposalStatus)676",
+                  "offset": 0,
+                  "slot": "12"
+                },
+                {
+                  "label": "guardianVetoed",
+                  "type": "t_bool",
+                  "offset": 1,
+                  "slot": "12"
+                },
+                {
+                  "label": "hasVoted",
+                  "type": "t_mapping(t_address,t_bool)",
+                  "offset": 0,
+                  "slot": "13"
+                },
+                {
+                  "label": "votes",
+                  "type": "t_mapping(t_address,t_enum(VoteType)680)",
+                  "offset": 0,
+                  "slot": "14"
+                }
+              ],
+              "numberOfBytes": "480"
+            },
+            "t_struct(RoleData)22_storage": {
+              "label": "struct AccessControl.RoleData",
+              "members": [
+                {
+                  "label": "hasRole",
+                  "type": "t_mapping(t_address,t_bool)",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "adminRole",
+                  "type": "t_bytes32",
+                  "offset": 0,
+                  "slot": "1"
+                }
+              ],
+              "numberOfBytes": "64"
+            },
+            "t_struct(TetrahedronVote)749_storage": {
+              "label": "struct GovernanceDAO.TetrahedronVote",
+              "members": [
+                {
+                  "label": "vertex1",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "vertex2",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "vertex3",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "vertex4",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "3"
+                },
+                {
+                  "label": "isComplete",
+                  "type": "t_bool",
+                  "offset": 20,
+                  "slot": "3"
+                },
+                {
+                  "label": "consensusVote",
+                  "type": "t_enum(VoteType)680",
+                  "offset": 21,
+                  "slot": "3"
+                }
+              ],
+              "numberOfBytes": "128"
+            },
+            "t_struct(VoterProfile)735_storage": {
+              "label": "struct GovernanceDAO.VoterProfile",
+              "members": [
+                {
+                  "label": "reputation",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "tetrahedronCount",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "proposalsCreated",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "votesCase",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "3"
+                },
+                {
+                  "label": "lastActivityTimestamp",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "4"
+                },
+                {
+                  "label": "isActive",
+                  "type": "t_bool",
+                  "offset": 0,
+                  "slot": "5"
+                }
+              ],
+              "numberOfBytes": "192"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.20"
+      },
+      "contracts/MemorialFundDAO.sol:MemorialFundDAO": {
+        "src": "contracts\\MemorialFundDAO.sol:19",
+        "version": {
+          "withMetadata": "37ec7219b3a42f8711de3fdf6ee113d32fc92c63c22981537b02baf841ece3ef",
+          "withoutMetadata": "37ec7219b3a42f8711de3fdf6ee113d32fc92c63c22981537b02baf841ece3ef",
+          "linkedWithoutMetadata": "37ec7219b3a42f8711de3fdf6ee113d32fc92c63c22981537b02baf841ece3ef"
+        },
+        "inherit": [
+          "@openzeppelin/contracts/utils/Pausable.sol:Pausable",
+          "@openzeppelin/contracts/access/AccessControl.sol:AccessControl",
+          "@openzeppelin/contracts/utils/introspection/ERC165.sol:ERC165",
+          "@openzeppelin/contracts/utils/introspection/IERC165.sol:IERC165",
+          "@openzeppelin/contracts/access/IAccessControl.sol:IAccessControl",
+          "@openzeppelin/contracts/utils/Context.sol:Context",
+          "@openzeppelin/contracts/utils/ReentrancyGuard.sol:ReentrancyGuard"
+        ],
+        "libraries": [],
+        "methods": [
+          "()",
+          "createLoss(address payable,uint8,uint256,string,bool)",
+          "contribute(uint256)",
+          "distributeFunds(uint256)",
+          "verifyLoss(uint256,bool)",
+          "flagEmergency(uint256)",
+          "getReciprocityScore(address)",
+          "getLoss(uint256)",
+          "getMemberLosses(address)",
+          "getMemberContributions(address)",
+          "getGlobalStats()",
+          "pause()",
+          "unpause()",
+          "withdrawPlatformFees()",
+          "()"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "MemorialFundDAO",
+            "src": "contracts\\MemorialFundDAO.sol:190"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "_status",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_uint256",
+              "contract": "ReentrancyGuard",
+              "src": "@openzeppelin\\contracts\\utils\\ReentrancyGuard.sol:40"
+            },
+            {
+              "label": "_roles",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_mapping(t_bytes32,t_struct(RoleData)22_storage)",
+              "contract": "AccessControl",
+              "src": "@openzeppelin\\contracts\\access\\AccessControl.sol:55"
+            },
+            {
+              "label": "_paused",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_bool",
+              "contract": "Pausable",
+              "src": "@openzeppelin\\contracts\\utils\\Pausable.sol:18"
+            },
+            {
+              "label": "lossCounter",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_uint256",
+              "contract": "MemorialFundDAO",
+              "src": "contracts\\MemorialFundDAO.sol:99"
+            },
+            {
+              "label": "totalFundsDistributed",
+              "offset": 0,
+              "slot": "4",
+              "type": "t_uint256",
+              "contract": "MemorialFundDAO",
+              "src": "contracts\\MemorialFundDAO.sol:100"
+            },
+            {
+              "label": "totalFundsCollected",
+              "offset": 0,
+              "slot": "5",
+              "type": "t_uint256",
+              "contract": "MemorialFundDAO",
+              "src": "contracts\\MemorialFundDAO.sol:101"
+            },
+            {
+              "label": "activeLossCount",
+              "offset": 0,
+              "slot": "6",
+              "type": "t_uint256",
+              "contract": "MemorialFundDAO",
+              "src": "contracts\\MemorialFundDAO.sol:102"
+            },
+            {
+              "label": "losses",
+              "offset": 0,
+              "slot": "7",
+              "type": "t_mapping(t_uint256,t_struct(Loss)2307_storage)",
+              "contract": "MemorialFundDAO",
+              "src": "contracts\\MemorialFundDAO.sol:104"
+            },
+            {
+              "label": "members",
+              "offset": 0,
+              "slot": "8",
+              "type": "t_mapping(t_address,t_struct(Member)2324_storage)",
+              "contract": "MemorialFundDAO",
+              "src": "contracts\\MemorialFundDAO.sol:105"
+            },
+            {
+              "label": "contributions",
+              "offset": 0,
+              "slot": "9",
+              "type": "t_mapping(t_uint256,t_mapping(t_address,t_struct(Contribution)2335_storage))",
+              "contract": "MemorialFundDAO",
+              "src": "contracts\\MemorialFundDAO.sol:106"
+            },
+            {
+              "label": "lossContributions",
+              "offset": 0,
+              "slot": "10",
+              "type": "t_mapping(t_uint256,t_array(t_uint256)dyn_storage)",
+              "contract": "MemorialFundDAO",
+              "src": "contracts\\MemorialFundDAO.sol:107"
+            },
+            {
+              "label": "memberLosses",
+              "offset": 0,
+              "slot": "11",
+              "type": "t_mapping(t_address,t_array(t_uint256)dyn_storage)",
+              "contract": "MemorialFundDAO",
+              "src": "contracts\\MemorialFundDAO.sol:108"
+            },
+            {
+              "label": "memberContributions",
+              "offset": 0,
+              "slot": "12",
+              "type": "t_mapping(t_address,t_array(t_uint256)dyn_storage)",
+              "contract": "MemorialFundDAO",
+              "src": "contracts\\MemorialFundDAO.sol:109"
+            },
+            {
+              "label": "hasVoted",
+              "offset": 0,
+              "slot": "13",
+              "type": "t_mapping(t_uint256,t_mapping(t_address,t_bool))",
+              "contract": "MemorialFundDAO",
+              "src": "contracts\\MemorialFundDAO.sol:112"
+            },
+            {
+              "label": "votesFor",
+              "offset": 0,
+              "slot": "14",
+              "type": "t_mapping(t_uint256,t_uint256)",
+              "contract": "MemorialFundDAO",
+              "src": "contracts\\MemorialFundDAO.sol:113"
+            },
+            {
+              "label": "votesAgainst",
+              "offset": 0,
+              "slot": "15",
+              "type": "t_mapping(t_uint256,t_uint256)",
+              "contract": "MemorialFundDAO",
+              "src": "contracts\\MemorialFundDAO.sol:114"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_address_payable": {
+              "label": "address payable",
+              "numberOfBytes": "20"
+            },
+            "t_array(t_address)dyn_storage": {
+              "label": "address[]",
+              "numberOfBytes": "32"
+            },
+            "t_array(t_uint256)dyn_storage": {
+              "label": "uint256[]",
+              "numberOfBytes": "32"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_bytes32": {
+              "label": "bytes32",
+              "numberOfBytes": "32"
+            },
+            "t_enum(LossStatus)2269": {
+              "label": "enum MemorialFundDAO.LossStatus",
+              "members": [
+                "Pending",
+                "Active",
+                "Funded",
+                "Distributed",
+                "Expired",
+                "Disputed"
+              ],
+              "numberOfBytes": "1"
+            },
+            "t_enum(LossType)2262": {
+              "label": "enum MemorialFundDAO.LossType",
+              "members": [
+                "Death",
+                "Divorce",
+                "Medical",
+                "JobLoss",
+                "Emergency",
+                "Other"
+              ],
+              "numberOfBytes": "1"
+            },
+            "t_enum(VerificationStatus)2274": {
+              "label": "enum MemorialFundDAO.VerificationStatus",
+              "members": [
+                "Unverified",
+                "Pending",
+                "Verified",
+                "Rejected"
+              ],
+              "numberOfBytes": "1"
+            },
+            "t_mapping(t_address,t_array(t_uint256)dyn_storage)": {
+              "label": "mapping(address => uint256[])",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_bool)": {
+              "label": "mapping(address => bool)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_struct(Contribution)2335_storage)": {
+              "label": "mapping(address => struct MemorialFundDAO.Contribution)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_struct(Member)2324_storage)": {
+              "label": "mapping(address => struct MemorialFundDAO.Member)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_bytes32,t_struct(RoleData)22_storage)": {
+              "label": "mapping(bytes32 => struct AccessControl.RoleData)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_uint256,t_array(t_uint256)dyn_storage)": {
+              "label": "mapping(uint256 => uint256[])",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_uint256,t_mapping(t_address,t_bool))": {
+              "label": "mapping(uint256 => mapping(address => bool))",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_uint256,t_mapping(t_address,t_struct(Contribution)2335_storage))": {
+              "label": "mapping(uint256 => mapping(address => struct MemorialFundDAO.Contribution))",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_uint256,t_struct(Loss)2307_storage)": {
+              "label": "mapping(uint256 => struct MemorialFundDAO.Loss)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_uint256,t_uint256)": {
+              "label": "mapping(uint256 => uint256)",
+              "numberOfBytes": "32"
+            },
+            "t_string_storage": {
+              "label": "string",
+              "numberOfBytes": "32"
+            },
+            "t_struct(Contribution)2335_storage": {
+              "label": "struct MemorialFundDAO.Contribution",
+              "members": [
+                {
+                  "label": "contributor",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "amount",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "timestamp",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "recurring",
+                  "type": "t_bool",
+                  "offset": 0,
+                  "slot": "3"
+                },
+                {
+                  "label": "recurringEndDate",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "4"
+                }
+              ],
+              "numberOfBytes": "160"
+            },
+            "t_struct(Loss)2307_storage": {
+              "label": "struct MemorialFundDAO.Loss",
+              "members": [
+                {
+                  "label": "id",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "triad",
+                  "type": "t_address_payable",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "lossType",
+                  "type": "t_enum(LossType)2262",
+                  "offset": 20,
+                  "slot": "1"
+                },
+                {
+                  "label": "status",
+                  "type": "t_enum(LossStatus)2269",
+                  "offset": 21,
+                  "slot": "1"
+                },
+                {
+                  "label": "verificationStatus",
+                  "type": "t_enum(VerificationStatus)2274",
+                  "offset": 22,
+                  "slot": "1"
+                },
+                {
+                  "label": "targetAmount",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "collectedAmount",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "3"
+                },
+                {
+                  "label": "distributedAmount",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "4"
+                },
+                {
+                  "label": "createdAt",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "5"
+                },
+                {
+                  "label": "expiresAt",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "6"
+                },
+                {
+                  "label": "verifiedAt",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "7"
+                },
+                {
+                  "label": "metadataURI",
+                  "type": "t_string_storage",
+                  "offset": 0,
+                  "slot": "8"
+                },
+                {
+                  "label": "contributors",
+                  "type": "t_array(t_address)dyn_storage",
+                  "offset": 0,
+                  "slot": "9"
+                },
+                {
+                  "label": "emergencyFlagged",
+                  "type": "t_bool",
+                  "offset": 0,
+                  "slot": "10"
+                }
+              ],
+              "numberOfBytes": "352"
+            },
+            "t_struct(Member)2324_storage": {
+              "label": "struct MemorialFundDAO.Member",
+              "members": [
+                {
+                  "label": "wallet",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "totalContributed",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "totalReceived",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "joinedAt",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "3"
+                },
+                {
+                  "label": "reciprocityScore",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "4"
+                },
+                {
+                  "label": "reputationScore",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "5"
+                },
+                {
+                  "label": "isActive",
+                  "type": "t_bool",
+                  "offset": 0,
+                  "slot": "6"
+                },
+                {
+                  "label": "inGoodStanding",
+                  "type": "t_bool",
+                  "offset": 1,
+                  "slot": "6"
+                }
+              ],
+              "numberOfBytes": "224"
+            },
+            "t_struct(RoleData)22_storage": {
+              "label": "struct AccessControl.RoleData",
+              "members": [
+                {
+                  "label": "hasRole",
+                  "type": "t_mapping(t_address,t_bool)",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "adminRole",
+                  "type": "t_bytes32",
+                  "offset": 0,
+                  "slot": "1"
+                }
+              ],
+              "numberOfBytes": "64"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.20"
+      }
+    }
+  ]
+}

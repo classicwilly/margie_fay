@@ -2,6 +2,13 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { VertexType, VERTEX_COLORS } from '../types/vertex';
+import { 
+  TETRAHEDRON_VERTICES, 
+  TETRAHEDRON_EDGES,
+  rotate3D,
+  project,
+  type Point3D
+} from '@/lib/geometry/sacred-geometry';
 
 interface TetrahedronVisualizationProps {
   activeVertex: VertexType;
@@ -13,7 +20,7 @@ export default function TetrahedronVisualization({
   size = 300
 }: TetrahedronVisualizationProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [rotation, setRotation] = useState({ x: 0.3, y: 0.5 });
+  const [rotation, setRotation] = useState({ x: 0.3, y: 0.5, z: 0 });
   const animationRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
@@ -23,65 +30,46 @@ export default function TetrahedronVisualization({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Tetrahedron vertices in 3D space (centered)
-    const vertices3D = [
-      { x: 0, y: -1, z: 0, type: 'technical' as VertexType },     // Top
-      { x: -0.866, y: 0.5, z: -0.5, type: 'emotional' as VertexType },  // Front-left
-      { x: 0.866, y: 0.5, z: -0.5, type: 'practical' as VertexType },   // Front-right
-      { x: 0, y: 0.5, z: 0.866, type: 'philosophical' as VertexType },  // Back
-    ];
-
-    // Edges connecting vertices
-    const edges = [
-      [0, 1], [0, 2], [0, 3], // From top
-      [1, 2], [1, 3], [2, 3], // Base
+    // Map tetrahedron vertices to vertex types
+    // Using precise mathematical coordinates from sacred-geometry
+    const vertexTypes: VertexType[] = [
+      'technical',      // Vertex 0: (1, 1, 1)
+      'emotional',      // Vertex 1: (-1, -1, 1)
+      'practical',      // Vertex 2: (-1, 1, -1)
+      'philosophical',  // Vertex 3: (1, -1, -1)
     ];
 
     const animate = () => {
       // Auto-rotate slowly
       setRotation(prev => ({
-        x: prev.x,
+        ...prev,
         y: prev.y + 0.005,
       }));
 
       // Clear canvas
       ctx.clearRect(0, 0, size, size);
 
-      // Apply rotation and projection
-      const rotatedVertices = vertices3D.map(v => {
-        // Rotate around Y axis
-        const cosY = Math.cos(rotation.y);
-        const sinY = Math.sin(rotation.y);
-        const x1 = v.x * cosY - v.z * sinY;
-        const z1 = v.x * sinY + v.z * cosY;
-
-        // Rotate around X axis
-        const cosX = Math.cos(rotation.x);
-        const sinX = Math.sin(rotation.x);
-        const y1 = v.y * cosX - z1 * sinX;
-        const z2 = v.y * sinX + z1 * cosX;
-
-        // Project to 2D (simple perspective)
-        const scale = 120;
-        const distance = 4;
-        const factor = scale / (distance + z2);
-
+      // Apply 3D rotation using sacred geometry functions
+      const rotatedVertices = TETRAHEDRON_VERTICES.map((v, i) => {
+        const rotated = rotate3D(v, rotation.x, rotation.y, rotation.z);
+        const projected = project(rotated, 4, size / 4);
+        
         return {
-          x: size / 2 + x1 * factor,
-          y: size / 2 + y1 * factor,
-          z: z2,
-          type: v.type,
+          x: size / 2 + projected.x,
+          y: size / 2 + projected.y,
+          z: rotated.z,
+          type: vertexTypes[i],
         };
       });
 
-      // Sort vertices by z-depth for proper rendering
+      // Sort vertices by z-depth for proper rendering (back to front)
       const sortedIndices = rotatedVertices
         .map((v, i) => ({ index: i, z: v.z }))
         .sort((a, b) => a.z - b.z)
         .map(item => item.index);
 
-      // Draw edges with glow effect
-      edges.forEach(([i, j]) => {
+      // Draw edges with glow effect using sacred geometry edge definitions
+      TETRAHEDRON_EDGES.forEach(([i, j]) => {
         const v1 = rotatedVertices[i];
         const v2 = rotatedVertices[j];
 
@@ -169,8 +157,7 @@ export default function TetrahedronVisualization({
         ref={canvasRef}
         width={size}
         height={size}
-        className="cursor-grab active:cursor-grabbing"
-        style={{ touchAction: 'none' }}
+        className="cursor-grab active:cursor-grabbing touch-none"
       />
       <p className="text-xs text-slate-500 mt-2">
         Interactive 3D Tetrahedron

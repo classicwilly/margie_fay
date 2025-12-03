@@ -1,15 +1,63 @@
 /**
- * Parenting Module
+ * 🤝 Parenting Module - Co-Parenting Coordination Engine
  * 
- * Four Vertices:
- * 1. Co-parent Communication - Structured messaging, status updates
- * 2. Custody Calendar - Transition schedule, pickups, holidays
- * 3. Rule Alignment - Shared house rules, consequences, consistency
- * 4. Transition Protocol - Handoff checklists, kid prep, parent coordination
+ * VPI PROTOCOL: Relationship Repair & Coordination Intelligence
+ * Frequency: 528 Hz (Transformation, Miracles, DNA Repair)
+ * 
+ * Four Vertices (Tetrahedral Co-Parenting Architecture):
+ * ┌───────────────────────────────────────────────────────────┐
+ * │ 1. COMMUNICATION (Emotional) - Structured messaging         │
+ * │    - BIFF protocol (Brief, Informative, Friendly, Firm)  │
+ * │    - Tone calibration (reduces escalation)               │
+ * │    - Template library for common scenarios               │
+ * │    - Conflict de-escalation flowcharts                   │
+ * │    - Read receipts & response time tracking              │
+ * │                                                           │
+ * │ 2. CUSTODY CALENDAR (Practical) - Transition scheduling  │
+ * │    - Visual custody timeline with color coding           │
+ * │    - Holiday rotation algorithms                         │
+ * │    - Exception handling & swap requests                  │
+ * │    - Integration with main calendar module               │
+ * │    - Transition prep reminders                           │
+ * │                                                           │
+ * │ 3. RULE ALIGNMENT (Philosophical) - Consistency protocol │
+ * │    - Shared house rules repository                       │
+ * │    - Consequence alignment system                        │
+ * │    - Agreement versioning & tracking                     │
+ * │    - Collaborative rule editing                          │
+ * │    - "United front" reinforcement tools                  │
+ * │                                                           │
+ * │ 4. TRANSITIONS (Technical) - Handoff orchestration       │
+ * │    - Interactive handoff checklists                      │
+ * │    - Kid preparation protocols                           │
+ * │    - Emotional prep for both parents & kids              │
+ * │    - Post-transition debrief system                      │
+ * │    - Smooth transition success tracking                  │
+ * └───────────────────────────────────────────────────────────┘
+ * 
+ * PROTOCOL PHILOSOPHY:
+ * Co-parenting after separation is one of the hardest relationship tasks.
+ * This module doesn't try to fix the relationship - it provides structure,
+ * reduces friction, and protects kids from adult conflict. Every feature
+ * is designed to lower the temperature, increase predictability, and
+ * maintain consistency across two households.
+ * 
+ * VPI ENRICHMENT:
+ * - Communication Intelligence: Tone analysis, escalation detection
+ * - Transition Smoothness: Success metrics, pattern learning
+ * - Conflict Mapping: Track what triggers fights, suggest alternatives
+ * - Rule Consistency: Version control for parenting agreements
+ * - Kid-Centric Design: Every feature asks "does this help the kids?"
  */
 
 import { BaseModule } from '@/lib/modules/BaseModule';
 import type { ModuleMetadata, Vertex, HubAuth } from '@/lib/types/module';
+
+// VPI: Message tone classification
+export type MessageTone = 'neutral' | 'friendly' | 'urgent' | 'conflict' | 'celebration';
+
+// VPI: Message visual markers
+export type MessagePriority = 'low' | 'normal' | 'high' | 'urgent';
 
 export interface Message {
   id: string;
@@ -21,6 +69,14 @@ export interface Message {
   read: boolean;
   urgent: boolean;
   category: 'schedule' | 'health' | 'school' | 'discipline' | 'general';
+  
+  // VPI: Communication intelligence
+  tone?: MessageTone;
+  priority?: MessagePriority;
+  sentiment?: 'positive' | 'neutral' | 'negative';  // AI-detected
+  templateUsed?: string;  // Which BIFF template was used
+  responseTime?: number;  // Minutes to respond
+  escalationRisk?: 'low' | 'medium' | 'high';  // AI prediction
 }
 
 export interface CustodySchedule {
@@ -61,15 +117,42 @@ export class ParentingModule extends BaseModule {
   constructor() {
     const metadata: ModuleMetadata = {
       id: 'parenting',
-      name: 'Parenting Module',
-      description: 'Co-parent communication, custody calendar, rule alignment, and transition protocols',
+      name: '🤝 Parenting - Co-Parent Coordinator',
+      description: 'Structured communication, custody coordination, rule alignment, and transition protocols for separated parents',
       author: 'Tetrahedron Protocol',
-      version: '1.0.0',
+      version: '2.0.0',  // VPI Enhanced
       license: 'CC-BY-4.0',
       category: 'parenting',
-      tags: ['parenting', 'co-parenting', 'custody', 'communication', 'divorce'],
+      tags: [
+        'parenting',
+        'co-parenting',
+        'custody-coordination',
+        'structured-communication',
+        'divorce-support',
+        'conflict-reduction',
+        'transition-protocols',
+        'rule-alignment',
+        'BIFF-method',
+        'visual-protocol'
+      ],
       dependencies: ['calendar'],
-      lastUpdated: new Date()
+      lastUpdated: new Date(),
+      
+      // VPI: Module Visual Identity
+      primaryColor: '#8B5CF6',      // Purple - Transformation, Healing
+      secondaryColor: '#EC4899',    // Pink - Connection, Care
+      accentColor: '#10B981',       // Green - Growth, Agreement
+      iconEmoji: '🤝',
+      
+      // VPI: Protocol Metadata
+      protocolFrequency: '528Hz',   // Transformation & miracles
+      tetrahedral: true,
+      vertexBalance: {
+        emotional: 1,               // Communication
+        practical: 1,               // Custody
+        philosophical: 1,           // Rules
+        technical: 1                // Transitions (perfect balance!)
+      }
     };
 
     const vertices: [Vertex, Vertex, Vertex, Vertex] = [
@@ -370,10 +453,13 @@ export class ParentingModule extends BaseModule {
     if (!saved) return [];
     try {
       const parsed = JSON.parse(saved);
-      return parsed.map((m: any) => ({
-        ...m,
-        timestamp: new Date(m.timestamp)
-      }));
+      return (parsed as unknown[]).map(m => {
+        const mm = m as unknown as Message;
+        return ({
+          ...mm,
+          timestamp: new Date((mm as Message).timestamp as unknown as string | number)
+        }) as Message;
+      });
     } catch {
       return [];
     }
@@ -390,11 +476,14 @@ export class ParentingModule extends BaseModule {
     if (!saved) return [];
     try {
       const parsed = JSON.parse(saved);
-      return parsed.map((s: any) => ({
-        ...s,
-        startDate: new Date(s.startDate),
-        endDate: new Date(s.endDate)
-      }));
+      return (parsed as unknown[]).map(s => {
+        const ss = s as unknown as CustodySchedule;
+        return ({
+          ...ss,
+          startDate: new Date((ss as CustodySchedule).startDate as unknown as string | number),
+          endDate: new Date((ss as CustodySchedule).endDate as unknown as string | number),
+        }) as CustodySchedule;
+      });
     } catch {
       return [];
     }
@@ -411,10 +500,13 @@ export class ParentingModule extends BaseModule {
     if (!saved) return [];
     try {
       const parsed = JSON.parse(saved);
-      return parsed.map((r: any) => ({
-        ...r,
-        agreedDate: r.agreedDate ? new Date(r.agreedDate) : undefined
-      }));
+      return (parsed as unknown[]).map(r => {
+        const rr = r as unknown as HouseRule;
+        return ({
+          ...rr,
+          agreedDate: (rr as HouseRule).agreedDate ? new Date((rr as HouseRule).agreedDate as unknown as string | number) : undefined
+        }) as HouseRule;
+      });
     } catch {
       return [];
     }
@@ -431,10 +523,13 @@ export class ParentingModule extends BaseModule {
     if (!saved) return [];
     try {
       const parsed = JSON.parse(saved);
-      return parsed.map((c: any) => ({
-        ...c,
-        lastUsed: c.lastUsed ? new Date(c.lastUsed) : undefined
-      }));
+      return (parsed as unknown[]).map(c => {
+        const cc = c as unknown as TransitionChecklist;
+        return ({
+          ...cc,
+          lastUsed: (cc as HouseRule).lastUsed ? new Date((cc as HouseRule).lastUsed as unknown as string | number) : undefined
+        }) as TransitionChecklist;
+      });
     } catch {
       return [];
     }

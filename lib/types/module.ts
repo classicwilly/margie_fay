@@ -15,7 +15,25 @@ export interface Vertex {
   name: string;
   category: VertexCategory;
   description: string;
-  data?: Record<string, any>;
+  data?: Record<string, unknown>;
+  
+  // VPI: Rich vertex metadata for visual protocols
+  metadata?: {
+    viewTypes?: string[];
+    visualizations?: string[];
+    capabilities?: string[];
+    uiElements?: string[];
+    eventTypes?: string[];
+    features?: string[];
+    workflows?: string[];
+    providers?: string[];
+    syncModes?: string[];
+    reminderTypes?: string[];
+    toneOptions?: string[];
+    deliveryMethods?: string[];
+    intelligence?: string[];
+    [key: string]: unknown;  // Extensible for custom VPI data
+  };
 }
 
 // ============================================================================
@@ -28,7 +46,7 @@ export interface Edge {
   target: string;  // Vertex ID
   strength: number;  // 0-1, how connected these vertices are
   lastInteraction?: Date;
-  data?: Record<string, any>;
+  data?: Record<string, unknown>;
 }
 
 // ============================================================================
@@ -78,6 +96,25 @@ export interface ModuleMetadata {
   repository?: string;  // GitHub repo URL
   homepage?: string;
   icon?: string;  // Icon URL or emoji
+  
+  // VPI: Visual Protocol Identity
+  primaryColor?: string;      // Hex color for module identity
+  secondaryColor?: string;    // Secondary/accent color
+  accentColor?: string;       // Highlight/attention color
+  iconEmoji?: string;         // Emoji representation
+  
+  // VPI: Protocol Metadata
+  protocolFrequency?: string; // Solfeggio frequency (e.g., '741Hz')
+  tetrahedral?: boolean;      // Explicitly tetrahedral structure
+  vertexBalance?: {           // Distribution across categories
+    technical?: number;
+    practical?: number;
+    emotional?: number;
+    philosophical?: number;
+  };
+  
+  // VPI: Extended metadata (flexible)
+  [key: string]: unknown;
 }
 
 // ============================================================================
@@ -104,12 +141,12 @@ export interface DockingInterface {
   disconnect(): Promise<void>;
   
   // Data Exchange
-  shareData(dataType: string, data: any): Promise<void>;
-  receiveData(dataType: string): Promise<any>;
+  shareData(dataType: string, data: unknown): Promise<void>;
+  receiveData(dataType: string): Promise<unknown>;
   
   // Inter-Module Communication
-  sendToModule(moduleId: string, message: any): Promise<void>;
-  subscribeToModule(moduleId: string, eventType: string, callback: (data: any) => void): void;
+  sendToModule(moduleId: string, message: unknown): Promise<void>;
+  subscribeToModule(moduleId: string, eventType: string, callback: (data: unknown) => void): void;
   unsubscribeFromModule(moduleId: string, eventType: string): void;
   
   // Lifecycle Hooks
@@ -128,7 +165,7 @@ export interface Module extends Tetrahedron {
   status: ModuleStatus;
   docking: DockingInterface;
   subModules?: Module[];  // Fractal: each module can contain 4 sub-modules
-  config?: Record<string, any>;  // Module-specific configuration
+  config?: Record<string, unknown>;  // Module-specific configuration
   
   // Module Lifecycle Methods
   initialize(): Promise<void>;
@@ -136,9 +173,9 @@ export interface Module extends Tetrahedron {
   
   // UI Components (React components exported by module)
   components?: {
-    main?: React.ComponentType<any>;
-    settings?: React.ComponentType<any>;
-    widget?: React.ComponentType<any>;
+    main?: React.ComponentType<Record<string, unknown>>;
+    settings?: React.ComponentType<Record<string, unknown>>;
+    widget?: React.ComponentType<Record<string, unknown>>;
   };
 }
 
@@ -150,7 +187,7 @@ export interface HubData {
   userId: string;
   tetrahedron: Tetrahedron;  // User's core support tetrahedron
   installedModules: string[];  // Module IDs
-  moduleData: Record<string, any>;  // Module-specific data storage
+  moduleData: Record<string, unknown>;  // Module-specific data storage
   settings: HubSettings;
 }
 
@@ -201,7 +238,7 @@ export interface ModuleEvent {
   type: ModuleEventType;
   moduleId: string;
   timestamp: Date;
-  data?: any;
+  data?: unknown;
 }
 
 // ============================================================================

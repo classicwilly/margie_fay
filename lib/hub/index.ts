@@ -2,6 +2,6 @@
  * Export all hub services
  */
 
-export { hub } from './hub/hub';
-export { moduleRegistry } from './hub/moduleRegistry';
-export { moduleManager } from './hub/moduleManager';
+export { hub } from './hub';
+export { moduleRegistry } from './moduleRegistry';
+export { moduleManager } from './moduleManager';

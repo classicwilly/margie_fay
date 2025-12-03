@@ -1,0 +1,6 @@
+ID,Topology,Friction,Phase1,Phase2,MultiSensory
+1,K4,0.007,0.00,0.01,True
+2,K4,0.008,0.00,0.00,True
+3,K4,0.009,0.00,0.02,False
+4,K3,0.005,0.00,0.01,True
+5,K4,0.006,0.00,0.01,True

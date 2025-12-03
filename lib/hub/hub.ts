@@ -12,6 +12,7 @@ import type {
   Tetrahedron,
   Vertex
 } from '@/lib/types/module';
+import { validateTetrahedronStructure } from '@/lib/validators/tetrahedronValidator';
 import { moduleRegistry } from './moduleRegistry';
 import { moduleManager } from './moduleManager';
 
@@ -60,6 +61,8 @@ class HubService {
     if (!this.hubData) {
       throw new Error('Hub not initialized');
     }
+    // Validate incoming tetrahedron before accepting it
+    validateTetrahedronStructure(tetrahedron);
 
     this.hubData.tetrahedron = tetrahedron;
     this.saveHubData();
@@ -122,7 +125,7 @@ class HubService {
   /**
    * Store module data
    */
-  setModuleData(moduleId: string, data: any): void {
+  setModuleData(moduleId: string, data: unknown): void {
     if (!this.hubData) {
       throw new Error('Hub not initialized');
     }
@@ -134,7 +137,7 @@ class HubService {
   /**
    * Retrieve module data
    */
-  getModuleData(moduleId: string): any {
+  getModuleData(moduleId: string): unknown {
     return this.hubData?.moduleData[moduleId];
   }
 

@@ -1,218 +1,210 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { ArrowLeft, Plus, Settings, Download, Upload } from 'lucide-react';
+import { useState } from 'react';
 import Link from 'next/link';
-
-// Import hub services
-import { hub } from '@/lib/hub/hub';
-import { moduleManager } from '@/lib/hub/moduleManager';
-import { moduleRegistry } from '@/lib/hub/moduleRegistry';
-import type { Module, ModuleMetadata } from '@/lib/types/module';
+import { ArrowLeft, ArrowRight, Sparkles, Heart, Users, Zap, BookOpen, Wrench, Target } from 'lucide-react';
+import { ENTRY_POINTS } from '@/lib/entryPoints';
 
 export default function HubPage() {
-  const router = useRouter();
-  const [hubInitialized, setHubInitialized] = useState(false);
-  const [installedModules, setInstalledModules] = useState<Module[]>([]);
-  const [availableModules, setAvailableModules] = useState<ModuleMetadata[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [breathingPhase, setBreathingPhase] = useState<'single' | 'expanding' | 'mesh'>('single');
 
-  useEffect(() => {
-    initializeHub();
-  }, []);
+  const entryPointIcons = {
+    crisis: Target,
+    parenting: Heart,
+    kids: Sparkles,
+    community: Users,
+    learning: BookOpen,
+    builder: Wrench,
+    protocol: Zap
+  };
 
-  async function initializeHub() {
-    try {
-      setLoading(true);
-      
-      // Initialize hub with default user
-      await hub.initialize('default-user');
-      setHubInitialized(true);
+  const handleBegin = () => {
+    setBreathingPhase('expanding');
+    setTimeout(() => setBreathingPhase('mesh'), 600);
+  };
 
-      // Get installed modules
-      const installed = moduleManager.getInstalledModules();
-      setInstalledModules(installed);
-
-      // Get available modules from registry
-      const registryData = moduleRegistry.getAll();
-      const available = [
-        ...registryData.core.map(e => e.metadata), 
-        ...registryData.community.map(e => e.metadata), 
-        ...registryData.private.map(e => e.metadata)
-      ];
-      setAvailableModules(available);
-    } catch (err) {
-      console.error('Failed to initialize hub:', err);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  if (loading) {
+  if (breathingPhase === 'single') {
     return (
       <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-purple-500 mx-auto mb-4"></div>
-          <p className="text-slate-300">Initializing Hub...</p>
+        {/* Animated Background */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-500/30 rounded-full blur-3xl animate-pulse" />
+        </div>
+
+        <div className="relative max-w-2xl mx-auto px-4 text-center">
+          <div className="mb-12">
+            <div className="flex justify-center mb-6">
+              <Link href="/" className="group w-24 h-24 rounded-full bg-purple-500/20 border-2 border-purple-500/50 flex items-center justify-center animate-pulse relative focus:outline-none hover:bg-purple-500/30 transition">
+                <svg viewBox="0 0 96 96" width="56" height="56" className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" style={{ pointerEvents: 'none' }}>
+                  <circle cx="48" cy="48" r="44" fill="none" stroke="#a855f7" strokeWidth="3" />
+                  <polygon points="48,28 68,68 28,68" fill="#a855f7" />
+                </svg>
+                <span className="sr-only">Back</span>
+              </Link>
+            </div>
+            <h1 className="text-5xl font-bold text-white mb-4">
+              You&apos;ve arrived at the hub.
+            </h1>
+            <p className="text-lg text-slate-400 mb-8">
+              One entry point. About to become many.
+            </p>
+          </div>
+
+          <button
+            onClick={handleBegin}
+            className="inline-flex items-center gap-3 px-8 py-4 bg-linear-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-semibold rounded-full transition-all text-lg shadow-lg shadow-purple-500/25"
+            style={{ fontSize: '1rem', padding: '0.5rem 2rem' }}
+          >
+            <span className="text-base font-medium">Watch it breathe</span>
+            <ArrowRight className="w-5 h-5" />
+          </button>
         </div>
       </div>
     );
   }
 
+  if (breathingPhase === 'expanding') {
+    return (
+      <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center">
+        {/* Expanding Background */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-purple-500/30 rounded-full blur-3xl animate-ping" />
+        </div>
+
+        <div className="relative max-w-4xl mx-auto px-4 text-center">
+          <div className="flex justify-center mb-8">
+            <div className="w-32 h-32 rounded-full bg-purple-500/20 border-2 border-purple-500/50 flex items-center justify-center scale-110 transition-transform">
+              <span className="text-6xl">▲</span>
+            </div>
+          </div>
+
+          <h2 className="text-4xl font-bold text-white mb-4 animate-pulse">
+            Opening...
+          </h2>
+          <p className="text-lg text-slate-400">
+            One becomes seven
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // breathingPhase === 'mesh'
   return (
     <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors mb-6"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Home
-          </Link>
+      {/* Mesh Background */}
+      <div className="absolute inset-0 opacity-10">
+        {Object.keys(ENTRY_POINTS).map((_, i) => (
+          <div
+            key={i}
+            className="absolute rounded-full blur-2xl animate-pulse"
+            style={{
+              width: '300px',
+              height: '300px',
+              background: `hsl(${i * 50}, 70%, 50%)`,
+              top: `${20 + i * 10}%`,
+              left: `${10 + i * 12}%`,
+              animationDelay: `${i * 0.2}s`
+            }}
+          />
+        ))}
+      </div>
 
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-4xl font-bold text-white mb-2">Your Hub</h1>
-              <p className="text-slate-300">Central coordination for your protocol</p>
-            </div>
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors mb-8"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span className="text-sm">Back</span>
+        </Link>
+
+        <div className="text-center mb-12">
+          <h1 className="text-5xl font-bold text-white mb-4">
+            Choose Your Entry Point
+          </h1>
+          <p className="text-xl text-slate-400">
+            Seven doors. Same destination. Different journeys.
+          </p>
+        </div>
+
+        {/* Entry Points Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+          {Object.values(ENTRY_POINTS).map((entry) => {
+            const Icon = entryPointIcons[entry.id as keyof typeof entryPointIcons];
             
-            <div className="flex gap-3">
-              <button aria-label="Settings" className="px-4 py-2 bg-white/10 border border-white/20 text-white rounded-lg hover:bg-white/20 transition-all">
-                <Settings className="w-4 h-4" />
-              </button>
-              <button aria-label="Export data" className="px-4 py-2 bg-white/10 border border-white/20 text-white rounded-lg hover:bg-white/20 transition-all">
-                <Download className="w-4 h-4" />
-              </button>
-              <button aria-label="Import data" className="px-4 py-2 bg-white/10 border border-white/20 text-white rounded-lg hover:bg-white/20 transition-all">
-                <Upload className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Your Tetrahedron */}
-        <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-8 mb-8">
-          <h2 className="text-2xl font-bold text-white mb-6">Your Tetrahedron</h2>
-          
-          {hubInitialized && hub.getTetrahedron() && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {hub.getTetrahedron()!.vertices.map((vertex: any, index: number) => (
-                <div
-                  key={index}
-                  className="bg-white/5 border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-all cursor-pointer"
-                  onClick={() => console.log('Edit vertex:', vertex)}
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-full bg-linear-to-r from-purple-600 to-blue-600 flex items-center justify-center text-white font-bold text-lg shrink-0">
-                      {index + 1}
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-xl font-bold text-white mb-2">{vertex.label}</h3>
-                      <p className="text-slate-300 text-sm mb-3">{vertex.description}</p>
-                      <div className="flex flex-wrap gap-2">
-                        <span className="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-xs">
-                          {vertex.category}
-                        </span>
-                        <span className="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-xs">
-                          {vertex.state}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Installed Modules */}
-        <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-8 mb-8">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-white">Installed Modules</h2>
-            <button
-              onClick={() => router.push('/modules')}
-              className="px-4 py-2 bg-linear-to-r from-purple-600 to-blue-600 text-white rounded-lg hover:from-purple-500 hover:to-blue-500 transition-all flex items-center gap-2"
-            >
-              <Plus className="w-4 h-4" />
-              Browse Modules
-            </button>
-          </div>
-
-          {installedModules.length === 0 ? (
-            <div className="text-center py-12">
-              <div className="text-6xl mb-4">📦</div>
-              <h3 className="text-xl font-bold text-white mb-2">No Modules Installed</h3>
-              <p className="text-slate-400 mb-6">Install modules to extend your protocol's capabilities</p>
-              <button
-                onClick={() => router.push('/modules')}
-                className="px-6 py-3 bg-linear-to-r from-purple-600 to-blue-600 text-white rounded-lg hover:from-purple-500 hover:to-blue-500 transition-all"
+            return (
+              <Link
+                key={entry.id}
+                href={entry.route}
+                className="group bg-white/5 backdrop-blur-sm border border-white/10 hover:border-white/20 rounded-2xl p-6 transition-all hover:scale-105 hover:bg-white/10"
               >
-                Browse Module Library
-              </button>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {installedModules.map((module, index) => (
-                <div
-                  key={index}
-                  className="bg-white/5 border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-all cursor-pointer"
-                  onClick={() => router.push(`/modules/${module.metadata.id}`)}
-                >
-                  <h3 className="text-lg font-bold text-white mb-2">{module.metadata.name}</h3>
-                  <p className="text-slate-300 text-sm mb-4">{module.metadata.description}</p>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-xs">
-                      v{module.metadata.version}
-                    </span>
-                    <span className="px-3 py-1 bg-green-500/20 text-green-300 rounded-full text-xs">
-                      Active
-                    </span>
+                <div className="flex items-start gap-4 mb-4">
+                  <div 
+                    className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
+                    style={{ 
+                      backgroundColor: `${entry.color}20`,
+                      borderColor: `${entry.color}50`,
+                      borderWidth: '2px'
+                    }}
+                  >
+                    <Icon className="w-6 h-6" style={{ color: entry.color }} />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-purple-300 transition-colors">
+                      {entry.title}
+                    </h3>
+                    <p className="text-sm text-slate-400">
+                      {entry.tagline}
+                    </p>
                   </div>
                 </div>
-              ))}
-            </div>
-          )}
+
+                <div className="space-y-2 text-xs text-slate-500">
+                  <div className="flex items-center gap-2">
+                    <span className="text-purple-400">→</span>
+                    <span>{entry.journey.step1}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-purple-400">→</span>
+                    <span>{entry.journey.step2}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-purple-400">→</span>
+                    <span>{entry.journey.step3}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-amber-400">✦</span>
+                    <span className="text-amber-400 italic">{entry.journey.revelation}</span>
+                  </div>
+                </div>
+
+                <div className="mt-4 flex items-center gap-2 text-sm text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span>Enter here</span>
+                  <ArrowRight className="w-4 h-4" />
+                </div>
+              </Link>
+            );
+          })}
         </div>
 
-        {/* Available Modules */}
-        <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-8">
-          <h2 className="text-2xl font-bold text-white mb-6">Available Modules</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {availableModules
-              .filter(m => !installedModules.some(im => im.metadata.id === m.id))
-              .map((metadata, index) => (
-                <div
-                  key={index}
-                  className="bg-white/5 border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-all"
-                >
-                  <div className="flex items-start justify-between mb-3">
-                    <h3 className="text-lg font-bold text-white">{metadata.name}</h3>
-                    <span className={`px-2 py-1 rounded text-xs ${
-                      metadata.category === 'parenting' || metadata.category === 'health'
-                        ? 'bg-purple-500/20 text-purple-300'
-                        : 'bg-blue-500/20 text-blue-300'
-                    }`}>
-                      {metadata.category}
-                    </span>
-                  </div>
-                  
-                  <p className="text-slate-300 text-sm mb-4">{metadata.description}</p>
-                  
-                  <button
-                    onClick={() => {
-                      console.log('Install module:', metadata.id);
-                      router.push(`/modules/${metadata.id}`);
-                    }}
-                    className="w-full px-4 py-2 bg-linear-to-r from-purple-600 to-blue-600 text-white rounded-lg hover:from-purple-500 hover:to-blue-500 transition-all text-sm font-medium"
-                  >
-                    View Module
-                  </button>
-                </div>
-              ))}
+        {/* Or Skip to Architect */}
+        <div className="text-center">
+          <div className="inline-flex flex-col gap-4 bg-white/5 border border-purple-500/30 rounded-2xl p-8">
+            <div className="flex items-center gap-2 text-purple-300">
+              <Sparkles className="w-5 h-5" />
+              <span className="text-sm font-semibold">Already know what you need?</span>
+            </div>
+            <Link
+              href="/architect"
+              className="inline-flex items-center gap-3 px-6 py-3 bg-linear-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-semibold rounded-full transition-all shadow-lg shadow-purple-500/25"
+            >
+              Go Straight to the Architect
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+            <p className="text-xs text-slate-500">
+              Build your tetrahedron from scratch
+            </p>
           </div>
         </div>
       </div>

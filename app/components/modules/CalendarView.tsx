@@ -1,19 +1,30 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Calendar, Plus, Clock, Users, Trash2, Edit2, X, Check } from 'lucide-react';
+import { Calendar, Plus, Clock, Users, Trash2, Edit2, X, Check, AlertTriangle, Heart, Zap, Shield, Activity, TrendingUp } from 'lucide-react';
 import { CalendarModule } from '@/modules/calendar/CalendarModule';
+import type { CalendarEvent as CalendarEventType, EventVisualType } from '@/modules/calendar/CalendarModule';
 
-interface CalendarEvent {
-  id: string;
-  title: string;
-  description?: string;
-  startTime: Date;
-  endTime: Date;
-  participants?: string[];
-  location?: string;
-  type?: 'personal' | 'family' | 'work' | 'other';
-}
+interface CalendarEvent extends CalendarEventType {}
+
+// VPI: Visual type configuration
+const EVENT_VISUAL_STYLES: Record<EventVisualType, { color: string; bgColor: string; borderColor: string; emoji: string; label: string }> = {
+  coordination: { color: 'text-blue-400', bgColor: 'bg-blue-600/30', borderColor: 'border-blue-500/50', emoji: '🔵', label: 'Co-parent' },
+  transition: { color: 'text-purple-400', bgColor: 'bg-purple-600/30', borderColor: 'border-purple-500/50', emoji: '🟣', label: 'Transition' },
+  milestone: { color: 'text-yellow-400', bgColor: 'bg-yellow-600/30', borderColor: 'border-yellow-500/50', emoji: '🟡', label: 'Milestone' },
+  therapy: { color: 'text-green-400', bgColor: 'bg-green-600/30', borderColor: 'border-green-500/50', emoji: '🟢', label: 'Therapy' },
+  conflict: { color: 'text-red-400', bgColor: 'bg-red-600/30', borderColor: 'border-red-500/50', emoji: '🔴', label: 'High-Stakes' },
+  routine: { color: 'text-slate-400', bgColor: 'bg-slate-600/30', borderColor: 'border-slate-500/50', emoji: '⚪', label: 'Routine' },
+  personal: { color: 'text-cyan-400', bgColor: 'bg-cyan-600/30', borderColor: 'border-cyan-500/50', emoji: '💙', label: 'Self-Care' },
+  emergency: { color: 'text-orange-400', bgColor: 'bg-orange-600/30', borderColor: 'border-orange-500/50', emoji: '🟠', label: 'Emergency' }
+};
+
+const STRESS_COLORS = {
+  low: 'text-green-400',
+  medium: 'text-yellow-400',
+  high: 'text-orange-400',
+  critical: 'text-red-400'
+};
 
 interface CalendarViewProps {
   module: CalendarModule;
@@ -76,6 +87,9 @@ export default function CalendarView({ module }: CalendarViewProps) {
         endTime: event.endTime!,
         description: event.description,
         location: event.location,
+        visualType: event.visualType || 'routine',
+        createdBy: 'current-user', // TODO: Get from auth context
+        lastModifiedBy: 'current-user',
       });
       await loadEvents();
       setShowCreateForm(false);
@@ -115,6 +129,22 @@ export default function CalendarView({ module }: CalendarViewProps) {
 
   return (
     <div className="space-y-6">
+      {/* VPI: Visual Legend */}
+      <div className="bg-slate-900/40 backdrop-blur-sm rounded-xl border border-white/10 p-4">
+        <div className="flex items-center gap-2 mb-3">
+          <TrendingUp className="w-4 h-4 text-purple-400" />
+          <h3 className="text-sm font-semibold text-white">Visual Protocol Legend</h3>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+          {(Object.entries(EVENT_VISUAL_STYLES) as [EventVisualType, typeof EVENT_VISUAL_STYLES[EventVisualType]][]).map(([type, style]) => (
+            <div key={type} className="flex items-center gap-2 text-xs">
+              <span className="text-lg">{style.emoji}</span>
+              <span className={style.color}>{style.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* Header Controls */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
@@ -210,24 +240,53 @@ export default function CalendarView({ module }: CalendarViewProps) {
           <div className="grid grid-cols-7 min-h-96">
             {getWeekDays().map((day, i) => (
               <div key={i} className="border-r border-white/10 last:border-r-0 p-2 space-y-1">
-                {getEventsByDay(day).map(event => (
-                  <div
-                    key={event.id}
-                    className="bg-blue-600/30 border border-blue-500/50 rounded p-2 cursor-pointer hover:bg-blue-600/40 transition-all group"
-                    onClick={() => setEditingEvent(event)}
-                  >
-                    <div className="text-xs font-semibold text-white truncate">
-                      {event.title}
+                {getEventsByDay(day).map(event => {
+                  const style = EVENT_VISUAL_STYLES[event.visualType || 'routine'];
+                  const hasConflicts = event.conflictsWith && event.conflictsWith.length > 0;
+                  const highStress = event.emotionalContext?.anticipatedStress === 'high' || event.emotionalContext?.anticipatedStress === 'critical';
+                  
+                  return (
+                    <div
+                      key={event.id}
+                      className={`${style.bgColor} border ${style.borderColor} rounded p-2 cursor-pointer hover:opacity-90 transition-all group relative`}
+                      onClick={() => setEditingEvent(event)}
+                    >
+                      {/* VPI: Conflict warning badge */}
+                      {hasConflicts && (
+                        <div className="absolute -top-1 -right-1 bg-red-500 text-white text-[8px] rounded-full w-4 h-4 flex items-center justify-center font-bold">
+                          !
+                        </div>
+                      )}
+                      
+                      {/* VPI: Stress indicator */}
+                      {highStress && (
+                        <div className="absolute -top-1 -left-1 text-orange-400">
+                          <Zap className="w-3 h-3" />
+                        </div>
+                      )}
+                      
+                      <div className="text-xs font-semibold text-white truncate flex items-center gap-1">
+                        <span>{style.emoji}</span>
+                        <span>{event.title}</span>
+                      </div>
+                      <div className="text-xs text-slate-300 flex items-center gap-1">
+                        <Clock className="w-3 h-3" />
+                        {new Date(event.startTime).toLocaleTimeString('en-US', { 
+                          hour: 'numeric', 
+                          minute: '2-digit' 
+                        })}
+                      </div>
+                      
+                      {/* VPI: Relationship context */}
+                      {event.relationshipContext && (
+                        <div className="text-[10px] text-slate-400 mt-1 flex items-center gap-1">
+                          <Users className="w-2 h-2" />
+                          {event.relationshipContext.relationshipType}
+                        </div>
+                      )}
                     </div>
-                    <div className="text-xs text-slate-300 flex items-center gap-1">
-                      <Clock className="w-3 h-3" />
-                      {new Date(event.startTime).toLocaleTimeString('en-US', { 
-                        hour: 'numeric', 
-                        minute: '2-digit' 
-                      })}
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             ))}
           </div>
@@ -242,50 +301,125 @@ export default function CalendarView({ module }: CalendarViewProps) {
                 No events scheduled for this day
               </div>
             ) : (
-              getEventsByDay(selectedDate).map(event => (
-                <div
-                  key={event.id}
-                  className="bg-white/5 border border-white/10 rounded-lg p-4 hover:bg-white/10 transition-all cursor-pointer"
-                  onClick={() => setEditingEvent(event)}
-                >
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-white mb-1">{event.title}</h3>
-                      {event.description && (
-                        <p className="text-sm text-slate-300 mb-2">{event.description}</p>
-                      )}
-                      <div className="flex items-center gap-4 text-sm text-slate-400">
-                        <span className="flex items-center gap-1">
-                          <Clock className="w-4 h-4" />
-                          {new Date(event.startTime).toLocaleTimeString('en-US', { 
-                            hour: 'numeric', 
-                            minute: '2-digit' 
-                          })} - {new Date(event.endTime).toLocaleTimeString('en-US', { 
-                            hour: 'numeric', 
-                            minute: '2-digit' 
-                          })}
-                        </span>
-                        {event.participants && event.participants.length > 0 && (
+              getEventsByDay(selectedDate).map(event => {
+                const style = EVENT_VISUAL_STYLES[event.visualType || 'routine'];
+                const hasConflicts = event.conflictsWith && event.conflictsWith.length > 0;
+                const emotionalCtx = event.emotionalContext;
+                const relationshipCtx = event.relationshipContext;
+                
+                return (
+                  <div
+                    key={event.id}
+                    className={`${style.bgColor} border ${style.borderColor} rounded-lg p-4 hover:opacity-90 transition-all cursor-pointer`}
+                    onClick={() => setEditingEvent(event)}
+                  >
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        {/* VPI: Event header with visual type */}
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="text-2xl">{style.emoji}</span>
+                          <div className="flex-1">
+                            <h3 className="text-lg font-semibold text-white">{event.title}</h3>
+                            <span className={`text-xs ${style.color} font-medium`}>{style.label}</span>
+                          </div>
+                        </div>
+                        
+                        {/* VPI: Conflict warning */}
+                        {hasConflicts && event.conflictsWith && (
+                          <div className="mb-2 px-2 py-1 bg-red-600/20 border border-red-500/50 rounded text-xs text-red-400 flex items-center gap-1">
+                            <AlertTriangle className="w-3 h-3" />
+                            <span>Conflicts with {event.conflictsWith.length} other event(s)</span>
+                          </div>
+                        )}
+                        
+                        {event.description && (
+                          <p className="text-sm text-slate-300 mb-3">{event.description}</p>
+                        )}
+                        
+                        {/* VPI: Time and location */}
+                        <div className="flex flex-wrap items-center gap-3 text-sm text-slate-400 mb-3">
                           <span className="flex items-center gap-1">
-                            <Users className="w-4 h-4" />
-                            {event.participants.length}
+                            <Clock className="w-4 h-4" />
+                            {new Date(event.startTime).toLocaleTimeString('en-US', { 
+                              hour: 'numeric', 
+                              minute: '2-digit' 
+                            })} - {new Date(event.endTime).toLocaleTimeString('en-US', { 
+                              hour: 'numeric', 
+                              minute: '2-digit' 
+                            })}
                           </span>
+                          {event.location && (
+                            <span className="flex items-center gap-1">📍 {event.location}</span>
+                          )}
+                        </div>
+                        
+                        {/* VPI: Emotional context indicators */}
+                        {emotionalCtx && (
+                          <div className="flex flex-wrap gap-2 mb-3">
+                            {emotionalCtx.anticipatedStress && (
+                              <div className={`px-2 py-1 bg-black/20 rounded text-xs ${STRESS_COLORS[emotionalCtx.anticipatedStress]} flex items-center gap-1`}>
+                                <Activity className="w-3 h-3" />
+                                Stress: {emotionalCtx.anticipatedStress}
+                              </div>
+                            )}
+                            {emotionalCtx.preparationNeeded && (
+                              <div className="px-2 py-1 bg-blue-600/20 rounded text-xs text-blue-400 flex items-center gap-1">
+                                <Shield className="w-3 h-3" />
+                                Prep needed
+                              </div>
+                            )}
+                            {emotionalCtx.supportRecommended && (
+                              <div className="px-2 py-1 bg-purple-600/20 rounded text-xs text-purple-400 flex items-center gap-1">
+                                <Heart className="w-3 h-3" />
+                                Support recommended
+                              </div>
+                            )}
+                          </div>
+                        )}
+                        
+                        {/* VPI: Relationship context */}
+                        {relationshipCtx && (
+                          <div className="flex items-center gap-2 text-xs text-slate-400">
+                            <Users className="w-4 h-4" />
+                            <span className="capitalize">{relationshipCtx.relationshipType}</span>
+                            {relationshipCtx.conflictRisk !== 'minimal' && relationshipCtx.conflictRisk !== 'low' && (
+                              <span className="px-2 py-0.5 bg-orange-600/20 text-orange-400 rounded">
+                                ⚠️ {relationshipCtx.conflictRisk} conflict risk
+                              </span>
+                            )}
+                          </div>
+                        )}
+                        
+                        {/* VPI: Preparation notes preview */}
+                        {event.preparationNotes && event.preparationNotes.length > 0 && (
+                          <div className="mt-3 pt-3 border-t border-white/10">
+                            <div className="text-xs text-slate-400 font-medium mb-1">📋 Preparation:</div>
+                            <ul className="text-xs text-slate-300 space-y-0.5">
+                              {event.preparationNotes.slice(0, 2).map((note, i) => (
+                                <li key={i}>• {note}</li>
+                              ))}
+                              {event.preparationNotes.length > 2 && (
+                                <li className="text-slate-400">+{event.preparationNotes.length - 2} more...</li>
+                              )}
+                            </ul>
+                          </div>
                         )}
                       </div>
+                      
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteEvent(event.id);
+                        }}
+                        className="p-2 text-red-400 hover:bg-red-500/20 rounded-lg transition-all"
+                        aria-label="Delete event"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
                     </div>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDeleteEvent(event.id);
-                      }}
-                      className="p-2 text-red-400 hover:bg-red-500/20 rounded-lg transition-all"
-                      aria-label="Delete event"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
                   </div>
-                </div>
-              ))
+                );
+              })
             )}
           </div>
         </div>
@@ -332,9 +466,9 @@ function EventFormModal({ event, onSave, onCancel, onDelete }: EventFormModalPro
       description: '',
       startTime: new Date(),
       endTime: new Date(Date.now() + 3600000), // +1 hour
-      participants: [],
+      attendees: [],
       location: '',
-      type: 'personal',
+      visualType: 'personal',
     }
   );
 

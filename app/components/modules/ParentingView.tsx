@@ -4,11 +4,6 @@ import { useState, useEffect } from 'react';
 import { MessageSquare, Calendar as CalendarIcon, FileText, Send, Plus } from 'lucide-react';
 import { ParentingModule, type Message as ParentingMessage, type CustodySchedule } from '@/modules/parenting/ParentingModule';
 
-interface Message extends ParentingMessage {
-  senderId: string;
-  content: string;
-}
-
 interface CustodyEvent extends CustodySchedule {
   childId?: string;
 }
@@ -19,7 +14,7 @@ interface ParentingViewProps {
 
 export default function ParentingView({ module }: ParentingViewProps) {
   const [activeTab, setActiveTab] = useState<'messages' | 'custody' | 'rules'>('messages');
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<ParentingMessage[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [custodyEvents, setCustodyEvents] = useState<CustodyEvent[]>([]);
 
@@ -34,7 +29,7 @@ export default function ParentingView({ module }: ParentingViewProps) {
         setMessages(msgs);
       } else if (activeTab === 'custody') {
         const events = await module.getCustodySchedule();
-        setCustodyEvents(events);
+        setCustodyEvents(events as CustodyEvent[]);
       }
     } catch (error) {
       console.error('Failed to load data:', error);
@@ -61,9 +56,9 @@ export default function ParentingView({ module }: ParentingViewProps) {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 max-w-5xl mx-auto flex flex-col items-center justify-center" style={{ minHeight: '80vh', overflow: 'hidden' }}>
       {/* Tab Navigation */}
-      <div className="flex gap-2 bg-white/5 p-2 rounded-xl border border-white/10">
+      <div className="flex gap-1 bg-white/5 p-1 rounded-lg border border-white/10 overflow-hidden">
         {[
           { id: 'messages', label: 'Messages', icon: MessageSquare },
           { id: 'custody', label: 'Custody Schedule', icon: CalendarIcon },
@@ -73,7 +68,7 @@ export default function ParentingView({ module }: ParentingViewProps) {
           return (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id as any)}
+              onClick={() => setActiveTab(tab.id as 'messages' | 'custody' | 'rules')}
               className={`flex-1 px-4 py-3 rounded-lg flex items-center justify-center gap-2 transition-all ${
                 activeTab === tab.id
                   ? 'bg-linear-to-r from-blue-600 to-purple-600 text-white'
@@ -89,7 +84,7 @@ export default function ParentingView({ module }: ParentingViewProps) {
 
       {/* Messages Tab */}
       {activeTab === 'messages' && (
-        <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 overflow-hidden flex flex-col h-[600px]">
+        <div className="bg-white/5 backdrop-blur-sm rounded-lg border border-white/10 overflow-hidden flex flex-col h-[480px]">
           <div className="p-4 border-b border-white/10">
             <h3 className="text-lg font-semibold text-white">Co-Parent Messages</h3>
           </div>
@@ -103,16 +98,16 @@ export default function ParentingView({ module }: ParentingViewProps) {
               messages.map(message => (
                 <div
                   key={message.id}
-                  className={`flex ${message.senderId === 'me' ? 'justify-end' : 'justify-start'}`}
+                  className={`flex ${message.from === 'me' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
                     className={`max-w-[70%] rounded-lg p-3 ${
-                      message.senderId === 'me'
+                      message.from === 'me'
                         ? 'bg-blue-600 text-white'
                         : 'bg-white/10 text-white'
                     }`}
                   >
-                    <p className="text-sm">{message.content}</p>
+                    <p className="text-sm">{message.body}</p>
                     <span className="text-xs opacity-70 mt-1 block">
                       {new Date(message.timestamp).toLocaleTimeString('en-US', {
                         hour: 'numeric',

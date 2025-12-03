@@ -1,0 +1,41 @@
+**********************
+PowerShell transcript start
+Start time: 20251202165728
+Username: DICKTATER-FUNDI\sandra
+RunAs User: DICKTATER-FUNDI\sandra
+Configuration Name: 
+Machine: DICKTATER-FUNDI (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\Program Files\PowerShell\7\pwsh.dll -File .\scripts\tetrahedron-audit.ps1 -SelfTest -LogPath .\scripts\tetrahedron-audit-selftest.log
+Process ID: 16908
+PSVersion: 7.5.4
+PSEdition: Core
+GitCommitId: 7.5.4
+OS: Microsoft Windows 10.0.26200
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+Transcript started, output file is .\scripts\tetrahedron-audit-selftest.log
+  ✓ Loaded audit-data.csv from C:\Users\sandra\phenix-framework\audit-data.csv
+
+═══════════════════════════════════════════════════════════════
+ SELF TEST MODE
+═══════════════════════════════════════════════════════════════
+▸ CSV Parser Test
+  ✓ TextFieldParser parsed 5 rows
+▸ File Content Validator Test
+  ✓ Homepage animation file content contains all required patterns
+  ✓ File content validator ok
+▸ Test-MultiSensory logic
+  ✓ MultiSensory TRUE detected (case-insensitive)
+  ✓ MultiSensory FALSE correctly detected
+
+═══════════════════════════════════════════════════════════════
+ SELF TEST COMPLETE
+═══════════════════════════════════════════════════════════════
+**********************
+PowerShell transcript end
+End time: 20251202165728
+**********************

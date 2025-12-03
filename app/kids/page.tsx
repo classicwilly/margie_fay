@@ -29,7 +29,7 @@ export default function KidsPage() {
             </div>
 
             <div className="prose prose-invert max-w-none">
-              <h3 className="text-xl font-semibold text-white mb-4">What's a Tetrahedron?</h3>
+              <h3 className="text-xl font-semibold text-white mb-4">What&apos;s a Tetrahedron?</h3>
               <p className="text-slate-300 text-lg mb-4">
                 Think of it like a super-strong tent! 🏕️ It has four corners and each corner connects to all the others. 
                 That makes it really, really strong—even if one part gets wobbly, the other parts keep it standing!
@@ -213,7 +213,7 @@ export default function KidsPage() {
               <div className="space-y-3 mb-6">
                 <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-4">
                   <h4 className="font-semibold text-amber-300 mb-2">📞 Regular Check-Ins</h4>
-                  <p className="text-slate-300 text-sm">Don't wait for crisis. Text, call, or visit each person regularly—even when things are fine.</p>
+                  <p className="text-slate-300 text-sm">Don&apos;t wait for crisis. Text, call, or visit each person regularly—even when things are fine.</p>
                 </div>
                 <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-4">
                   <h4 className="font-semibold text-amber-300 mb-2">🗣️ Clear Communication</h4>
@@ -221,7 +221,7 @@ export default function KidsPage() {
                 </div>
                 <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-4">
                   <h4 className="font-semibold text-amber-300 mb-2">🔄 Update Them</h4>
-                  <p className="text-slate-300 text-sm">Share wins, struggles, changes. They can't support what they don't know about.</p>
+                  <p className="text-slate-300 text-sm">Share wins, struggles, changes. They can&apos;t support what they don&apos;t know about.</p>
                 </div>
                 <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-4">
                   <h4 className="font-semibold text-amber-300 mb-2">🤝 Respect Boundaries</h4>
@@ -248,7 +248,7 @@ export default function KidsPage() {
 
               <h3 className="text-xl font-semibold text-white mb-4">Your Agency in the System</h3>
               <p className="text-slate-300 mb-4">
-                Here's something important: <strong>You're not passive in this system.</strong> As a teen, you have increasing agency to:
+                Here&apos;s something important: <strong>You&apos;re not passive in this system.</strong> As a teen, you have increasing agency to:
               </p>
               <ul className="text-slate-300 space-y-2">
                 <li>✓ Choose who you trust and lean on</li>

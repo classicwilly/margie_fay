@@ -211,7 +211,7 @@ export default function CorePrinciplesPage() {
             <ul>
               <li>Collaborate with families in creating solutions, don't prescribe them</li>
               <li>Follow the system's energy—work with what's ready to shift</li>
-              <li>Small, strategic interventions > comprehensive overhauls</li>
+              <li>Small, strategic interventions {">"}comprehensive overhauls</li>
               <li>Be curious, not certain. Ask questions, don't give answers.</li>
               <li>When you're working harder than the family, stop and reassess</li>
             </ul>

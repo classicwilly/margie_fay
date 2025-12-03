@@ -1,17 +1,67 @@
 /**
- * Kids Module
+ * 🌈 Kids Module - Child Resilience Architecture
  * 
- * Four Vertices:
- * 1. Little Kids (5-9) - Age-appropriate tetrahedron explanation
- * 2. Tweens (10-12) - Understanding support systems
- * 3. Teens (13-17) - Autonomy, resilience, agency
- * 4. Family Activities - Shared experiences, connection-building
+ * VPI PROTOCOL: Age-Appropriate Support & Empowerment Systems
+ * Frequency: 396 Hz (Liberating Guilt & Fear, Grounding)
+ * 
+ * Four Vertices (Tetrahedral Growth Architecture):
+ * ┌───────────────────────────────────────────────────────────┐
+ * │ 1. LITTLE KIDS 5-9 (Emotional) - Safety & comfort       │
+ * │    - Simple tetrahedron explanation (4 support people)   │
+ * │    - Feelings chart with emoji & colors                  │
+ * │    - Comfort activities (drawing, play, stories)         │
+ * │    - "Not your fault" messaging reinforcement            │
+ * │    - Safe space creation                                 │
+ * │                                                           │
+ * │ 2. TWEENS 10-12 (Practical) - Understanding systems     │
+ * │    - Family system visualization                         │
+ * │    - Support network mapping                             │
+ * │    - Coping skills toolkit (breathing, journaling)       │
+ * │    - Emotional vocabulary expansion                      │
+ * │    - Peer support resources                              │
+ * │                                                           │
+ * │ 3. TEENS 13-17 (Philosophical) - Autonomy & agency      │
+ * │    - Resilience architecture concepts                    │
+ * │    - Agency in own support system                        │
+ * │    - Future self visualization                           │
+ * │    - Relationship pattern awareness                      │
+ * │    - College/independence preparation                    │
+ * │                                                           │
+ * │ 4. FAMILY ACTIVITIES (Technical) - Connection building  │
+ * │    - Shared experience library                           │
+ * │    - Low-stress connection activities                    │
+ * │    - Ritual creation tools                               │
+ * │    - Memory documentation                                │
+ * │    - Team strengthening exercises                        │
+ * └───────────────────────────────────────────────────────────┘
+ * 
+ * PROTOCOL PHILOSOPHY:
+ * Kids don't need to understand tetrahedrons - they need to feel safe,
+ * understood, and empowered. This module adapts its language, activities,
+ * and support strategies to developmental stage. For little ones, it's
+ * about safety and "not your fault." For tweens, it's skill-building.
+ * For teens, it's autonomy and agency in their own support system.
+ * 
+ * VPI ENRICHMENT:
+ * - Developmental Adaptation: Content scales with cognitive ability
+ * - Visual Language: Heavy use of emoji, colors, metaphors
+ * - Safety First: Every feature reinforces "you're not alone"
+ * - Empowerment Focus: From victim to agent of own life
+ * - Check-in Intelligence: Detects when kids need help
+ * - Resource Curation: Age-appropriate books, apps, hotlines
  */
 
 import { BaseModule } from '@/lib/modules/BaseModule';
 import type { ModuleMetadata, Vertex } from '@/lib/types/module';
 
 export type AgeGroup = 'little-kids' | 'tweens' | 'teens';
+
+// VPI: Emotion spectrum for kids
+export type KidsMood = 'amazing' | 'happy' | 'okay' | 'sad' | 'mad' | 'scared' | 'confused';
+
+// VPI: Visual activity markers
+export type ActivityDifficulty = 'easy' | 'medium' | 'challenging';
+export type ActivityDuration = 'quick' | 'medium' | 'long';  // 5min, 15min, 30min+
 
 export interface KidsContent {
   ageGroup: AgeGroup;
@@ -56,15 +106,42 @@ export class KidsModule extends BaseModule {
   constructor() {
     const metadata: ModuleMetadata = {
       id: 'kids',
-      name: 'Kids Module',
-      description: 'Age-appropriate support content for children (5-17) navigating family systems',
+      name: '🌈 Kids - Resilience Architect',
+      description: 'Support and coping tools for kids (5-17) navigating family change',
       author: 'Tetrahedron Protocol',
-      version: '1.0.0',
+      version: '2.0.0',  // VPI Enhanced
       license: 'CC-BY-4.0',
       category: 'education',
-      tags: ['kids', 'children', 'education', 'support', 'resilience'],
+      tags: [
+        'kids',
+        'children',
+        'resilience',
+        'coping-skills',
+        'emotional-support',
+        'age-appropriate',
+        'empowerment',
+        'safety',
+        'family-activities',
+        'visual-protocol'
+      ],
       dependencies: [],
-      lastUpdated: new Date()
+      lastUpdated: new Date(),
+      
+      // VPI: Module Visual Identity
+      primaryColor: '#F59E0B',      // Amber - Warmth, Safety
+      secondaryColor: '#EC4899',    // Pink - Care, Nurturing
+      accentColor: '#8B5CF6',       // Purple - Growth, Magic
+      iconEmoji: '🌈',
+      
+      // VPI: Protocol Metadata
+      protocolFrequency: '396Hz',   // Liberation from fear & guilt
+      tetrahedral: true,
+      vertexBalance: {
+        emotional: 1,               // Little Kids
+        practical: 1,               // Tweens
+        philosophical: 1,           // Teens
+        technical: 1                // Family Activities
+      }
     };
 
     const vertices: [Vertex, Vertex, Vertex, Vertex] = [
@@ -406,10 +483,13 @@ export class KidsModule extends BaseModule {
     if (!saved) return [];
     try {
       const parsed = JSON.parse(saved);
-      return parsed.map((a: any) => ({
-        ...a,
-        completedDate: a.completedDate ? new Date(a.completedDate) : undefined
-      }));
+      return (parsed as unknown[]).map(ci => {
+        const c = ci as unknown as CheckIn;
+        return ({
+          ...c,
+          timestamp: new Date((ci as CheckIn).timestamp as unknown as string | number)
+        }) as CheckIn;
+      });
     } catch {
       return [];
     }
@@ -426,10 +506,13 @@ export class KidsModule extends BaseModule {
     if (!saved) return [];
     try {
       const parsed = JSON.parse(saved);
-      return parsed.map((c: any) => ({
-        ...c,
-        timestamp: new Date(c.timestamp)
-      }));
+      return (parsed as unknown[]).map(c => {
+        const ci = c as unknown as CheckIn;
+        return ({
+          ...c,
+          timestamp: new Date((ci as CheckIn).timestamp as unknown as string | number)
+        }) as CheckIn;
+      });
     } catch {
       return [];
     }

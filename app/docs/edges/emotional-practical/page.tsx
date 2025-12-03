@@ -89,7 +89,7 @@ export default function EmotionalPracticalEdgePage() {
             <ul>
               <li>Pick a specific time (After breakfast? Before bed? Right after school?)</li>
               <li>Set a reminder or trigger (When I see kid's backpack, I remember: decompression zone)</li>
-              <li>Start small and consistent (5 minutes every day > 1 hour once a week)</li>
+              <li>Start small and consistent (5 minutes every day {">"}1 hour once a week)</li>
             </ul>
 
             <h3>Step 5: Track and Adjust</h3>

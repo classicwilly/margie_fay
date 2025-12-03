@@ -178,7 +178,7 @@ export default function PracticalEmotionalEdgePage() {
               Kid wants to talk but you're focused on getting out the door on time.
             </p>
             <p>
-              <strong>Why it's harmful:</strong> Communicates that efficiency > relationships<br/>
+              <strong>Why it's harmful:</strong> Communicates that efficiency {">"}relationships<br/>
               <strong>Emotionally-informed alternative:</strong> "I hear you want to tell me something. We have to leave in 2 minutes—can you give me the short version now and we'll talk more in the car?"
             </p>
 

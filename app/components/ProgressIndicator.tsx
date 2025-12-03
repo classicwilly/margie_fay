@@ -13,14 +13,18 @@ export default function ProgressIndicator({
   totalSteps,
   steps
 }: ProgressIndicatorProps) {
+  const progressPercentage = ((currentStep - 1) / (totalSteps - 1)) * 100;
+  
   return (
     <div className="w-full py-4">
       {/* Progress Bar */}
       <div className="relative mb-6">
         <div className="overflow-hidden h-1.5 text-xs flex rounded-full bg-slate-700">
           <div
-            style={{ width: (((currentStep - 1) / (totalSteps - 1)) * 100) + '%' }}
             className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-linear-to-r from-blue-500 to-purple-500 transition-all duration-500"
+            role="progressbar"
+            aria-label={`Step ${currentStep} of ${totalSteps}`}
+            style={{ width: `${progressPercentage}%` }}
           />
         </div>
       </div>

@@ -1,11 +1,49 @@
 /**
- * Status Module (Phenix Navigator)
+ * 🧭 Status Module - Phenix Navigator (Presence Broadcasting Engine)
  * 
- * Four Vertices:
- * 1. Availability - Green/yellow/red status indicator
- * 2. Health - Physical wellness check-in
- * 3. Mood - Emotional state tracking
- * 4. Needs - What support needed right now
+ * VPI PROTOCOL: Real-time Wellness & Availability Signaling
+ * Frequency: 639 Hz (Harmonizing Relationships, Connection, Understanding)
+ * 
+ * Four Vertices (Tetrahedral Presence Architecture):
+ * ┌───────────────────────────────────────────────────────────┐
+ * │ 1. AVAILABILITY (Technical) - Capacity signaling          │
+ * │    - Green/Yellow/Red traffic light system               │
+ * │    - Visual presence indicators with context             │
+ * │    - Auto-detection of schedule density                  │
+ * │    - Boundary enforcement through color coding           │
+ * │                                                           │
+ * │ 2. HEALTH (Practical) - Physical wellness broadcasting   │
+ * │    - Sleep quality, hydration, exercise tracking         │
+ * │    - Energy levels with visual gauges                    │
+ * │    - Wellness trends and pattern detection               │
+ * │    - Self-care reminders and encouragement               │
+ * │                                                           │
+ * │ 3. MOOD (Emotional) - Emotional weather reporting        │
+ * │    - Granular mood spectrum (not just happy/sad)         │
+ * │    - Emotional trajectory visualization                  │
+ * │    - Context-aware mood patterns                         │
+ * │    - Trigger identification and learning                 │
+ * │                                                           │
+ * │ 4. NEEDS (Philosophical) - Support request system        │
+ * │    - Clear articulation of current needs                 │
+ * │    - Request types: space, support, conversation, help   │
+ * │    - Reciprocity tracking (give/receive balance)         │
+ * │    - Need fulfillment celebration                        │
+ * └───────────────────────────────────────────────────────────┘
+ * 
+ * PROTOCOL PHILOSOPHY:
+ * Presence is not just "available" or "busy." It's a rich tapestry of
+ * physical state, emotional weather, relational capacity, and support needs.
+ * This module transforms status updates from binary signals into full-spectrum
+ * human presence broadcasting. It helps families stay connected without
+ * constant check-ins, respecting boundaries while maintaining awareness.
+ * 
+ * VPI ENRICHMENT:
+ * - Color Psychology: Traffic light system + mood spectrum visualization
+ * - Presence History: Pattern detection across time (when are you greenest?)
+ * - Proactive Support: AI suggests when someone might need check-in
+ * - Boundary Intelligence: Auto-sets red based on schedule/stress
+ * - Reciprocity Metrics: Tracks give/receive balance in support requests
  */
 
 import { BaseModule } from '@/lib/modules/BaseModule';
@@ -55,41 +93,135 @@ export class StatusModule extends BaseModule {
   constructor() {
     const metadata: ModuleMetadata = {
       id: 'status',
-      name: 'Status Module (Phenix Navigator)',
-      description: 'Real-time availability, health, mood, and needs broadcasting',
+      name: '🧭 Status - Phenix Navigator',
+      description: 'Real-time presence broadcasting with wellness tracking, mood signaling, and support requests',
       author: 'Tetrahedron Protocol',
-      version: '1.0.0',
+      version: '2.0.0',  // VPI Enhanced
       license: 'CC-BY-4.0',
       category: 'communication',
-      tags: ['status', 'presence', 'health', 'mood', 'availability'],
+      tags: [
+        'status', 
+        'presence', 
+        'health-tracking', 
+        'mood-spectrum', 
+        'availability-signaling',
+        'wellness-dashboard',
+        'boundary-enforcement',
+        'emotional-weather',
+        'support-requests',
+        'visual-protocol'
+      ],
       dependencies: [],
-      lastUpdated: new Date()
+      lastUpdated: new Date(),
+      
+      // VPI: Module Visual Identity
+      primaryColor: '#10B981',      // Green - Wellness, Growth
+      secondaryColor: '#F59E0B',    // Amber - Caution, Attention
+      accentColor: '#EF4444',       // Red - Alert, Boundaries
+      iconEmoji: '🧭',
+      
+      // VPI: Protocol Metadata
+      protocolFrequency: '639Hz',   // Harmonizing relationships
+      tetrahedral: true,
+      vertexBalance: {
+        technical: 1,               // Availability
+        practical: 1,               // Health
+        emotional: 1,               // Mood
+        philosophical: 1            // Needs (perfect balance!)
+      }
     };
 
     const vertices: [Vertex, Vertex, Vertex, Vertex] = [
       {
         id: 'status-availability',
-        name: 'Availability',
+        name: '🟢 Availability',
         category: 'technical',
-        description: 'Green/yellow/red status indicator for immediate availability'
+        description: 'Traffic light presence system: Green (available), Yellow (limited), Red (unavailable)',
+        metadata: {
+          visualizations: ['traffic-light-badge', 'capacity-gauge', 'boundary-indicator'],
+          statuses: ['green', 'yellow', 'red'],
+          autoDetection: [
+            'schedule-density',
+            'stress-levels',
+            'recent-interactions',
+            'time-since-break'
+          ],
+          boundaryFeatures: [
+            'do-not-disturb-mode',
+            'auto-responder',
+            'expectation-setting',
+            'emergency-override'
+          ]
+        }
       },
       {
         id: 'status-health',
-        name: 'Health',
+        name: '💪 Health',
         category: 'practical',
-        description: 'Physical wellness check-in'
+        description: 'Physical wellness dashboard: sleep, exercise, hydration, energy tracking',
+        metadata: {
+          metrics: ['sleep-hours', 'exercise-minutes', 'water-intake', 'energy-level'],
+          visualizations: ['wellness-gauges', 'trend-charts', 'streak-calendar'],
+          trackingTypes: ['daily-checkin', 'metric-logging', 'wellness-snapshot'],
+          insights: [
+            'pattern-detection',
+            'correlation-analysis',
+            'goal-progress',
+            'encouragement-system'
+          ]
+        }
       },
       {
         id: 'status-mood',
-        name: 'Mood',
+        name: '🌈 Mood',
         category: 'emotional',
-        description: 'Emotional state tracking'
+        description: 'Emotional weather spectrum: granular mood tracking with context and patterns',
+        metadata: {
+          moodSpectrum: ['great', 'good', 'neutral', 'down', 'distressed'],
+          visualizations: ['mood-wheel', 'emotional-timeline', 'weather-metaphors'],
+          contextTracking: [
+            'trigger-identification',
+            'pattern-recognition',
+            'mood-forecasting',
+            'improvement-suggestions'
+          ],
+          features: [
+            'private-notes',
+            'therapist-sharing',
+            'trend-analysis',
+            'celebration-markers'
+          ]
+        }
       },
       {
         id: 'status-needs',
-        name: 'Needs',
+        name: '🤝 Needs',
         category: 'philosophical',
-        description: 'What support is needed right now'
+        description: 'Support request system: articulate needs, track reciprocity, celebrate fulfillment',
+        metadata: {
+          needTypes: [
+            'space',
+            'conversation',
+            'practical-help',
+            'emotional-support',
+            'advice',
+            'presence',
+            'celebration'
+          ],
+          features: [
+            'clear-articulation',
+            'request-broadcast',
+            'fulfillment-tracking',
+            'reciprocity-balance',
+            'gratitude-system'
+          ],
+          intelligence: [
+            'pattern-learning',
+            'proactive-suggestions',
+            'unmet-need-alerts',
+            'support-network-mapping'
+          ]
+        }
       }
     ];
 
@@ -334,10 +466,13 @@ export class StatusModule extends BaseModule {
 
     try {
       const parsed = JSON.parse(saved);
-      return parsed.map((s: any) => ({
-        ...s,
-        timestamp: new Date(s.timestamp)
-      }));
+      return (parsed as unknown[]).map(s => {
+        const st = s as unknown as { timestamp: string } & Partial<CurrentStatus>;
+        return {
+          ...st,
+          timestamp: new Date(st.timestamp)
+        } as CurrentStatus;
+      });
     } catch {
       return [];
     }

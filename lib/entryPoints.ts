@@ -21,6 +21,7 @@ export interface EntryPointConfig {
   painPoint: string;
   immediateAction: string;
   moduleId: string;
+  route: string;
   icon: string;
   color: string;
   journey: {
@@ -48,6 +49,7 @@ export const ENTRY_POINTS: Record<EntryPoint, EntryPointConfig> = {
     painPoint: 'You\'re in crisis. You need someone. Fast.',
     immediateAction: 'Broadcast your status. Alert your people.',
     moduleId: 'status',
+    route: '/modules/status',
     icon: '🚨',
     color: 'red',
     journey: {
@@ -65,6 +67,7 @@ export const ENTRY_POINTS: Record<EntryPoint, EntryPointConfig> = {
     painPoint: 'Every handoff is a fight. Communication is toxic. Kids are caught in the middle.',
     immediateAction: 'Start with structured messaging. Custody calendar. Transition checklists.',
     moduleId: 'parenting',
+    route: '/modules/parenting',
     icon: '👨‍👩‍👧',
     color: 'blue',
     journey: {
@@ -82,6 +85,7 @@ export const ENTRY_POINTS: Record<EntryPoint, EntryPointConfig> = {
     painPoint: 'Your child is anxious, withdrawn, or acting out. They feel alone.',
     immediateAction: 'Show them their support team. Age-appropriate content.',
     moduleId: 'kids',
+    route: '/kids',
     icon: '🌟',
     color: 'purple',
     journey: {
@@ -99,6 +103,7 @@ export const ENTRY_POINTS: Record<EntryPoint, EntryPointConfig> = {
     painPoint: 'Everyone\'s busy. No one knows what\'s happening. Community feels disconnected.',
     immediateAction: 'Start with shared calendar. Coordinate events.',
     moduleId: 'calendar',
+    route: '/modules/calendar',
     icon: '📅',
     color: 'green',
     journey: {
@@ -116,6 +121,7 @@ export const ENTRY_POINTS: Record<EntryPoint, EntryPointConfig> = {
     painPoint: 'You\'re a therapist, student, or curious human. You want the theory.',
     immediateAction: 'Start with the four vertices. Read the documentation.',
     moduleId: 'docs',
+    route: '/docs',
     icon: '📚',
     color: 'amber',
     journey: {
@@ -133,6 +139,7 @@ export const ENTRY_POINTS: Record<EntryPoint, EntryPointConfig> = {
     painPoint: 'You have a specific use case. The existing modules don\'t quite fit.',
     immediateAction: 'Use the module creator. Build what you need.',
     moduleId: 'creator',
+    route: '/modules/creator',
     icon: '🔧',
     color: 'indigo',
     journey: {
@@ -150,6 +157,7 @@ export const ENTRY_POINTS: Record<EntryPoint, EntryPointConfig> = {
     painPoint: 'You get it. Wye→Delta. Mesh topology. You\'re ready.',
     immediateAction: 'Deploy your tetrahedron. Install all modules. Go.',
     moduleId: 'hub',
+    route: '/hub',
     icon: '▲',
     color: 'slate',
     journey: {

@@ -22,10 +22,10 @@ export abstract class BaseModule implements Module {
   vertices: [Vertex, Vertex, Vertex, Vertex];
   edges: Edge[] = [];
   subModules?: Module[];
-  config?: Record<string, any>;
+  config?: Record<string, unknown>;
   
   private hubAuth: HubAuth | null = null;
-  private eventSubscriptions: Map<string, Map<string, (data: any) => void>> = new Map();
+  private eventSubscriptions: Map<string, Map<string, (data: unknown) => void>> = new Map();
 
   constructor(metadata: ModuleMetadata, vertices: [Vertex, Vertex, Vertex, Vertex]) {
     this.metadata = metadata;
@@ -87,7 +87,7 @@ export abstract class BaseModule implements Module {
       await this.onDisconnect();
     },
 
-    shareData: async (dataType: string, data: any): Promise<void> => {
+    shareData: async (dataType: string, data: unknown): Promise<void> => {
       if (!this.hubAuth) {
         throw new Error('Module not connected to hub');
       }
@@ -95,7 +95,7 @@ export abstract class BaseModule implements Module {
       await this.onShareData(dataType, data);
     },
 
-    receiveData: async (dataType: string): Promise<any> => {
+    receiveData: async (dataType: string): Promise<unknown> => {
       if (!this.hubAuth) {
         throw new Error('Module not connected to hub');
       }
@@ -103,7 +103,7 @@ export abstract class BaseModule implements Module {
       return await this.onReceiveData(dataType);
     },
 
-    sendToModule: async (moduleId: string, message: any): Promise<void> => {
+    sendToModule: async (moduleId: string, message: unknown): Promise<void> => {
       if (!this.hubAuth) {
         throw new Error('Module not connected to hub');
       }
@@ -111,7 +111,7 @@ export abstract class BaseModule implements Module {
       await this.onSendToModule(moduleId, message);
     },
 
-    subscribeToModule: (moduleId: string, eventType: string, callback: (data: any) => void): void => {
+    subscribeToModule: (moduleId: string, eventType: string, callback: (data: unknown) => void): void => {
       if (!this.eventSubscriptions.has(moduleId)) {
         this.eventSubscriptions.set(moduleId, new Map());
       }
@@ -180,23 +180,23 @@ export abstract class BaseModule implements Module {
     // Override in subclass if needed
   }
 
-  protected async onShareData(dataType: string, data: any): Promise<void> {
+  protected async onShareData(dataType: string, data: unknown): Promise<void> {
     // Override in subclass if needed
   }
 
-  protected async onReceiveData(dataType: string): Promise<any> {
+  protected async onReceiveData(dataType: string): Promise<unknown> {
     // Override in subclass if needed
     return null;
   }
 
-  protected async onSendToModule(moduleId: string, message: any): Promise<void> {
+  protected async onSendToModule(moduleId: string, message: unknown): Promise<void> {
     // Override in subclass if needed
   }
 
   /**
    * Trigger event for subscribed modules
    */
-  protected triggerEvent(eventType: string, data: any): void {
+  protected triggerEvent(eventType: string, data: unknown): void {
     // In production, this would broadcast through hub
     // For now, it's a stub
   }

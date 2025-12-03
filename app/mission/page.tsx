@@ -79,15 +79,15 @@ export default function MissionPage() {
           </div>
 
           {/* The Protocol as Solution */}
-          <div className="bg-gradient-to-br from-blue-900/20 via-purple-900/20 to-amber-900/20 border border-blue-700/50 rounded-xl p-8 mb-8">
-            <h3 className="text-xl font-bold text-white mb-4">The Tetrahedron Protocol = The Transformation Framework</h3>
+          <div className="bg-linear-to-br from-blue-900/20 via-purple-900/20 to-amber-900/20 border border-blue-700/50 rounded-xl p-8 mb-8">
+            <h3 className="text-xl font-bold text-white mb-4">G.O.D. = The Transformation Framework</h3>
             
             <p className="text-slate-300 mb-6">
-              It's not therapy. It's not social media. It's not a product.
+              It&apos;s not therapy. It&apos;s not social media. It&apos;s not a product.
             </p>
             
             <p className="text-white text-xl font-semibold mb-6">
-              It's the RESIN.
+              It&apos;s the RESIN.
             </p>
 
             <div className="space-y-6">
@@ -159,7 +159,7 @@ export default function MissionPage() {
             </div>
 
             <p className="text-white font-semibold mt-6 text-lg">
-              It's Sierpiński tetrahedrons all the way up. And it STARTS with 4 people.
+              It&apos;s Sierpiński tetrahedrons all the way up. And it STARTS with 4 people.
             </p>
           </div>
 
@@ -196,7 +196,7 @@ export default function MissionPage() {
           </div>
 
           {/* Call to Action */}
-          <div className="bg-gradient-to-r from-blue-600/20 to-purple-600/20 border-2 border-purple-500/50 rounded-xl p-8 text-center">
+          <div className="bg-linear-to-r from-blue-600/20 to-purple-600/20 border-2 border-purple-500/50 rounded-xl p-8 text-center">
             <h3 className="text-2xl font-bold text-white mb-4">The Resin Is Ready</h3>
             <p className="text-slate-200 mb-6">
               Pull vacuum. Flood with resin. Pressurize. Cure.<br/>
@@ -208,7 +208,7 @@ export default function MissionPage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
                 href="/"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl hover:from-blue-500 hover:to-purple-500 transition-all"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 text-lg font-semibold text-white bg-linear-to-r from-blue-600 to-purple-600 rounded-xl hover:from-blue-500 hover:to-purple-500 transition-all shadow-lg hover:shadow-xl"
               >
                 Deploy the Protocol
                 <span>→</span>
