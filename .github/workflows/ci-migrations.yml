@@ -1,0 +1,59 @@
+name: CI - Migrations & Security
+
+on:
+  pull_request:
+    paths:
+      - 'supabase/migrations/**'
+      - 'scripts/**'
+      - 'supabase/**'
+      - '.github/**'
+      - 'package.json'
+
+jobs:
+  test-migrations:
+    name: Run migration and security tests
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: phenix_test
+        options: >-
+          --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        ports:
+          - 5432:5432
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install system deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+
+      - name: Wait for DB
+        run: |
+          until pg_isready -h localhost -p 5432; do sleep 1; done
+
+      - name: Export DB env vars
+        run: |
+          echo "PGHOST=localhost" >> $GITHUB_ENV
+          echo "PGPORT=5432" >> $GITHUB_ENV
+          echo "PGUSER=postgres" >> $GITHUB_ENV
+          echo "PGPASSWORD=postgres" >> $GITHUB_ENV
+          echo "PGDATABASE=phenix_test" >> $GITHUB_ENV
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run migration tests
+        run: |
+          node scripts/test-migration-tetrahedron.cjs
+          node scripts/test-security-harden.cjs
